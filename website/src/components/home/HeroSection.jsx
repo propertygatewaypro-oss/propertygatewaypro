@@ -33,7 +33,7 @@ export default function HeroSection({ onOpenVisitModal }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0C10] via-transparent to-[#0A0C10]/60" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 sm:pt-36 lg:pt-40 lg:pb-28 w-full">
         {/* Top Trust Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A1D26]/90 border border-[#2E3342] text-xs font-medium text-brand-bronze-400 mb-6 backdrop-blur-md shadow-sm">
           <ShieldCheck className="w-4 h-4 text-brand-bronze-400" />
