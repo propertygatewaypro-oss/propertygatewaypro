@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles, Building, Phone, MessageCircle } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Sparkles, 
+  Building, 
+  Phone, 
+  MessageCircle, 
+  ChevronDown, 
+  ChevronUp, 
+  ShieldCheck, 
+  Car, 
+  CheckCircle2, 
+  Quote 
+} from 'lucide-react';
 import HeroSection from '../components/home/HeroSection';
 import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
@@ -12,6 +24,7 @@ export default function HomePage({ onOpenVisitModal }) {
   const [featuredProperties, setFeaturedProperties] = useState([]);
   const [activeTab, setActiveTab] = useState('All');
   const [loading, setLoading] = useState(true);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   useEffect(() => {
     async function loadData() {
@@ -25,7 +38,50 @@ export default function HomePage({ onOpenVisitModal }) {
 
   const filteredList = activeTab === 'All' 
     ? featuredProperties 
-    : featuredProperties.filter(p => p.propertyType.toLowerCase().includes(activeTab.toLowerCase()));
+    : featuredProperties.filter(p => {
+        const typeStr = (p.propertyType || p.type || '').toLowerCase();
+        return typeStr.includes(activeTab.toLowerCase());
+      });
+
+  const faqs = [
+    {
+      q: "Why is there 0% brokerage on new builder projects?",
+      a: `As an authorized channel advisory partner under TNRERA (${BRAND.reraId}) for Chennai's tier-1 builders (Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy), our consultation fees are remunerated directly by the builders. You pay the exact direct developer price with zero added commission or hidden charges.`
+    },
+    {
+      q: "How does the Doorstep AC Cab Site Visit work?",
+      a: "Once you shortlist properties, our team coordinates with you to schedule a sanitized private AC cab to pick you and your family up from your doorstep anywhere in Chennai, tour the selected sites with our property advisor, and drop you back safely. This service is 100% complimentary."
+    },
+    {
+      q: "Are all listed properties approved by TNRERA and local authorities?",
+      a: "Yes. Every residential apartment, villa, and plot listed on Property Gateway is strictly validated against TNRERA filings, CMDA / DTCP planning approvals, and 30-year title clearance by legal advocates prior to listing."
+    },
+    {
+      q: "Can Property Gateway assist with bank home loan approvals and legal paperwork?",
+      a: "Yes. We maintain direct loan facilitation desks with leading banks including SBI, HDFC Bank, ICICI Bank, and Axis Bank for expedited home loan processing at optimal interest rates, alongside end-to-end guidance during registration at the Sub-Registrar Office."
+    }
+  ];
+
+  const testimonials = [
+    {
+      quote: "Finding a 3 BHK near Tidel Park without paying hefty broker commissions was seamless. The private cab pickup made inspecting multiple projects on OMR with our parents completely stress-free.",
+      author: "Anand & Meera Sundaram",
+      location: "OMR IT Corridor Buyer",
+      tag: "3 BHK High-Rise Residence"
+    },
+    {
+      quote: "Parent document legal verification was our paramount condition. Property Gateway provided complete 30-year title documents and CMDA sanctions before collecting any booking token.",
+      author: "Dr. S. Radhakrishnan",
+      location: "Anna Nagar",
+      tag: "Regal Crest Luxury Apartment"
+    },
+    {
+      quote: "Secured our sea-facing villa along East Coast Road with transparent builder pricing and zero markup. Highly professional advisory team with deep Chennai market insights.",
+      author: "Priya & Rajesh Narayanan",
+      location: "East Coast Road (ECR)",
+      tag: "The Sovereign Bay Villa"
+    }
+  ];
 
   return (
     <div className="space-y-0">
@@ -95,7 +151,7 @@ export default function HomePage({ onOpenVisitModal }) {
             to="/properties"
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-navy-900 hover:bg-brand-navy-800 text-white font-bold text-sm shadow-md transition-all active:scale-[0.98]"
           >
-            <span>Explore All 20+ Chennai Properties</span>
+            <span>Explore All Chennai Properties</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -128,7 +184,95 @@ export default function HomePage({ onOpenVisitModal }) {
       {/* 5. Interactive EMI Calculator */}
       <EmiCalculator />
 
-      {/* 6. High-Converting Instant WhatsApp Hook */}
+      {/* 6. Authentic Homebuyer Case Studies & Reviews */}
+      <section className="py-20 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
+              Verified Client Journeys
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy-950 tracking-tight mt-2">
+              Trusted by Homebuyers Across Chennai
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Authentic feedback from families and investors who purchased through Property Gateway.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, idx) => (
+              <div 
+                key={idx}
+                className="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col justify-between"
+              >
+                <div>
+                  <Quote className="w-8 h-8 text-brand-emerald-600/30 mb-4" />
+                  <p className="text-slate-700 text-sm leading-relaxed italic mb-6">
+                    "{t.quote}"
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-100">
+                  <div className="font-bold text-sm text-brand-navy-950">{t.author}</div>
+                  <div className="text-xs text-slate-500 mt-0.5">{t.location}</div>
+                  <span className="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-100">
+                    {t.tag}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Frequently Asked Questions (FAQ) Accordion */}
+      <section className="py-20 bg-white border-t border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-xl mx-auto mb-12">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
+              Clarity & Legal Transparency
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-navy-950 tracking-tight mt-2">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-sm text-slate-600 mt-1">
+              Everything you need to know about our zero-brokerage advisory and site visit process.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div 
+                  key={idx}
+                  className="border border-slate-200 rounded-xl overflow-hidden transition-colors"
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : idx)}
+                    className="w-full text-left p-5 flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                  >
+                    <span className="font-bold text-sm sm:text-base text-brand-navy-950">
+                      {faq.q}
+                    </span>
+                    {isOpen ? (
+                      <ChevronUp className="w-5 h-5 text-brand-emerald-700 shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
+                    )}
+                  </button>
+                  {isOpen && (
+                    <div className="p-5 pt-1 text-sm text-slate-600 leading-relaxed bg-white border-t border-slate-100">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. High-Converting Instant WhatsApp Hook */}
       <section className="py-16 bg-brand-navy-950 text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="w-12 h-12 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center mx-auto">

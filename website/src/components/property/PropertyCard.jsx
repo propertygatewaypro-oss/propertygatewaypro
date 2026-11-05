@@ -5,9 +5,15 @@ import { generateWhatsAppLink } from '../../utils/constants';
 
 export default function PropertyCard({ property }) {
   const whatsappUrl = generateWhatsAppLink(property);
+  const status = property.status || property.possessionStatus || 'Ready to Move';
+  const displayImage = property.mainImage || property.images?.[0] || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+  const isFeatured = property.isFeatured || property.featured;
+  const propType = property.propertyType || property.type || 'Apartment';
+  const bhkDisplay = typeof property.bhk === 'string' ? property.bhk : `${property.bhk} BHK`;
+  const areaDisplay = property.builtUpArea ? (typeof property.builtUpArea === 'number' ? `${property.builtUpArea} sq.ft` : property.builtUpArea) : null;
 
-  const getStatusBadge = (status) => {
-    switch (status) {
+  const getStatusBadge = (s) => {
+    switch (s) {
       case 'Ready to Move':
         return 'bg-emerald-50 text-emerald-800 border-emerald-200';
       case 'Under Construction':
@@ -25,7 +31,7 @@ export default function PropertyCard({ property }) {
         {/* Image Container with 16:10 Aspect Ratio & Zoom Physics */}
         <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
           <img
-            src={property.mainImage}
+            src={displayImage}
             alt={property.title}
             loading="lazy"
             className="w-full h-full object-cover photo-zoom-transition"
@@ -33,11 +39,11 @@ export default function PropertyCard({ property }) {
 
           {/* Top Floating Status Badges */}
           <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-            <span className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border shadow-sm backdrop-blur-sm ${getStatusBadge(property.status)}`}>
-              {property.status}
+            <span className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border shadow-sm backdrop-blur-sm ${getStatusBadge(status)}`}>
+              {status}
             </span>
 
-            {property.isFeatured && (
+            {isFeatured && (
               <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-brand-gold-100 text-brand-gold-700 border border-brand-gold-500/20 shadow-sm">
                 ★ Exclusive
               </span>
@@ -58,7 +64,7 @@ export default function PropertyCard({ property }) {
           {/* Builder & Location */}
           <div className="flex items-center justify-between text-xs text-slate-500">
             <span className="font-semibold text-brand-emerald-700 uppercase tracking-wider">
-              {property.builder || 'Verified Builder'}
+              {property.builder || 'Verified Project'}
             </span>
             <span className="flex items-center gap-1 text-slate-600">
               <MapPin className="w-3.5 h-3.5 text-slate-400" />
@@ -75,18 +81,20 @@ export default function PropertyCard({ property }) {
 
           {/* Spec Badges Row */}
           <div className="flex items-center gap-3 py-2 border-y border-slate-100 text-xs text-slate-600">
-            {property.bhk > 0 && (
+            {property.bhk && (
               <div className="flex items-center gap-1.5 font-medium">
                 <BedDouble className="w-4 h-4 text-slate-400" />
-                <span>{property.bhk} BHK</span>
+                <span>{bhkDisplay}</span>
               </div>
             )}
-            <div className="flex items-center gap-1.5 font-medium">
-              <Maximize2 className="w-3.5 h-3.5 text-slate-400" />
-              <span>{property.builtUpArea}</span>
-            </div>
+            {areaDisplay && (
+              <div className="flex items-center gap-1.5 font-medium">
+                <Maximize2 className="w-3.5 h-3.5 text-slate-400" />
+                <span>{areaDisplay}</span>
+              </div>
+            )}
             <div className="text-slate-400 font-light">•</div>
-            <span className="text-slate-600">{property.propertyType}</span>
+            <span className="text-slate-600">{propType}</span>
           </div>
         </div>
       </div>

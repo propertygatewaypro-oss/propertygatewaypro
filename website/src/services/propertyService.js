@@ -2,13 +2,13 @@ import { collection, getDocs, doc, getDoc, addDoc, query, where, orderBy, limit,
 import { db, isFirebaseConfigured } from "./firebase";
 import { INITIAL_PROPERTIES } from "../data/initialProperties";
 
-const LOCAL_STORAGE_KEY = "pg_properties_cache";
-const LEADS_STORAGE_KEY = "pg_leads_cache";
+const LOCAL_STORAGE_KEY = "pg_admin_properties";
+const LEADS_STORAGE_KEY = "pg_admin_leads";
 
 // Initialize local cache if empty
 function getLocalProperties() {
   try {
-    const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const cached = localStorage.getItem(LOCAL_STORAGE_KEY) || localStorage.getItem("pg_properties_cache");
     if (cached) {
       return JSON.parse(cached);
     }
@@ -25,7 +25,7 @@ export async function fetchProperties(filters = {}) {
     try {
       let q = query(
         collection(db, "properties"),
-        where("isActive", "==", true),
+        where("active", "!=", false),
         orderBy("createdAt", "desc"),
         limit(pageSize)
       );
@@ -59,21 +59,30 @@ export async function fetchProperties(filters = {}) {
   }
 
   // Fallback to local properties
-  let results = [...getLocalProperties()];
+  let results = [...getLocalProperties()].filter(p => p.active !== false && p.isActive !== false);
 
   if (category && category !== "All Types") {
-    results = results.filter(p => p.propertyType === category);
+    results = results.filter(p => {
+      const type = p.propertyType || p.type || "";
+      return type.toLowerCase().includes(category.toLowerCase());
+    });
   }
   if (location && location !== "All Locations") {
     results = results.filter(p => p.location === location);
   }
   if (status && status !== "All Statuses") {
-    results = results.filter(p => p.status === status);
+    results = results.filter(p => {
+      const s = p.status || p.possessionStatus || "";
+      return s.toLowerCase().includes(status.toLowerCase());
+    });
   }
   if (budgetMin !== undefined || budgetMax !== undefined) {
     const min = budgetMin || 0;
     const max = budgetMax || Infinity;
-    results = results.filter(p => p.price >= min && p.price <= max);
+    results = results.filter(p => {
+      const price = Number(p.price) || 0;
+      return price >= min && price <= max;
+    });
   }
 
   // Sort
@@ -83,7 +92,7 @@ export async function fetchProperties(filters = {}) {
     results.sort((a, b) => b.price - a.price);
   } else {
     // latest
-    results.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    results.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
   }
 
   return results.slice(0, pageSize);
@@ -108,7 +117,7 @@ export async function fetchPropertyBySlug(slug) {
 
 export async function submitLeadInquiry(leadData) {
   // 1. Bot Honeypot Check
-  if (leadData.website_trap_field) {
+  if (leadData.website_trap_field || leadData.website_hp) {
     console.warn("Honeypot triggered. Bot submission discarded.");
     return { success: true, bot: true };
   }
@@ -119,38 +128,39 @@ export async function submitLeadInquiry(leadData) {
   }
 
   const newLead = {
+    id: `lead_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     name: leadData.name.trim(),
     phone: leadData.phone.trim(),
     email: (leadData.email || "").trim(),
     propertyId: leadData.propertyId || "general-inquiry",
-    propertyTitle: leadData.propertyTitle || "General Real Estate Inquiry",
+    propertyTitle: leadData.propertyTitle || "Chennai Real Estate Consultation",
+    preferredLocation: leadData.preferredLocation || "",
     preferredDate: leadData.preferredDate || "",
-    source: leadData.source || "Website Form",
+    leadType: leadData.leadType || "Website Inquiry",
+    message: leadData.message || "",
     status: "New",
-    createdAt: new Date().toISOString()
+    submittedAt: new Date().toISOString()
   };
 
   // 3. Write to Firestore if configured
   if (isFirebaseConfigured) {
     try {
-      const docRef = await addDoc(collection(db, "inquiries"), {
+      const docRef = await addDoc(collection(db, "leads"), {
         ...newLead,
         timestamp: serverTimestamp()
       });
       newLead.id = docRef.id;
     } catch (err) {
-      console.warn("Firestore lead write failed, saving to local inbox:", err);
+      console.warn("Firestore lead submission failed, caching locally:", err.message);
     }
   }
 
-  // Always save locally so Admin can view it immediately
+  // 4. Always cache in localStorage for Admin synchronization
   try {
     const existing = JSON.parse(localStorage.getItem(LEADS_STORAGE_KEY) || "[]");
-    newLead.id = newLead.id || `lead-${Date.now()}`;
-    existing.unshift(newLead);
-    localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify(existing));
+    localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify([newLead, ...existing]));
   } catch (e) {
-    console.error("Failed to store lead locally:", e);
+    console.error("Local leads cache error", e);
   }
 
   return { success: true, lead: newLead };
