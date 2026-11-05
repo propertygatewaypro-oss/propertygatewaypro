@@ -57,15 +57,13 @@ export default function Navbar({ onOpenVisitModal }) {
           </nav>
 
           {/* Right Action Trigger Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <a
-              href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20verified%20properties%20in%20Chennai.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
-              title="Chat on WhatsApp"
+              href={`tel:${BRAND.phone}`}
+              className="text-xs font-mono text-slate-300 hover:text-brand-bronze-300 transition-colors flex items-center gap-1.5"
             >
-              <MessageCircle className="w-5 h-5 text-[#25D366]" />
+              <Phone className="w-3.5 h-3.5 text-brand-bronze-400" />
+              <span>{BRAND.phoneDisplay}</span>
             </a>
 
             <button

@@ -7,6 +7,7 @@ import Footer from './components/common/Footer';
 import MobileBottomBar from './components/common/MobileBottomBar';
 import CookieConsent from './components/common/CookieConsent';
 import ScheduleVisitModal from './components/common/ScheduleVisitModal';
+import WhatsAppChatbot from './components/common/WhatsAppChatbot';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -97,6 +98,9 @@ function AppContent() {
         onClose={handleCloseVisitModal}
         property={selectedPropertyForModal}
       />
+
+      {/* Floating Interactive WhatsApp Chatbot */}
+      <WhatsAppChatbot />
     </div>
   );
 }
