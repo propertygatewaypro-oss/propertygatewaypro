@@ -1,0 +1,17 @@
+{
+  "name": "property-gateway-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Property Gateway - Real Estate Platform & Management Portal Monorepo",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:admin\"",
+    "dev:web": "npm --prefix website run dev",
+    "dev:admin": "npm --prefix admin run dev",
+    "build:web": "npm --prefix website run build",
+    "build:admin": "npm --prefix admin run build",
+    "build": "npm run build:web && npm run build:admin"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
