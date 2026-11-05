@@ -37,9 +37,7 @@ export default function AdminLayout() {
       {/* Mobile Top Bar */}
       <header className="md:hidden bg-brand-navy-900 text-white px-4 py-3 flex items-center justify-between border-b border-brand-navy-800 sticky top-0 z-30">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded bg-brand-emerald-600 flex items-center justify-center font-bold text-white text-sm">
-            PG
-          </div>
+          <img src="/logo.png" alt="Property Gateway" className="w-8 h-8 rounded-full object-cover ring-1 ring-brand-bronze-500/50" />
           <div>
             <h1 className="text-sm font-semibold tracking-wide">Property Gateway</h1>
             <p className="text-[10px] text-slate-400">Admin Management Portal</p>
@@ -63,9 +61,7 @@ export default function AdminLayout() {
         <div>
           <div className="p-6 border-b border-brand-navy-800/80">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-brand-emerald-600 flex items-center justify-center text-white font-bold text-base shadow-sm">
-                PG
-              </div>
+              <img src="/logo.png" alt="Property Gateway" className="w-10 h-10 rounded-full object-cover ring-1 ring-brand-bronze-500/50 shadow-sm" />
               <div>
                 <h2 className="text-sm font-semibold text-white tracking-tight">Property Gateway</h2>
                 <div className="flex items-center gap-1.5 mt-0.5">

@@ -12,8 +12,12 @@ export default function Footer() {
           {/* Brand & Authority Column */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-brand-bronze-600 flex items-center justify-center text-white shadow-bronze-glow">
-                <Building2 className="w-5 h-5 text-white" />
+              <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-brand-bronze-600 via-amber-400 to-brand-bronze-400 shadow-md shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="Property Gateway" 
+                  className="w-full h-full rounded-full object-cover bg-black" 
+                />
               </div>
               <span className="text-2xl font-serif font-bold tracking-tight text-white">
                 Property<span className="text-brand-bronze-400 font-sans font-extrabold ml-1">Gateway</span>

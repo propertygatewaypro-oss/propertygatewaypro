@@ -36,8 +36,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-600 text-white font-bold text-xl shadow-lg mb-4">
-          PG
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full p-1 bg-gradient-to-tr from-emerald-600 via-amber-400 to-emerald-500 shadow-xl mb-4">
+          <img src="/logo.png" alt="Property Gateway" className="w-full h-full rounded-full object-cover bg-black" />
         </div>
         <h1 className="text-2xl font-serif font-bold text-white tracking-tight">
           Property Gateway

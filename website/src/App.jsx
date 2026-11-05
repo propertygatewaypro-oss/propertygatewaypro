@@ -100,7 +100,7 @@ function AppContent() {
       />
 
       {/* Floating Interactive WhatsApp Chatbot */}
-      <WhatsAppChatbot />
+      <WhatsAppChatbot onOpenVisitModal={() => handleOpenVisitModal(null)} />
     </div>
   );
 }
