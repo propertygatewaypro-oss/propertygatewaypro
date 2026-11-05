@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, CheckCheck, ShieldCheck } from 'lucide-react';
+import { X, Send, Sparkles, CheckCheck, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
-// Authentic WhatsApp SVG Icon
-function WhatsAppIcon({ className = "w-7 h-7" }) {
+// Official Meta WhatsApp Vector Logo (Exact Official Glyph & Palette)
+function OfficialWhatsAppLogo({ className = "w-8 h-8" }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z" />
-      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.434 5.177L2 22l4.975-1.399C8.423 21.498 10.15 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.25c-1.63 0-3.151-.488-4.432-1.328l-.317-.207-2.964.833.823-2.906-.226-.339C3.968 14.938 3.5 13.518 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z" />
+    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="24" cy="24" r="24" fill="#25D366"/>
+      <path 
+        fill="#FFFFFF" 
+        fillRule="evenodd" 
+        clipRule="evenodd" 
+        d="M24 10.5c-7.456 0-13.5 6.044-13.5 13.5 0 2.38.623 4.618 1.71 6.567L10.5 37.5l7.147-1.874A13.435 13.435 0 0 0 24 37.5c7.456 0 13.5-6.044 13.5-13.5S31.456 10.5 24 10.5zm6.54 18.966c-.27.76-1.57 1.456-2.193 1.55-.583.088-1.346.126-2.176-.138-.503-.16-1.147-.373-1.97-.73-3.47-1.498-5.733-4.992-5.906-5.223-.174-.23-1.413-1.876-1.413-3.578 0-1.703.894-2.54 1.21-2.887.317-.346.69-.433.92-.433.23 0 .46.002.663.013.213.01.498-.08.778.595.288.694.978 2.394 1.065 2.567.086.173.144.375.029.606-.115.231-.173.375-.345.576l-.52.607c-.173.172-.355.36-.153.706.202.347.898 1.48 1.926 2.397 1.321 1.179 2.436 1.545 2.782 1.718.347.173.548.144.75-.087.202-.23.865-1.01 1.096-1.356.23-.347.46-.289.78-.173.317.115 2.016.95 2.362 1.124.346.173.576.26.662.404.087.144.087.837-.183 1.597z"
+      />
     </svg>
   );
 }
@@ -48,7 +53,7 @@ export default function WhatsAppChatbot() {
 
   return (
     <>
-      {/* Floating Container (Fixed Bottom Right, elevated above mobile bar) */}
+      {/* Floating Launcher (Bottom Right, elevated above mobile conversion bar) */}
       <div className="fixed bottom-6 right-5 md:bottom-8 md:right-8 z-50 flex flex-col items-end">
         
         {/* Floating Attention Prompt Bubble (Dismissible) */}
@@ -56,7 +61,7 @@ export default function WhatsAppChatbot() {
           <div className="mb-3 mr-1 bg-white text-slate-800 text-xs py-2.5 px-3.5 rounded-2xl shadow-xl border border-slate-200/90 flex items-center gap-2.5 animate-bounce-subtle max-w-[260px]">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             <p className="leading-snug">
-              Need help shortlisting Chennai homes? <strong>Chat with our advisor on WhatsApp.</strong>
+              Need help shortlisting Chennai homes? <strong>Chat with an advisor on WhatsApp.</strong>
             </p>
             <button
               onClick={(e) => {
@@ -71,22 +76,24 @@ export default function WhatsAppChatbot() {
           </div>
         )}
 
-        {/* Circular Authentic WhatsApp Launcher Button */}
+        {/* Circular Official Meta WhatsApp Launcher Button */}
         <button
           onClick={() => {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba56] text-white flex items-center justify-center shadow-[0_4px_20px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_28px_rgba(37,211,102,0.6)] transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
+          className="relative w-14 h-14 rounded-full overflow-hidden shadow-[0_4px_24px_rgba(37,211,102,0.5)] hover:shadow-[0_6px_32px_rgba(37,211,102,0.7)] transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-[#25D366]/40 flex items-center justify-center bg-[#25D366]"
           aria-label={isOpen ? "Close WhatsApp Chat" : "Open WhatsApp Chatbot"}
         >
           {isOpen ? (
-            <X className="w-6 h-6 transition-transform rotate-0 hover:rotate-90" />
+            <div className="w-full h-full bg-[#1F2C34] text-white flex items-center justify-center">
+              <X className="w-6 h-6 transition-transform rotate-0 hover:rotate-90" />
+            </div>
           ) : (
             <>
-              <WhatsAppIcon className="w-8 h-8 fill-current" />
-              {/* Online Notification Badge */}
-              <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
+              <OfficialWhatsAppLogo className="w-14 h-14" />
+              {/* Online Unread Notification Badge */}
+              <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
                 1
               </span>
             </>
@@ -100,12 +107,12 @@ export default function WhatsAppChatbot() {
           className="fixed bottom-24 right-4 md:right-8 z-50 w-[92vw] max-w-[360px] bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200"
           style={{ maxHeight: 'calc(100vh - 120px)' }}
         >
-          {/* Header in Official WhatsApp Green with Verified Badge */}
+          {/* Header in Official WhatsApp Teal Green (#075E54) with Verified Badge */}
           <div className="bg-[#075E54] text-white p-4 flex items-center justify-between shadow-md">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center font-bold text-white text-sm">
-                  PG
+                <div className="w-10 h-10 rounded-full overflow-hidden border border-white/40 shadow-xs">
+                  <OfficialWhatsAppLogo className="w-10 h-10" />
                 </div>
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] border-2 border-[#075E54] rounded-full" />
               </div>
@@ -143,7 +150,7 @@ export default function WhatsAppChatbot() {
                 Vanakkam! 🙏 Welcome to <strong>Property Gateway Chennai</strong>.
               </p>
               <p className="leading-relaxed text-slate-600">
-                Are you looking for ready homes, sea-facing villas on ECR, or direct developer pre-launches?
+                Are you looking for ready apartments, sea-facing villas on ECR, or direct builder pre-launches?
               </p>
               <div className="flex items-center justify-end gap-1 text-[9px] text-slate-400 pt-0.5">
                 <span>Just now</span>
