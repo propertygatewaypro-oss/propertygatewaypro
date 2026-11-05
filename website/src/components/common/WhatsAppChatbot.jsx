@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { X, Send, CheckCheck, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
-// Standard Canonical WhatsApp White Glyph
-function WhatsAppIcon({ className = "w-7 h-7" }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24M8.53 7.33c-.16 0-.35.06-.53.27-.19.2-.72.71-.72 1.73s.74 2.01.84 2.15c.1.14 1.42 2.24 3.51 3.09.5.2 1 .33 1.34.44.5.16.96.14 1.32.08.41-.06 1.25-.51 1.42-1 .18-.5.18-.92.12-1.01-.05-.09-.2-.14-.42-.25-.21-.11-1.25-.62-1.45-.69-.19-.07-.33-.11-.47.11s-.54.69-.67.83c-.12.14-.25.16-.47.05-.21-.11-.9-.33-1.72-1.06-.63-.56-1.06-1.26-1.18-1.47-.13-.21-.01-.33.09-.43.1-.1.21-.25.32-.38.1-.12.14-.21.21-.35.07-.14.04-.27-.02-.38-.05-.11-.47-1.14-.65-1.56-.17-.41-.35-.35-.48-.36l-.41-.01Z"/>
-    </svg>
-  );
-}
-
 export default function WhatsAppChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -70,20 +61,26 @@ export default function WhatsAppChatbot() {
           </div>
         )}
 
-        {/* Circular Authentic WhatsApp Button */}
+        {/* Circular WhatsApp Launcher Button using Exact User Icon */}
         <button
           onClick={() => {
             setIsOpen(!isOpen);
             setShowTooltip(false);
           }}
-          className="relative w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20ba56] text-white flex items-center justify-center shadow-[0_4px_24px_rgba(37,211,102,0.45)] hover:shadow-[0_6px_32px_rgba(37,211,102,0.65)] transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
+          className="relative w-14 h-14 rounded-full flex items-center justify-center shadow-[0_6px_24px_rgba(37,211,102,0.5)] hover:shadow-[0_8px_32px_rgba(37,211,102,0.7)] transition-all duration-200 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-[#25D366]/40"
           aria-label={isOpen ? "Close WhatsApp Chat" : "Open WhatsApp Chat"}
         >
           {isOpen ? (
-            <X className="w-6 h-6 transition-transform rotate-0 hover:rotate-90" />
+            <div className="w-14 h-14 rounded-full bg-[#0F1117] text-white flex items-center justify-center border border-slate-700 shadow-xl">
+              <X className="w-6 h-6 transition-transform rotate-0 hover:rotate-90 text-brand-bronze-400" />
+            </div>
           ) : (
             <>
-              <WhatsAppIcon className="w-7 h-7 fill-white" />
+              <img 
+                src="/icons/whatsapp-icon.png" 
+                alt="WhatsApp" 
+                className="w-14 h-14 rounded-full object-cover group-hover:scale-105 transition-transform"
+              />
               {/* Online Notification Badge */}
               <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
                 1
@@ -103,9 +100,11 @@ export default function WhatsAppChatbot() {
           <div className="bg-[#075E54] text-white p-4 flex items-center justify-between shadow-md">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-xs">
-                  <WhatsAppIcon className="w-6 h-6 fill-white" />
-                </div>
+                <img 
+                  src="/icons/whatsapp-icon.png" 
+                  alt="Property Gateway Desk" 
+                  className="w-10 h-10 rounded-full object-cover border border-white/40 shadow-xs"
+                />
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] border-2 border-[#075E54] rounded-full" />
               </div>
               <div>
