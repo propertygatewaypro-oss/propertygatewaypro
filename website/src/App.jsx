@@ -8,6 +8,9 @@ import MobileBottomBar from './components/common/MobileBottomBar';
 import CookieConsent from './components/common/CookieConsent';
 import ScheduleVisitModal from './components/common/ScheduleVisitModal';
 import WhatsAppChatbot from './components/common/WhatsAppChatbot';
+import PostRequirementModal from './components/common/PostRequirementModal';
+import FloatingRequirementTab from './components/common/FloatingRequirementTab';
+import { usePsychologicalModalTrigger } from './hooks/usePsychologicalModalTrigger';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -31,6 +34,13 @@ function AppContent() {
   const [isVisitModalOpen, setIsVisitModalOpen] = useState(false);
   const [selectedPropertyForModal, setSelectedPropertyForModal] = useState(null);
 
+  // Intelligent Behavioral & Psychological Popup Trigger
+  const {
+    isOpen: isReqModalOpen,
+    openModal: handleOpenReqModal,
+    closeModal: handleCloseReqModal
+  } = usePsychologicalModalTrigger();
+
   const handleOpenVisitModal = (property = null) => {
     setSelectedPropertyForModal(property);
     setIsVisitModalOpen(true);
@@ -42,11 +52,14 @@ function AppContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen text-slate-800 bg-slate-50 antialiased selection:bg-emerald-100 selection:text-navy-950">
+    <div className="flex flex-col min-h-screen text-slate-800 bg-[#FAF9F6] antialiased selection:bg-amber-100 selection:text-slate-900">
       <ScrollToTop />
       
-      {/* Top Navigation */}
-      <Navbar onOpenVisitModal={() => handleOpenVisitModal(null)} />
+      {/* Top Floating Navigation */}
+      <Navbar 
+        onOpenVisitModal={() => handleOpenVisitModal(null)} 
+        onOpenRequirementModal={handleOpenReqModal}
+      />
 
       {/* Main Routed Content */}
       <main className="flex-grow">
@@ -87,7 +100,10 @@ function AppContent() {
       <Footer />
 
       {/* Pinned Mobile Bottom Bar (< 768px) */}
-      <MobileBottomBar onOpenVisitModal={() => handleOpenVisitModal(null)} />
+      <MobileBottomBar 
+        onOpenVisitModal={() => handleOpenVisitModal(null)} 
+        onOpenRequirementModal={handleOpenReqModal}
+      />
 
       {/* Cookie Consent Banner */}
       <CookieConsent />
@@ -101,6 +117,15 @@ function AppContent() {
 
       {/* Floating Interactive WhatsApp Chatbot */}
       <WhatsAppChatbot onOpenVisitModal={() => handleOpenVisitModal(null)} />
+
+      {/* Persistent Floating Requirement Tab (Desktop) */}
+      <FloatingRequirementTab onClick={handleOpenReqModal} />
+
+      {/* Behavioral & Psychological Post Requirement Modal */}
+      <PostRequirementModal
+        isOpen={isReqModalOpen}
+        onClose={handleCloseReqModal}
+      />
     </div>
   );
 }

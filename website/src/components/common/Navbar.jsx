@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X, Phone, MapPin, Building2, Sparkles, CheckCircle2 } from 'lucide-react';
 import { BRAND, CHENNAI_LOCATIONS } from '../../utils/constants';
+import PostRequirementIcon from './PostRequirementIcon';
 
-export default function Navbar({ onOpenVisitModal }) {
+export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'properties' | 'locations' | 'services' | null
   const [mobileExpandedSection, setMobileExpandedSection] = useState(null);
@@ -308,6 +309,16 @@ export default function Navbar({ onOpenVisitModal }) {
               Contact
             </Link>
 
+            {/* Post Requirement CTA Button */}
+            <button
+              onClick={onOpenRequirementModal || onOpenVisitModal}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F1117] hover:bg-[#1C202C] text-[#FAF9F6] border border-[#B37D4E]/40 hover:border-[#B37D4E] text-xs font-semibold uppercase tracking-wider transition-all shadow-xs cursor-pointer group"
+              title="Post your custom property requirement"
+            >
+              <PostRequirementIcon className="w-3.5 h-3.5 text-[#B37D4E] group-hover:scale-110 transition-transform" color="#B37D4E" />
+              <span className="group-hover:text-[#B37D4E] transition-colors">Post Requirement</span>
+            </button>
+
           </div>
 
           {/* 3. MOBILE HAMBURGER BUTTON */}
@@ -444,10 +455,22 @@ export default function Navbar({ onOpenVisitModal }) {
               Contact
             </Link>
 
-            <div className="pt-2">
+            <div className="pt-2 space-y-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onOpenRequirementModal) onOpenRequirementModal();
+                  else if (onOpenVisitModal) onOpenVisitModal();
+                }}
+                className="w-full py-2.5 rounded-full bg-[#0F1117] text-[#FAF9F6] border border-[#B37D4E]/50 font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-95 transition-all"
+              >
+                <PostRequirementIcon className="w-3.5 h-3.5 text-[#B37D4E]" color="#B37D4E" />
+                <span>Post Requirement</span>
+              </button>
+
               <a
                 href={`tel:${BRAND.phone}`}
-                className="w-full py-2.5 rounded-full bg-[#11141D] text-white font-medium text-xs flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-full bg-[#FAF9F6] text-[#0F1117] border border-[#DCD5C8] font-medium text-xs flex items-center justify-center gap-2"
               >
                 <Phone className="w-3.5 h-3.5 text-[#B37D4E]" />
                 <span>Call Advisor: {BRAND.phoneDisplay}</span>
