@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, MessageCircle, Menu, X, ShieldCheck, Building2 } from 'lucide-react';
+import { Phone, MessageCircle, Menu, X, ShieldCheck, Building2, Car } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
 export default function Navbar({ onOpenVisitModal }) {
@@ -20,59 +20,60 @@ export default function Navbar({ onOpenVisitModal }) {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-colors">
+    <header className="sticky top-0 z-40 bg-[#0F1117]/95 backdrop-blur-md border-b border-[#232733] text-white transition-colors">
       {/* Top Micro-Bar for Trust & Local Authority */}
-      <div className="bg-brand-navy-950 text-slate-300 text-xs py-1.5 px-4 hidden sm:block border-b border-brand-navy-800">
+      <div className="bg-[#0A0C10] text-slate-300 text-xs py-1.5 px-4 hidden sm:block border-b border-[#1A1D26]">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-brand-emerald-400 font-medium">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <span className="flex items-center gap-1.5 text-brand-bronze-400 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-bronze-400" />
               TNRERA Reg: {BRAND.reraId}
             </span>
-            <span className="text-slate-400">• Zero Brokerage on New Projects</span>
+            <span className="text-slate-500">•</span>
+            <span className="text-slate-400">Zero Brokerage on Direct Builder Launches</span>
           </div>
           <div className="flex items-center gap-4">
             <a 
               href={`tel:${BRAND.phoneRaw}`} 
-              className="hover:text-white transition-colors flex items-center gap-1"
+              className="hover:text-brand-bronze-300 transition-colors flex items-center gap-1.5 text-slate-300"
             >
-              <Phone className="w-3 h-3 text-brand-emerald-400" />
+              <Phone className="w-3 h-3 text-brand-bronze-400" />
               <span>{BRAND.phoneDisplay}</span>
             </a>
-            <span className="text-slate-500">|</span>
-            <span className="text-slate-300">Chennai, Tamil Nadu</span>
+            <span className="text-slate-700">|</span>
+            <span className="text-slate-400">Chennai, Tamil Nadu</span>
           </div>
         </div>
       </div>
 
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-18">
+        <div className="flex justify-between items-center h-20">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-brand-navy-900 flex items-center justify-center text-brand-emerald-500 shadow-sm group-hover:scale-105 transition-transform">
-              <Building2 className="w-6 h-6 text-brand-emerald-500" />
+            <div className="w-10 h-10 rounded-xl bg-[#1A1D26] border border-[#2E3342] flex items-center justify-center text-brand-bronze-400 shadow-sm group-hover:border-brand-bronze-500/50 transition-colors">
+              <Building2 className="w-5 h-5 text-brand-bronze-400" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-brand-navy-950 flex items-center">
-                Property<span className="text-brand-emerald-600 font-extrabold">Gateway</span>
+              <span className="text-xl font-serif font-bold tracking-tight text-white flex items-center">
+                Property<span className="text-brand-bronze-400 font-sans font-extrabold ml-1">Gateway</span>
               </span>
-              <p className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-                Chennai Real Estate Advisory
+              <p className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
+                Chennai Architectural Advisory
               </p>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-1.5">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors ${
                   isActive(link.path)
-                    ? 'text-brand-emerald-700 bg-brand-emerald-50 font-semibold'
-                    : 'text-slate-700 hover:text-brand-navy-900 hover:bg-slate-100'
+                    ? 'text-brand-bronze-400 bg-white/5 border border-brand-bronze-500/30'
+                    : 'text-slate-300 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {link.label}
@@ -86,7 +87,7 @@ export default function Navbar({ onOpenVisitModal }) {
               href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20verified%20properties%20in%20Chennai.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+              className="p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
               title="Chat on WhatsApp"
             >
               <MessageCircle className="w-5 h-5 text-[#25D366]" />
@@ -94,9 +95,10 @@ export default function Navbar({ onOpenVisitModal }) {
 
             <button
               onClick={onOpenVisitModal}
-              className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-brand-emerald-600 hover:bg-brand-emerald-700 active:scale-[0.98] text-white text-sm font-semibold shadow-sm transition-all"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-brand-bronze-600 hover:bg-brand-bronze-700 active:scale-[0.98] text-white text-xs font-bold uppercase tracking-wider shadow-bronze-glow transition-all"
             >
-              Book Site Visit
+              <Car className="w-3.5 h-3.5" />
+              <span>Book Site Visit</span>
             </button>
           </div>
 
@@ -104,13 +106,13 @@ export default function Navbar({ onOpenVisitModal }) {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={onOpenVisitModal}
-              className="px-3 py-1.5 rounded-md bg-brand-emerald-600 text-white text-xs font-semibold"
+              className="px-3 py-1.5 rounded-md bg-brand-bronze-600 text-white text-xs font-semibold"
             >
               Visit
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-lg text-slate-300 hover:bg-white/10 focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -121,38 +123,32 @@ export default function Navbar({ onOpenVisitModal }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg animate-fadeIn">
+        <div className="md:hidden bg-[#0A0C10] border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-3 py-2.5 rounded-lg text-base font-medium ${
+              className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                 isActive(link.path)
-                  ? 'text-brand-emerald-700 bg-brand-emerald-50 font-semibold'
-                  : 'text-slate-800 hover:bg-slate-50'
+                  ? 'text-brand-bronze-400 bg-white/5 font-semibold'
+                  : 'text-slate-300 hover:text-white'
               }`}
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
-            <a
-              href={`tel:${BRAND.phoneRaw}`}
-              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-brand-navy-900 text-white text-sm font-medium"
+          <div className="pt-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenVisitModal();
+              }}
+              className="w-full py-3 rounded-lg bg-brand-bronze-600 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-bronze-glow"
             >
-              <Phone className="w-4 h-4 text-brand-emerald-400" />
-              <span>Call: {BRAND.phoneDisplay}</span>
-            </a>
-            <a
-              href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20properties%20in%20Chennai.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#25D366] text-white text-sm font-semibold"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp Us Directly</span>
-            </a>
+              <Car className="w-4 h-4" />
+              <span>Book Free Cab Site Visit</span>
+            </button>
           </div>
         </div>
       )}

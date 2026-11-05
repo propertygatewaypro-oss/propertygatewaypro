@@ -5,8 +5,8 @@
 @layer base {
   html, body {
     overflow-x: clip;
-    background-color: #F8FAFC;
-    color: #0F172A;
+    background-color: #FAF9F6;
+    color: #1A1D24;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -14,7 +14,7 @@
 
   /* Accessible focus indicators */
   :focus-visible {
-    outline: 2px solid #059669;
+    outline: 2px solid #B37D4E;
     outline-offset: 2px;
   }
 
@@ -36,7 +36,7 @@
 }
 
 .photo-zoom-transition {
-  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .photo-zoom-transition:hover {
@@ -49,29 +49,10 @@
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
   }
   50% {
-    box-shadow: 0 4px 28px rgba(37, 211, 102, 0.65);
+    box-shadow: 0 4px 24px rgba(37, 211, 102, 0.55);
   }
 }
 
 .animate-cta-pulse {
   animation: cta-pulse 3s infinite ease-in-out;
-}
-
-/* Clean Horizontal Scroll Snap for Mobile Galleries */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Reduced Motion Safety */
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
 }

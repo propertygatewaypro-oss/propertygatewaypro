@@ -25,17 +25,17 @@ export default function EmiCalculator() {
   };
 
   return (
-    <section className="py-20 bg-brand-canvas-base">
+    <section className="py-20 bg-[#FAF9F6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
-            Financial Planning
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-bronze-700 bg-brand-bronze-50 px-3 py-1 rounded-full border border-brand-bronze-200">
+            Financial Planning Desk
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy-950 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight">
             Home Loan EMI Calculator
           </h2>
           <p className="text-base text-slate-600 leading-relaxed">
-            Estimate your monthly payments. We partner with SBI, HDFC, ICICI, and Axis Bank to secure the lowest prevailing interest rates.
+            Estimate your monthly payments. We partner with SBI, HDFC, ICICI, and Axis Bank to secure preferential lending rates.
           </p>
         </div>
 
@@ -47,8 +47,8 @@ export default function EmiCalculator() {
             {/* Loan Amount Slider */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
-                <span className="text-slate-700">Loan Amount</span>
-                <span className="text-brand-navy-950 font-bold text-base tabular-nums">
+                <span className="text-slate-700">Loan Principal</span>
+                <span className="text-[#0F1117] font-bold text-base tabular-nums">
                   {formatLakhs(loanAmount)}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export default function EmiCalculator() {
                 step="500000"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-emerald-600"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>₹10 Lakhs</span>
@@ -72,7 +72,7 @@ export default function EmiCalculator() {
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
                 <span className="text-slate-700">Interest Rate (% p.a.)</span>
-                <span className="text-brand-navy-950 font-bold text-base tabular-nums">
+                <span className="text-[#0F1117] font-bold text-base tabular-nums">
                   {interestRate}%
                 </span>
               </div>
@@ -83,7 +83,7 @@ export default function EmiCalculator() {
                 step="0.1"
                 value={interestRate}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-emerald-600"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>7.5% (Prime)</span>
@@ -95,8 +95,8 @@ export default function EmiCalculator() {
             {/* Tenure Slider */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
-                <span className="text-slate-700">Loan Tenure</span>
-                <span className="text-brand-navy-950 font-bold text-base tabular-nums">
+                <span className="text-slate-700">Tenure</span>
+                <span className="text-[#0F1117] font-bold text-base tabular-nums">
                   {tenureYears} Years
                 </span>
               </div>
@@ -107,7 +107,7 @@ export default function EmiCalculator() {
                 step="1"
                 value={tenureYears}
                 onChange={(e) => setTenureYears(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-emerald-600"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>5 Yrs</span>
@@ -118,12 +118,12 @@ export default function EmiCalculator() {
           </div>
 
           {/* EMI Calculation Result Card (5 cols) */}
-          <div className="lg:col-span-5 bg-brand-navy-950 text-white rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border border-brand-navy-800 shadow-md">
+          <div className="lg:col-span-5 bg-[#0F1117] text-white rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border border-slate-800 shadow-xl">
             <div>
               <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
                 Monthly Estimated EMI
               </span>
-              <div className="text-3xl sm:text-4xl font-extrabold text-brand-emerald-400 tabular-nums mt-1">
+              <div className="text-3xl sm:text-4xl font-serif font-bold text-brand-bronze-400 tabular-nums mt-1">
                 ₹{monthlyEmi.toLocaleString('en-IN')}
                 <span className="text-xs font-normal text-slate-300 ml-1">/ month</span>
               </div>
@@ -139,8 +139,8 @@ export default function EmiCalculator() {
                 <span className="font-semibold text-white">{formatLakhs(totalInterest)}</span>
               </div>
               <div className="flex justify-between text-slate-300 font-bold border-t border-slate-800 pt-2 text-sm">
-                <span>Total Payable:</span>
-                <span className="text-brand-emerald-400">{formatLakhs(totalPayment)}</span>
+                <span>Total Outflow:</span>
+                <span className="text-brand-bronze-400">{formatLakhs(totalPayment)}</span>
               </div>
             </div>
 
@@ -148,9 +148,9 @@ export default function EmiCalculator() {
               href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20home%20loan%20assistance%20for%20a%20budget%20of%20${formatLakhs(loanAmount)}.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-brand-emerald-600 hover:bg-brand-emerald-700 active:scale-[0.98] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+              className="w-full py-3 px-4 rounded-xl bg-brand-bronze-600 hover:bg-brand-bronze-700 active:scale-[0.98] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-bronze-glow transition-all"
             >
-              <span>Get Bank Loan Pre-Approval</span>
+              <span>Get Bank Pre-Approval</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>

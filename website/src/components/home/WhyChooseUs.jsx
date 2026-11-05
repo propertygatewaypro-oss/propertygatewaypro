@@ -13,13 +13,13 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
     {
       icon: Tag,
       title: "Zero Brokerage on New Projects",
-      description: "Buy directly at builder prices. We charge ₹0 commission to buyers for all newly launched gated community apartments, villas, and plots.",
+      description: "Buy directly at developer prices. We charge ₹0 commission to buyers for all newly launched gated community apartments, villas, and plots.",
       highlight: "Save 2% Brokerage"
     },
     {
       icon: FileCheck,
       title: "Title & Document Assistance",
-      description: "Our in-house legal team verifies parent deeds, patta, CMDA approvals, and assists with bank loan approvals up to 80% from top lenders.",
+      description: "Our in-house legal advocates verify 30-year parent deeds, patta, CMDA approvals, and assist with bank loan approvals up to 80% from top lenders.",
       highlight: "SBI & HDFC Pre-Approved"
     },
     {
@@ -34,10 +34,10 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
     <section className="py-20 bg-white border-y border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-bronze-700 bg-brand-bronze-50 px-3 py-1 rounded-full border border-brand-bronze-200">
             The Property Gateway Assurance
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy-950 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight">
             Why Discerning Chennai Buyers Trust Us
           </h2>
           <p className="text-base text-slate-600 leading-relaxed">
@@ -51,14 +51,14 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
             return (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-brand-canvas-base border border-slate-200 hover:border-brand-emerald-300 card-lift-transition shadow-subtle flex flex-col justify-between"
+                className="p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200 hover:border-brand-bronze-400 card-lift-transition shadow-subtle flex flex-col justify-between"
               >
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-white text-brand-emerald-600 border border-slate-200 flex items-center justify-center shadow-xs">
-                    <Icon className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-xl bg-white text-brand-bronze-600 border border-slate-200 flex items-center justify-center shadow-xs">
+                    <Icon className="w-6 h-6 text-brand-bronze-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-brand-navy-950 tracking-tight">
+                    <h3 className="text-lg font-bold text-[#0F1117] tracking-tight">
                       {item.title}
                     </h3>
                     <p className="text-sm text-slate-600 leading-relaxed mt-2">
@@ -68,7 +68,7 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-slate-200/60">
-                  <span className="text-xs font-bold text-brand-emerald-700">
+                  <span className="text-xs font-bold text-brand-bronze-700">
                     ✓ {item.highlight}
                   </span>
                 </div>
@@ -78,18 +78,18 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
         </div>
 
         {/* Free Cab Site Visit Callout Banner */}
-        <div className="mt-16 bg-brand-navy-900 rounded-2xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-brand-navy-800">
+        <div className="mt-16 bg-[#0F1117] rounded-2xl p-8 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-slate-800">
           <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-2xl font-bold tracking-tight">
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
               Want to inspect shortlisted projects this weekend?
             </h3>
             <p className="text-sm text-slate-300 max-w-xl">
-              Tell us your preferred Chennai micro-market. We will arrange a dedicated private cab to pick up your family and tour top gated communities.
+              Tell us your preferred Chennai micro-market. We will arrange a dedicated private AC cab to pick up your family and tour top gated communities.
             </p>
           </div>
           <button
             onClick={onOpenVisitModal}
-            className="shrink-0 px-6 py-3.5 rounded-xl bg-brand-emerald-600 hover:bg-brand-emerald-700 active:scale-[0.98] text-white font-bold text-sm shadow-md transition-all flex items-center gap-2"
+            className="shrink-0 px-7 py-4 rounded-xl bg-brand-bronze-600 hover:bg-brand-bronze-700 active:scale-[0.98] text-white font-bold text-xs uppercase tracking-wider shadow-bronze-glow transition-all flex items-center gap-2"
           >
             <Car className="w-4 h-4" />
             <span>Book Free Cab Site Visit</span>

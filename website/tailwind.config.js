@@ -8,30 +8,69 @@ export default {
     extend: {
       colors: {
         brand: {
+          // Obsidian Carbon (Primary Authority & Architectural Foundations)
+          obsidian: {
+            950: '#0A0C10',
+            900: '#0F1117', // Primary Luxury Dark
+            850: '#141720',
+            800: '#1B1E28',
+            700: '#272B38',
+            600: '#383C4B',
+          },
+          // Alias navy to obsidian for seamless drop-in
           navy: {
-            950: '#060D17',
-            900: '#0A192F',
-            800: '#112240',
-            700: '#1D3557',
-            600: '#233F68',
+            950: '#0A0C10',
+            900: '#0F1117',
+            850: '#141720',
+            800: '#1B1E28',
+            700: '#272B38',
+            600: '#383C4B',
           },
+          // Warm Brushed Bronze (Primary Luxury Accent, Price Tags, CTAs)
+          bronze: {
+            800: '#754B27',
+            700: '#8E5D34',
+            600: '#B37D4E', // Primary Bronze Action Token
+            500: '#C58F5E',
+            400: '#D8A67B',
+            300: '#E4BF9C',
+            200: '#ECD6C3',
+            100: '#F6ECE1',
+            50:  '#FAF4EE',
+          },
+          // Alias emerald to bronze for smooth color transformation
           emerald: {
-            700: '#047857',
-            600: '#059669',
-            500: '#10B981',
-            100: '#D1FAE5',
-            50:  '#ECFDF5',
+            800: '#754B27',
+            700: '#8E5D34',
+            600: '#B37D4E',
+            500: '#C58F5E',
+            400: '#D8A67B',
+            100: '#F6ECE1',
+            50:  '#FAF4EE',
           },
+          // Champagne Gold (Villas & Exclusive Badges)
           gold: {
-            700: '#99733E',
-            600: '#B88E4C',
-            500: '#C5A880',
-            100: '#FBF5EB',
+            700: '#8E5D34',
+            600: '#B37D4E',
+            500: '#C58F5E',
+            100: '#F6ECE1',
           },
+          // Travertine Alabaster Canvas (Warm Gallery Surfaces)
           canvas: {
-            base: '#F8FAFC',
+            base: '#FAF9F6',
             surface: '#FFFFFF',
-            subtle: '#F1F5F9',
+            subtle: '#F3F1EC',
+            border: '#E6E3DB',
+          },
+          // Architectural Stone Grays
+          stone: {
+            900: '#1C1A17',
+            700: '#4A463F',
+            600: '#6E6962',
+            500: '#8C867E',
+            400: '#ABA59D',
+            200: '#DDD9D2',
+            100: '#EFECE6',
           },
           whatsapp: {
             DEFAULT: '#25D366',
@@ -41,12 +80,14 @@ export default {
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['Cinzel', 'Playfair Display', 'Georgia', 'serif'],
       },
       boxShadow: {
-        'subtle': '0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05)',
-        'card-hover': '0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
-        'modal': '0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.05)',
+        'subtle': '0 1px 3px 0 rgba(15, 17, 23, 0.04), 0 1px 2px -1px rgba(15, 17, 23, 0.04)',
+        'card-hover': '0 12px 30px -6px rgba(15, 17, 23, 0.09), 0 8px 12px -4px rgba(15, 17, 23, 0.04)',
+        'modal': '0 25px 50px -12px rgba(15, 17, 23, 0.25)',
         'floating-cta': '0 4px 16px rgba(37, 211, 102, 0.35)',
+        'bronze-glow': '0 4px 20px -2px rgba(179, 125, 78, 0.35)',
       }
     },
   },
