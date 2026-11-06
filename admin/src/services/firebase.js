@@ -22,13 +22,17 @@ let auth = null;
 let db = null;
 let storage = null;
 
-try {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  storage = getStorage(app);
-} catch (error) {
-  console.warn("Firebase initialization notice:", error.message);
+// Only initialize Firebase when valid production credentials are provided
+// Prevents 400 Bad Request calls to Google Identity Toolkit with mock keys
+if (isFirebaseConfigured) {
+  try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    storage = getStorage(app);
+  } catch (error) {
+    console.warn("Firebase initialization notice:", error.message);
+  }
 }
 
 export { app, auth, db, storage };

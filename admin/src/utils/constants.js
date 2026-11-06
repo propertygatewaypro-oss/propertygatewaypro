@@ -1,9 +1,9 @@
 export const BRAND = {
   name: "Property Gateway Admin",
   siteName: "Property Gateway",
-  phone: "+91 7598954635",
-  phoneDisplay: "+91 75989 54635",
-  phoneRaw: "917598954635",
+  phone: "+91 9345852889",
+  phoneDisplay: "+91 93458 52889",
+  phoneRaw: "919345852889",
   email: "propertygatewy@gmail.com",
   address: "37/48, 1st Floor, Vellalar Street, TNGO Colony, Adambakkam, Chennai, Tamil Nadu - 600 088",
   reraId: "TN/Agent/020/2019",

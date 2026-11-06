@@ -25,13 +25,13 @@ export default function EmiCalculator() {
   };
 
   return (
-    <section className="py-20 bg-[#FAF9F6]">
+    <section className="py-20 bg-[#FAF9F6] border-y border-[#E7E2D8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-bronze-700 bg-brand-bronze-50 px-3 py-1 rounded-full border border-brand-bronze-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B] bg-[#C98A4B]/10 px-3.5 py-1 rounded-full border border-[#C98A4B]/30 inline-block">
             Financial Planning Desk
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0F1117] tracking-tight">
             Home Loan EMI Calculator
           </h2>
           <p className="text-base text-slate-600 leading-relaxed">
@@ -39,7 +39,7 @@ export default function EmiCalculator() {
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xl max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E7E2D8] shadow-xl max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Sliders Control Rail (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
@@ -59,7 +59,7 @@ export default function EmiCalculator() {
                 step="500000"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>₹10 Lakhs</span>
@@ -83,7 +83,7 @@ export default function EmiCalculator() {
                 step="0.1"
                 value={interestRate}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>7.5% (Prime)</span>
@@ -107,7 +107,7 @@ export default function EmiCalculator() {
                 step="1"
                 value={tenureYears}
                 onChange={(e) => setTenureYears(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#B37D4E]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>5 Yrs</span>
@@ -145,12 +145,13 @@ export default function EmiCalculator() {
             </div>
 
             <a
-              href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20home%20loan%20assistance%20for%20a%20budget%20of%20${formatLakhs(loanAmount)}.`}
+              href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(`Hello Property Gateway,\n\nI used your EMI calculator and would like assistance with bank home loan pre-approval:\n• Required Loan Amount: ${formatLakhs(loanAmount)}\n• Estimated Monthly EMI: ₹${monthlyEmi.toLocaleString('en-IN')}\n• Preferred Tenor: ${tenureYears} Years\n\nPlease connect me with your banking desk for pre-approval from partner banks (SBI, HDFC, ICICI). Thank you!`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 px-4 rounded-xl bg-brand-bronze-600 hover:bg-brand-bronze-700 active:scale-[0.98] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-bronze-glow transition-all"
             >
-              <span>Get Bank Pre-Approval</span>
+              <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
+              <span>Get Bank Pre-Approval on WhatsApp</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>

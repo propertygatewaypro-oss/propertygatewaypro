@@ -1,9 +1,9 @@
 export const BRAND = {
   name: "Property Gateway",
   tagline: "Chennai's Trusted Real Estate Gateway",
-  phone: "+91 7598954635",
-  phoneDisplay: "+91 75989 54635",
-  phoneRaw: "917598954635",
+  phone: "+91 9345852889",
+  phoneDisplay: "+91 93458 52889",
+  phoneRaw: "919345852889",
   email: "propertygatewy@gmail.com",
   address: "37/48, 1st Floor, Vellalar Street, TNGO Colony, Adambakkam, Chennai, Tamil Nadu - 600 088",
   reraId: "TN/Agent/020/2019",
@@ -69,24 +69,38 @@ export function formatIndianCurrency(amount) {
 }
 
 export function generateWhatsAppLink(property) {
-  const text = `Hi Property Gateway! 🏡
-I am interested in: *${property.title}*
-📍 Location: ${property.location}
-💰 Price: ${property.priceDisplay}
-🔗 Ref: https://propertygateway.in/property/${property.slug}
+  if (!property) {
+    const defaultText = `Hello Property Gateway,
 
-Please share the detailed floor plan, cost sheet, and available site visit slots.`;
+I am looking for verified residential properties in Chennai. Please share available options and brochures. Thank you!`;
+    return `https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(defaultText)}`;
+  }
+
+  const title = property.title || 'Verified Property';
+  const location = property.location ? `\n• Location: ${property.location}` : '';
+  const price = property.priceDisplay ? `\n• Price: ${property.priceDisplay}` : '';
+  const slug = property.slug ? `\n• Ref: https://propertygateway.in/property/${property.slug}` : '';
+
+  const text = `Hello Property Gateway,
+
+I am interested in: *${title}*${location}${price}${slug}
+
+Please share the detailed floor plans, cost sheet, and available site visit slots. Thank you!`;
 
   return `https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(text)}`;
 }
 
 export function generateSiteVisitWhatsAppLink(propertyTitle, date) {
-  const text = `Hi Property Gateway! 🚗
-I would like to schedule a *Free Site Visit with Cab Pickup* for:
-🏡 Property: *${propertyTitle || 'Chennai Properties'}*
-📅 Preferred Date: ${date || 'This Weekend'}
+  const title = propertyTitle || 'Verified Chennai Properties';
+  const preferredDate = date || 'Upcoming Weekend';
 
-Please confirm the pickup arrangement.`;
+  const text = `Hello Property Gateway,
+
+I would like to schedule a complimentary site visit with cab pickup for:
+• Property: *${title}*
+• Preferred Date: ${preferredDate}
+
+Please let me know the available time slots and confirm the pickup arrangements. Thank you!`;
 
   return `https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(text)}`;
 }

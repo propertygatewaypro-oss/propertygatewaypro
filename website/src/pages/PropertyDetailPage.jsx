@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   MapPin, BedDouble, Maximize2, Compass, Calendar, Building, 
-  ShieldCheck, Phone, MessageCircle, Check, ArrowLeft, Car, 
+  ShieldCheck, Phone, Check, ArrowLeft, Car, 
   Share2, ChevronRight 
 } from 'lucide-react';
 import { fetchPropertyBySlug, submitLeadInquiry } from '../services/propertyService';
@@ -310,7 +310,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
                     rel="noopener noreferrer"
                     className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]"
                   >
-                    <MessageCircle className="w-5 h-5 fill-white" />
+                    <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
                     <span>Inquire via WhatsApp</span>
                   </a>
 

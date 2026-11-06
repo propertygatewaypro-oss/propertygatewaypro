@@ -14,7 +14,7 @@
 
   /* Accessible focus indicators */
   :focus-visible {
-    outline: 2px solid #B37D4E;
+    outline: 2px solid #C98A4B;
     outline-offset: 2px;
   }
 
@@ -22,6 +22,17 @@
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Hallmark & Emil Kowalski Lightweight Motion Physics */
@@ -55,4 +66,150 @@
 
 .animate-cta-pulse {
   animation: cta-pulse 3s infinite ease-in-out;
+}
+
+/* Lightweight Hero & Footer Motion Physics (GPU Accelerated, 0kb JS) */
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes strokeDraw {
+  0% {
+    stroke-dashoffset: 220;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes kenBurnsSubtle {
+  0% {
+    transform: scale(1.045);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+@keyframes badgeShimmer {
+  0%, 100% {
+    border-color: rgba(30, 41, 59, 1);
+    box-shadow: 0 0 0 rgba(201, 138, 75, 0);
+  }
+  50% {
+    border-color: rgba(201, 138, 75, 0.45);
+    box-shadow: 0 0 14px rgba(201, 138, 75, 0.12);
+  }
+}
+
+/* Post Requirement Floating Side Tab & Modal Physics */
+@keyframes tabSlideIn {
+  0% {
+    transform: translateY(-50%) translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modalBackdropFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalCardScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Featured Projects Staggered Cascade Reveal */
+@keyframes cardCascadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card-cascade {
+  animation: cardCascadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-hero-fade-up {
+  animation: heroFadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-stroke-draw {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: strokeDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+.animate-ken-burns {
+  animation: kenBurnsSubtle 5.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-badge-shimmer {
+  animation: badgeShimmer 4s infinite ease-in-out;
+}
+
+.animate-tab-slide-in {
+  animation: tabSlideIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+}
+
+.animate-modal-backdrop,
+.animate-fadeIn {
+  animation: modalBackdropFade 0.25s ease-out both;
+}
+
+.animate-modal-card,
+.animate-scaleUp {
+  animation: modalCardScaleUp 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-fade-up,
+  .animate-stroke-draw,
+  .animate-ken-burns,
+  .animate-badge-shimmer,
+  .animate-tab-slide-in,
+  .animate-modal-backdrop,
+  .animate-modal-card,
+  .animate-card-cascade,
+  .animate-fadeIn,
+  .animate-scaleUp,
+  .animate-cta-pulse {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
 }

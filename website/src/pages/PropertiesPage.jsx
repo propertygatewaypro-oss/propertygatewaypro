@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filter, SlidersHorizontal, X, Search, RotateCcw, MessageCircle, MapPin } from 'lucide-react';
+import { Filter, SlidersHorizontal, X, Search, RotateCcw, MapPin } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
 import { fetchProperties } from '../services/propertyService';
 import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
@@ -21,8 +21,10 @@ export default function PropertiesPage() {
   // Sync state if query params change
   useEffect(() => {
     if (searchParams.get('location')) setLocation(searchParams.get('location'));
-    if (searchParams.get('category')) setCategory(searchParams.get('category'));
+    const cat = searchParams.get('category') || searchParams.get('type');
+    if (cat) setCategory(cat);
     if (searchParams.get('budget')) setBudgetLabel(searchParams.get('budget'));
+    if (searchParams.get('status')) setStatus(searchParams.get('status'));
   }, [searchParams]);
 
   useEffect(() => {
@@ -187,12 +189,24 @@ export default function PropertiesPage() {
                 Clear All Filters
               </button>
               <a
-                href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20a%20property%20matching:%20${location}%20-%20${category}%20-%20${budgetLabel}.%20Do%20you%20have%20any%20options?`}
+                href={(() => {
+                  const criteria = [];
+                  if (location && location !== 'All Locations') criteria.push(`Location: ${location}`);
+                  if (category && category !== 'All Types') criteria.push(`Type: ${category}`);
+                  if (budgetLabel && budgetLabel !== 'Any Budget') criteria.push(`Budget: ${budgetLabel}`);
+
+                  const criteriaText = criteria.length > 0 
+                    ? ` matching:\n• ${criteria.join('\n• ')}` 
+                    : '';
+
+                  const text = `Hello Property Gateway,\n\nI am looking for verified properties in Chennai${criteriaText}.\n\nPlease share matching project brochures and available options. Thank you!`;
+                  return `https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(text)}`;
+                })()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm"
+                className="px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
               >
-                <MessageCircle className="w-4 h-4 fill-white" />
+                <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
                 <span>Ask on WhatsApp</span>
               </a>
             </div>

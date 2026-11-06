@@ -18,7 +18,7 @@ To establish unshakeable authority, we reject saturated fintech green in favor o
 | **Obsidian 950** | `#0A0C10` | Deepest ambient negative space, top trust bar, and footer background |
 | **Obsidian 900** | `#0F1117` | Primary luxury background, sticky search bar base, and heavy serif typography |
 | **Obsidian 800** | `#1B1E28` | Elevated dark cards, dropdown menus, and glassmorphic panels |
-| **Warm Bronze 600** | `#B37D4E` | **Primary Luxury Accent:** Call to action buttons, search trigger, price numbers, and focus rings |
+| **Warm Bronze 600** | `#C98A4B` | **Primary Luxury Accent:** Call to action buttons, search trigger, price numbers, and focus rings |
 | **Warm Bronze 500** | `#C58F5E` | Gradient highlight tones, hover active transitions |
 | **Warm Bronze 100** | `#F6ECE1` | Subtle chip backgrounds and luxury badge containers |
 | **Canvas Alabaster** | `#FAF9F6` | Glare-free travertine marble canvas for property cards and page bodies |
@@ -31,4 +31,4 @@ To establish unshakeable authority, we reject saturated fintech green in favor o
 
 * **Background:** High-resolution architectural villa at blue-hour twilight with warm golden illuminated floor-to-ceiling glass and infinity pool reflections.
 * **Overlays:** Seamless obsidian gradient (`from-[#0A0C10] via-[#0F1117]/90 to-transparent`) ensuring 100% WCAG AAA contrast for headlines.
-* **Search Module:** Floating translucent obsidian glass panel (`#141720/95`) with location, category, budget selectors, and a warm bronze action button (`#B37D4E`).
+* **Search Module:** Floating translucent obsidian glass panel (`#141720/95`) with location, category, budget selectors, and a warm bronze action button (`#C98A4B`).

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 // Layout & Global Components
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
-import MobileBottomBar from './components/common/MobileBottomBar';
 import CookieConsent from './components/common/CookieConsent';
 import ScheduleVisitModal from './components/common/ScheduleVisitModal';
 import WhatsAppChatbot from './components/common/WhatsAppChatbot';
@@ -18,7 +17,10 @@ import PropertiesPage from './pages/PropertiesPage';
 import PropertyDetailPage from './pages/PropertyDetailPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
-import LegalPoliciesPage from './pages/LegalPoliciesPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
+import CookiePolicyPage from './pages/CookiePolicyPage';
+import RefundPolicyPage from './pages/RefundPolicyPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -86,10 +88,14 @@ function AppContent() {
           />
           
           {/* Statutory & Legal Policy Routes */}
-          <Route path="/privacy-policy" element={<LegalPoliciesPage />} />
-          <Route path="/terms-and-conditions" element={<LegalPoliciesPage />} />
-          <Route path="/cookie-policy" element={<LegalPoliciesPage />} />
-          <Route path="/refund-policy" element={<LegalPoliciesPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-and-conditions" element={<TermsPage />} />
+          <Route path="/termsofuse" element={<TermsPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+          <Route path="/cookies" element={<CookiePolicyPage />} />
+          <Route path="/refund-policy" element={<RefundPolicyPage />} />
 
           {/* Catch-all redirect to Home */}
           <Route path="*" element={<HomePage onOpenVisitModal={handleOpenVisitModal} />} />
@@ -98,12 +104,6 @@ function AppContent() {
 
       {/* Global Footer */}
       <Footer />
-
-      {/* Pinned Mobile Bottom Bar (< 768px) */}
-      <MobileBottomBar 
-        onOpenVisitModal={() => handleOpenVisitModal(null)} 
-        onOpenRequirementModal={handleOpenReqModal}
-      />
 
       {/* Cookie Consent Banner */}
       <CookieConsent />
@@ -115,8 +115,8 @@ function AppContent() {
         property={selectedPropertyForModal}
       />
 
-      {/* Floating Interactive WhatsApp Chatbot */}
-      <WhatsAppChatbot onOpenVisitModal={() => handleOpenVisitModal(null)} />
+      {/* Floating Direct WhatsApp Action */}
+      <WhatsAppChatbot />
 
       {/* Persistent Floating Requirement Tab (Desktop) */}
       <FloatingRequirementTab onClick={handleOpenReqModal} />

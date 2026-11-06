@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Car, Calendar, Phone, User, CheckCircle2, MessageCircle, ShieldCheck } from 'lucide-react';
+import { X, Car, Calendar, Phone, User, CheckCircle2, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { submitLeadInquiry } from '../../services/propertyService';
 import { BRAND, generateSiteVisitWhatsAppLink } from '../../utils/constants';
@@ -10,7 +10,7 @@ export default function ScheduleVisitModal({ isOpen, onClose, property = null })
     phone: '',
     email: '',
     date: '',
-    consent: true,
+    consent: false,
     website_trap_field: '' // Honeypot
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -76,7 +76,7 @@ export default function ScheduleVisitModal({ isOpen, onClose, property = null })
         <div className="bg-[#0F1117] text-white p-6 relative border-b border-slate-800">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors outline-none focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-[#C98A4B] cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -112,9 +112,9 @@ export default function ScheduleVisitModal({ isOpen, onClose, property = null })
                 href={generateSiteVisitWhatsAppLink(propertyName, formData.date)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]"
               >
-                <MessageCircle className="w-4 h-4 fill-white" />
+                <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
                 <span>Confirm Pickup on WhatsApp</span>
               </a>
               <button

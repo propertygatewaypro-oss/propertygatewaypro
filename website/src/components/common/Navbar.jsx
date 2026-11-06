@@ -1,10 +1,71 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, Phone, MapPin, Building2, Sparkles, CheckCircle2 } from 'lucide-react';
-import { BRAND, CHENNAI_LOCATIONS } from '../../utils/constants';
-import PostRequirementIcon from './PostRequirementIcon';
+import { 
+  ChevronDown, 
+  Menu, 
+  X, 
+  MapPin, 
+  Sparkles, 
+  CheckCircle2, 
+  Phone,
+  Building2,
+  Briefcase,
+  Home,
+  ShieldCheck,
+  Calendar,
+  ArrowRight
+} from 'lucide-react';
+import { BRAND } from '../../utils/constants';
 
-export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
+// 4 Strategic Pillars for Properties Mega-Menu
+const PROPERTIES_MEGA_MENU = [
+  {
+    title: 'New Residential Projects',
+    subtitle: 'Direct Developer Launches',
+    icon: Building2,
+    links: [
+      { label: 'New Launches (0% Brokerage)', path: '/properties?status=New+Launch' },
+      { label: 'Under Construction Projects', path: '/properties?status=Under+Construction' },
+      { label: 'Ready to Move In Homes', path: '/properties?status=Ready+to+Move' },
+      { label: 'Upcoming Pre-Launches', path: '/properties?status=Upcoming' },
+    ]
+  },
+  {
+    title: 'Commercial Projects',
+    subtitle: 'High ROI & Corporate Assets',
+    icon: Briefcase,
+    links: [
+      { label: 'Grade-A Office Spaces', path: '/properties?type=Commercial' },
+      { label: 'IT Tech Parks (OMR / Guindy)', path: '/properties?type=Commercial&zone=IT' },
+      { label: 'Retail Showrooms & Plazas', path: '/properties?type=Commercial&category=retail' },
+      { label: 'Pre-Leased High-Yield Assets', path: '/properties?type=Commercial&yield=high' },
+    ]
+  },
+  {
+    title: 'Luxury Villas & Resale',
+    subtitle: 'Exclusive Architectural Living',
+    icon: Home,
+    links: [
+      { label: 'Beachfront Villas (ECR)', path: '/properties?location=East+Coast+Road+(ECR)&type=Luxury+Villa' },
+      { label: 'Gated Community Villas', path: '/properties?type=Luxury+Villa' },
+      { label: 'Ultra-Luxury Penthouses', path: '/properties?type=Apartment&tier=luxury' },
+      { label: 'Verified Resale Homes', path: '/properties?status=Resale' },
+    ]
+  },
+  {
+    title: 'Plots & Land Parcels',
+    subtitle: 'CMDA / DTCP Verified Land',
+    icon: MapPin,
+    links: [
+      { label: 'CMDA & DTCP Approved Plots', path: '/properties?type=Plot+/+Land' },
+      { label: 'Villa Plots in OMR Corridor', path: '/properties?location=Old+Mahabalipuram+Road+(OMR)&type=Plot+/+Land' },
+      { label: 'Commercial Land Parcels', path: '/properties?type=Plot+/+Land&purpose=commercial' },
+      { label: 'Farm Land & Weekend Plots', path: '/properties?type=Plot+/+Land&purpose=farm' },
+    ]
+  }
+];
+
+export default function Navbar({ onOpenVisitModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null); // 'properties' | 'locations' | 'services' | null
   const [mobileExpandedSection, setMobileExpandedSection] = useState(null);
@@ -17,6 +78,18 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
     setMobileMenuOpen(false);
   }, [location.pathname, location.search]);
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const handleMouseEnter = (menu) => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     setActiveDropdown(menu);
@@ -25,7 +98,7 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
   const handleMouseLeave = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150);
+    }, 180);
   };
 
   const isHomeActive = location.pathname === '/' && !location.search;
@@ -33,452 +106,294 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
   const isAboutActive = location.pathname.startsWith('/about');
   const isContactActive = location.pathname.startsWith('/contact');
 
-  // Dropdown menu options
-  const propertiesMenu = [
-    { label: 'All Verified Properties', path: '/properties', badge: 'Active' },
-    { label: 'Luxury Architectural Villas', path: '/properties?type=Villa', badge: 'Exclusive' },
-    { label: 'Premium Penthouses & Apartments', path: '/properties?type=Apartment' },
-    { label: 'Direct Builder Launches (0% Brokerage)', path: '/properties?builder=direct', badge: 'Hot' },
-    { label: 'Commercial & High-Yield Assets', path: '/properties?type=Commercial' },
-  ];
-
-  const locationsMenu = [
-    { label: 'OMR — IT Expressway', path: '/properties?location=OMR', tag: 'Fast Appreciation' },
-    { label: 'ECR — Beachfront Luxury', path: '/properties?location=ECR', tag: 'High Net Worth' },
-    { label: 'Anna Nagar — Prime West', path: '/properties?location=Anna%20Nagar', tag: 'Elite Living' },
-    { label: 'Adyar & Besant Nagar', path: '/properties?location=Adyar', tag: 'Heritage Prime' },
-    { label: 'Guindy & Adambakkam', path: '/properties?location=Adambakkam', tag: 'Central Chennai' },
-    { label: 'Velachery & Medavakkam', path: '/properties?location=Velachery', tag: 'High Rental Yield' },
-  ];
-
-  const servicesMenu = [
-    { 
-      label: 'Free Cab Site Visit', 
-      desc: 'Chauffeured site tours for short-listed villas & plots', 
-      action: () => onOpenVisitModal && onOpenVisitModal(),
-      highlight: true
-    },
-    { 
-      label: 'TNRERA Legal Verification', 
-      desc: '100% verified titles & government approval audit', 
-      path: '/about#compliance' 
-    },
-    { 
-      label: 'NRI Portfolio Advisory', 
-      desc: 'Complete remote management & investment advisory', 
-      path: '/contact?service=NRI+Advisory' 
-    },
-    { 
-      label: 'Pre-Approved Home Loans', 
-      desc: 'Preferred interest rates with leading nationalized banks', 
-      path: '/contact?service=Home+Loan' 
-    },
-  ];
-
-  const isHomePage = location.pathname === '/';
-
   return (
-    <header className={`sticky top-3 sm:top-4 z-50 w-full px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto transition-all duration-300 ${
-      isHomePage ? '-mb-[76px] sm:-mb-[84px] relative' : ''
-    }`}>
-      {/* Floating Pill Container (Exact Ivory / Off-White Aesthetic) */}
-      <nav 
-        className="relative bg-[#FAF9F5] border border-[#E7E2D8] rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.08)] px-4 sm:px-7 py-2.5 sm:py-3 transition-all backdrop-blur-md"
-        aria-label="Main Navigation"
-      >
-        <div className="flex items-center justify-between">
-          
-          {/* 1. BRAND LOGO & SUBTITLE */}
-          <Link to="/" className="flex items-center group shrink-0">
-            {/* Dark Rounded Badge with Gold Architectural Emblem */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#0F1117] border border-slate-800 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform shrink-0">
-              <img 
-                src="/logo.png" 
-                alt="Property Gateway Emblem" 
-                className="w-full h-full object-contain rounded-lg" 
-              />
-            </div>
+    <header className="sticky top-0 z-50 w-full bg-[#0F1117] border-b border-[#C98A4B]/30 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <nav 
+          className="flex items-center justify-between h-[74px] sm:h-[80px]"
+          aria-label="Main Navigation"
+        >
+          {/* 1. LEFT WING: BRAND LOGO & WORDMARK */}
+          <div className="flex-1 flex items-center justify-start min-w-0">
+            <Link to="/" className="flex items-center group shrink-0">
+              {/* Dark Rounded Badge with Gold Architectural Emblem */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#17191F] border border-[#C98A4B]/30 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                <img 
+                  src="/logo.png" 
+                  alt="Property Gateway Emblem" 
+                  className="w-full h-full object-contain rounded-lg" 
+                />
+              </div>
 
-            {/* Subtle Vertical Divider */}
-            <div className="h-7 w-[1.5px] bg-[#D6D0C4] mx-3 sm:mx-3.5 shrink-0" />
+              {/* Subtle Vertical Divider */}
+              <div className="h-6 sm:h-7 w-[1.5px] bg-[#E7E2D8]/20 mx-3 sm:mx-3.5 shrink-0" />
 
-            {/* Brand Typography */}
-            <div className="flex flex-col justify-center">
-              <span className="font-serif font-bold text-[17px] sm:text-[19px] text-[#11141D] tracking-tight leading-none group-hover:text-[#B37D4E] transition-colors">
+              {/* Brand Typography in Ivory */}
+              <span className="font-serif font-bold text-[19px] sm:text-[21px] xl:text-[22px] text-[#F1EEE7] tracking-tight leading-none group-hover:text-[#C98A4B] transition-colors whitespace-nowrap">
                 Property Gateway
               </span>
-              <span className="font-sans text-[8px] sm:text-[8.5px] uppercase font-semibold tracking-[0.24em] text-[#636A79] mt-1 leading-none">
-                Chennai Architectural Advisory
-              </span>
-            </div>
-          </Link>
+            </Link>
+          </div>
 
-          {/* 2. DESKTOP NAVIGATION LINKS */}
-          <div className="hidden lg:flex items-center gap-7 xl:gap-8">
+          {/* 2. CENTER: DESKTOP NAVIGATION LINKS (Mathematically Centered) */}
+          <div className="hidden lg:flex items-center justify-center gap-5 xl:gap-7 2xl:gap-8 shrink-0">
             
-            {/* Home (Active with Bottom Underline Indicator) */}
+            {/* Home */}
             <Link
               to="/"
-              className={`relative py-1 text-[14px] font-medium transition-colors ${
+              className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isHomeActive 
-                  ? 'text-[#B37D4E] font-semibold' 
-                  : 'text-[#1F2430] hover:text-[#B37D4E]'
+                  ? 'text-[#C98A4B] font-semibold' 
+                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
               }`}
             >
-              <span>Home</span>
-              {isHomeActive && (
-                <span className="absolute -bottom-1.5 left-0 right-0 h-[2.5px] bg-[#B37D4E] rounded-full" />
-              )}
+              Home
             </Link>
 
-            {/* Properties Dropdown */}
+            {/* Properties Mega-Menu Dropdown */}
             <div 
-              className="relative"
+              className="static"
               onMouseEnter={() => handleMouseEnter('properties')}
               onMouseLeave={handleMouseLeave}
             >
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === 'properties' ? null : 'properties')}
-                className={`flex items-center gap-1 py-1 text-[14px] font-medium transition-colors cursor-pointer ${
+                className={`flex items-center gap-1.5 py-1 text-[14px] xl:text-[15px] font-medium transition-colors cursor-pointer group whitespace-nowrap ${
                   isPropertiesActive 
-                    ? 'text-[#B37D4E] font-semibold' 
-                    : 'text-[#1F2430] hover:text-[#B37D4E]'
+                    ? 'text-[#C98A4B] font-semibold' 
+                    : 'text-[#F1EEE7] hover:text-[#C98A4B]'
                 }`}
+                aria-expanded={activeDropdown === 'properties'}
               >
                 <span>Properties</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
-                  activeDropdown === 'properties' ? 'rotate-180 text-[#B37D4E]' : ''
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 group-hover:text-[#C98A4B] transition-transform duration-200 ${
+                  activeDropdown === 'properties' ? 'rotate-180 text-[#C98A4B]' : ''
                 }`} />
               </button>
 
-              {/* Properties Dropdown Menu Panel */}
+              {/* Mega-Menu Solid Dark Panel (4 Categorized Columns) */}
               {activeDropdown === 'properties' && (
-                <div className="absolute top-full left-0 mt-3 w-64 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E5E0D6] shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  {propertiesMenu.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-950 hover:bg-[#FAF8F3] transition-colors"
-                    >
-                      <span>{item.label}</span>
-                      {item.badge && (
-                        <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-[#B37D4E]/10 text-[#B37D4E]">
-                          {item.badge}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+                <div 
+                  className="absolute top-[calc(100%+6px)] left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-[#0F1117] rounded-2xl border border-[#C98A4B]/40 shadow-[0_30px_70px_rgba(0,0,0,0.95)] p-7 lg:p-9 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  onMouseEnter={() => handleMouseEnter('properties')}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {/* 4 Columns Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-9 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.09]">
+                    {PROPERTIES_MEGA_MENU.map((col, idx) => {
+                      const Icon = col.icon;
+                      return (
+                        <div key={col.title} className={idx > 0 ? "lg:pl-7 xl:pl-8 pt-4 lg:pt-0" : ""}>
+                          {/* Pillar Header */}
+                          <div className="flex items-center gap-3 mb-4 pb-2.5 border-b border-white/[0.09]">
+                            <div className="w-9 h-9 rounded-xl bg-[#C98A4B]/15 border border-[#C98A4B]/30 flex items-center justify-center shrink-0">
+                              <Icon className="w-5 h-5 text-[#C98A4B]" />
+                            </div>
+                            <div>
+                              <h4 className="text-[15px] xl:text-[16px] font-bold text-white tracking-tight leading-snug">
+                                {col.title}
+                              </h4>
+                              <span className="text-[11.5px] xl:text-[12px] text-[#C98A4B] font-medium block mt-0.5">
+                                {col.subtitle}
+                              </span>
+                            </div>
+                          </div>
 
-            {/* Locations Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => handleMouseEnter('locations')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveDropdown(activeDropdown === 'locations' ? null : 'locations')}
-                className="flex items-center gap-1 py-1 text-[14px] font-medium text-[#1F2430] hover:text-[#B37D4E] transition-colors cursor-pointer"
-              >
-                <span>Locations</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
-                  activeDropdown === 'locations' ? 'rotate-180 text-[#B37D4E]' : ''
-                }`} />
-              </button>
-
-              {/* Locations Dropdown Menu Panel */}
-              {activeDropdown === 'locations' && (
-                <div className="absolute top-full left-0 mt-3 w-72 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E5E0D6] shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Prime Chennai Zones
+                          {/* Sub-links */}
+                          <ul className="space-y-2.5">
+                            {col.links.map((link) => (
+                              <li key={link.label}>
+                                <Link
+                                  to={link.path}
+                                  onClick={() => setActiveDropdown(null)}
+                                  className="group flex items-center justify-between text-[13.5px] xl:text-[14.5px] text-slate-200/90 hover:text-[#C98A4B] transition-all duration-150 py-1"
+                                >
+                                  <span className="group-hover:translate-x-1.5 transition-transform duration-150">
+                                    {link.label}
+                                  </span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
                   </div>
-                  {locationsMenu.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-950 hover:bg-[#FAF8F3] transition-colors"
-                    >
-                      <span className="flex items-center gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-[#B37D4E]" />
-                        <span>{item.label}</span>
-                      </span>
-                      <span className="text-[9.5px] text-slate-500 font-mono">
-                        {item.tag}
-                      </span>
-                    </Link>
-                  ))}
                 </div>
               )}
             </div>
+
+            {/* Locations (Direct Link) */}
+            <Link
+              to="/properties"
+              className="py-1 text-[14px] xl:text-[15px] font-medium text-[#F1EEE7] hover:text-[#C98A4B] transition-colors whitespace-nowrap"
+            >
+              Locations
+            </Link>
 
             {/* About Us */}
             <Link
               to="/about"
-              className={`py-1 text-[14px] font-medium transition-colors ${
+              className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isAboutActive 
-                  ? 'text-[#B37D4E] font-semibold' 
-                  : 'text-[#1F2430] hover:text-[#B37D4E]'
+                  ? 'text-[#C98A4B] font-semibold' 
+                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
               }`}
             >
               About Us
             </Link>
 
-            {/* Services Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => handleMouseEnter('services')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveDropdown(activeDropdown === 'services' ? null : 'services')}
-                className="flex items-center gap-1 py-1 text-[14px] font-medium text-[#1F2430] hover:text-[#B37D4E] transition-colors cursor-pointer"
-              >
-                <span>Services</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${
-                  activeDropdown === 'services' ? 'rotate-180 text-[#B37D4E]' : ''
-                }`} />
-              </button>
-
-              {/* Services Dropdown Menu Panel */}
-              {activeDropdown === 'services' && (
-                <div className="absolute top-full -left-12 mt-3 w-80 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E5E0D6] shadow-[0_12px_40px_rgba(0,0,0,0.12)] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  {servicesMenu.map((item) => (
-                    item.action ? (
-                      <button
-                        key={item.label}
-                        onClick={() => {
-                          setActiveDropdown(null);
-                          item.action();
-                        }}
-                        className="w-full text-left p-2.5 rounded-xl text-xs hover:bg-[#FAF8F3] transition-colors flex items-start gap-2.5 group cursor-pointer"
-                      >
-                        <Sparkles className="w-4 h-4 text-[#B37D4E] mt-0.5 shrink-0" />
-                        <div>
-                          <p className="font-semibold text-slate-900 group-hover:text-[#B37D4E] transition-colors">
-                            {item.label}
-                          </p>
-                          <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </button>
-                    ) : (
-                      <Link
-                        key={item.label}
-                        to={item.path}
-                        className="p-2.5 rounded-xl text-xs hover:bg-[#FAF8F3] transition-colors flex items-start gap-2.5 group"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                        <div>
-                          <p className="font-semibold text-slate-900 group-hover:text-[#B37D4E] transition-colors">
-                            {item.label}
-                          </p>
-                          <p className="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    )
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Career */}
+            {/* Services (Direct Link) */}
             <Link
-              to="/contact?subject=Career+Inquiry"
-              className="py-1 text-[14px] font-medium text-[#1F2430] hover:text-[#B37D4E] transition-colors"
+              to="/about#services"
+              className="py-1 text-[14px] xl:text-[15px] font-medium text-[#F1EEE7] hover:text-[#C98A4B] transition-colors whitespace-nowrap"
             >
-              Career
+              Services
             </Link>
 
             {/* Contact */}
             <Link
               to="/contact"
-              className={`py-1 text-[14px] font-medium transition-colors ${
+              className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isContactActive 
-                  ? 'text-[#B37D4E] font-semibold' 
-                  : 'text-[#1F2430] hover:text-[#B37D4E]'
+                  ? 'text-[#C98A4B] font-semibold' 
+                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
               }`}
             >
               Contact
             </Link>
 
-            {/* Post Requirement CTA Button */}
-            <button
-              onClick={onOpenRequirementModal || onOpenVisitModal}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F1117] hover:bg-[#1C202C] text-[#FAF9F6] border border-[#B37D4E]/40 hover:border-[#B37D4E] text-xs font-semibold uppercase tracking-wider transition-all shadow-xs cursor-pointer group"
-              title="Post your custom property requirement"
-            >
-              <PostRequirementIcon className="w-3.5 h-3.5 text-[#B37D4E] group-hover:scale-110 transition-transform" color="#B37D4E" />
-              <span className="group-hover:text-[#B37D4E] transition-colors">Post Requirement</span>
-            </button>
-
           </div>
 
-          {/* 3. MOBILE HAMBURGER BUTTON */}
-          <div className="flex lg:hidden items-center gap-2">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full text-slate-700 hover:bg-slate-200/60 focus:outline-none transition-colors"
-              aria-label="Toggle Navigation"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
-            </button>
-          </div>
-
-        </div>
-
-        {/* 4. MOBILE DRAWER MENU */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 pt-3 border-t border-[#E7E2D8] space-y-2 pb-2">
-            <Link
-              to="/"
-              className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-                isHomeActive ? 'text-[#B37D4E] bg-amber-50/80 font-semibold' : 'text-slate-800'
-              }`}
-            >
-              Home
-            </Link>
-
-            {/* Mobile Properties Accordion */}
-            <div>
-              <button
-                type="button"
-                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'properties' ? null : 'properties')}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-              >
-                <span>Properties</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'properties' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileExpandedSection === 'properties' && (
-                <div className="pl-4 pr-2 py-1 space-y-1">
-                  {propertiesMenu.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="block px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Locations Accordion */}
-            <div>
-              <button
-                type="button"
-                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'locations' ? null : 'locations')}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-              >
-                <span>Locations</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'locations' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileExpandedSection === 'locations' && (
-                <div className="pl-4 pr-2 py-1 space-y-1">
-                  {locationsMenu.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="block px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/about"
-              className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-            >
-              About Us
-            </Link>
-
-            {/* Mobile Services Accordion */}
-            <div>
-              <button
-                type="button"
-                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'services' ? null : 'services')}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-              >
-                <span>Services</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'services' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileExpandedSection === 'services' && (
-                <div className="pl-4 pr-2 py-1 space-y-1">
-                  {servicesMenu.map((item) => (
-                    item.action ? (
-                      <button
-                        key={item.label}
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          item.action();
-                        }}
-                        className="w-full text-left px-3 py-1.5 text-xs text-[#B37D4E] font-medium"
-                      >
-                        {item.label}
-                      </button>
-                    ) : (
-                      <Link
-                        key={item.label}
-                        to={item.path}
-                        className="block px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900"
-                      >
-                        {item.label}
-                      </Link>
-                    )
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/contact?subject=Career+Inquiry"
-              className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-            >
-              Career
-            </Link>
-
-            <Link
-              to="/contact"
-              className="block px-3 py-2 rounded-xl text-sm font-medium text-slate-800"
-            >
-              Contact
-            </Link>
-
-            <div className="pt-2 space-y-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (onOpenRequirementModal) onOpenRequirementModal();
-                  else if (onOpenVisitModal) onOpenVisitModal();
-                }}
-                className="w-full py-2.5 rounded-full bg-[#0F1117] text-[#FAF9F6] border border-[#B37D4E]/50 font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-95 transition-all"
-              >
-                <PostRequirementIcon className="w-3.5 h-3.5 text-[#B37D4E]" color="#B37D4E" />
-                <span>Post Requirement</span>
-              </button>
-
+          {/* 3. RIGHT WING: DIRECT DIAL CTA & MOBILE TOGGLE */}
+          <div className="flex-1 flex items-center justify-end shrink-0">
+            {/* Desktop Direct Dial CTA */}
+            <div className="hidden lg:flex items-center">
               <a
                 href={`tel:${BRAND.phone}`}
-                className="w-full py-2.5 rounded-full bg-[#FAF9F6] text-[#0F1117] border border-[#DCD5C8] font-medium text-xs flex items-center justify-center gap-2"
+                className="flex items-center gap-2 h-[40px] xl:h-[42px] px-3.5 xl:px-4 rounded-xl bg-[#171922] hover:bg-[#C98A4B] text-[#F1EEE7] hover:text-[#0F1117] border border-[#C98A4B]/60 hover:border-[#C98A4B] transition-all duration-200 text-xs xl:text-[13.5px] font-bold tracking-wide group shrink-0 shadow-sm shadow-[#C98A4B]/10 active:scale-[0.98]"
+                aria-label={`Direct Call: ${BRAND.phoneDisplay}`}
+                title={`Direct Call: ${BRAND.phoneDisplay}`}
               >
-                <Phone className="w-3.5 h-3.5 text-[#B37D4E]" />
-                <span>Call Advisor: {BRAND.phoneDisplay}</span>
+                <Phone className="w-3.5 h-3.5 text-[#C98A4B] group-hover:text-[#0F1117] fill-current transition-colors shrink-0" />
+                <span className="font-mono tracking-tight whitespace-nowrap">{BRAND.phoneDisplay}</span>
               </a>
             </div>
+
+            {/* Mobile Controls */}
+            <div className="flex lg:hidden items-center gap-2">
+              <a
+                href={`tel:${BRAND.phone}`}
+                className="p-2 rounded-xl text-[#C98A4B] hover:bg-white/[0.08] transition-colors"
+                aria-label={`Call ${BRAND.phoneDisplay}`}
+                title={`Call ${BRAND.phoneDisplay}`}
+              >
+                <Phone className="w-5 h-5 fill-current" />
+              </a>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl text-[#F1EEE7] hover:bg-white/[0.08] hover:text-[#C98A4B] focus:outline-none transition-colors"
+                aria-label="Toggle Navigation"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5 text-[#F1EEE7]" /> : <Menu className="w-5 h-5 text-[#F1EEE7]" />}
+              </button>
+            </div>
           </div>
-        )}
-      </nav>
+        </nav>
+      </div>
+
+      {/* 4. MOBILE DRAWER MENU (Scrollable, Safe Area Inset, Compact Rhythm) */}
+      {mobileMenuOpen && (
+        <div 
+          className="border-t border-[#C98A4B]/30 bg-[#0F1117] px-4 pt-3 text-[#F1EEE7] space-y-1 sm:space-y-1.5 lg:hidden shadow-2xl max-h-[calc(100dvh-4.25rem)] overflow-y-auto overscroll-contain"
+          style={{ paddingBottom: 'max(1.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <Link
+            to="/"
+            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
+              isHomeActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+            }`}
+          >
+            Home
+          </Link>
+
+          {/* Mobile Properties Accordion (Clean 2x2 Touch Cards) */}
+          <div>
+            <button
+              type="button"
+              onClick={() => setMobileExpandedSection(mobileExpandedSection === 'properties' ? null : 'properties')}
+              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
+            >
+              <span>Properties</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileExpandedSection === 'properties' ? 'rotate-180 text-[#C98A4B]' : ''}`} />
+            </button>
+            {mobileExpandedSection === 'properties' && (
+              <div className="pl-3 pr-2 py-1 space-y-0.5 animate-fadeIn">
+                {PROPERTIES_MEGA_MENU.map((col) => {
+                  const Icon = col.icon;
+                  const primaryPath = col.links[0]?.path || '/properties';
+                  return (
+                    <Link
+                      key={col.title}
+                      to={primaryPath}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm text-[#F1EEE7] hover:text-[#C98A4B] hover:bg-white/[0.04] transition-colors"
+                    >
+                      <Icon className="w-4 h-4 text-[#C98A4B] shrink-0" />
+                      <span className="font-medium text-[13.5px]">{col.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <Link
+            to="/properties"
+            className="block px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
+          >
+            Locations
+          </Link>
+
+          <Link
+            to="/about"
+            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
+              isAboutActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+            }`}
+          >
+            About Us
+          </Link>
+
+          <Link
+            to="/about#services"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
+          >
+            Services
+          </Link>
+
+          <Link
+            to="/contact"
+            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
+              isContactActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+            }`}
+          >
+            Contact
+          </Link>
+
+          {/* Direct Dial Call Card in Mobile Menu */}
+          <div className="pt-2 px-0.5 pb-2">
+            <a
+              href={`tel:${BRAND.phone}`}
+              className="flex items-center justify-center gap-2.5 w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#C98A4B] text-[#0F1117] font-bold text-xs sm:text-sm tracking-wide shadow-md active:scale-[0.98] transition-all"
+            >
+              <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-[#0F1117]" />
+              <span>Direct Dial: {BRAND.phoneDisplay}</span>
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

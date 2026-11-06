@@ -139,12 +139,12 @@ export default function ContactPage() {
 
               <div className="pt-4 border-t border-slate-100">
                 <a
-                  href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hi Property Gateway, I would like to consult on properties in Chennai.")}`}
+                  href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to schedule a consultation with an advisor regarding verified residential communities and projects in Chennai. Thank you!")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm transition-colors shadow-sm"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm transition-all shadow-sm active:scale-[0.98]"
                 >
-                  <MessageSquare className="w-4 h-4" />
+                  <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
                   Instant WhatsApp Consultation
                 </a>
               </div>

@@ -34,7 +34,7 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
     <section className="py-20 bg-white border-y border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-bronze-700 bg-brand-bronze-50 px-3 py-1 rounded-full border border-brand-bronze-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B] bg-[#C98A4B]/10 px-3.5 py-1 rounded-full border border-[#C98A4B]/30 inline-block">
             The Property Gateway Assurance
           </span>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight">
@@ -51,7 +51,7 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
             return (
               <div 
                 key={idx}
-                className="p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200 hover:border-brand-bronze-400 card-lift-transition shadow-subtle flex flex-col justify-between"
+                className="p-6 rounded-2xl bg-[#FAF9F6] border border-[#E7E2D8] hover:border-[#C98A4B] hover:shadow-md card-lift-transition shadow-subtle flex flex-col justify-between transition-all"
               >
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-white text-brand-bronze-600 border border-slate-200 flex items-center justify-center shadow-xs">

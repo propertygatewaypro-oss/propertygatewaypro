@@ -8,7 +8,7 @@
 * **Project Name:** Property Gateway Real Estate Web Platform
 * **Client Company:** Property Gateway (PropertyGateway)
 * **Client Email:** `propertygatewy@gmail.com`
-* **Client Phone / WhatsApp:** `+91 7598954635`
+* **Client Phone / WhatsApp:** `+91 9345852889`
 * **Agency:** Strategy 360 Digital Marketing Agency, Adambakkam, Chennai - 600 088
 * **Quotation Date:** 04 November 2026 (Validity: 15 Days)
 * **Total Project Budget:** **₹18,000 INR** (Rupees Eighteen Thousand Only)

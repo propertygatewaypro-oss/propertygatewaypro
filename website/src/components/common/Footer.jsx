@@ -1,132 +1,266 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Building2, Phone, Mail, MapPin, ShieldCheck, ExternalLink } from 'lucide-react';
-import { BRAND, CHENNAI_LOCATIONS, PROPERTY_TYPES } from '../../utils/constants';
+import { Phone, Mail, MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
+import { BRAND } from '../../utils/constants';
 
 export default function Footer() {
+  const [isInView, setIsInView] = useState(false);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    // Respect user's motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsInView(true);
+      return;
+    }
+
+    // Lightweight native IntersectionObserver (0kb JS library)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect(); // Triggers smoothly once
+        }
+      },
+      { threshold: 0.08 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <footer className="bg-[#0A0C10] text-slate-300 pt-16 pb-24 md:pb-12 border-t border-[#1C1F28]">
+    <footer 
+      ref={footerRef}
+      className="bg-[#0A0C10] text-slate-300 pt-10 sm:pt-12 lg:pt-14 pb-24 sm:pb-14 lg:pb-10 border-t border-[#1C1F28]"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+        
+        {/* Responsive Grid:
+            - Mobile (<640px): 1 column stack with touch-friendly tap targets
+            - Tablet (640px - 1023px): 2x2 symmetrical grid (Row 1: Brand + Properties, Row 2: Locations + Contact)
+            - Desktop (>=1024px): 12-column proportional layout (4 / 3 / 2 / 3) with zero voids
+            - Motion: GPU-composited smooth staggered reveal when scrolled into view
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-10 sm:pb-12 border-b border-slate-800/80 items-start">
           
-          {/* Brand & Authority Column */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-brand-bronze-600 via-amber-400 to-brand-bronze-400 shadow-md shrink-0">
+          {/* 1. Brand & Authority Column */}
+          <div 
+            className={`sm:col-span-1 lg:col-span-4 space-y-3.5 transition-all duration-700 ease-out ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: '0ms' }}
+          >
+            <Link to="/" className="inline-flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-xl p-1.5 bg-[#0F1117] border border-slate-800 shadow-sm shrink-0 group-hover:border-[#C98A4B]/60 transition-colors">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway" 
-                  className="w-full h-full rounded-full object-cover bg-black" 
+                  className="w-full h-full object-contain rounded-lg" 
                 />
               </div>
-              <span className="text-2xl font-serif font-bold tracking-tight text-white">
-                Property<span className="text-brand-bronze-400 font-sans font-extrabold ml-1">Gateway</span>
+              <span className="text-xl sm:text-[22px] font-serif font-bold tracking-tight text-white">
+                Property<span className="text-[#C98A4B] font-sans font-extrabold ml-1">Gateway</span>
               </span>
             </Link>
-            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Chennai's premier real estate consultancy. We partner with tier-1 developers to curate verified residential apartments, coastal villas, and grade-A commercial offices with 0% brokerage on new launches.
+
+            <p className="text-[13px] sm:text-sm text-slate-400 leading-relaxed max-w-sm">
+              Chennai's premier real estate consultancy. Direct developer launches, luxury villas, and verified residential communities with 0% brokerage.
             </p>
-            <div className="pt-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141720] border border-slate-800 text-xs text-brand-bronze-400 font-medium">
-                <ShieldCheck className="w-4 h-4 text-brand-bronze-400" />
+
+            <div className="pt-0.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141720] border border-slate-800 text-[11px] sm:text-xs text-[#C98A4B] font-medium animate-badge-shimmer">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B] shrink-0" />
                 <span>TNRERA Registered: {BRAND.reraId}</span>
               </div>
             </div>
           </div>
 
-          {/* Key Chennai Locations */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
-              Micro-Markets
+          {/* 2. Properties Column */}
+          <div 
+            className={`sm:col-span-1 lg:col-span-3 space-y-3 transition-all duration-700 ease-out ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: '80ms' }}
+          >
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+              Properties
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
-              {CHENNAI_LOCATIONS.slice(1, 6).map((loc) => (
-                <li key={loc}>
-                  <Link to={`/properties?location=${encodeURIComponent(loc)}`} className="hover:text-brand-bronze-400 transition-colors">
-                    {loc}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Property Types */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
-              Property Categories
-            </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
-              {PROPERTY_TYPES.slice(1).map((type) => (
-                <li key={type}>
-                  <Link to={`/properties?category=${encodeURIComponent(type)}`} className="hover:text-brand-bronze-400 transition-colors">
-                    {type} in Chennai
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-400">
               <li>
-                <Link to="/properties" className="text-brand-bronze-400 font-medium hover:underline inline-flex items-center gap-1">
-                  View All Listings →
+                <Link 
+                  to="/properties?status=New+Launch" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  New Launches (0% Brokerage)
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?type=Luxury+Villa" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Luxury Villas &amp; Resale
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?type=Apartment" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Residential Apartments
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?type=Commercial" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Commercial Offices &amp; Tech Parks
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?type=Plot+/+Land" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Approved Plots &amp; Land
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Direct Contact Info */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-200 mb-4">
-              Advisory Office
+          {/* 3. Chennai Locations Column */}
+          <div 
+            className={`sm:col-span-1 lg:col-span-2 space-y-3 transition-all duration-700 ease-out ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: '160ms' }}
+          >
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+              Locations
             </h4>
-            <div className="space-y-3 text-xs text-slate-400">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-brand-bronze-400 shrink-0 mt-0.5" />
-                <span>{BRAND.address}</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-brand-bronze-400 shrink-0" />
-                <a href={`tel:${BRAND.phone}`} className="hover:text-white font-mono text-slate-300">
-                  {BRAND.phoneDisplay}
+            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-400">
+              <li>
+                <Link 
+                  to="/properties?location=East+Coast+Road+(ECR)" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  East Coast Road (ECR)
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?location=Old+Mahabalipuram+Road+(OMR)" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Old Mahabalipuram (OMR)
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?location=Anna+Nagar" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Anna Nagar
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?location=Porur" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Porur
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/properties?location=Guindy" 
+                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                >
+                  Guindy
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* 4. Advisory & Contact Column */}
+          <div 
+            className={`sm:col-span-1 lg:col-span-3 space-y-3 transition-all duration-700 ease-out ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            style={{ transitionDelay: '240ms' }}
+          >
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+              Contact
+            </h4>
+            <div className="space-y-2.5 sm:space-y-3 text-[13.5px] sm:text-sm text-slate-400">
+              <div>
+                <a 
+                  href={`tel:${BRAND.phone}`} 
+                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-white font-mono text-slate-300 transition-colors group"
+                >
+                  <Phone className="w-4 h-4 text-[#C98A4B] shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                  <span>{BRAND.phoneDisplay}</span>
                 </a>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-brand-bronze-400 shrink-0" />
-                <a href={`mailto:${BRAND.email}`} className="hover:text-white text-slate-300 truncate">
-                  {BRAND.email}
+              <div className="min-w-0">
+                <a 
+                  href={`mailto:${BRAND.email}`} 
+                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-white text-slate-300 truncate max-w-full transition-colors group"
+                >
+                  <Mail className="w-4 h-4 text-[#C98A4B] shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="truncate">{BRAND.email}</span>
+                </a>
+              </div>
+              <div>
+                <a 
+                  href={`https://maps.google.com/?q=${encodeURIComponent(BRAND.name + ' ' + BRAND.address)}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2.5 py-0.5 group"
+                  aria-label="View office on Google Maps"
+                >
+                  <MapPin className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="leading-snug text-slate-400 group-hover:text-slate-200 text-xs sm:text-[13px] transition-colors">
+                    {BRAND.address}
+                  </span>
                 </a>
               </div>
             </div>
           </div>
+
         </div>
 
-        {/* Bottom Statutory & Copyright Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div>
-            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. Registered under TNRERA ({BRAND.reraId}).
+        {/* Bottom Copyright & Legal Links Bar:
+            - On mobile: Centered stack, with extra bottom padding (pb-24 on footer) so floating WhatsApp/Call buttons never collide.
+            - On desktop: Left-aligned copyright + right-aligned legal links with clearance padding.
+        */}
+        <div className="pt-6 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <div className="text-center md:text-left leading-relaxed">
+            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. TNRERA: <span className="font-mono text-slate-300">{BRAND.reraId}</span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6">
-            <Link to="/privacy-policy" className="hover:text-brand-bronze-400 transition-colors">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2.5 pr-0 md:pr-20 lg:pr-24 text-xs">
+            <Link to="/privacy-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/terms-and-conditions" className="hover:text-brand-bronze-400 transition-colors">
-              Terms & Conditions
+            <Link to="/terms-and-conditions" className="py-0.5 hover:text-[#C98A4B] transition-colors">
+              Terms &amp; Conditions
             </Link>
-            <Link to="/cookie-policy" className="hover:text-brand-bronze-400 transition-colors">
+            <Link to="/cookie-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
               Cookie Policy
             </Link>
-            <Link to="/refund-policy" className="hover:text-brand-bronze-400 transition-colors">
+            <Link to="/refund-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
               Refund Policy
             </Link>
-            <a 
-              href="http://localhost:3001" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-slate-400 hover:text-white flex items-center gap-1"
-            >
-              <span>Admin Desk</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
           </div>
         </div>
+
       </div>
     </footer>
   );

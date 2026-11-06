@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   Sparkles, 
   Building, 
   Phone, 
-  MessageCircle, 
   ChevronDown, 
   ChevronUp, 
   ShieldCheck, 
@@ -25,6 +24,32 @@ export default function HomePage({ onOpenVisitModal }) {
   const [activeTab, setActiveTab] = useState('All');
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [isFeaturedInView, setIsFeaturedInView] = useState(false);
+  const featuredSectionRef = useRef(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsFeaturedInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFeaturedInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.08 }
+    );
+
+    if (featuredSectionRef.current) {
+      observer.observe(featuredSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     async function loadData() {
@@ -86,74 +111,91 @@ export default function HomePage({ onOpenVisitModal }) {
   return (
     <div className="space-y-0">
       {/* 1. Hero Section with Search Bar */}
-      <HeroSection />
+      <HeroSection onOpenVisitModal={onOpenVisitModal} />
 
-      {/* 2. Featured Projects Grid */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
-              Handpicked Portfolios
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy-950 tracking-tight mt-2">
-              Featured Chennai Properties
-            </h2>
-            <p className="text-sm text-slate-600 mt-1">
-              Carefully vetted residential and commercial assets with verified RERA documentation.
-            </p>
+      {/* 2. Featured Projects Grid - Warm Travertine Luxury Gallery */}
+      <section 
+        ref={featuredSectionRef}
+        className="bg-[#FAF9F6] border-b border-[#E6E1D6] pt-12 sm:pt-16 pb-20 sm:pb-24"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 transition-all duration-700 ease-out ${
+            isFeaturedInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C98A4B] bg-[#C98A4B]/10 px-3 py-1 rounded-full border border-[#C98A4B]/25 font-mono">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B] shrink-0" />
+                <span>TNRERA Verified Projects</span>
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0F1117] tracking-tight mt-2.5">
+                Featured Projects Across Chennai
+              </h2>
+              <p className="text-sm sm:text-[14.5px] text-slate-600 mt-1.5 max-w-xl leading-relaxed">
+                Direct developer pricing, CMDA/DTCP legal approvals, and 0% brokerage on all new launches.
+              </p>
+            </div>
+
+            {/* Category Tabs Filter - Travertine Stone Pill Container */}
+            <div className="flex items-center gap-1.5 p-1 bg-[#EFECE5] rounded-xl border border-[#E0DBD0] self-start md:self-auto overflow-x-auto no-scrollbar shadow-xs">
+              {['All', 'Apartment', 'Villa', 'Commercial'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap cursor-pointer ${
+                    activeTab === tab
+                      ? 'bg-[#C98A4B] text-[#0F1117] font-bold shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 font-medium'
+                  }`}
+                >
+                  {tab === 'All' ? 'All Verified' : `${tab}s`}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Category Tabs Filter */}
-          <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 self-start md:self-auto overflow-x-auto no-scrollbar">
-            {['All', 'Apartment', 'Villa', 'Commercial'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
-                  activeTab === tab
-                    ? 'bg-white text-brand-navy-950 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {tab === 'All' ? 'All Verified' : `${tab}s`}
-              </button>
-            ))}
-          </div>
-        </div>
+          {/* Property Grid with Staggered Cascading Entrance */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((n) => (
+                <div key={n} className="h-96 rounded-2xl bg-[#EFECE5] animate-pulse border border-[#E0DBD0]" />
+              ))}
+            </div>
+          ) : filteredList.length > 0 ? (
+            <div 
+              key={activeTab}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {filteredList.map((property, idx) => (
+                <div
+                  key={property.id}
+                  className={isFeaturedInView ? "animate-card-cascade" : "opacity-0"}
+                  style={{ animationDelay: `${idx * 75}ms` }}
+                >
+                  <PropertyCard property={property} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-white rounded-2xl border border-[#E6E1D6] p-8 space-y-3">
+              <p className="text-slate-600 text-sm">
+                No properties found in this category right now.
+              </p>
+              <Link to="/properties" className="text-[#C98A4B] font-semibold text-sm hover:underline">
+                View all listings →
+              </Link>
+            </div>
+          )}
 
-        {/* Property Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((n) => (
-              <div key={n} className="h-96 rounded-2xl bg-slate-100 animate-pulse border border-slate-200" />
-            ))}
-          </div>
-        ) : filteredList.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredList.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
-            <p className="text-slate-600 text-sm">
-              No properties found in this category right now.
-            </p>
-            <Link to="/properties" className="text-brand-emerald-700 font-semibold text-sm hover:underline">
-              View all listings →
+          {/* View All Listings CTA */}
+          <div className="text-center mt-12 sm:mt-14">
+            <Link
+              to="/properties"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#0F1117] hover:bg-[#C98A4B] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
+            >
+              <span>Explore All Chennai Properties</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        )}
-
-        {/* View All Listings CTA */}
-        <div className="text-center mt-12">
-          <Link
-            to="/properties"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-navy-900 hover:bg-brand-navy-800 text-white font-bold text-sm shadow-md transition-all active:scale-[0.98]"
-          >
-            <span>Explore All Chennai Properties</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
 
@@ -275,8 +317,8 @@ export default function HomePage({ onOpenVisitModal }) {
       {/* 8. High-Converting Instant WhatsApp Hook */}
       <section className="py-16 bg-brand-navy-950 text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="w-12 h-12 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center mx-auto">
-            <MessageCircle className="w-6 h-6 fill-[#25D366]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#25D366]/15 flex items-center justify-center mx-auto border border-[#25D366]/30 shadow-sm">
+            <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-8 h-8 object-contain" />
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             Looking for something specific in Chennai?
@@ -286,12 +328,12 @@ export default function HomePage({ onOpenVisitModal }) {
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
             <a
-              href={`https://wa.me/${BRAND.phoneRaw}?text=Hi%20Property%20Gateway,%20I%20am%20looking%20for%20a%20property%20in%20Chennai.%20My%20budget%20is:`}
+              href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI am looking for verified property options in Chennai matching my requirements. Please share suitable project brochures and details. Thank you!")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm shadow-lg flex items-center justify-center gap-2.5 transition-all active:scale-[0.98]"
             >
-              <MessageCircle className="w-4 h-4 fill-white" />
+              <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
               <span>Send Requirements on WhatsApp</span>
             </a>
             <a

@@ -6,7 +6,7 @@
 ## 1. Fast Reference: Client & Project Constants
 
 * **Brand Name:** Property Gateway
-* **Primary Phone / WhatsApp:** `+91 7598954635` (Display: `+91 75989 54635`)
+* **Primary Phone / WhatsApp:** `+91 9345852889` (Display: `+91 93458 52889`)
 * **Primary Contact Email:** `propertygatewy@gmail.com`
 * **Office Location:** 37/48, 1st Floor, Vellalar Street, TNGO Colony, Adambakkam, Chennai - 600 088
 * **TNRERA Registration:** `TN/Agent/020/2019`

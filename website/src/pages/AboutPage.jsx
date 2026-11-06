@@ -50,7 +50,7 @@ export default function AboutPage({ onOpenVisitModal }) {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
+    <div className="min-h-screen bg-slate-50 pb-20">
       {/* Hero Section */}
       <section className="bg-navy-950 text-white py-16 sm:py-24 border-b border-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,12 +76,12 @@ export default function AboutPage({ onOpenVisitModal }) {
                 Book Free Site Visit
               </button>
               <a
-                href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hi Property Gateway, I would like to speak to a senior property advisor.")}`}
+                href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to speak with a senior property advisor regarding verified homes in Chennai. Thank you!")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-sm border border-white/20 transition-colors"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-400" />
+                <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
                 Chat with Advisor
               </a>
             </div>
@@ -117,8 +117,8 @@ export default function AboutPage({ onOpenVisitModal }) {
         </div>
       </section>
 
-      {/* 4-Step Advisory Process */}
-      <section className="bg-white border-y border-slate-200/80 py-16 sm:py-20">
+      {/* 4-Step Advisory Process & Services */}
+      <section id="services" className="bg-white border-y border-slate-200/80 py-16 sm:py-20 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-12">
             <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest">The Property Gateway Protocol</p>
@@ -189,12 +189,13 @@ export default function AboutPage({ onOpenVisitModal }) {
                 Call {BRAND.phoneDisplay}
               </a>
               <a
-                href={`https://wa.me/${BRAND.phoneRaw}`}
+                href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to connect with your team for real estate guidance and verified properties in Chennai. Thank you!")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center justify-center w-full py-3 px-6 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-sm border border-white/20 transition-colors"
+                className="mt-3 inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-sm border border-white/20 transition-colors"
               >
-                WhatsApp Us Directly
+                <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                <span>WhatsApp Us Directly</span>
               </a>
             </div>
           </div>
