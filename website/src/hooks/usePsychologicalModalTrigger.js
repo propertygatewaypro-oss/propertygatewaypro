@@ -46,8 +46,7 @@ export function usePsychologicalModalTrigger() {
       '/terms',
       '/cookie-policy', 
       '/cookies',
-      '/refund-policy', 
-      '/anti-ai-standards'
+      '/refund-policy'
     ].some(p => location.pathname === p || location.pathname.startsWith(`${p}/`));
     
     if (isExcluded) return;

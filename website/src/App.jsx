@@ -21,7 +21,6 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import CookiePolicyPage from './pages/CookiePolicyPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
-import AntiAiStandardsPage from './pages/AntiAiStandardsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -100,9 +99,6 @@ function AppContent() {
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
           <Route path="/cookies" element={<CookiePolicyPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
-          <Route path="/anti-ai-standards" element={<AntiAiStandardsPage />} />
-          <Route path="/hallmark-standards" element={<AntiAiStandardsPage />} />
-          <Route path="/standards" element={<AntiAiStandardsPage />} />
 
           {/* Catch-all redirect to Home */}
           <Route path="*" element={<HomePage onOpenVisitModal={handleOpenVisitModal} />} />

@@ -267,18 +267,6 @@ export default function Footer() {
             <Link to="/refund-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
               Refund Policy
             </Link>
-            <Link to="/anti-ai-standards" className="py-0.5 text-[#C98A4B] hover:text-[#e09d58] transition-colors font-medium">
-              Anti-AI Standards
-            </Link>
-            <a 
-              href={BRAND.adminUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-0.5 text-slate-500 hover:text-[#C98A4B] transition-colors font-mono text-[11px]"
-              title="Property Gateway Administrator Console"
-            >
-              Admin Console ↗
-            </a>
           </div>
         </div>
 
