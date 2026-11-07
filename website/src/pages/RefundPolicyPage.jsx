@@ -59,7 +59,7 @@ export default function RefundPolicyPage() {
               1. 100% Free Homebuyer Advisory Services
             </h2>
             <p>
-              All property search assistance, requirement evaluations, tele-consultations, and chauffeured AC cab site inspections arranged by Property Gateway for primary residential developer projects in Chennai are <strong>entirely free of charge to prospective homebuyers</strong>.
+              All property search assistance, requirement evaluations, tele-consultations, and guided on-site property inspections arranged by Property Gateway for primary residential developer projects in Chennai are <strong>entirely free of charge to prospective homebuyers</strong>.
             </p>
             <p>
               We do not charge registration fees, viewing charges, or brokerage on primary new launches. Consequently, no refund obligations arise for standard website enquiries or site visits.

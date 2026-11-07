@@ -234,7 +234,7 @@ export default function TermsOfServiceContent() {
           </h2>
         </div>
         <p>
-          Property Gateway arranges complimentary consultations and chauffeured AC cab site inspections to premier project locations across Chennai. Site visits are arranged in good faith based on vehicle availability and developer site inspection hours. Property Gateway reserves the right to reschedule or decline site visits in cases of inclement weather, safety hazards, or incomplete user verification.
+          Property Gateway arranges complimentary consultations and guided on-site property inspections to premier project locations across Chennai. Site visits are arranged in good faith based on developer site inspection hours. Property Gateway reserves the right to reschedule or decline site visits in cases of inclement weather, safety hazards, or incomplete user verification.
         </p>
       </section>
 

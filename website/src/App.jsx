@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 
 // Layout & Global Components
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import CookieConsent from './components/common/CookieConsent';
-import ScheduleVisitModal from './components/common/ScheduleVisitModal';
 import WhatsAppChatbot from './components/common/WhatsAppChatbot';
-import PostRequirementModal from './components/common/PostRequirementModal';
 import FloatingRequirementTab from './components/common/FloatingRequirementTab';
+import PostRequirementModal from './components/common/PostRequirementModal';
 import { usePsychologicalModalTrigger } from './hooks/usePsychologicalModalTrigger';
 
 // Pages
@@ -16,11 +15,13 @@ import HomePage from './pages/HomePage';
 import PropertiesPage from './pages/PropertiesPage';
 import PropertyDetailPage from './pages/PropertyDetailPage';
 import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
 import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import CookiePolicyPage from './pages/CookiePolicyPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
+import AntiAiStandardsPage from './pages/AntiAiStandardsPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,24 +34,19 @@ function ScrollToTop() {
 }
 
 function AppContent() {
-  const [isVisitModalOpen, setIsVisitModalOpen] = useState(false);
-  const [selectedPropertyForModal, setSelectedPropertyForModal] = useState(null);
-
-  // Intelligent Behavioral & Psychological Popup Trigger
-  const {
-    isOpen: isReqModalOpen,
-    openModal: handleOpenReqModal,
-    closeModal: handleCloseReqModal
-  } = usePsychologicalModalTrigger();
+  const navigate = useNavigate();
+  const { isOpen, openModal, closeModal } = usePsychologicalModalTrigger();
 
   const handleOpenVisitModal = (property = null) => {
-    setSelectedPropertyForModal(property);
-    setIsVisitModalOpen(true);
+    const title = typeof property === 'string' ? property : property?.title;
+    const q = new URLSearchParams();
+    q.set('purpose', 'site-visit');
+    if (title) q.set('property', title);
+    navigate(`/contact?${q.toString()}`);
   };
 
-  const handleCloseVisitModal = () => {
-    setIsVisitModalOpen(false);
-    setSelectedPropertyForModal(null);
+  const handleOpenReqModal = () => {
+    openModal();
   };
 
   return (
@@ -74,6 +70,10 @@ function AppContent() {
             path="/properties" 
             element={<PropertiesPage onOpenVisitModal={handleOpenVisitModal} />} 
           />
+          {/* Gracefully redirect /locations & /browse-by directly to /properties */}
+          <Route path="/locations" element={<Navigate to="/properties" replace />} />
+          <Route path="/browse-by" element={<Navigate to="/properties" replace />} />
+          
           <Route 
             path="/property/:slug" 
             element={<PropertyDetailPage onOpenVisitModal={handleOpenVisitModal} />} 
@@ -81,6 +81,10 @@ function AppContent() {
           <Route 
             path="/about" 
             element={<AboutPage onOpenVisitModal={handleOpenVisitModal} />} 
+          />
+          <Route 
+            path="/services" 
+            element={<ServicesPage />} 
           />
           <Route 
             path="/contact" 
@@ -96,6 +100,9 @@ function AppContent() {
           <Route path="/cookie-policy" element={<CookiePolicyPage />} />
           <Route path="/cookies" element={<CookiePolicyPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
+          <Route path="/anti-ai-standards" element={<AntiAiStandardsPage />} />
+          <Route path="/hallmark-standards" element={<AntiAiStandardsPage />} />
+          <Route path="/standards" element={<AntiAiStandardsPage />} />
 
           {/* Catch-all redirect to Home */}
           <Route path="*" element={<HomePage onOpenVisitModal={handleOpenVisitModal} />} />
@@ -108,24 +115,14 @@ function AppContent() {
       {/* Cookie Consent Banner */}
       <CookieConsent />
 
-      {/* Free Cab Site Visit Modal */}
-      <ScheduleVisitModal
-        isOpen={isVisitModalOpen}
-        onClose={handleCloseVisitModal}
-        property={selectedPropertyForModal}
-      />
-
       {/* Floating Direct WhatsApp Action */}
       <WhatsAppChatbot />
 
-      {/* Persistent Floating Requirement Tab (Desktop) */}
-      <FloatingRequirementTab onClick={handleOpenReqModal} />
+      {/* Desktop Floating "Post Requirement" Tab */}
+      <FloatingRequirementTab onClick={openModal} />
 
-      {/* Behavioral & Psychological Post Requirement Modal */}
-      <PostRequirementModal
-        isOpen={isReqModalOpen}
-        onClose={handleCloseReqModal}
-      />
+      {/* Behavioral Psychological Trigger Modal */}
+      <PostRequirementModal isOpen={isOpen} onClose={closeModal} />
     </div>
   );
 }

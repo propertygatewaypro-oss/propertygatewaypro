@@ -2,63 +2,98 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
-  Sparkles, 
   Building, 
   Phone, 
   ChevronDown, 
   ChevronUp, 
   ShieldCheck, 
-  Car, 
   CheckCircle2, 
-  Quote 
+  Quote,
+  Star 
 } from 'lucide-react';
 import HeroSection from '../components/home/HeroSection';
 import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
-import EmiCalculator from '../components/home/EmiCalculator';
-import { fetchProperties } from '../services/propertyService';
-import { BRAND, BUILDER_PARTNERS } from '../utils/constants';
+import { fetchProperties, subscribeProperties, subscribeTestimonials } from '../services/propertyService';
+import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
+import { BRAND } from '../utils/constants';
 
 export default function HomePage({ onOpenVisitModal }) {
   const [featuredProperties, setFeaturedProperties] = useState([]);
+  const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
   const [activeTab, setActiveTab] = useState('All');
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [isFeaturedInView, setIsFeaturedInView] = useState(false);
+  const [isFaqInView, setIsFaqInView] = useState(false);
   const featuredSectionRef = useRef(null);
+  const faqSectionRef = useRef(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setIsFeaturedInView(true);
+      setIsFaqInView(true);
       return;
     }
 
-    const observer = new IntersectionObserver(
+    const featuredObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsFeaturedInView(true);
-          observer.disconnect();
+          featuredObserver.disconnect();
         }
       },
       { threshold: 0.08 }
     );
 
     if (featuredSectionRef.current) {
-      observer.observe(featuredSectionRef.current);
+      featuredObserver.observe(featuredSectionRef.current);
     }
 
-    return () => observer.disconnect();
+    const faqObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFaqInView(true);
+          faqObserver.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (faqSectionRef.current) {
+      faqObserver.observe(faqSectionRef.current);
+    }
+
+    return () => {
+      featuredObserver.disconnect();
+      faqObserver.disconnect();
+    };
   }, []);
 
   useEffect(() => {
-    async function loadData() {
-      setLoading(true);
-      const data = await fetchProperties({ pageSize: 6 });
-      setFeaturedProperties(data);
+    setLoading(true);
+    // Realtime subscription to properties (auto-updates when admin publishes or edits)
+    const unsubscribeProps = subscribeProperties((liveProps) => {
+      setFeaturedProperties(liveProps.slice(0, 6));
       setLoading(false);
-    }
-    loadData();
+    }, { pageSize: 6 });
+
+    // Live subscription to client feedbacks / testimonials
+    const unsubscribeTestimonials = subscribeTestimonials((liveData) => {
+      if (liveData && liveData.length > 0) {
+        setTestimonials(liveData);
+      }
+    });
+
+    return () => {
+      if (typeof unsubscribeProps === 'function') {
+        unsubscribeProps();
+      }
+      if (typeof unsubscribeTestimonials === 'function') {
+        unsubscribeTestimonials();
+      }
+    };
   }, []);
 
   const filteredList = activeTab === 'All' 
@@ -74,8 +109,8 @@ export default function HomePage({ onOpenVisitModal }) {
       a: `As an authorized channel advisory partner under TNRERA (${BRAND.reraId}) for Chennai's tier-1 builders (Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy), our consultation fees are remunerated directly by the builders. You pay the exact direct developer price with zero added commission or hidden charges.`
     },
     {
-      q: "How does the Doorstep AC Cab Site Visit work?",
-      a: "Once you shortlist properties, our team coordinates with you to schedule a sanitized private AC cab to pick you and your family up from your doorstep anywhere in Chennai, tour the selected sites with our property advisor, and drop you back safely. This service is 100% complimentary."
+      q: "How do Property Site Visits work?",
+      a: "Once you shortlist properties, our advisory team coordinates a personalized site visit for you and your family. A senior property specialist will walk you through the model homes, floor plans, and amenities with zero pressure or obligation."
     },
     {
       q: "Are all listed properties approved by TNRERA and local authorities?",
@@ -84,27 +119,6 @@ export default function HomePage({ onOpenVisitModal }) {
     {
       q: "Can Property Gateway assist with bank home loan approvals and legal paperwork?",
       a: "Yes. We maintain direct loan facilitation desks with leading banks including SBI, HDFC Bank, ICICI Bank, and Axis Bank for expedited home loan processing at optimal interest rates, alongside end-to-end guidance during registration at the Sub-Registrar Office."
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "Finding a 3 BHK near Tidel Park without paying hefty broker commissions was seamless. The private cab pickup made inspecting multiple projects on OMR with our parents completely stress-free.",
-      author: "Anand & Meera Sundaram",
-      location: "OMR IT Corridor Buyer",
-      tag: "3 BHK High-Rise Residence"
-    },
-    {
-      quote: "Parent document legal verification was our paramount condition. Property Gateway provided complete 30-year title documents and CMDA sanctions before collecting any booking token.",
-      author: "Dr. S. Radhakrishnan",
-      location: "Anna Nagar",
-      tag: "Regal Crest Luxury Apartment"
-    },
-    {
-      quote: "Secured our sea-facing villa along East Coast Road with transparent builder pricing and zero markup. Highly professional advisory team with deep Chennai market insights.",
-      author: "Priya & Rajesh Narayanan",
-      location: "East Coast Road (ECR)",
-      tag: "The Sovereign Bay Villa"
     }
   ];
 
@@ -199,114 +213,188 @@ export default function HomePage({ onOpenVisitModal }) {
         </div>
       </section>
 
-      {/* 3. Partner Builders Ribbon */}
-      <section className="py-12 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-6">
-            Authorized Channel Partner for Chennai's Leading Developers
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-14 opacity-75">
-            {BUILDER_PARTNERS.map((builder, i) => (
-              <div key={i} className="text-center">
-                <span className="text-base font-extrabold text-brand-navy-950 tracking-tight block">
-                  {builder.name}
-                </span>
-                <span className="text-[10px] text-slate-400 uppercase tracking-wider">
-                  {builder.focus}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Why Discerning Buyers Choose Us */}
+      {/* 3. Why Discerning Buyers Choose Us */}
       <WhyChooseUs onOpenVisitModal={onOpenVisitModal} />
 
-      {/* 5. Interactive EMI Calculator */}
-      <EmiCalculator />
-
-      {/* 6. Authentic Homebuyer Case Studies & Reviews */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
-              Verified Client Journeys
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy-950 tracking-tight mt-2">
-              Trusted by Homebuyers Across Chennai
+      {/* 4. Authentic Homebuyer Case Studies & Reviews - Compact Two-Tier Modern Marquee */}
+      <section className="pt-10 sm:pt-12 md:pt-14 pb-4 sm:pb-6 bg-[#FAF9F6] border-t border-[#EAE6DE] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2 sm:gap-2.5">
+              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#C98A4B]">
+                Verified Client Journeys
+              </span>
+              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#0F1117] tracking-tight mt-1.5 leading-snug sm:leading-tight">
+              Trusted by Homebuyers <span className="text-[#C98A4B]">Across Chennai</span>
             </h2>
-            <p className="text-sm text-slate-600 mt-2">
-              Authentic feedback from families and investors who purchased through Property Gateway.
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
+              Real families and investors sharing authentic experiences purchasing verified homes through Property Gateway.
             </p>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, idx) => (
-              <div 
-                key={idx}
-                className="bg-white p-7 rounded-2xl border border-slate-200/90 shadow-sm flex flex-col justify-between"
-              >
-                <div>
-                  <Quote className="w-8 h-8 text-brand-emerald-600/30 mb-4" />
-                  <p className="text-slate-700 text-sm leading-relaxed italic mb-6">
-                    "{t.quote}"
-                  </p>
+        {/* Continuous Right-to-Left Marquee Carousel */}
+        <div className="relative w-full overflow-hidden">
+          {/* Edge Fade Gradients (Vignettes - Scaled for mobile) */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
+
+          {/* Marquee Track */}
+          <div className="animate-marquee-rtl py-2 px-1 sm:px-2 flex gap-3.5 sm:gap-5">
+            {[...testimonials, ...testimonials].map((t, idx) => {
+              const displayInitials = t.initials || (t.author ? t.author.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : 'PG');
+              return (
+                <div 
+                  key={`${t.id || 't'}-${idx}`}
+                  className="w-[285px] sm:w-[350px] md:w-[410px] shrink-0 bg-[#F8FAFC] rounded-2xl p-4 sm:p-5 md:p-6 border border-[#E2E8F0] shadow-xs flex flex-col justify-between hover:shadow-md hover:border-[#C98A4B]/40 transition-all duration-300"
+                >
+                  <div>
+                    {/* Rating stars & verified tag */}
+                    <div className="flex items-center justify-between gap-1 mb-2.5">
+                      <div className="flex items-center gap-0.5 text-[#C98A4B]">
+                        {[...Array(t.rating || 5)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#C98A4B] text-[#C98A4B]" />
+                        ))}
+                      </div>
+                      {t.verified !== false && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Verified Homeowner
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Top: Quote with styled quotation marks and bolded highlights */}
+                    <p className="text-slate-700 text-xs sm:text-sm md:text-[14px] leading-relaxed">
+                      <span className="text-[#C98A4B] font-serif font-black text-lg sm:text-xl mr-1 select-none">“</span>
+                      {t.beforeHighlight !== undefined ? (
+                        <>
+                          {t.beforeHighlight}
+                          {t.highlight && <strong className="font-bold text-slate-900">{t.highlight}</strong>}
+                          {t.afterHighlight}
+                        </>
+                      ) : (
+                        <>
+                          {t.highlight && <strong className="font-bold text-slate-900 mr-1">{t.highlight}</strong>}
+                          {t.content || t.quote}
+                        </>
+                      )}
+                      <span className="text-[#C98A4B] font-serif font-black text-lg sm:text-xl ml-1 select-none">”</span>
+                    </p>
+                  </div>
+
+                  {/* Bottom Inset Panel: Avatar, Name, and Role */}
+                  <div className="bg-white rounded-xl p-3 sm:p-3.5 md:p-4 border border-slate-100 shadow-xs flex items-center gap-2.5 sm:gap-3.5 mt-3.5 sm:mt-4 md:mt-5">
+                    <div className="relative shrink-0">
+                      {t.avatar ? (
+                        <img 
+                          src={t.avatar} 
+                          alt={t.author} 
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-[#C98A4B] ring-offset-2 ring-offset-white"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            if (e.target.nextElementSibling) {
+                              e.target.nextElementSibling.style.display = 'flex';
+                            }
+                          }}
+                        />
+                      ) : null}
+                      <div 
+                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#0F1117] to-[#272B38] text-[#C98A4B] font-bold text-xs ring-2 ring-[#C98A4B] ring-offset-2 ring-offset-white ${t.avatar ? 'hidden' : 'flex'} items-center justify-center`}
+                      >
+                        {displayInitials}
+                      </div>
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-bold text-xs sm:text-sm md:text-[15px] text-[#0F1117] truncate">
+                        {t.author}
+                      </div>
+                      <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5 font-medium">
+                        {t.role}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="pt-4 border-t border-slate-100">
-                  <div className="font-bold text-sm text-brand-navy-950">{t.author}</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{t.location}</div>
-                  <span className="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-100">
-                    {t.tag}
-                  </span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 7. Frequently Asked Questions (FAQ) Accordion */}
-      <section className="py-20 bg-white border-t border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-emerald-700 bg-brand-emerald-50 px-3 py-1 rounded-full border border-brand-emerald-100">
-              Clarity & Legal Transparency
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-brand-navy-950 tracking-tight mt-2">
-              Frequently Asked Questions
+      {/* 7. Frequently Asked Questions (FAQ) Accordion - Full Width Animated Lite Editorial */}
+      <section 
+        ref={faqSectionRef}
+        className="pt-6 sm:pt-8 pb-12 sm:pb-16 md:pb-18 bg-[#FAF9F6] border-t border-[#EAE6DE]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center max-w-2xl mx-auto mb-6 sm:mb-8 transition-all duration-700 ease-out ${
+            isFaqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
+            <div className="inline-flex items-center gap-2 sm:gap-2.5">
+              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#C98A4B]">
+                Clarity & Legal Transparency
+              </span>
+              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#0F1117] tracking-tight mt-1.5 leading-snug sm:leading-tight">
+              Frequently Asked <span className="text-[#C98A4B]">Questions</span>
             </h2>
-            <p className="text-sm text-slate-600 mt-1">
-              Everything you need to know about our zero-brokerage advisory and site visit process.
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto leading-relaxed px-2 sm:px-0">
+              Everything you need to know about our zero-brokerage advisory, TNRERA approvals, and guided property site visits.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, idx) => {
               const isOpen = openFaqIndex === idx;
               return (
                 <div 
                   key={idx}
-                  className="border border-slate-200 rounded-xl overflow-hidden transition-colors"
+                  style={{
+                    transitionDelay: isFaqInView ? `${idx * 90}ms` : '0ms'
+                  }}
+                  className={`bg-white rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:-translate-y-0.5 ${
+                    isFaqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                  } ${
+                    isOpen 
+                      ? 'border border-[#C98A4B]/40 border-l-4 border-l-[#C98A4B] shadow-sm' 
+                      : 'border border-[#E2E8F0] hover:border-[#C98A4B]/40 shadow-xs hover:shadow-sm'
+                  }`}
                 >
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? -1 : idx)}
-                    className="w-full text-left p-5 flex items-center justify-between gap-4 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                    className="w-full text-left p-4 sm:p-5 md:p-6 flex items-center justify-between gap-3 sm:gap-4 group transition-colors min-h-[52px]"
                   >
-                    <span className="font-bold text-sm sm:text-base text-brand-navy-950">
-                      {faq.q}
-                    </span>
-                    {isOpen ? (
-                      <ChevronUp className="w-5 h-5 text-brand-emerald-700 shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
-                    )}
-                  </button>
-                  {isOpen && (
-                    <div className="p-5 pt-1 text-sm text-slate-600 leading-relaxed bg-white border-t border-slate-100">
-                      {faq.a}
+                    <div className="flex items-center gap-2.5 sm:gap-3.5 md:gap-4 min-w-0">
+                      <span className={`text-xs sm:text-sm font-mono font-bold shrink-0 transition-colors duration-200 ${
+                        isOpen ? 'text-[#C98A4B]' : 'text-slate-400 group-hover:text-[#C98A4B]'
+                      }`}>
+                        {`0${idx + 1}`}
+                      </span>
+                      <span className={`font-bold text-xs sm:text-sm md:text-base leading-snug sm:leading-normal transition-colors duration-200 ${
+                        isOpen ? 'text-[#C98A4B]' : 'text-[#0F1117] group-hover:text-[#C98A4B]'
+                      }`}>
+                        {faq.q}
+                      </span>
                     </div>
-                  )}
+                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-transform duration-300 ease-out ${
+                      isOpen ? 'rotate-180 text-[#C98A4B]' : 'rotate-0 text-slate-400 group-hover:text-[#C98A4B]'
+                    }`} />
+                  </button>
+                  <div 
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pl-8 sm:pl-10 md:pl-14">
+                        {faq.a}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
@@ -315,11 +403,8 @@ export default function HomePage({ onOpenVisitModal }) {
       </section>
 
       {/* 8. High-Converting Instant WhatsApp Hook */}
-      <section className="py-16 bg-brand-navy-950 text-white relative overflow-hidden">
+      <section className="py-16 bg-[#0F1117] text-white relative overflow-hidden border-t border-[#232733]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <div className="w-14 h-14 rounded-2xl bg-[#25D366]/15 flex items-center justify-center mx-auto border border-[#25D366]/30 shadow-sm">
-            <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-8 h-8 object-contain" />
-          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             Looking for something specific in Chennai?
           </h2>
@@ -338,9 +423,9 @@ export default function HomePage({ onOpenVisitModal }) {
             </a>
             <a
               href={`tel:${BRAND.phoneRaw}`}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-navy-900 hover:bg-brand-navy-800 text-white font-semibold text-sm border border-slate-700 flex items-center justify-center gap-2 transition-all"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#161922] hover:bg-[#1E222D] text-white font-semibold text-sm border border-[#2B303C] flex items-center justify-center gap-2 transition-all"
             >
-              <Phone className="w-4 h-4 text-brand-emerald-400" />
+              <Phone className="w-4 h-4 text-[#C98A4B]" />
               <span>Call: {BRAND.phoneDisplay}</span>
             </a>
           </div>

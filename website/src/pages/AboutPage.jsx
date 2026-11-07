@@ -1,206 +1,711 @@
-import React from 'react';
-import { ShieldCheck, Award, Users, Car, CheckCircle2, Phone, MessageSquare, ArrowRight, Building2, FileCheck2, Scale } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { 
+  ShieldCheck, 
+  Award, 
+  Users, 
+  Calendar, 
+  CheckCircle2, 
+  Phone, 
+  MessageSquare, 
+  ArrowRight, 
+  Building2, 
+  FileCheck2, 
+  Scale, 
+  Globe2, 
+  BadgePercent, 
+  Coins, 
+  Sparkles, 
+  Landmark, 
+  Compass, 
+  Star 
+} from 'lucide-react';
 import { BRAND } from '../utils/constants';
 
-export default function AboutPage({ onOpenVisitModal }) {
+// Luxury Quartic Ease-Out Number Counter
+function AnimatedStatCounter({ 
+  start = 0, 
+  end, 
+  duration = 2000, 
+  decimals = 0, 
+  prefix = '', 
+  suffix = '', 
+  trigger = true 
+}) {
+  const [count, setCount] = useState(start);
+
+  useEffect(() => {
+    if (!trigger) return;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setCount(end);
+      return;
+    }
+
+    let startTimestamp = null;
+    let animationFrameId;
+
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const elapsed = timestamp - startTimestamp;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Quartic ease-out for ultra smooth luxury deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+      const currentVal = start + (end - start) * easeOut;
+      setCount(currentVal);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(step);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [start, end, duration, trigger]);
+
+  const formatted = decimals > 0 
+    ? count.toFixed(decimals) 
+    : Math.floor(count).toLocaleString('en-IN');
+
+  return (
+    <span className="tabular-nums font-mono font-bold">
+      {prefix}{formatted}{suffix}
+    </span>
+  );
+}
+
+// Lightweight, performant scroll observer hook
+function useScrollReveal(options = { threshold: 0.12 }) {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.unobserve(el);
+      }
+    }, options);
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, isVisible];
+}
+
+export default function AboutPage() {
+  const navigate = useNavigate();
+
+  // Mount animation for hero
+  const [isHeroLoaded, setIsHeroLoaded] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsHeroLoaded(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Section scroll reveal observers
+  const [sec2Ref, sec2InView] = useScrollReveal();
+  const [sec3Ref, sec3InView] = useScrollReveal();
+  const [sec4Ref, sec4InView] = useScrollReveal();
+  const [sec5Ref, sec5InView] = useScrollReveal();
+  const [sec6Ref, sec6InView] = useScrollReveal();
+
+  // 6 Core Services (Inspired by PropLeaf's high-converting services architecture)
+  const services = [
+    {
+      icon: Compass,
+      title: "Strategic Property Advisory",
+      category: "Bespoke Consulting",
+      desc: "Tailored residential guidance analyzing commute radii, micro-market price benchmarks, builder delivery history, and 5-year capital appreciation potential."
+    },
+    {
+      icon: Globe2,
+      title: "NRI & Global Investor Concierge",
+      category: "Cross-Border Desk",
+      desc: "Dedicated advisory for non-resident Indians across the US, Middle East, Singapore, and UK. Includes 4K live video walk-throughs, power-of-attorney coordination, and repatriation advisory."
+    },
+    {
+      icon: Sparkles,
+      title: "Premium Villas & Coastal Estates",
+      category: "Luxury Portfolio",
+      desc: "Exclusive access to Chennai's most sought-after addresses — sea-facing villas on ECR, sky-villas on OMR, and elite residential enclaves in Anna Nagar, Adyar, and Alwarpet."
+    },
+    {
+      icon: FileCheck2,
+      title: "Legal Due Diligence & Title Audit",
+      category: "In-House Legal",
+      desc: "Rigorous 30-year parent deed scrutinization by veteran high-court property advocates: CMDA/DTCP building sanctions, revenue patta, and RERA registration compliance."
+    },
+    {
+      icon: Coins,
+      title: "Pre-Approved Home Loans Desk",
+      category: "Institutional Banking",
+      desc: "Direct corporate tie-ups with SBI, HDFC Bank, ICICI Bank, and Axis Bank. We secure competitive interest rates, waiver of loan processing hurdles, and sanctions up to 80%."
+    },
+    {
+      icon: BadgePercent,
+      title: "0% Brokerage on New Projects",
+      category: "Developer Partner",
+      desc: "As authorized channel partners for Chennai's tier-1 builders (Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy), you pay the exact developer price with zero added fees."
+    }
+  ];
+
+  // Why Choose Us Pillars (PropLeaf Inspired)
+  const whyChooseUs = [
+    {
+      title: "100% Verified Legal Scrutiny",
+      highlight: "Zero Risk",
+      desc: "Every listed project has passed stringent CMDA, DTCP, and TNRERA regulatory compliance before being recommended to clients."
+    },
+    {
+      title: "Zero Brokerage Guarantee",
+      highlight: "Save 2% - 3%",
+      desc: "We charge absolutely zero commission to buyers for newly launched and under-construction gated communities across Chennai."
+    },
+    {
+      title: "Guided Property Site Visits",
+      highlight: "Personalized",
+      desc: "Tour multiple shortlisted projects with your family accompanied by our certified property specialists anywhere in Chennai."
+    },
+    {
+      title: "4.9★ Client Trust Rating",
+      highlight: "350+ Reviews",
+      desc: "Ranked among Chennai's highest-rated real estate consultancies, backed by honest guidance and prompt post-booking support."
+    },
+    {
+      title: "Tier-1 Developer Alliances",
+      highlight: "Direct Access",
+      desc: "First-hand access to pre-launches, exclusive unit allotments, and developer pre-launch discounts across prime Chennai corridors."
+    },
+    {
+      title: "End-to-End Handover Support",
+      highlight: "Post-Sale Care",
+      desc: "Our commitment continues beyond booking to parent document registration, interior coordination, and rental tenant management."
+    }
+  ];
+
+  // 4-Step Structured Protocol
   const steps = [
     {
       num: "01",
-      title: "Consultation & Shortlisting",
-      desc: "We analyze your exact budget, preferred micro-market, commute radius, and family spatial needs before recommending 3 to 4 vetted options."
+      title: "Requirement & Spatial Profiling",
+      desc: "We evaluate your family's exact budget, spatial configuration, school/office commute corridors, and timeline before curating 3 to 4 vetted communities."
     },
     {
       num: "02",
-      title: "Complimentary Cab Site Visit",
-      desc: "Inspect shortlisted properties stress-free. We arrange private, sanitized AC cab transportation directly from your doorstep across Chennai."
+      title: "Guided On-Site Property Tours",
+      desc: "Inspect shortlisted projects stress-free. We coordinate personalized on-site property walkthroughs for your entire family across Chennai."
     },
     {
       num: "03",
-      title: "Legal & RERA Verification",
-      desc: "Complete document scrutinization by experienced property advocates: CMDA/DTCP approvals, encumbrance certificates (EC), and RERA sanction compliance."
+      title: "Comprehensive Legal Verification",
+      desc: "Complete 30-year document audit by experienced property advocates: CMDA/DTCP approvals, encumbrance certificates (EC), and RERA sanction compliance."
     },
     {
       num: "04",
       title: "Transparent Price Negotiation",
-      desc: "Zero hidden builder markups. We secure direct developer pre-launch discounts, transparent payment schedules, and end-to-end bank loan approvals."
-    }
-  ];
-
-  const pillars = [
-    {
-      icon: ShieldCheck,
-      title: "Government RERA Registered",
-      desc: `Registered under Tamil Nadu Real Estate Regulatory Authority (Reg: ${BRAND.reraId}). Every listed project strictly holds valid CMDA/DTCP sanctions.`
-    },
-    {
-      icon: Scale,
-      title: "Zero Brokerage on Direct Launches",
-      desc: "You pay zero consultation fee or agency commission for new builder projects. Our pricing matches direct developer pricing with added advisory support."
-    },
-    {
-      icon: FileCheck2,
-      title: "Title & Legal Clearance",
-      desc: "30-year parent document history check, encumbrance verification, and layout approval confirmation prior to collecting any booking token."
-    },
-    {
-      icon: Users,
-      title: "Tier-1 Developer Alliances",
-      desc: "Authorized marketing partners for Casagrand, TVS Emerald, Shriram Properties, Puravankara, Brigade Group, and Appaswamy Real Estates."
+      desc: "Zero hidden builder markups. We secure direct developer pre-launch terms, transparent milestone payment schedules, and end-to-end bank disbursements."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      {/* Hero Section */}
-      <section className="bg-navy-950 text-white py-16 sm:py-24 border-b border-navy-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-12">
+      
+      {/* 1. EDITORIAL HERO SECTION */}
+      <section className="relative bg-[#0F1117] text-white pt-10 pb-14 sm:pt-14 sm:pb-16 border-b border-[#C98A4B]/20 overflow-hidden">
+        {/* Subtle Architectural Glow & Grid Texture */}
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#C98A4B 1px, transparent 1px), radial-gradient(#C98A4B 1px, #0F1117 1px)`,
+            backgroundSize: '40px 40px',
+            backgroundPosition: '0 0, 20px 20px'
+          }}
+        />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C98A4B]/10 rounded-full blur-3xl pointer-events-none animate-pulse duration-1000" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <nav 
+            className={`flex items-center gap-2 text-xs sm:text-sm text-[#E7E2D8]/60 mb-5 font-medium transition-all duration-700 ease-out ${
+              isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
+            }`}
+          >
+            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-[#C98A4B]">About Us</span>
+          </nav>
+
+          {/* Hairline Editorial Eyebrow */}
+          <div 
+            className={`inline-flex items-center gap-3 mb-3.5 transition-all duration-700 ease-out delay-100 ${
+              isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+            }`}
+          >
+            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
+            <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#C98A4B]">
+              CHENNAI'S PREMIER REAL ESTATE ADVISORY
+            </span>
+            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
+          </div>
+
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-6">
-              <ShieldCheck className="w-4 h-4" />
-              TNRERA Reg: {BRAND.reraId}
-            </div>
-            <h1 className="text-3xl sm:text-5xl font-serif font-bold text-slate-100 tracking-tight leading-tight">
-              Advising Chennai homebuyers with uncompromising legal clarity.
+            <h1 
+              className={`text-3xl sm:text-5xl lg:text-5xl font-serif font-bold text-[#F1EEE7] tracking-tight leading-[1.15] transition-all duration-700 ease-out delay-150 ${
+                isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              Advising Chennai Homebuyers with <span className="text-[#C98A4B] italic">Uncompromising Integrity</span>
             </h1>
-            <p className="mt-6 text-lg text-slate-300 leading-relaxed font-sans">
-              Property Gateway was founded to remove ambiguity from real estate decisions in Chennai. 
-              We do not treat property purchase as a transactional classified ad — we act as your personal advisory desk from first inquiry to key handover.
+            
+            <p 
+              className={`mt-4 text-sm sm:text-base text-[#E7E2D8]/80 leading-relaxed font-sans max-w-2xl transition-all duration-700 ease-out delay-200 ${
+                isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              Property Gateway was founded to remove ambiguity, aggressive sales pitches, and legal blind spots from Chennai real estate. We treat property acquisition as your family's biggest milestone — offering institutional-grade due diligence, direct developer pricing, and 0% buyer brokerage.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <button
-                onClick={() => onOpenVisitModal?.()}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-navy-950"
+            <div 
+              className={`mt-6 flex flex-wrap items-center gap-3.5 transition-all duration-700 ease-out delay-300 ${
+                isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              <Link
+                to="/contact?purpose=site-visit"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#C98A4B] hover:bg-[#d99857] text-[#0F1117] font-bold text-sm transition-all shadow-lg active:scale-[0.98] hover:shadow-[0_10px_25px_rgba(201,138,75,0.35)]"
               >
-                <Car className="w-4 h-4" />
-                Book Free Site Visit
-              </button>
+                <Calendar className="w-4 h-4" />
+                <span>Schedule Property Visit</span>
+              </Link>
+              
               <a
                 href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to speak with a senior property advisor regarding verified homes in Chennai. Thank you!")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-sm border border-white/20 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-[#F1EEE7] font-bold text-sm border border-white/15 transition-all active:scale-[0.98]"
               >
                 <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
-                Chat with Advisor
+                <span>Chat with Advisor</span>
               </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Trust Pillars */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest">Our Advisory Standards</p>
-          <h2 className="mt-2 text-2xl sm:text-3xl font-serif font-bold text-navy-950">
-            Why Chennai buyers trust Property Gateway
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pillars.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div 
-                key={idx} 
-                className="bg-white p-6 rounded-xl border border-slate-200/80 shadow-sm hover:border-slate-300 transition-all"
-              >
-                <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-navy-900 mb-5">
-                  <Icon className="w-6 h-6 text-emerald-700" />
-                </div>
-                <h3 className="font-semibold text-base text-navy-950 mb-2">{item.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+          {/* Key Metrics Strip (With Smooth Deceleration Counter Animation) */}
+          <div 
+            className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 pt-7 border-t border-white/10 max-w-4xl transition-all duration-700 ease-out delay-350 ${
+              isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+                <AnimatedStatCounter 
+                  end={4500} 
+                  suffix="+" 
+                  trigger={isHeroLoaded} 
+                  duration={2200} 
+                />
               </div>
-            );
-          })}
-        </div>
-      </section>
+              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+                Properties Evaluated
+              </div>
+            </div>
 
-      {/* 4-Step Advisory Process & Services */}
-      <section id="services" className="bg-white border-y border-slate-200/80 py-16 sm:py-20 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <p className="text-xs font-bold text-emerald-700 uppercase tracking-widest">The Property Gateway Protocol</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-serif font-bold text-navy-950">
-              A transparent, 4-step home buying process
-            </h2>
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+                <AnimatedStatCounter 
+                  end={950} 
+                  suffix="+" 
+                  trigger={isHeroLoaded} 
+                  duration={2000} 
+                />
+              </div>
+              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+                Families Assisted
+              </div>
+            </div>
+
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+                <AnimatedStatCounter 
+                  start={2} 
+                  end={0} 
+                  suffix="%" 
+                  trigger={isHeroLoaded} 
+                  duration={1600} 
+                />
+              </div>
+              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+                Buyer Brokerage
+              </div>
+            </div>
+
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B] flex items-baseline gap-1">
+                <AnimatedStatCounter 
+                  end={4.9} 
+                  decimals={1} 
+                  trigger={isHeroLoaded} 
+                  duration={1800} 
+                />
+                <span className="text-base text-[#E7E2D8]/60 font-sans font-normal">/ 5.0</span>
+              </div>
+              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+                Verified Client Rating
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((step, idx) => (
-              <div 
+        </div>
+      </section>
+
+      {/* 2. WHO WE ARE: OUR STORY & ETHOS (Gaps Tightened to py-10 sm:py-14) */}
+      <section 
+        ref={sec2Ref}
+        className="py-10 sm:py-14 bg-white border-b border-[#E7E2D8]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Narrative Column */}
+            <div 
+              className={`lg:col-span-7 space-y-4 transition-all duration-700 ease-out ${
+                sec2InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              }`}
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C98A4B] text-xs font-semibold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                WHO WE ARE
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight leading-tight">
+                Not a Transactional Brokerage. Your Personal <span className="text-[#C98A4B] italic">Real Estate Counsel</span>.
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
+                Operating under Tamil Nadu Real Estate Regulatory Authority Registration <strong>{BRAND.reraId}</strong>, Property Gateway is a specialized advisory consultancy founded by professionals with deep backgrounds in structured real estate, banking due diligence, and property law.
+              </p>
+
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
+                Traditional real estate often prioritizes developer push over consumer interest. We engineered an advisory-first model: we don’t list unapproved layouts, we independently audit 30-year parent deeds, and we provide honest micro-market intelligence so you never overpay.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#C98A4B]/40 transition-colors shadow-2xs">
+                  <div className="font-serif font-bold text-base text-slate-900 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>TNRERA Registered</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Licensed agent: {BRAND.reraId}. Complete statutory compliance under TN RERA regulations.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#C98A4B]/40 transition-colors shadow-2xs">
+                  <div className="font-serif font-bold text-base text-slate-900 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>In-House Legal Advocates</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Independent title scrutiny of CMDA, DTCP, Patta, and Encumbrance certificates.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Card / Visual Credential Column */}
+            <div 
+              className={`lg:col-span-5 transition-all duration-700 ease-out delay-150 ${
+                sec2InView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-[0.98]'
+              }`}
+            >
+              <div className="relative rounded-3xl bg-[#0F1117] text-white p-7 sm:p-8 border border-[#C98A4B]/30 shadow-2xl overflow-hidden hover:border-[#C98A4B]/60 transition-all duration-500">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#C98A4B]/10 rounded-full blur-2xl pointer-events-none" />
+
+                <div className="relative z-10 space-y-5">
+                  <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[#C98A4B]">
+                      AUTHORITY BADGE
+                    </span>
+                    <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#C98A4B] text-[#0F1117]">
+                      VERIFIED AGENCY
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif font-bold text-2xl text-[#F1EEE7]">
+                    The Property Gateway Standard
+                  </h3>
+
+                  <ul className="space-y-3 text-xs text-[#E7E2D8]/80 font-sans">
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <span><strong>Zero Buyer Commission:</strong> 100% free consultation on all new builder projects.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <span><strong>Guided On-Site Inspections:</strong> Personalized property walkthroughs for your family.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <span><strong>Tier-1 Developers Only:</strong> Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <span><strong>Home Loan Desk:</strong> SBI, HDFC, ICICI instant sanctions with lowest floating rates.</span>
+                    </li>
+                  </ul>
+
+                  <div className="pt-3.5 border-t border-white/10 flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Chennai Headquarters</span>
+                    <span className="font-bold text-[#C98A4B]">Adambakkam, Chennai - 600 088</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 3. SERVICES WE PROVIDE (Gaps Tightened to py-10 sm:py-14, Staggered Card Entrance) */}
+      <section 
+        id="services" 
+        ref={sec3Ref}
+        className="py-10 sm:py-14 bg-[#FAF9F6] scroll-mt-20 border-b border-[#E7E2D8]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div 
+            className={`text-center max-w-2xl mx-auto mb-8 sm:mb-10 transition-all duration-700 ease-out ${
+              sec3InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+              COMPREHENSIVE ADVISORY SUITE
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-1">
+              Services We Provide
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
+              From first shortlisting and on-site property inspections to legal parent document verification and home loan sanctioning.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {services.map((svc, i) => {
+              const Icon = svc.icon;
+              return (
+                <div
+                  key={i}
+                  style={{ transitionDelay: `${i * 75}ms` }}
+                  className={`p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-[#C98A4B]/60 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group ${
+                    sec3InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#C98A4B] group-hover:scale-110 group-hover:bg-[#C98A4B] group-hover:text-white transition-all duration-300">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
+                        {svc.category}
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-[#C98A4B] transition-colors">
+                      {svc.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed font-sans">
+                      {svc.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 pt-3.5 border-t border-slate-100">
+                    <Link
+                      to="/contact"
+                      className="text-xs font-bold text-[#C98A4B] group-hover:text-[#9e632b] flex items-center gap-1.5"
+                    >
+                      <span>Inquire about this service</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. WHY CHOOSE PROPERTY GATEWAY (Gaps Tightened to py-10 sm:py-14, Staggered Reveals) */}
+      <section 
+        ref={sec4Ref}
+        className="py-10 sm:py-14 bg-[#0F1117] text-white relative overflow-hidden border-b border-[#C98A4B]/20"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <div 
+            className={`text-center max-w-2xl mx-auto mb-8 sm:mb-10 transition-all duration-700 ease-out ${
+              sec4InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+              THE CLIENT ADVANTAGE
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-[#F1EEE7] mt-1">
+              Why Discerning Chennai Buyers Choose Us
+            </h2>
+            <p className="text-xs sm:text-sm text-[#E7E2D8]/70 mt-2 font-sans">
+              We eliminate friction, bias, and uncertainty from the real estate buying journey.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {whyChooseUs.map((item, idx) => (
+              <div
                 key={idx}
-                className="relative bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col justify-between"
+                style={{ transitionDelay: `${idx * 75}ms` }}
+                className={`p-6 rounded-2xl bg-[#151722] border border-white/10 hover:border-[#C98A4B]/60 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col justify-between group ${
+                  sec4InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
               >
                 <div>
-                  <span className="text-3xl font-serif font-bold text-slate-300 block mb-4">
-                    {step.num}
-                  </span>
-                  <h3 className="font-semibold text-base text-navy-950 mb-2">{step.title}</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">{step.desc}</p>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono font-bold text-[#C98A4B]">0{idx + 1}</span>
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#C98A4B]/20 text-[#C98A4B] border border-[#C98A4B]/30">
+                      {item.highlight}
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-lg text-[#F1EEE7] group-hover:text-[#C98A4B] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-[#E7E2D8]/75 mt-2 leading-relaxed font-sans">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
-      {/* Office & Agency Credentials */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="bg-navy-900 text-white rounded-2xl p-8 sm:p-12 border border-navy-800">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <span className="text-xs font-bold text-gold-400 uppercase tracking-widest">Physical Presence</span>
-              <h2 className="mt-2 text-2xl sm:text-3xl font-serif font-bold text-slate-100">
-                Operating from the heart of South Chennai
+      {/* 5. THE 4-STEP ADVISORY PROCESS (Gaps Tightened to py-10 sm:py-14) */}
+      <section 
+        ref={sec5Ref}
+        className="py-10 sm:py-14 bg-white border-b border-[#E7E2D8]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div 
+            className={`text-center max-w-2xl mx-auto mb-8 sm:mb-10 transition-all duration-700 ease-out ${
+              sec5InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+              THE PROPERTY GATEWAY PROTOCOL
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-1">
+              A Transparent, 4-Step Home Buying Process
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
+              How our advisors shepherd you safely from requirement analysis to registration.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+            {steps.map((step, idx) => (
+              <div 
+                key={idx}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+                className={`p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200/90 flex flex-col justify-between hover:border-[#C98A4B]/60 hover:shadow-md hover:-translate-y-1 transition-all duration-300 ${
+                  sec5InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+              >
+                <div>
+                  <span className="text-3xl font-serif font-bold text-[#C98A4B] block mb-2.5">
+                    {step.num}
+                  </span>
+                  <h3 className="font-serif font-bold text-base text-slate-900 mb-1.5">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed font-sans">
+                    {step.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 6. PHYSICAL HEADQUARTERS & ADVISORY DESK BANNER (Tightened to py-8 sm:py-12) */}
+      <section 
+        ref={sec6Ref}
+        className="py-8 sm:py-12 bg-[#FAF9F6]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div 
+            className={`rounded-3xl bg-gradient-to-r from-[#151722] to-[#0F1117] text-white p-7 sm:p-10 lg:p-12 border border-[#C98A4B]/30 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 transition-all duration-700 ease-out ${
+              sec6InView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-[0.98]'
+            }`}
+          >
+            
+            <div className="max-w-2xl space-y-3.5">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#C98A4B]/20 text-[#C98A4B] border border-[#C98A4B]/30">
+                <Building2 className="w-3.5 h-3.5" /> PHYSICAL ADVISORY HEADQUARTERS
+              </span>
+
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#F1EEE7] tracking-tight leading-snug">
+                Speak With Chennai’s <span className="text-[#C98A4B] italic">Property Advisory Team</span>
               </h2>
-              <p className="mt-4 text-slate-300 text-sm leading-relaxed">
-                Our central consulting office is located in Adambakkam, providing easy access to prime growth corridors including OMR, GST Road, Velachery, and the Inner Ring Road.
+
+              <p className="text-xs sm:text-sm text-[#E7E2D8]/80 leading-relaxed font-sans">
+                Our central consulting office is located in Adambakkam, providing easy access to prime growth corridors including OMR, GST Road, Velachery, and ECR. Open Monday through Sunday, 9:00 AM – 8:00 PM.
               </p>
-              
-              <div className="mt-6 space-y-3 text-sm text-slate-300">
-                <div className="flex items-start gap-3">
-                  <Building2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>Registered Office:</strong> {BRAND.address}</span>
+
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-1 text-xs text-[#E7E2D8]/70">
+                <div>
+                  <strong>Address:</strong> {BRAND.address}
                 </div>
-                <div className="flex items-center gap-3">
-                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <span><strong>TNRERA Registration:</strong> {BRAND.reraId}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <span><strong>Digital & Marketing Partner:</strong> {BRAND.agency}</span>
+                <div>
+                  <strong>TNRERA:</strong> {BRAND.reraId}
                 </div>
               </div>
             </div>
 
-            <div className="bg-navy-950 p-6 sm:p-8 rounded-xl border border-navy-800 text-center flex flex-col items-center">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-4">
-                <Phone className="w-8 h-8" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-100">Speak With Our Advisory Desk</h3>
-              <p className="mt-1 text-sm text-slate-400">Available Monday through Sunday, 9:00 AM – 8:00 PM</p>
-              
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto shrink-0">
               <a
                 href={`tel:${BRAND.phone}`}
-                className="mt-6 inline-flex items-center justify-center w-full py-3 px-6 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-sm transition-colors"
+                className="px-6 py-3.5 rounded-xl bg-[#C98A4B] text-[#0F1117] font-bold text-sm hover:bg-[#d99857] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2"
               >
-                Call {BRAND.phoneDisplay}
+                <Phone className="w-4 h-4" />
+                <span>Call {BRAND.phoneDisplay}</span>
               </a>
-              <a
-                href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to connect with your team for real estate guidance and verified properties in Chennai. Thank you!")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg bg-white/10 hover:bg-white/15 text-white font-medium text-sm border border-white/20 transition-colors"
+
+              <Link
+                to="/contact"
+                className="px-6 py-3.5 rounded-xl bg-white/10 text-[#F1EEE7] border border-white/15 font-bold text-sm hover:bg-white/15 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
               >
-                <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
-                <span>WhatsApp Us Directly</span>
-              </a>
+                <MessageSquare className="w-4 h-4 text-[#C98A4B]" />
+                <span>Submit Requirements</span>
+              </Link>
             </div>
+
           </div>
+
         </div>
       </section>
+
     </div>
   );
 }

@@ -4,10 +4,10 @@ export const BRAND = {
   phone: "+91 9345852889",
   phoneDisplay: "+91 93458 52889",
   phoneRaw: "919345852889",
-  email: "propertygatewy@gmail.com",
+  email: "propertygatewaypro@gmail.com",
   address: "37/48, 1st Floor, Vellalar Street, TNGO Colony, Adambakkam, Chennai, Tamil Nadu - 600 088",
   reraId: "TN/Agent/020/2019",
-  websiteUrl: "http://localhost:3000",
+  websiteUrl: import.meta.env.VITE_WEBSITE_URL || "http://localhost:3000",
 };
 
 export const CHENNAI_LOCATIONS = [

@@ -188,9 +188,10 @@ export default function PostRequirementModal({ isOpen, onClose }) {
         name: formData.name,
         email: formData.email,
         phone: fullPhoneNumber,
+        propertyTitle: 'Custom Property Requirement',
         message: formData.requirement || 'Looking for personalized Chennai property options.',
-        leadType: 'Post Requirement Popup',
-        source: 'Psychological Post Requirement Modal',
+        leadType: 'Client Requirement Inquiry',
+        source: 'Requirement Modal',
         website_trap_field: formData.website_trap_field
       });
 

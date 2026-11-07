@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Properties Collection:
+    // - Publicly readable by all visitors browsing the website
+    // - Writable only by authenticated administrators
+    match /properties/{propertyId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Leads Collection:
+    // - Publicly creatable by prospective clients submitting contact forms
+    // - Readable and manageable ONLY by authenticated administrators
+    match /leads/{leadId} {
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.phone is string;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Testimonials / Client Feedbacks Collection:
+    // - Publicly readable by all visitors browsing client reviews on the website
+    // - Writable, updatable, deletable only by authenticated administrators
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Default catch-all: Block all unspecified collection access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

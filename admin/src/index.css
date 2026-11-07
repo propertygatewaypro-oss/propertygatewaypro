@@ -1,3 +1,18 @@
+/* Hallmark v2.0 Anti-AI Design System Tokens */
+:root {
+  --color-canvas: #0A0C10;
+  --color-surface-panel: #0E121B;
+  --color-surface-card: #141722;
+  --color-surface-input: #0B0E17;
+  --color-border: #202636;
+  --color-border-focus: #C98A4B;
+  --color-accent-gold: #C98A4B;
+  --color-accent-gold-hover: #B57A3E;
+  --color-text-primary: #F1EEE7;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,15 +20,15 @@
 @layer base {
   html, body {
     overflow-x: clip;
-    background-color: #F4F2ED;
-    color: #1A1D24;
+    background-color: var(--color-canvas);
+    color: var(--color-text-primary);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   :focus-visible {
-    outline: 2px solid #C98A4B;
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
 }

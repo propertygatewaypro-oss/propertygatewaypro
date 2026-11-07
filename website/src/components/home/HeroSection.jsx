@@ -176,7 +176,7 @@ export default function HeroSection({ onOpenVisitModal }) {
 
   return (
     <section 
-      className="relative w-full bg-[#07090E] text-white border-b border-[#232733] min-h-[780px] lg:min-h-[820px] xl:min-h-[850px] flex flex-col justify-between"
+      className="relative w-full bg-[#07090E] text-white border-b border-[#232733] flex flex-col justify-center"
       aria-label="Property Gateway Homepage Hero"
     >
       {/* 1. Background Slideshow with subtle Ken Burns drift */}
@@ -227,7 +227,7 @@ export default function HeroSection({ onOpenVisitModal }) {
       </div>
 
       {/* 2. Main Hero Content Container (Left-aligned, max-w-7xl) */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 lg:pt-14 pb-16 sm:pb-20 lg:pb-24 flex flex-col justify-between h-full">
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-12 pb-10 sm:pb-12 flex flex-col justify-center">
         
         {/* Top Content Block */}
         <div className="flex flex-col items-start max-w-[760px] w-full text-left">

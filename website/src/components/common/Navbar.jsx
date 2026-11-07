@@ -1,80 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
-  ChevronDown, 
   Menu, 
   X, 
-  MapPin, 
-  Sparkles, 
-  CheckCircle2, 
-  Phone,
-  Building2,
-  Briefcase,
-  Home,
-  ShieldCheck,
-  Calendar,
-  ArrowRight
+  Phone
 } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
-// 4 Strategic Pillars for Properties Mega-Menu
-const PROPERTIES_MEGA_MENU = [
-  {
-    title: 'New Residential Projects',
-    subtitle: 'Direct Developer Launches',
-    icon: Building2,
-    links: [
-      { label: 'New Launches (0% Brokerage)', path: '/properties?status=New+Launch' },
-      { label: 'Under Construction Projects', path: '/properties?status=Under+Construction' },
-      { label: 'Ready to Move In Homes', path: '/properties?status=Ready+to+Move' },
-      { label: 'Upcoming Pre-Launches', path: '/properties?status=Upcoming' },
-    ]
-  },
-  {
-    title: 'Commercial Projects',
-    subtitle: 'High ROI & Corporate Assets',
-    icon: Briefcase,
-    links: [
-      { label: 'Grade-A Office Spaces', path: '/properties?type=Commercial' },
-      { label: 'IT Tech Parks (OMR / Guindy)', path: '/properties?type=Commercial&zone=IT' },
-      { label: 'Retail Showrooms & Plazas', path: '/properties?type=Commercial&category=retail' },
-      { label: 'Pre-Leased High-Yield Assets', path: '/properties?type=Commercial&yield=high' },
-    ]
-  },
-  {
-    title: 'Luxury Villas & Resale',
-    subtitle: 'Exclusive Architectural Living',
-    icon: Home,
-    links: [
-      { label: 'Beachfront Villas (ECR)', path: '/properties?location=East+Coast+Road+(ECR)&type=Luxury+Villa' },
-      { label: 'Gated Community Villas', path: '/properties?type=Luxury+Villa' },
-      { label: 'Ultra-Luxury Penthouses', path: '/properties?type=Apartment&tier=luxury' },
-      { label: 'Verified Resale Homes', path: '/properties?status=Resale' },
-    ]
-  },
-  {
-    title: 'Plots & Land Parcels',
-    subtitle: 'CMDA / DTCP Verified Land',
-    icon: MapPin,
-    links: [
-      { label: 'CMDA & DTCP Approved Plots', path: '/properties?type=Plot+/+Land' },
-      { label: 'Villa Plots in OMR Corridor', path: '/properties?location=Old+Mahabalipuram+Road+(OMR)&type=Plot+/+Land' },
-      { label: 'Commercial Land Parcels', path: '/properties?type=Plot+/+Land&purpose=commercial' },
-      { label: 'Farm Land & Weekend Plots', path: '/properties?type=Plot+/+Land&purpose=farm' },
-    ]
-  }
-];
-
-export default function Navbar({ onOpenVisitModal }) {
+export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'properties' | 'locations' | 'services' | null
-  const [mobileExpandedSection, setMobileExpandedSection] = useState(null);
   const location = useLocation();
-  const dropdownTimeoutRef = useRef(null);
 
-  // Close dropdown on outside click or route change
+  // Close mobile drawer on route change
   useEffect(() => {
-    setActiveDropdown(null);
     setMobileMenuOpen(false);
   }, [location.pathname, location.search]);
 
@@ -90,20 +28,10 @@ export default function Navbar({ onOpenVisitModal }) {
     };
   }, [mobileMenuOpen]);
 
-  const handleMouseEnter = (menu) => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setActiveDropdown(menu);
-  };
-
-  const handleMouseLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 180);
-  };
-
   const isHomeActive = location.pathname === '/' && !location.search;
   const isPropertiesActive = location.pathname.startsWith('/properties');
   const isAboutActive = location.pathname.startsWith('/about');
+  const isServicesActive = location.pathname.startsWith('/services');
   const isContactActive = location.pathname.startsWith('/contact');
 
   return (
@@ -150,86 +78,16 @@ export default function Navbar({ onOpenVisitModal }) {
               Home
             </Link>
 
-            {/* Properties Mega-Menu Dropdown */}
-            <div 
-              className="static"
-              onMouseEnter={() => handleMouseEnter('properties')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveDropdown(activeDropdown === 'properties' ? null : 'properties')}
-                className={`flex items-center gap-1.5 py-1 text-[14px] xl:text-[15px] font-medium transition-colors cursor-pointer group whitespace-nowrap ${
-                  isPropertiesActive 
-                    ? 'text-[#C98A4B] font-semibold' 
-                    : 'text-[#F1EEE7] hover:text-[#C98A4B]'
-                }`}
-                aria-expanded={activeDropdown === 'properties'}
-              >
-                <span>Properties</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 group-hover:text-[#C98A4B] transition-transform duration-200 ${
-                  activeDropdown === 'properties' ? 'rotate-180 text-[#C98A4B]' : ''
-                }`} />
-              </button>
-
-              {/* Mega-Menu Solid Dark Panel (4 Categorized Columns) */}
-              {activeDropdown === 'properties' && (
-                <div 
-                  className="absolute top-[calc(100%+6px)] left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-[#0F1117] rounded-2xl border border-[#C98A4B]/40 shadow-[0_30px_70px_rgba(0,0,0,0.95)] p-7 lg:p-9 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
-                  onMouseEnter={() => handleMouseEnter('properties')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {/* 4 Columns Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-9 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.09]">
-                    {PROPERTIES_MEGA_MENU.map((col, idx) => {
-                      const Icon = col.icon;
-                      return (
-                        <div key={col.title} className={idx > 0 ? "lg:pl-7 xl:pl-8 pt-4 lg:pt-0" : ""}>
-                          {/* Pillar Header */}
-                          <div className="flex items-center gap-3 mb-4 pb-2.5 border-b border-white/[0.09]">
-                            <div className="w-9 h-9 rounded-xl bg-[#C98A4B]/15 border border-[#C98A4B]/30 flex items-center justify-center shrink-0">
-                              <Icon className="w-5 h-5 text-[#C98A4B]" />
-                            </div>
-                            <div>
-                              <h4 className="text-[15px] xl:text-[16px] font-bold text-white tracking-tight leading-snug">
-                                {col.title}
-                              </h4>
-                              <span className="text-[11.5px] xl:text-[12px] text-[#C98A4B] font-medium block mt-0.5">
-                                {col.subtitle}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Sub-links */}
-                          <ul className="space-y-2.5">
-                            {col.links.map((link) => (
-                              <li key={link.label}>
-                                <Link
-                                  to={link.path}
-                                  onClick={() => setActiveDropdown(null)}
-                                  className="group flex items-center justify-between text-[13.5px] xl:text-[14.5px] text-slate-200/90 hover:text-[#C98A4B] transition-all duration-150 py-1"
-                                >
-                                  <span className="group-hover:translate-x-1.5 transition-transform duration-150">
-                                    {link.label}
-                                  </span>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Locations (Direct Link) */}
+            {/* Properties (Direct Link) */}
             <Link
               to="/properties"
-              className="py-1 text-[14px] xl:text-[15px] font-medium text-[#F1EEE7] hover:text-[#C98A4B] transition-colors whitespace-nowrap"
+              className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
+                isPropertiesActive 
+                  ? 'text-[#C98A4B] font-semibold' 
+                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+              }`}
             >
-              Locations
+              Properties
             </Link>
 
             {/* About Us */}
@@ -246,8 +104,12 @@ export default function Navbar({ onOpenVisitModal }) {
 
             {/* Services (Direct Link) */}
             <Link
-              to="/about#services"
-              className="py-1 text-[14px] xl:text-[15px] font-medium text-[#F1EEE7] hover:text-[#C98A4B] transition-colors whitespace-nowrap"
+              to="/services"
+              className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
+                isServicesActive 
+                  ? 'text-[#C98A4B] font-semibold' 
+                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+              }`}
             >
               Services
             </Link>
@@ -318,42 +180,15 @@ export default function Navbar({ onOpenVisitModal }) {
             Home
           </Link>
 
-          {/* Mobile Properties Accordion (Clean 2x2 Touch Cards) */}
-          <div>
-            <button
-              type="button"
-              onClick={() => setMobileExpandedSection(mobileExpandedSection === 'properties' ? null : 'properties')}
-              className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
-            >
-              <span>Properties</span>
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileExpandedSection === 'properties' ? 'rotate-180 text-[#C98A4B]' : ''}`} />
-            </button>
-            {mobileExpandedSection === 'properties' && (
-              <div className="pl-3 pr-2 py-1 space-y-0.5 animate-fadeIn">
-                {PROPERTIES_MEGA_MENU.map((col) => {
-                  const Icon = col.icon;
-                  const primaryPath = col.links[0]?.path || '/properties';
-                  return (
-                    <Link
-                      key={col.title}
-                      to={primaryPath}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm text-[#F1EEE7] hover:text-[#C98A4B] hover:bg-white/[0.04] transition-colors"
-                    >
-                      <Icon className="w-4 h-4 text-[#C98A4B] shrink-0" />
-                      <span className="font-medium text-[13.5px]">{col.title}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
+          {/* Properties (Direct Link) */}
           <Link
             to="/properties"
-            className="block px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
+              isPropertiesActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+            }`}
           >
-            Locations
+            Properties
           </Link>
 
           <Link
@@ -366,9 +201,11 @@ export default function Navbar({ onOpenVisitModal }) {
           </Link>
 
           <Link
-            to="/about#services"
+            to="/services"
             onClick={() => setMobileMenuOpen(false)}
-            className="block px-3 py-2 rounded-xl text-sm font-medium text-[#F1EEE7] hover:text-[#C98A4B]"
+            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
+              isServicesActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+            }`}
           >
             Services
           </Link>
@@ -382,8 +219,21 @@ export default function Navbar({ onOpenVisitModal }) {
             Contact
           </Link>
 
-          {/* Direct Dial Call Card in Mobile Menu */}
-          <div className="pt-2 px-0.5 pb-2">
+          {/* Post Requirement & Direct Dial in Mobile Menu */}
+          <div className="pt-2 px-0.5 pb-2 space-y-2">
+            {onOpenRequirementModal && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenRequirementModal();
+                }}
+                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#171922] border border-[#C98A4B]/50 hover:bg-[#C98A4B] text-[#C98A4B] hover:text-[#0F1117] font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+              >
+                <span>Post Requirement</span>
+              </button>
+            )}
+
             <a
               href={`tel:${BRAND.phone}`}
               className="flex items-center justify-center gap-2.5 w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#C98A4B] text-[#0F1117] font-bold text-xs sm:text-sm tracking-wide shadow-md active:scale-[0.98] transition-all"

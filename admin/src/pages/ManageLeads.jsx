@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Users, 
   Search, 
   Phone, 
   MessageSquare, 
   Calendar, 
-  Car, 
   Trash2, 
-  CheckCircle2, 
-  Clock, 
-  AlertCircle,
   Filter,
-  Loader2
+  Loader2,
+  Inbox
 } from 'lucide-react';
-import { fetchAdminLeads, updateLeadStatus, deleteLead } from '../services/adminService';
+import { subscribeAdminLeads, updateLeadStatus, deleteLead } from '../services/adminService';
 
 const STATUS_OPTIONS = [
   'New',
   'Contacted',
-  'Site Visit Scheduled',
-  'Under Negotiation',
-  'Closed / Booked',
-  'Archived'
+  'Site Visit',
+  'Closed'
 ];
+
+function normalizeLeadStatus(status) {
+  if (!status || status === 'New') return 'New';
+  if (status.includes('Visit')) return 'Site Visit';
+  if (status.includes('Closed') || status.includes('Archived')) return 'Closed';
+  if (status.includes('Contacted') || status.includes('Negotiation')) return 'Contacted';
+  return status;
+}
 
 export default function ManageLeads() {
   const [leads, setLeads] = useState([]);
@@ -30,26 +32,20 @@ export default function ManageLeads() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
 
-  const loadLeads = async () => {
-    setLoading(true);
-    try {
-      const data = await fetchAdminLeads();
-      setLeads(data);
-    } catch (err) {
-      console.error("Error loading leads:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadLeads();
+    setLoading(true);
+    const unsubscribe = subscribeAdminLeads((liveLeads) => {
+      setLeads(liveLeads);
+      setLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
   const handleStatusChange = async (leadId, newStatus) => {
+    // Optimistic instant state update in UI
+    setLeads(prev => prev.map(l => l.id === leadId ? { ...l, status: newStatus } : l));
     try {
-      const updated = await updateLeadStatus(leadId, newStatus);
-      setLeads(updated);
+      await updateLeadStatus(leadId, newStatus);
     } catch (err) {
       console.error("Failed to update status:", err);
     }
@@ -57,9 +53,9 @@ export default function ManageLeads() {
 
   const handleDelete = async (leadId, name) => {
     if (window.confirm(`Permanently remove lead record for "${name}"?`)) {
+      setLeads(prev => prev.filter(l => l.id !== leadId));
       try {
-        const remaining = await deleteLead(leadId);
-        setLeads(remaining);
+        await deleteLead(leadId);
       } catch (err) {
         console.error("Delete failed:", err);
       }
@@ -71,7 +67,8 @@ export default function ManageLeads() {
       l.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       l.phone?.includes(searchQuery) ||
       l.propertyTitle?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || l.status === statusFilter;
+    const leadNormStatus = normalizeLeadStatus(l.status);
+    const matchesStatus = statusFilter === 'All' || leadNormStatus === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
@@ -84,7 +81,7 @@ export default function ManageLeads() {
             Client Inquiries & Site Visit Desk
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Manage incoming Chennai buyer inquiries, cab bookings, and 1-tap WhatsApp responses
+            Manage incoming Chennai buyer inquiries, site visit requests, and 1-tap WhatsApp responses
           </p>
         </div>
 
@@ -117,7 +114,7 @@ export default function ManageLeads() {
           >
             <option value="All">All Statuses ({leads.length})</option>
             {STATUS_OPTIONS.map(s => {
-              const count = leads.filter(l => l.status === s).length;
+              const count = leads.filter(l => normalizeLeadStatus(l.status) === s).length;
               return (
                 <option key={s} value={s}>{s} ({count})</option>
               );
@@ -134,8 +131,18 @@ export default function ManageLeads() {
             <span>Loading inquiries...</span>
           </div>
         ) : filteredLeads.length === 0 ? (
-          <div className="p-12 text-center text-xs text-slate-500">
-            No inquiries match your current filter.
+          <div className="py-16 px-6 text-center text-xs text-slate-500 space-y-2">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mx-auto mb-3">
+              <Inbox className="w-6 h-6" />
+            </div>
+            <p className="text-sm font-semibold text-slate-700">
+              {searchQuery || statusFilter !== 'All' ? 'No inquiries match your filter' : 'No Inquiries Recorded Yet'}
+            </p>
+            <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              {searchQuery || statusFilter !== 'All' 
+                ? 'Try resetting your search query or status filter to see all leads.' 
+                : 'Live client inquiries and site visit requests submitted via the website will appear here in real time.'}
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -180,8 +187,8 @@ export default function ManageLeads() {
                         <div className="mt-1 flex items-center gap-1.5">
                           {isSiteVisit ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
-                              <Car className="w-3 h-3" />
-                              <span>Free Cab Visit: {lead.preferredDate || 'Upcoming'}</span>
+                              <Calendar className="w-3 h-3" />
+                              <span>Site Visit: {lead.preferredDate || 'Requested'}</span>
                             </span>
                           ) : (
                             <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700">
@@ -203,23 +210,28 @@ export default function ManageLeads() {
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <select
-                          value={lead.status || 'New'}
-                          onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                          className={`text-xs py-1 px-2.5 rounded-lg border font-semibold focus:outline-none ${
-                            lead.status === 'New'
-                              ? 'bg-amber-50 border-amber-300 text-amber-800'
-                              : lead.status === 'Contacted'
-                              ? 'bg-blue-50 border-blue-300 text-blue-800'
-                              : lead.status === 'Site Visit Scheduled'
-                              ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
-                              : 'bg-slate-50 border-slate-300 text-slate-700'
-                          }`}
-                        >
-                          {STATUS_OPTIONS.map(opt => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
+                        {(() => {
+                          const currentStatus = normalizeLeadStatus(lead.status);
+                          return (
+                            <select
+                              value={currentStatus}
+                              onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                              className={`text-xs py-1 px-2.5 rounded-lg border font-semibold focus:outline-none transition-colors ${
+                                currentStatus === 'New'
+                                  ? 'bg-amber-50 border-amber-300 text-amber-800'
+                                  : currentStatus === 'Contacted'
+                                  ? 'bg-blue-50 border-blue-300 text-blue-800'
+                                  : currentStatus === 'Site Visit'
+                                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
+                                  : 'bg-slate-100 border-slate-300 text-slate-700'
+                              }`}
+                            >
+                              {STATUS_OPTIONS.map(opt => (
+                                <option key={opt} value={opt}>{opt}</option>
+                              ))}
+                            </select>
+                          );
+                        })()}
                       </td>
 
                       <td className="py-3.5 px-4 text-right">

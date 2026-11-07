@@ -178,7 +178,7 @@ export default function PrivacyPolicyContent() {
             <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
-            <span>Arranging complimentary chauffeured AC cab site inspections with licensed developer representatives;</span>
+            <span>Arranging personalized on-site inspections with licensed developer representatives;</span>
           </div>
           <div className="flex items-start gap-2.5">
             <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   MapPin, BedDouble, Maximize2, Compass, Calendar, Building, 
-  ShieldCheck, Phone, Check, ArrowLeft, Car, 
+  ShieldCheck, Phone, Check, ArrowLeft, 
   Share2, ChevronRight 
 } from 'lucide-react';
-import { fetchPropertyBySlug, submitLeadInquiry } from '../services/propertyService';
+import { fetchPropertyBySlug, subscribePropertyBySlug, submitLeadInquiry } from '../services/propertyService';
 import { BRAND, generateWhatsAppLink } from '../utils/constants';
 
 export default function PropertyDetailPage({ onOpenVisitModal }) {
@@ -23,13 +23,17 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
   const [inquiryError, setInquiryError] = useState('');
 
   useEffect(() => {
-    async function load() {
-      setLoading(true);
-      const data = await fetchPropertyBySlug(slug);
-      setProperty(data);
+    setLoading(true);
+    const unsubscribe = subscribePropertyBySlug(slug, (liveData) => {
+      setProperty(liveData);
       setLoading(false);
-    }
-    load();
+    });
+
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
   }, [slug]);
 
   if (loading) {
@@ -77,6 +81,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
         phone: leadPhone,
         propertyTitle: property.title,
         propertyId: property.id,
+        leadType: 'Property Inquiry',
         source: 'Property Detail Page Form',
         website_trap_field: leadTrap
       });
@@ -261,25 +266,25 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
               </div>
             )}
 
-            {/* Free Cab Site Visit Callout */}
+            {/* Guided Site Visit Callout */}
             <div className="bg-gradient-to-r from-brand-navy-950 to-brand-navy-900 rounded-2xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md border border-brand-navy-800">
               <div className="space-y-1.5 text-center sm:text-left">
                 <span className="text-xs font-semibold text-brand-emerald-400 uppercase tracking-wider">
-                  Complimentary Doorstep Pickup
+                  Personalized Walkthrough
                 </span>
                 <h3 className="text-xl font-bold text-white">
                   Schedule an In-Person Site Visit for this Property
                 </h3>
                 <p className="text-xs text-slate-300 max-w-md">
-                  We will arrange an air-conditioned private cab to pick up your family anywhere in Chennai.
+                  Inspect model units, master plans, and amenities with our senior property specialist.
                 </p>
               </div>
               <button
                 onClick={onOpenVisitModal}
                 className="shrink-0 px-6 py-3 rounded-xl bg-brand-emerald-600 hover:bg-brand-emerald-700 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-transform active:scale-95"
               >
-                <Car className="w-4 h-4" />
-                <span>Book Free Visit</span>
+                <Calendar className="w-4 h-4" />
+                <span>Schedule Visit</span>
               </button>
             </div>
           </div>

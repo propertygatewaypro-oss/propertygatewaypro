@@ -3,68 +3,144 @@ import { auth, isFirebaseConfigured } from '../services/firebase';
 import { 
   signInWithEmailAndPassword, 
   signOut as fbSignOut, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword
 } from 'firebase/auth';
+import { formatFirebaseAuthError } from '../utils/authErrors';
 
 const AuthContext = createContext(null);
-
-const DEMO_ADMIN = {
-  uid: "demo-admin-pg-01",
-  email: "admin@propertygateway.in",
-  displayName: "Strategy 360 Admin",
-};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Production-level session subscriber via official Firebase SDK
   useEffect(() => {
     if (isFirebaseConfigured && auth) {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        setLoading(false);
-      });
+      const unsubscribe = onAuthStateChanged(
+        auth, 
+        (currentUser) => {
+          setUser(currentUser);
+          setLoading(false);
+        },
+        (error) => {
+          console.error("Firebase Auth observer error:", error);
+          setUser(null);
+          setLoading(false);
+        }
+      );
       return () => unsubscribe();
     } else {
-      // Offline / Local mock mode
-      const savedUser = localStorage.getItem('pg_admin_session');
-      if (savedUser) {
-        try {
-          setUser(JSON.parse(savedUser));
-        } catch (e) {
-          localStorage.removeItem('pg_admin_session');
-        }
-      }
+      // No demo fallback — pure production initialization state
+      setUser(null);
       setLoading(false);
     }
   }, []);
 
-  const login = async (email, password) => {
-    if (isFirebaseConfigured && auth) {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      return userCredential.user;
-    } else {
-      // Mock / Offline Auth check
-      if ((email.trim().toLowerCase() === "admin@propertygateway.in" || email.trim().toLowerCase() === "propertygatewy@gmail.com") && password === "admin123") {
-        const sessionUser = {
-          ...DEMO_ADMIN,
-          email: email.trim().toLowerCase()
-        };
-        setUser(sessionUser);
-        localStorage.setItem('pg_admin_session', JSON.stringify(sessionUser));
-        return sessionUser;
-      } else {
-        throw new Error("Invalid admin credentials. Use demo: admin@propertygateway.in / admin123");
+  /**
+   * Production Firebase Sign-In with Configurable Persistence (Remember Me)
+   */
+  const login = async (email, password, rememberMe = true) => {
+    if (!isFirebaseConfigured || !auth) {
+      throw new Error(
+        'Firebase is not connected. Please provide production Firebase credentials in your environment variables (VITE_FIREBASE_API_KEY).'
+      );
+    }
+
+    try {
+      // Set session persistence based on "Remember me" checkbox
+      try {
+        await setPersistence(
+          auth,
+          rememberMe ? browserLocalPersistence : browserSessionPersistence
+        );
+      } catch (persistErr) {
+        console.warn("Could not set auth persistence:", persistErr);
       }
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth, 
+        email.trim(), 
+        password
+      );
+      return userCredential.user;
+    } catch (err) {
+      const friendlyMessage = formatFirebaseAuthError(err);
+      throw new Error(friendlyMessage);
     }
   };
 
+  /**
+   * Production Firebase Sign-Out
+   */
   const logout = async () => {
     if (isFirebaseConfigured && auth) {
       await fbSignOut(auth);
     }
     setUser(null);
-    localStorage.removeItem('pg_admin_session');
+  };
+
+  /**
+   * Production Firebase Password Reset via Email
+   */
+  const resetPassword = async (email) => {
+    if (!isFirebaseConfigured || !auth) {
+      throw new Error(
+        'Firebase is not connected. Please configure your production Firebase environment.'
+      );
+    }
+
+    if (!email || !email.trim()) {
+      throw new Error('Please enter the email address to receive password reset instructions.');
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email.trim());
+    } catch (err) {
+      const friendlyMessage = formatFirebaseAuthError(err);
+      throw new Error(friendlyMessage);
+    }
+  };
+
+  /**
+   * Securely change Admin Password requiring current password verification
+   */
+  const changeAdminPassword = async (currentPassword, newPassword) => {
+    if (!auth || !auth.currentUser) {
+      throw new Error('No authenticated administrator found. Please log in again.');
+    }
+
+    if (!currentPassword) {
+      throw new Error('Please enter your current password to authorize this change.');
+    }
+
+    if (!newPassword || newPassword.length < 8) {
+      throw new Error('New password must be at least 8 characters long.');
+    }
+
+    try {
+      const currentUser = auth.currentUser;
+      const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
+      
+      // Step 1: Re-authenticate to prove current ownership
+      await reauthenticateWithCredential(currentUser, credential);
+
+      // Step 2: Update password directly in Firebase Authentication
+      await updatePassword(currentUser, newPassword);
+      return true;
+    } catch (err) {
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+        throw new Error('Your current password is incorrect. Please verify and try again.');
+      }
+      const friendlyMessage = formatFirebaseAuthError(err);
+      throw new Error(friendlyMessage);
+    }
   };
 
   const value = {
@@ -72,12 +148,15 @@ export function AuthProvider({ children }) {
     loading,
     login,
     logout,
+    resetPassword,
+    changeAdminPassword,
+    isFirebaseConfigured,
     isAuthenticated: Boolean(user)
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 }

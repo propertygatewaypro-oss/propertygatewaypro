@@ -98,7 +98,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-2 text-slate-700">
               <li>Curation and presentation of verified primary residential developments (apartments, row villas, independent houses, plotted subdivisions) and commercial spaces in Chennai.</li>
               <li>Impartial requirement analysis and comparative evaluation across key micro-markets including OMR, ECR, Anna Nagar, Porur, Adyar, and surrounding corridors.</li>
-              <li>Arranging and coordinating complimentary chauffeured AC cab site inspections to developer project locations.</li>
+              <li>Arranging and coordinating guided property site inspections to developer project locations.</li>
               <li>Liaising between prospective purchasers and authorized developer sales management desks to clarify technical specifications, payment milestones, and statutory approval statuses.</li>
             </ul>
             <p className="pt-2">

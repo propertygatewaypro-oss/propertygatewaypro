@@ -326,3 +326,96 @@ export const INITIAL_PROPERTIES = [
     createdAt: "2026-11-04T12:00:00.000Z"
   }
 ];
+
+export const INITIAL_TESTIMONIALS = [
+  {
+    id: "testi-1",
+    author: "Anand & Meera Sundaram",
+    role: "OMR IT Corridor • 3 BHK High-Rise Residence",
+    avatar: "/images/families/chennai-couple-villa-keys.webp",
+    initials: "AS",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "Finding a 3 BHK near Tidel Park without paying hefty broker commissions was seamless, ",
+    highlight: "saving our family nearly ₹2.4 Lakhs in cash.",
+    afterHighlight: " The personalized on-site guidance made inspecting multiple projects on OMR with our parents completely stress-free.",
+    content: "Finding a 3 BHK near Tidel Park without paying hefty broker commissions was seamless, saving our family nearly ₹2.4 Lakhs in cash. The personalized on-site guidance made inspecting multiple projects on OMR with our parents completely stress-free.",
+    createdAt: "2026-11-01T10:00:00.000Z"
+  },
+  {
+    id: "testi-2",
+    author: "Dr. S. Radhakrishnan",
+    role: "Anna Nagar • Regal Crest Luxury Apartment",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80",
+    initials: "SR",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "Parent document legal verification was our paramount condition. Property Gateway ",
+    highlight: "provided 30-year title deeds and CMDA sanctions",
+    afterHighlight: " before collecting any booking token, giving us complete peace of mind.",
+    content: "Parent document legal verification was our paramount condition. Property Gateway provided 30-year title deeds and CMDA sanctions before collecting any booking token, giving us complete peace of mind.",
+    createdAt: "2026-11-02T11:00:00.000Z"
+  },
+  {
+    id: "testi-3",
+    author: "Priya & Rajesh Narayanan",
+    role: "East Coast Road (ECR) • The Sovereign Bay Villa",
+    avatar: "/images/families/chennai-family-balcony-sunset.webp",
+    initials: "PN",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "Secured our sea-facing villa along East Coast Road ",
+    highlight: "with transparent builder pricing and zero markup.",
+    afterHighlight: " Highly professional advisory team with deep Chennai market insights and zero pushy tactics.",
+    content: "Secured our sea-facing villa along East Coast Road with transparent builder pricing and zero markup. Highly professional advisory team with deep Chennai market insights and zero pushy tactics.",
+    createdAt: "2026-11-03T12:00:00.000Z"
+  },
+  {
+    id: "testi-4",
+    author: "K. Vijayakumar & Family",
+    role: "Velachery / Perungudi • Lakeview Residences",
+    avatar: "/images/families/chennai-family-housewarming.webp",
+    initials: "KV",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "Getting direct builder pricing on our apartment saved us substantial brokerage. ",
+    highlight: "The personalized on-site guidance made site visits with elderly parents effortless",
+    afterHighlight: " across multiple weekends in South Chennai.",
+    content: "Getting direct builder pricing on our apartment saved us substantial brokerage. The personalized on-site guidance made site visits with elderly parents effortless across multiple weekends in South Chennai.",
+    createdAt: "2026-11-04T09:00:00.000Z"
+  },
+  {
+    id: "testi-5",
+    author: "Shweta & Karthik Raman",
+    role: "Porur / DLF IT Park • Greenwood Enclave Villa",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=160&h=160&q=80",
+    initials: "SK",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "The thorough document vetting gave our family total security before committing. Property Gateway's desk ",
+    highlight: "handled our SBI home loan sanction within 48 hours",
+    afterHighlight: " without multiple bank branch follow-ups.",
+    content: "The thorough document vetting gave our family total security before committing. Property Gateway's desk handled our SBI home loan sanction within 48 hours without multiple bank branch follow-ups.",
+    createdAt: "2026-11-05T14:00:00.000Z"
+  },
+  {
+    id: "testi-6",
+    author: "Capt. R. Arunachalam (Retd.)",
+    role: "Adyar / Besant Nagar • Sea-Breeze Penthouse",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&h=160&q=80",
+    initials: "RA",
+    rating: 5,
+    verified: true,
+    active: true,
+    beforeHighlight: "Transparent negotiation with top developers and zero broker fee. ",
+    highlight: "Their legal team guided us through registration at the Sub-Registrar Office",
+    afterHighlight: " without a single delay or unexpected expense.",
+    content: "Transparent negotiation with top developers and zero broker fee. Their legal team guided us through registration at the Sub-Registrar Office without a single delay or unexpected expense.",
+    createdAt: "2026-11-06T16:00:00.000Z"
+  }
+];

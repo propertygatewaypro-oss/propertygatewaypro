@@ -55,6 +55,15 @@ export default {
             surface: '#FFFFFF',
             subtle: '#EAE6DD',
           },
+          stone: {
+            900: '#1C1A17',
+            700: '#4A463F',
+            600: '#6E6962',
+            500: '#8C867E',
+            400: '#ABA59D',
+            200: '#DDD9D2',
+            100: '#EFECE6',
+          },
           whatsapp: {
             DEFAULT: '#25D366',
             hover: '#20BA56',
@@ -63,6 +72,10 @@ export default {
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+      },
+      boxShadow: {
+        modal: '0 25px 50px -12px rgba(15, 17, 23, 0.25)',
       },
     },
   },

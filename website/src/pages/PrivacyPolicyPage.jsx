@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 space-y-2 text-slate-700">
               <li><strong>Requirement Analysis & Shortlisting:</strong> Matching your budget and location criteria with verified inventory from Grade-A developers in Chennai.</li>
               <li><strong>Project Documentation:</strong> Delivering official developer brochures, master plans, sanction letters, and payment milestone sheets.</li>
-              <li><strong>Site Visit Coordination:</strong> Arranging complimentary chauffeured AC cab site inspections and scheduling dedicated appointments with builder representatives.</li>
+              <li><strong>Site Visit Coordination:</strong> Arranging guided on-site property inspections and scheduling dedicated appointments with builder representatives.</li>
               <li><strong>Advisory Follow-ups:</strong> Answering your questions regarding unit availability, floor-rise charges, clubhouse amenities, and legal clearances.</li>
               <li><strong>Platform Security:</strong> Safeguarding our digital infrastructure against fraudulent activity, spam submissions, and unauthorized automated scraping.</li>
             </ul>

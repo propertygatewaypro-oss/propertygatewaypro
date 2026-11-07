@@ -194,6 +194,51 @@
   animation: modalCardScaleUp 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Luxury Horizon Light Beam (Left to Right Sweep) */
+@keyframes beamSweep {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(450%);
+    opacity: 0;
+  }
+}
+
+.animate-beam-sweep {
+  animation: beamSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Continuous Right-to-Left Testimonials Marquee */
+@keyframes marqueeRightToLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-rtl,
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeRightToLeft 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-rtl:hover,
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* Reduced Motion Safety */
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-fade-up,
@@ -206,7 +251,10 @@
   .animate-card-cascade,
   .animate-fadeIn,
   .animate-scaleUp,
-  .animate-cta-pulse {
+  .animate-beam-sweep,
+  .animate-cta-pulse,
+  .animate-marquee-rtl,
+  .animate-marquee {
     animation: none !important;
     transform: none !important;
     opacity: 1 !important;

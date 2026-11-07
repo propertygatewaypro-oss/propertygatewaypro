@@ -1,28 +1,55 @@
-import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, MessageSquare, Send, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { BRAND, CHENNAI_LOCATIONS, PROPERTY_TYPES } from '../utils/constants';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Clock, 
+  Send, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Building2, 
+  Calendar,
+  ExternalLink
+} from 'lucide-react';
+import confetti from 'canvas-confetti';
+import { BRAND, CHENNAI_LOCATIONS } from '../utils/constants';
 import { submitLeadInquiry } from '../services/propertyService';
 
 export default function ContactPage() {
+  const [searchParams] = useSearchParams();
+  const propertyParam = searchParams.get('property') || '';
+  const locationParam = searchParams.get('location') || '';
+  const purposeParam = searchParams.get('purpose') || '';
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: '',
-    preferredLocation: 'Any Location',
-    propertyType: 'All Types',
-    message: '',
-    agreeConsent: true,
-    website_hp: '' // Honeypot field
+    preferredLocation: locationParam || 'All Locations',
+    targetTimeline: 'Immediate (Within 30 Days)',
+    message: propertyParam ? `Inquiring about ${propertyParam}.` : '',
+    consent: true,
+    website_hp: '' // Honeypot
   });
 
   const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'error'
   const [errorMsg, setErrorMsg] = useState('');
 
+  // Keep form in sync if query parameters change
+  useEffect(() => {
+    if (locationParam) {
+      setFormData(prev => ({ ...prev, preferredLocation: locationParam }));
+    }
+    if (propertyParam) {
+      setFormData(prev => ({ ...prev, message: `Inquiring about ${propertyParam}.` }));
+    }
+  }, [searchParams, locationParam, propertyParam]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
     }));
   };
 
@@ -31,161 +58,286 @@ export default function ContactPage() {
     setErrorMsg('');
 
     if (!formData.name.trim() || !formData.phone.trim()) {
-      setErrorMsg('Please enter your name and phone number.');
+      setErrorMsg('Please enter your full name and contact number.');
       return;
     }
 
-    if (!formData.agreeConsent) {
-      setErrorMsg('Please consent to contact so we can reach you.');
+    if (formData.phone.replace(/\D/g, '').length < 10) {
+      setErrorMsg('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
+    if (!formData.consent) {
+      setErrorMsg('Please accept the DPDP Act privacy consent to proceed.');
       return;
     }
 
     setStatus('loading');
     try {
+      const leadTitle = propertyParam 
+        ? propertyParam 
+        : (formData.preferredLocation && formData.preferredLocation !== 'All Locations' 
+            ? `${formData.preferredLocation} Inquiry` 
+            : 'Chennai Real Estate Inquiry');
+
+      const typeLabel = propertyParam 
+        ? 'Property Site Visit' 
+        : 'General Property Inquiry';
+
       await submitLeadInquiry({
-        ...formData,
-        leadType: 'General Consultation',
+        name: formData.name,
+        phone: formData.phone,
+        preferredLocation: formData.preferredLocation !== 'All Locations' ? formData.preferredLocation : 'Any Prime Location in Chennai',
+        targetTimeline: formData.targetTimeline,
+        message: formData.message,
+        propertyTitle: leadTitle,
+        leadType: typeLabel,
+        source: 'Website Contact Page',
+        website_trap_field: formData.website_hp,
         submittedAt: new Date().toISOString()
       });
+
       setStatus('success');
+      try {
+        confetti({
+          particleCount: 70,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#C98A4B', '#0F1117', '#E5B57E', '#25D366']
+        });
+      } catch (e) {
+        // Confetti fallback
+      }
+
       setFormData({
         name: '',
         phone: '',
-        email: '',
-        preferredLocation: 'Any Location',
-        propertyType: 'All Types',
+        preferredLocation: 'All Locations',
+        targetTimeline: 'Immediate (Within 30 Days)',
         message: '',
-        agreeConsent: true,
+        consent: true,
         website_hp: ''
       });
     } catch (err) {
       console.error(err);
       setStatus('error');
-      setErrorMsg('Unable to submit inquiry right now. Please message us on WhatsApp.');
+      setErrorMsg('Unable to submit right now. Please message us on WhatsApp or call our advisory desk.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
-      {/* Header */}
-      <section className="bg-navy-950 text-white py-14 sm:py-20 border-b border-navy-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest">Connect With Us</span>
-            <h1 className="mt-2 text-3xl sm:text-4xl font-serif font-bold text-slate-100">
-              Get in touch with Chennai's property advisory team.
+    <div className="min-h-screen bg-[#FAF9F6] pb-16 sm:pb-20">
+      
+      {/* 1. EDITORIAL HERO SECTION */}
+      <section className="bg-[#0F1117] text-white pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-[#C98A4B]/20 relative overflow-hidden">
+        {/* Architectural Grid Texture */}
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none"
+          style={{
+            backgroundImage: `radial-gradient(#C98A4B 1px, transparent 1px), radial-gradient(#C98A4B 1px, #0F1117 1px)`,
+            backgroundSize: '40px 40px',
+            backgroundPosition: '0 0, 20px 20px'
+          }}
+        />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C98A4B]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Breadcrumb Navigation */}
+          <nav className="flex items-center gap-2 text-xs text-[#E7E2D8]/60 mb-4 font-medium">
+            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-[#C98A4B]">Contact Us</span>
+          </nav>
+
+          {/* Hairline Eyebrow */}
+          <div className="inline-flex items-center gap-3 mb-3">
+            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
+            <span className="text-xs font-semibold tracking-[0.25em] uppercase text-[#C98A4B]">
+              PROPERTY GATEWAY ADVISORY
+            </span>
+            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
+          </div>
+
+          <div className="max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#F1EEE7] tracking-tight leading-tight">
+              Let’s Connect & <span className="text-[#C98A4B] italic">Find Your Next Property</span>
             </h1>
-            <p className="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed">
-              Whether you are planning to purchase a family apartment, invest in a villa on ECR, or require legal guidance on title verification, our team is at your service.
+            <p className="mt-3 text-sm sm:text-base text-[#E7E2D8]/80 leading-relaxed font-sans max-w-2xl">
+              Zero brokerage on new builder projects, 30-year parent title verification, and personalized site inspections across Chennai.
             </p>
           </div>
+
+          {/* 3 Quick Value Tickers */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10 max-w-3xl">
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-[#E7E2D8]/90">
+              <div className="w-8 h-8 rounded-lg bg-[#C98A4B]/20 flex items-center justify-center text-[#C98A4B] shrink-0">
+                <Building2 className="w-4 h-4" />
+              </div>
+              <span>Guided On-Site Inspections</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-[#E7E2D8]/90">
+              <div className="w-8 h-8 rounded-lg bg-[#C98A4B]/20 flex items-center justify-center text-[#C98A4B] shrink-0">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <span>0% Brokerage on New Launches</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-[#E7E2D8]/90">
+              <div className="w-8 h-8 rounded-lg bg-[#C98A4B]/20 flex items-center justify-center text-[#C98A4B] shrink-0">
+                <Clock className="w-4 h-4" />
+              </div>
+              <span>Quick 10-Minute Response</span>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Main Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      {/* 2. MAIN CONTENT GRID (Generous Spacing & Gaps) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
-          {/* Contact Details & Info Column (5 cols) */}
+          {/* LEFT COLUMN: Fast Connect, Office Info & Map (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200/80 shadow-sm space-y-6">
-              <h2 className="text-xl font-serif font-bold text-navy-950">Advisory Office</h2>
-              
-              <div className="space-y-5 text-sm">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-navy-900 shrink-0">
-                    <MapPin className="w-5 h-5 text-emerald-700" />
-                  </div>
-                  <div>
-                    <strong className="block text-slate-900 font-semibold mb-1">Office Address</strong>
-                    <p className="text-slate-600 leading-relaxed">{BRAND.address}</p>
-                  </div>
+            
+            {/* 1-Tap Fast Contact Card */}
+            <div className="bg-[#0F1117] text-white p-6 sm:p-7 rounded-3xl border border-[#C98A4B]/30 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#C98A4B]/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 space-y-5">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-[#C98A4B]">
+                    IMMEDIATE ASSISTANCE
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    Advisors Online
+                  </span>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-navy-900 shrink-0">
-                    <Phone className="w-5 h-5 text-emerald-700" />
-                  </div>
-                  <div>
-                    <strong className="block text-slate-900 font-semibold mb-1">Direct Calling</strong>
-                    <a href={`tel:${BRAND.phone}`} className="text-navy-950 font-medium hover:text-emerald-700 underline underline-offset-2">
-                      {BRAND.phoneDisplay}
-                    </a>
-                  </div>
+                <div>
+                  <h3 className="font-serif font-bold text-xl text-[#F1EEE7]">
+                    Prefer to Talk Directly?
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#E7E2D8]/75 leading-relaxed font-sans mt-1">
+                    Chat instantly with our senior Chennai property advisors over WhatsApp or call directly.
+                  </p>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-navy-900 shrink-0">
-                    <Mail className="w-5 h-5 text-emerald-700" />
-                  </div>
-                  <div>
-                    <strong className="block text-slate-900 font-semibold mb-1">Email Desk</strong>
-                    <a href={`mailto:${BRAND.email}`} className="text-navy-950 font-medium hover:text-emerald-700 underline underline-offset-2">
-                      {BRAND.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-navy-900 shrink-0">
-                    <Clock className="w-5 h-5 text-emerald-700" />
-                  </div>
-                  <div>
-                    <strong className="block text-slate-900 font-semibold mb-1">Consultation Hours</strong>
-                    <p className="text-slate-600">Monday – Sunday: 9:00 AM – 8:00 PM</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-100">
+                {/* Instant WhatsApp Action */}
                 <a
-                  href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to schedule a consultation with an advisor regarding verified residential communities and projects in Chennai. Thank you!")}`}
+                  href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(
+                    propertyParam 
+                      ? `Hello Property Gateway,\n\nI would like more information and pricing details for "${propertyParam}". Please share the brochure and floor plans. Thank you!`
+                      : "Hello Property Gateway,\n\nI would like to consult with an advisor regarding verified residential communities in Chennai. Thank you!"
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm transition-all shadow-sm active:scale-[0.98]"
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-xl bg-[#25D366] hover:bg-[#20ba56] text-white font-bold text-sm transition-all shadow-md active:scale-[0.98]"
                 >
                   <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-5 h-5 object-contain" />
-                  Instant WhatsApp Consultation
+                  <span>Chat on WhatsApp (Instant)</span>
+                </a>
+
+                {/* Direct Telephone Action */}
+                <a
+                  href={`tel:${BRAND.phone}`}
+                  className="w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-xl bg-white/10 hover:bg-white/15 text-[#F1EEE7] font-bold text-sm border border-white/15 transition-all active:scale-[0.98]"
+                >
+                  <Phone className="w-4 h-4 text-[#C98A4B]" />
+                  <span>Call {BRAND.phoneDisplay}</span>
                 </a>
               </div>
             </div>
 
-            {/* RERA Notice Box */}
-            <div className="bg-slate-100 p-5 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-2">
-              <div className="flex items-center gap-2 font-semibold text-navy-950">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                <span>Statutory Compliance Notice</span>
+            {/* Physical Headquarters & Timings */}
+            <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-2xs space-y-5">
+              <h3 className="font-serif font-bold text-lg text-slate-900 flex items-center justify-between pb-3 border-b border-slate-100">
+                <span>Advisory Headquarters</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                  CHENNAI
+                </span>
+              </h3>
+
+              <div className="space-y-4 text-xs sm:text-sm">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/70 flex items-center justify-center text-[#C98A4B] shrink-0 mt-0.5">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="block text-slate-900 font-semibold mb-0.5">Office Address</strong>
+                    <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">{BRAND.address}</p>
+                    <a
+                      href="https://maps.google.com/?q=Adambakkam+Chennai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C98A4B] hover:underline mt-1.5"
+                    >
+                      <span>Open in Google Maps</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/70 flex items-center justify-center text-[#C98A4B] shrink-0 mt-0.5">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="block text-slate-900 font-semibold mb-0.5">Consultation Timings</strong>
+                    <p className="text-slate-600 text-xs sm:text-sm">Monday – Sunday: 9:00 AM – 8:00 PM</p>
+                    <p className="text-xs text-emerald-700 font-medium mt-0.5">Site visit appointments available all 7 days</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/70 flex items-center justify-center text-[#C98A4B] shrink-0 mt-0.5">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <strong className="block text-slate-900 font-semibold mb-0.5">Official Inquiries</strong>
+                    <a href={`mailto:${BRAND.email}`} className="text-slate-600 hover:text-[#C98A4B] text-xs sm:text-sm">
+                      {BRAND.email}
+                    </a>
+                  </div>
+                </div>
               </div>
-              <p>
-                Property Gateway operates under Tamil Nadu Real Estate Regulatory Authority Agent Registration <strong>{BRAND.reraId}</strong>. We do not accept undisclosed cash charges or broker commissions on builder direct offerings.
-              </p>
+
+              {/* RERA Notice Pill */}
+              <div className="pt-3 border-t border-slate-100 flex items-center gap-2.5 text-xs text-slate-500">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>TNRERA Registered Agent: <strong className="text-slate-800">{BRAND.reraId}</strong></span>
+              </div>
             </div>
+
           </div>
 
-          {/* Form Column (7 cols) */}
+          {/* RIGHT COLUMN: Generous, Well-Spaced Inquiry Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200/80 shadow-sm">
-              <h2 className="text-xl font-serif font-bold text-navy-950 mb-1">Send an Inquiry</h2>
-              <p className="text-sm text-slate-600 mb-6">
-                Fill in your requirements below. Our Chennai micro-market specialist will contact you within 2 business hours.
-              </p>
-
+            <div className="bg-white p-6 sm:p-8 lg:p-10 rounded-3xl border border-slate-200/90 shadow-sm">
+              
+              {/* Form State Success Message */}
               {status === 'success' ? (
-                <div className="p-6 rounded-lg bg-emerald-50 border border-emerald-200 text-center space-y-3">
-                  <CheckCircle2 className="w-10 h-10 text-emerald-700 mx-auto" />
-                  <h3 className="text-base font-semibold text-emerald-950">Inquiry Received Successfully</h3>
-                  <p className="text-xs text-emerald-800 leading-relaxed max-w-md mx-auto">
-                    Thank you! Our property advisory specialist has received your requirements and will reach out shortly with vetted options.
+                <div className="py-12 px-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-700 mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-xl font-serif font-bold text-emerald-950">
+                    Inquiry Received Successfully!
+                  </h3>
+                  <p className="text-sm text-emerald-800 leading-relaxed max-w-md mx-auto">
+                    Thank you! Our senior property advisory specialist has received your request and will contact you within 2 business hours.
                   </p>
                   <button
                     onClick={() => setStatus('idle')}
-                    className="mt-2 text-xs font-semibold text-emerald-700 hover:underline"
+                    className="mt-3 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs sm:text-sm font-bold hover:bg-emerald-800 transition-colors shadow-xs"
                   >
-                    Send another inquiry
+                    Send Another Inquiry
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  
                   {/* Honeypot field (hidden from real users) */}
                   <div className="hidden" aria-hidden="true">
                     <label htmlFor="website_hp">Leave this empty</label>
@@ -200,9 +352,22 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Simple Text Header */}
+                  <div className="border-b border-slate-100 pb-5">
+                    <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 tracking-tight">
+                      {propertyParam ? `Inquire About ${propertyParam}` : 'Schedule a Visit or Inquiry'}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                      {propertyParam 
+                        ? 'Share your details below to receive brochure, verified pricing, and schedule a private inspection.'
+                        : 'Connect with a certified Chennai property specialist. We respond within 2 hours.'}
+                    </p>
+                  </div>
+
+                  {/* 2. NAME & PHONE INPUTS (Well-Spaced Grid) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                     <div>
-                      <label htmlFor="name" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                      <label htmlFor="name" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                         Your Full Name *
                       </label>
                       <input
@@ -213,13 +378,13 @@ export default function ContactPage() {
                         placeholder="e.g. Anand Sundaram"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
+                        className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C98A4B] focus:border-[#C98A4B] bg-[#FAF9F6]/40 focus:bg-white transition-all shadow-2xs"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Phone / WhatsApp *
+                      <label htmlFor="phone" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        WhatsApp / Phone Number *
                       </label>
                       <input
                         type="tel"
@@ -229,39 +394,25 @@ export default function ContactPage() {
                         placeholder="e.g. 98400 12345"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
+                        className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C98A4B] focus:border-[#C98A4B] bg-[#FAF9F6]/40 focus:bg-white transition-all shadow-2xs"
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Email Address (Optional)
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="e.g. anand@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* 3. LOCALITY & TIMELINE INPUTS */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                     <div>
-                      <label htmlFor="preferredLocation" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Preferred Location
+                      <label htmlFor="preferredLocation" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Target Locality
                       </label>
                       <select
                         id="preferredLocation"
                         name="preferredLocation"
                         value={formData.preferredLocation}
                         onChange={handleChange}
-                        className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
+                        className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C98A4B] focus:border-[#C98A4B] bg-white cursor-pointer shadow-2xs"
                       >
-                        <option value="Any Location">Any Location in Chennai</option>
+                        <option value="All Locations">Any Prime Location in Chennai</option>
                         {CHENNAI_LOCATIONS.filter(l => l !== "All Locations").map(loc => (
                           <option key={loc} value={loc}>{loc}</option>
                         ))}
@@ -269,73 +420,92 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="propertyType" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                        Property Category
+                      <label htmlFor="targetTimeline" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                        Target Move-In Date / Timeline
                       </label>
                       <select
-                        id="propertyType"
-                        name="propertyType"
-                        value={formData.propertyType}
+                        id="targetTimeline"
+                        name="targetTimeline"
+                        value={formData.targetTimeline}
                         onChange={handleChange}
-                        className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
+                        className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C98A4B] focus:border-[#C98A4B] bg-white cursor-pointer shadow-2xs"
                       >
-                        {PROPERTY_TYPES.map(type => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
+                        <option value="Immediate (Within 30 Days)">Immediate (Within 30 Days)</option>
+                        <option value="1 to 3 Months">1 to 3 Months</option>
+                        <option value="3 to 6 Months">3 to 6 Months</option>
+                        <option value="Under Construction (1-2 Years)">Under Construction (1-2 Years)</option>
+                        <option value="Investment / Exploring">Investment / Just Exploring</option>
                       </select>
                     </div>
                   </div>
 
+                  {/* 4. SPECIFIC REQUIREMENTS */}
                   <div>
-                    <label htmlFor="message" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Specific Requirements or Questions
+                    <label htmlFor="message" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Specific Requirements or Questions (Optional)
                     </label>
                     <textarea
                       id="message"
                       name="message"
-                      rows={3}
-                      placeholder="e.g. Looking for a 3 BHK near Tidel Park or Guindy within ₹1.2 Cr, ready within 6 months."
+                      rows={3.5}
+                      placeholder="e.g. Looking for 3 BHK near OMR or ECR under ₹1.5 Cr, or need to schedule a site inspection this weekend."
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full text-base px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 bg-white"
+                      className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#C98A4B] focus:border-[#C98A4B] bg-[#FAF9F6]/40 focus:bg-white transition-all shadow-2xs resize-none"
                     ></textarea>
                   </div>
 
-                  {/* DPDP Consent */}
-                  <div className="flex items-start gap-2 pt-1">
-                    <input
-                      type="checkbox"
-                      id="agreeConsent"
-                      name="agreeConsent"
-                      checked={formData.agreeConsent}
-                      onChange={handleChange}
-                      className="mt-1 h-4 w-4 rounded border-slate-300 text-emerald-700 focus:ring-emerald-700"
-                    />
-                    <label htmlFor="agreeConsent" className="text-xs text-slate-600 leading-normal">
-                      I consent to Property Gateway contacting me via Phone or WhatsApp regarding relevant Chennai properties per the DPDP Act 2023. We do not sell or spam your contact info.
+                  {/* 5. PRIVACY & DPDP ACT CONSENT CHECKBOX */}
+                  <div className="pt-1">
+                    <label className="flex items-start gap-3 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        name="consent"
+                        checked={formData.consent}
+                        onChange={handleChange}
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#C98A4B] focus:ring-[#C98A4B] accent-[#C98A4B] cursor-pointer"
+                      />
+                      <span className="text-xs text-slate-600 leading-relaxed">
+                        I authorize Property Gateway to contact me via Phone or WhatsApp regarding verified properties per DPDP Act 2023. We strictly safeguard your privacy.
+                      </span>
                     </label>
                   </div>
 
                   {errorMsg && (
-                    <div className="text-xs text-red-600 bg-red-50 p-2.5 rounded border border-red-200">
+                    <div className="text-xs text-red-600 bg-red-50 p-3 rounded-xl border border-red-200">
                       {errorMsg}
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-lg bg-navy-950 hover:bg-navy-900 text-white font-medium text-sm transition-colors disabled:opacity-50"
-                  >
-                    <Send className="w-4 h-4" />
-                    {status === 'loading' ? 'Submitting Inquiry...' : 'Submit Inquiry'}
-                  </button>
+                  {/* 6. SUBMIT BUTTON */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-xl bg-[#0F1117] hover:bg-black text-[#C98A4B] font-bold text-sm sm:text-base transition-all shadow-md active:scale-[0.98] disabled:opacity-50 cursor-pointer hover:shadow-[0_8px_20px_rgba(201,138,75,0.3)]"
+                    >
+                      <Send className="w-4 h-4" />
+                      <span>
+                        {status === 'loading' ? 'Submitting Details...' : 'Submit Inquiry'}
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Privacy Assurance Note */}
+                  <p className="text-xs text-slate-400 text-center pt-2 flex items-center justify-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>100% Privacy Protected. TNRERA Reg: {BRAND.reraId}. No spam, ever.</span>
+                  </p>
+
                 </form>
               )}
+
             </div>
           </div>
+
         </div>
       </section>
+
     </div>
   );
 }

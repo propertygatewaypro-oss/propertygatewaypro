@@ -71,7 +71,7 @@ export default function RefundPolicyContent() {
             <span>100% Complimentary Homebuyer Advisory</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            All general property browsing, enquiry submissions, requirement registrations, phone consultations, brochure downloads, and chauffeured AC cab site inspections arranged by Property Gateway for primary residential projects in Chennai are <strong>entirely free of charge</strong>.
+            All general property browsing, enquiry submissions, requirement registrations, phone consultations, brochure downloads, and property site inspections arranged by Property Gateway for primary residential projects in Chennai are <strong>entirely free of charge</strong>.
           </p>
         </div>
         <p className="text-xs text-slate-600 pt-1">

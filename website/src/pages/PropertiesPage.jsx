@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Filter, SlidersHorizontal, X, Search, RotateCcw, MapPin } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
-import { fetchProperties } from '../services/propertyService';
+import { fetchProperties, subscribeProperties } from '../services/propertyService';
 import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
 
 export default function PropertiesPage() {
@@ -28,24 +28,28 @@ export default function PropertiesPage() {
   }, [searchParams]);
 
   useEffect(() => {
-    async function loadProperties() {
-      setLoading(true);
-      const budgetObj = BUDGET_RANGES.find(b => b.label === budgetLabel) || BUDGET_RANGES[0];
-      
-      const results = await fetchProperties({
-        location,
-        category,
-        budgetMin: budgetObj.min,
-        budgetMax: budgetObj.max,
-        status,
-        sortBy,
-        pageSize: 24
-      });
-      setProperties(results);
+    setLoading(true);
+    const budgetObj = BUDGET_RANGES.find(b => b.label === budgetLabel) || BUDGET_RANGES[0];
+    
+    // Realtime subscription: updates automatically whenever admin changes property data or status
+    const unsubscribe = subscribeProperties((liveResults) => {
+      setProperties(liveResults);
       setLoading(false);
-    }
+    }, {
+      location,
+      category,
+      budgetMin: budgetObj.min,
+      budgetMax: budgetObj.max,
+      status,
+      sortBy,
+      pageSize: 24
+    });
 
-    loadProperties();
+    return () => {
+      if (typeof unsubscribe === 'function') {
+        unsubscribe();
+      }
+    };
   }, [location, category, budgetLabel, status, sortBy]);
 
   const handleReset = () => {

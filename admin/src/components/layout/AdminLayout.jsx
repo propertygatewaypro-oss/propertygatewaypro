@@ -4,12 +4,12 @@ import {
   LayoutDashboard, 
   Building2, 
   Users, 
+  MessageSquareQuote,
+  Settings,
   ExternalLink, 
   LogOut, 
   Menu, 
   X, 
-  ShieldCheck, 
-  PlusCircle,
   Home
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -29,6 +29,8 @@ export default function AdminLayout() {
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Properties', path: '/properties', icon: Building2 },
     { name: 'Inquiries & Leads', path: '/leads', icon: Users },
+    { name: 'Client Feedbacks', path: '/testimonials', icon: MessageSquareQuote },
+    { name: 'Settings & Security', path: '/settings', icon: Settings },
   ];
 
   return (
@@ -70,18 +72,6 @@ export default function AdminLayout() {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Quick Action Button */}
-          <div className="px-4 pt-5 pb-2">
-            <NavLink
-              to="/properties?new=1"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg bg-brand-emerald-600 hover:bg-brand-emerald-700 text-white text-xs font-semibold tracking-wide transition-colors shadow-sm"
-            >
-              <PlusCircle className="w-4 h-4" />
-              Add New Property
-            </NavLink>
           </div>
 
           {/* Links */}
@@ -127,14 +117,19 @@ export default function AdminLayout() {
 
           {/* User & Logout */}
           <div className="pt-2 flex items-center justify-between text-xs">
-            <div className="truncate pr-2">
+            <NavLink 
+              to="/settings"
+              onClick={() => setMobileMenuOpen(false)}
+              className="truncate pr-2 hover:opacity-80 transition-opacity"
+              title="Manage Credentials & Security"
+            >
               <p className="font-semibold text-white truncate">{user?.displayName || 'Admin'}</p>
               <p className="text-[11px] text-slate-400 truncate">{user?.email}</p>
-            </div>
+            </NavLink>
             <button
               onClick={handleLogout}
               title="Sign Out"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-brand-navy-900 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-brand-navy-900 transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>

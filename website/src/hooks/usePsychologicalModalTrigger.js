@@ -2,13 +2,13 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
- * usePsychologicalModalTrigger (Aggressive CRO Engine)
+ * usePsychologicalModalTrigger (High-Converting CRO Engine)
  * 
  * Auto-triggers for website visitors using proven behavioral psychological hooks:
- * 1. Fast Timer: Auto-pops after 5 seconds of browsing.
- * 2. Exit-Intent: Pops when desktop cursor moves towards top tabs/close button.
- * 3. Scroll-Up Velocity: Pops when user scrolls down > 150px and flicks up.
- * 4. Testing-Friendly: Cleans up obsolete permanent locks so it triggers reliably on refresh.
+ * 1. Dwell Timer: Auto-triggers after 6 seconds of browsing.
+ * 2. Exit-Intent: Triggers when desktop cursor moves towards top browser window/tabs.
+ * 3. Scroll-Up Velocity: Triggers when visitor scrolls down > 180px and rapidly scrolls up (seeking back button).
+ * 4. User-Friendly Session Frequency: Honors session dismissal so visitors aren't spammed after closing.
  */
 export function usePsychologicalModalTrigger() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,50 +16,68 @@ export function usePsychologicalModalTrigger() {
   const hasTriggeredRef = useRef(false);
   const lastScrollYRef = useRef(0);
   const maxScrollYRef = useRef(0);
-  const lastScrollTimeRef = useRef(Date.now());
-  const mountTimeRef = useRef(Date.now());
+  const lastScrollTimeRef = useRef(0);
+  const mountTimeRef = useRef(0);
 
-  // Clean up any old permanent lockout keys from past testing sessions on mount
+  // Initialize mount timestamp cleanly on route change
   useEffect(() => {
-    try {
-      localStorage.removeItem('pg_requirement_submitted');
-      localStorage.removeItem('pg_post_req_dismissed_until');
-      sessionStorage.removeItem('pg_post_req_dismissed');
-    } catch {
-      // ignore
-    }
-  }, []);
-
-  // Reset trigger state on route change so user on another page can still trigger exit intent / dwell
-  useEffect(() => {
-    hasTriggeredRef.current = false;
     mountTimeRef.current = Date.now();
+    lastScrollTimeRef.current = Date.now();
+    hasTriggeredRef.current = false;
   }, [location.pathname]);
 
-  const triggerModal = useCallback((reason = 'behavioral') => {
+  const triggerModal = useCallback((_reason = 'behavioral') => {
     if (hasTriggeredRef.current) return;
+
+    // Check if previously dismissed in this session or already submitted
+    try {
+      if (sessionStorage.getItem('pg_post_req_dismissed')) return;
+      if (localStorage.getItem('pg_requirement_submitted')) return;
+    } catch {
+      // ignore storage errors
+    }
+
+    // Exclude contact page and legal policy pages
+    const isExcluded = [
+      '/contact', 
+      '/privacy-policy', 
+      '/privacy',
+      '/terms-and-conditions', 
+      '/terms',
+      '/cookie-policy', 
+      '/cookies',
+      '/refund-policy', 
+      '/anti-ai-standards'
+    ].some(p => location.pathname === p || location.pathname.startsWith(`${p}/`));
     
-    // Quick 500ms initial safety lockout so page finishes rendering
-    if (Date.now() - mountTimeRef.current < 500) return;
+    if (isExcluded) return;
+
+    // Ensure page has been rendered for at least 600ms
+    if (mountTimeRef.current && (Date.now() - mountTimeRef.current < 600)) return;
 
     hasTriggeredRef.current = true;
     setIsOpen(true);
-  }, []);
+  }, [location.pathname]);
 
-  // Manual launcher (can always be triggered by buttons or floating tab)
+  // Manual trigger (always opens on click, bypassing auto-dismiss limits)
   const openModal = useCallback(() => {
     setIsOpen(true);
   }, []);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);
+    try {
+      sessionStorage.setItem('pg_post_req_dismissed', 'true');
+    } catch {
+      // ignore
+    }
   }, []);
 
   useEffect(() => {
-    // 1. FAST DWELL TIMER: Triggers automatically after 5 seconds on page
+    // 1. DWELL TIMER: Triggers after 6 seconds on page
     const dwellTimer = setTimeout(() => {
-      triggerModal('aggressive_timer_5s');
-    }, 5000);
+      triggerModal('dwell_timer_6s');
+    }, 6000);
 
     // 2. SCROLL-UP VELOCITY TRIGGER
     const handleScroll = () => {
@@ -71,8 +89,8 @@ export function usePsychologicalModalTrigger() {
         maxScrollYRef.current = currentScrollY;
       }
 
-      // If user scrolled past 150px and scrolls up by > 40px
-      if (maxScrollYRef.current > 150) {
+      // If visitor scrolled past 180px and rapidly flicks up by > 40px
+      if (maxScrollYRef.current > 180) {
         const scrollDelta = lastScrollYRef.current - currentScrollY;
         if (scrollDelta > 40 && timeDelta < 400) {
           triggerModal('scroll_up_velocity');

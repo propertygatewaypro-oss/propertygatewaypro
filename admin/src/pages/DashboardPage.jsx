@@ -3,34 +3,34 @@ import { Link } from 'react-router-dom';
 import { 
   Building2, 
   Users, 
-  Car, 
-  Eye, 
   PlusCircle, 
   ArrowRight, 
   Phone, 
   MessageSquare, 
-  CheckCircle2, 
-  Clock, 
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  MessageSquareQuote
 } from 'lucide-react';
-import { fetchAdminProperties, fetchAdminLeads } from '../services/adminService';
+import { fetchAdminProperties, fetchAdminLeads, fetchAdminTestimonials } from '../services/adminService';
 import { BRAND } from '../utils/constants';
 
 export default function DashboardPage() {
   const [properties, setProperties] = useState([]);
   const [leads, setLeads] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
-        const [props, lds] = await Promise.all([
+        const [props, lds, tests] = await Promise.all([
           fetchAdminProperties(),
-          fetchAdminLeads()
+          fetchAdminLeads(),
+          fetchAdminTestimonials()
         ]);
         setProperties(props);
         setLeads(lds);
+        setTestimonials(tests || []);
       } catch (err) {
         console.error("Dashboard data load error:", err);
       } finally {
@@ -59,8 +59,8 @@ export default function DashboardPage() {
 
         <div className="flex items-center gap-3">
           <Link
-            to="/properties?new=1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-brand-emerald-600 hover:bg-brand-emerald-700 text-white text-xs font-semibold tracking-wide transition-colors shadow-sm"
+            to="/properties/add"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C98A4B] hover:bg-[#b07436] text-white text-xs font-semibold tracking-wide transition-colors shadow-sm"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Add Property</span>
@@ -114,22 +114,26 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Site Visits */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs">
+        {/* Client Testimonials */}
+        <Link 
+          to="/testimonials" 
+          className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs hover:border-[#C98A4B]/50 hover:shadow-md transition-all group"
+        >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Free Cab Visits</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <Car className="w-4 h-4" />
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-[#C98A4B] transition-colors">Client Feedbacks</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C98A4B] flex items-center justify-center">
+              <MessageSquareQuote className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="text-3xl font-serif font-bold text-slate-900">{visitRequestsCount}</span>
-            <span className="text-xs text-slate-500">scheduled</span>
+            <span className="text-3xl font-serif font-bold text-slate-900">{testimonials.length}</span>
+            <span className="text-xs text-slate-500">reviews</span>
           </div>
-          <div className="mt-2 text-xs text-emerald-700 font-medium">
-            Door-to-door AC transport
+          <div className="mt-2 text-xs text-emerald-700 font-medium flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            {testimonials.filter(t => t.active !== false).length} Active on Website
           </div>
-        </div>
+        </Link>
 
         {/* Statutory Compliance */}
         <div className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs">
@@ -207,17 +211,25 @@ export default function DashboardPage() {
                         </span>
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                          lead.status === 'New' 
-                            ? 'bg-amber-100 text-amber-800' 
-                            : lead.status === 'Contacted' 
-                            ? 'bg-blue-100 text-blue-800' 
-                            : lead.status === 'Site Visit Scheduled' 
-                            ? 'bg-emerald-100 text-emerald-800' 
-                            : 'bg-slate-100 text-slate-700'
-                        }`}>
-                          {lead.status || 'New'}
-                        </span>
+                        {(() => {
+                          const s = lead.status || 'New';
+                          const isVisit = s.includes('Visit');
+                          const isContacted = s.includes('Contacted') || s.includes('Negotiation');
+                          const isClosed = s.includes('Closed') || s.includes('Archived');
+                          return (
+                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                              s === 'New' 
+                                ? 'bg-amber-100 text-amber-800' 
+                                : isContacted 
+                                ? 'bg-blue-100 text-blue-800' 
+                                : isVisit 
+                                ? 'bg-emerald-100 text-emerald-800' 
+                                : 'bg-slate-100 text-slate-700'
+                            }`}>
+                              {isVisit ? 'Site Visit' : isClosed ? 'Closed' : isContacted ? 'Contacted' : 'New'}
+                            </span>
+                          );
+                        })()}
                       </td>
                       <td className="py-3.5 px-4 text-right">
                         <div className="flex items-center justify-end gap-2">
