@@ -223,7 +223,7 @@ export default function SettingsPage() {
             <button
               type="submit"
               disabled={passwordLoading || !isLengthValid || !isMatchValid}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl bg-gold-metallic text-white font-bold text-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm active:scale-95"
             >
               {passwordLoading ? (
                 <>

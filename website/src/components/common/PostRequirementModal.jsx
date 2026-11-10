@@ -236,7 +236,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
         {/* Responsive Circular Close Button: Inset cleanly inside card, eliminating edge collisions and click outlines */}
         <button
           onClick={onClose}
-          className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-50 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0F1117] hover:bg-[#C98A4B] text-slate-300 hover:text-white font-bold shadow-md flex items-center justify-center transition-all duration-200 outline-none focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-[#C98A4B] select-none cursor-pointer active:scale-95"
+          className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-50 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white hover:bg-gold-metallic text-slate-700 hover:text-white font-bold shadow-md flex items-center justify-center transition-all duration-200 border border-[#E7E2D8] outline-none focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-[#A88548] select-none cursor-pointer active:scale-95"
           aria-label="Close dialog"
         >
           <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
@@ -245,7 +245,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
         {/* ============================================================== */}
         {/* 1. LEFT COLUMN: CHENNAI FAMILY IMAGE CAROUSEL (Desktop Only)   */}
         {/* ============================================================== */}
-        <div className="hidden md:block relative md:w-1/2 overflow-hidden bg-[#0F1117] md:rounded-l-2xl shrink-0 self-stretch">
+        <div className="hidden md:block relative md:w-1/2 overflow-hidden bg-[#FAF9F6] md:rounded-l-2xl shrink-0 self-stretch border-r border-[#E7E2D8]">
           {FAMILY_SLIDES.map((slide, index) => (
             <div
               key={slide.image}
@@ -259,7 +259,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                 className="w-full h-full object-cover object-center"
               />
               {/* Refined gradient overlay for text legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-[#0F1117]/45 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
             </div>
           ))}
 
@@ -284,7 +284,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                       setCurrentSlide(i);
                     }}
                     className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer outline-none focus:outline-none ${
-                      i === currentSlide ? 'w-5 sm:w-6 bg-[#C98A4B]' : 'w-1.5 bg-white/40 hover:bg-white/70'
+                      i === currentSlide ? 'w-5 sm:w-6 bg-gold-metallic' : 'w-1.5 bg-white/40 hover:bg-white/70'
                     }`}
                     aria-label={`Go to slide ${i + 1}`}
                   />
@@ -305,7 +305,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
               <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
                 <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />
               </div>
-              <h3 className="text-lg sm:text-xl font-serif font-bold text-[#0F1117]">
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-[#181B22]">
                 Thank You!
               </h3>
               <p className="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
@@ -314,7 +314,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
               <div className="pt-1.5 sm:pt-2">
                 <button
                   onClick={onClose}
-                  className="px-5 py-2 sm:py-2.5 rounded-xl bg-[#0F1117] hover:bg-[#1A1E29] text-white text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
+                  className="px-5 py-2 sm:py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-semibold uppercase tracking-wider shadow-sm transition-transform active:scale-95 cursor-pointer"
                 >
                   Close
                 </button>
@@ -326,20 +326,20 @@ export default function PostRequirementModal({ isOpen, onClose }) {
               
               {/* A. Top Header (Symmetrical & Brand-Aligned) */}
               <div className="pt-3.5 sm:pt-4 md:pt-5 pb-1 sm:pb-1.5 px-8 sm:px-10 md:px-7 text-center space-y-1 shrink-0">
-                <h2 className="text-xs sm:text-sm md:text-base font-bold text-[#0F1117] tracking-tight leading-snug">
-                  Expert Consultation by <span className="text-[#C98A4B]">Professionals</span>
+                <h2 className="text-xs sm:text-sm md:text-base font-bold text-[#181B22] tracking-tight leading-snug">
+                  Expert Consultation by <span className="text-gold-metallic font-serif">Professionals</span>
                 </h2>
 
                 {/* Brand Logo & Company Name */}
                 <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-                  <div className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 rounded-md sm:rounded-lg bg-[#0F1117] border border-[#C98A4B]/35 flex items-center justify-center p-0.5 sm:p-1 shadow-xs shrink-0">
+                  <div className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 rounded-md sm:rounded-lg bg-white border border-[#A88548]/35 flex items-center justify-center p-0.5 sm:p-1 shadow-xs shrink-0">
                     <img 
                       src="/logo.png" 
                       alt="Property Gateway Logo" 
                       className="w-full h-full object-contain rounded" 
                     />
                   </div>
-                  <span className="font-serif font-bold text-xs sm:text-sm md:text-[15px] text-[#0F1117] tracking-tight">
+                  <span className="font-serif font-bold text-xs sm:text-sm md:text-[15px] text-[#181B22] tracking-tight">
                     Property Gateway
                   </span>
                 </div>
@@ -378,7 +378,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                     className={`w-full h-9 sm:h-10 px-3 sm:px-3.5 text-base md:text-sm rounded-xl bg-white border text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all ${
                       errors.name 
                         ? 'border-rose-400 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 bg-rose-50/20' 
-                        : 'border-[#DDD6C8] focus:border-[#C98A4B] focus:ring-1 focus:ring-[#C98A4B]'
+                        : 'border-[#DDD6C8] focus:border-[#A88548] focus:ring-1 focus:ring-[#A88548]'
                     }`}
                   />
                   {errors.name && (
@@ -398,7 +398,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                     className={`w-full h-9 sm:h-10 px-3 sm:px-3.5 text-base md:text-sm rounded-xl bg-white border text-slate-900 placeholder:text-slate-400 focus:outline-none transition-all ${
                       errors.email 
                         ? 'border-rose-400 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 bg-rose-50/20' 
-                        : 'border-[#DDD6C8] focus:border-[#C98A4B] focus:ring-1 focus:ring-[#C98A4B]'
+                        : 'border-[#DDD6C8] focus:border-[#A88548] focus:ring-1 focus:ring-[#A88548]'
                     }`}
                   />
                   {errors.email && (
@@ -410,7 +410,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
 
                 {/* 3. Mobile Number with Fixed Indian +91 Prefix */}
                 <div>
-                  <div className={`flex h-9 sm:h-10 w-full rounded-xl border bg-white transition-all focus-within:border-[#C98A4B] focus-within:ring-1 focus-within:ring-[#C98A4B] ${
+                  <div className={`flex h-9 sm:h-10 w-full rounded-xl border bg-white transition-all focus-within:border-[#A88548] focus-within:ring-1 focus-within:ring-[#A88548] ${
                     errors.phone ? 'border-rose-400 bg-rose-50/20' : 'border-[#DDD6C8]'
                   }`}>
                     <div className="flex h-full items-center px-3 sm:px-3.5 bg-[#FAF9F6] border-r border-[#DDD6C8] rounded-l-xl text-slate-800 text-xs sm:text-sm font-semibold font-mono select-none shrink-0">
@@ -440,7 +440,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                     placeholder="Please share your requirement here."
                     value={formData.requirement}
                     onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
-                    className="w-full h-[52px] sm:h-[58px] md:h-[64px] p-2 sm:p-2.5 text-base md:text-sm rounded-xl bg-white border border-[#DDD6C8] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#C98A4B] focus:border-[#C98A4B] transition-all resize-none"
+                    className="w-full h-[52px] sm:h-[58px] md:h-[64px] p-2 sm:p-2.5 text-base md:text-sm rounded-xl bg-white border border-[#DDD6C8] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#A88548] focus:border-[#A88548] transition-all resize-none"
                   />
                 </div>
 
@@ -451,12 +451,12 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                       type="checkbox"
                       checked={formData.consent}
                       onChange={handleConsentChange}
-                      className="mt-0.5 rounded text-[#0F1117] focus:ring-[#C98A4B] border-[#DDD6C8]"
+                      className="mt-0.5 rounded text-[#181B22] focus:ring-[#A88548] border-[#DDD6C8]"
                     />
                     <span className="text-[10px] sm:text-[10.5px] text-slate-600 leading-tight">
                       I authorise Property Gateway to contact me via email, SMS, WhatsApp, and call (overrides DND). I agree to the{' '}
-                      <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#C98A4B] hover:underline font-medium">Privacy Policy</a> &{' '}
-                      <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="text-[#C98A4B] hover:underline font-medium">Terms</a>.
+                      <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#A88548] hover:underline font-medium">Privacy Policy</a> &{' '}
+                      <a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="text-[#A88548] hover:underline font-medium">Terms</a>.
                     </span>
                   </label>
                   {errors.consent && (
@@ -466,12 +466,12 @@ export default function PostRequirementModal({ isOpen, onClose }) {
                   )}
                 </div>
 
-                {/* C. Direct Submit Button - Flows immediately after consent (No unwanted gaps) */}
+                {/* C. Direct Submit Button - Flows immediately after consent in Metallic Gold */}
                 <div className="pt-1.5 sm:pt-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-10 sm:h-11 rounded-xl bg-[#0F1117] hover:bg-[#1C202C] active:scale-[0.99] text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center border border-[#232733] disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full h-10 sm:h-11 rounded-xl bg-gold-metallic active:scale-[0.99] text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md hover:shadow-lg cursor-pointer flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <span className="inline-flex items-center gap-2">

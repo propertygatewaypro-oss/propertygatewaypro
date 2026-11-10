@@ -137,11 +137,11 @@ export default function HomePage({ onOpenVisitModal }) {
             isFeaturedInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             <div>
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#C98A4B] bg-[#C98A4B]/10 px-3 py-1 rounded-full border border-[#C98A4B]/25 font-mono">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B] shrink-0" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#7D5D2A] bg-[#A88548]/15 px-3 py-1 rounded-full border border-[#A88548]/30 font-mono">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
                 <span>TNRERA Verified Projects</span>
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0F1117] tracking-tight mt-2.5">
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#181B22] tracking-tight mt-2.5">
                 Featured Projects Across Chennai
               </h2>
               <p className="text-sm sm:text-[14.5px] text-slate-600 mt-1.5 max-w-xl leading-relaxed">
@@ -157,7 +157,7 @@ export default function HomePage({ onOpenVisitModal }) {
                   onClick={() => setActiveTab(tab)}
                   className={`px-3.5 py-1.5 rounded-lg text-xs transition-all whitespace-nowrap cursor-pointer ${
                     activeTab === tab
-                      ? 'bg-[#C98A4B] text-[#0F1117] font-bold shadow-xs'
+                      ? 'bg-gold-metallic text-white font-bold shadow-xs'
                       : 'text-slate-600 hover:text-slate-900 font-medium'
                   }`}
                 >
@@ -194,7 +194,7 @@ export default function HomePage({ onOpenVisitModal }) {
               <p className="text-slate-600 text-sm">
                 No properties found in this category right now.
               </p>
-              <Link to="/properties" className="text-[#C98A4B] font-semibold text-sm hover:underline">
+              <Link to="/properties" className="text-[#A88548] font-semibold text-sm hover:underline">
                 View all listings →
               </Link>
             </div>
@@ -204,7 +204,7 @@ export default function HomePage({ onOpenVisitModal }) {
           <div className="text-center mt-12 sm:mt-14">
             <Link
               to="/properties"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#0F1117] hover:bg-[#C98A4B] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-gold-metallic text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]"
             >
               <span>Explore All Chennai Properties</span>
               <ArrowRight className="w-4 h-4" />
@@ -221,14 +221,14 @@ export default function HomePage({ onOpenVisitModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 sm:gap-2.5">
-              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
-              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#C98A4B]">
+              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#7D5D2A]">
                 Verified Client Journeys
               </span>
-              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#0F1117] tracking-tight mt-1.5 leading-snug sm:leading-tight">
-              Trusted by Homebuyers <span className="text-[#C98A4B]">Across Chennai</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#181B22] tracking-tight mt-1.5 leading-snug sm:leading-tight">
+              Trusted by Homebuyers <span className="text-gold-metallic font-serif">Across Chennai</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
               Real families and investors sharing authentic experiences purchasing verified homes through Property Gateway.
@@ -249,14 +249,14 @@ export default function HomePage({ onOpenVisitModal }) {
               return (
                 <div 
                   key={`${t.id || 't'}-${idx}`}
-                  className="w-[285px] sm:w-[350px] md:w-[410px] shrink-0 bg-[#F8FAFC] rounded-2xl p-4 sm:p-5 md:p-6 border border-[#E2E8F0] shadow-xs flex flex-col justify-between hover:shadow-md hover:border-[#C98A4B]/40 transition-all duration-300"
+                  className="w-[285px] sm:w-[350px] md:w-[410px] shrink-0 bg-[#F8FAFC] rounded-2xl p-4 sm:p-5 md:p-6 border border-[#E2E8F0] shadow-xs flex flex-col justify-between hover:shadow-md hover:border-[#A88548]/50 transition-all duration-300"
                 >
                   <div>
                     {/* Rating stars & verified tag */}
                     <div className="flex items-center justify-between gap-1 mb-2.5">
-                      <div className="flex items-center gap-0.5 text-[#C98A4B]">
+                      <div className="flex items-center gap-0.5 text-[#D4AF37]">
                         {[...Array(t.rating || 5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-[#C98A4B] text-[#C98A4B]" />
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
                         ))}
                       </div>
                       {t.verified !== false && (
@@ -268,7 +268,7 @@ export default function HomePage({ onOpenVisitModal }) {
 
                     {/* Top: Quote with styled quotation marks and bolded highlights */}
                     <p className="text-slate-700 text-xs sm:text-sm md:text-[14px] leading-relaxed">
-                      <span className="text-[#C98A4B] font-serif font-black text-lg sm:text-xl mr-1 select-none">“</span>
+                      <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl mr-1 select-none">“</span>
                       {t.beforeHighlight !== undefined ? (
                         <>
                           {t.beforeHighlight}
@@ -281,7 +281,7 @@ export default function HomePage({ onOpenVisitModal }) {
                           {t.content || t.quote}
                         </>
                       )}
-                      <span className="text-[#C98A4B] font-serif font-black text-lg sm:text-xl ml-1 select-none">”</span>
+                      <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl ml-1 select-none">”</span>
                     </p>
                   </div>
 
@@ -292,7 +292,7 @@ export default function HomePage({ onOpenVisitModal }) {
                         <img 
                           src={t.avatar} 
                           alt={t.author} 
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-[#C98A4B] ring-offset-2 ring-offset-white"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-[#A88548] ring-offset-2 ring-offset-white"
                           onError={(e) => {
                             e.target.style.display = 'none';
                             if (e.target.nextElementSibling) {
@@ -302,13 +302,13 @@ export default function HomePage({ onOpenVisitModal }) {
                         />
                       ) : null}
                       <div 
-                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#0F1117] to-[#272B38] text-[#C98A4B] font-bold text-xs ring-2 ring-[#C98A4B] ring-offset-2 ring-offset-white ${t.avatar ? 'hidden' : 'flex'} items-center justify-center`}
+                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#181B22] to-[#272B38] text-[#A88548] font-bold text-xs ring-2 ring-[#A88548] ring-offset-2 ring-offset-white ${t.avatar ? 'hidden' : 'flex'} items-center justify-center`}
                       >
                         {displayInitials}
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="font-bold text-xs sm:text-sm md:text-[15px] text-[#0F1117] truncate">
+                      <div className="font-bold text-xs sm:text-sm md:text-[15px] text-[#181B22] truncate">
                         {t.author}
                       </div>
                       <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5 font-medium">
@@ -333,14 +333,14 @@ export default function HomePage({ onOpenVisitModal }) {
             isFaqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
             <div className="inline-flex items-center gap-2 sm:gap-2.5">
-              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
-              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#C98A4B]">
+              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
+              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#A88548]">
                 Clarity & Legal Transparency
               </span>
-              <span className="w-5 sm:w-6 h-[1px] bg-[#C98A4B]/50" />
+              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#0F1117] tracking-tight mt-1.5 leading-snug sm:leading-tight">
-              Frequently Asked <span className="text-[#C98A4B]">Questions</span>
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#181B22] tracking-tight mt-1.5 leading-snug sm:leading-tight">
+              Frequently Asked <span className="text-[#A88548]">Questions</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl mx-auto leading-relaxed px-2 sm:px-0">
               Everything you need to know about our zero-brokerage advisory, TNRERA approvals, and guided property site visits.
@@ -360,8 +360,8 @@ export default function HomePage({ onOpenVisitModal }) {
                     isFaqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                   } ${
                     isOpen 
-                      ? 'border border-[#C98A4B]/40 border-l-4 border-l-[#C98A4B] shadow-sm' 
-                      : 'border border-[#E2E8F0] hover:border-[#C98A4B]/40 shadow-xs hover:shadow-sm'
+                      ? 'border border-[#A88548]/50 border-l-4 border-l-[#A88548] shadow-sm' 
+                      : 'border border-[#E2E8F0] hover:border-[#A88548]/40 shadow-xs hover:shadow-sm'
                   }`}
                 >
                   <button
@@ -370,18 +370,18 @@ export default function HomePage({ onOpenVisitModal }) {
                   >
                     <div className="flex items-center gap-2.5 sm:gap-3.5 md:gap-4 min-w-0">
                       <span className={`text-xs sm:text-sm font-mono font-bold shrink-0 transition-colors duration-200 ${
-                        isOpen ? 'text-[#C98A4B]' : 'text-slate-400 group-hover:text-[#C98A4B]'
+                        isOpen ? 'text-[#7D5D2A]' : 'text-slate-400 group-hover:text-[#A88548]'
                       }`}>
                         {`0${idx + 1}`}
                       </span>
                       <span className={`font-bold text-xs sm:text-sm md:text-base leading-snug sm:leading-normal transition-colors duration-200 ${
-                        isOpen ? 'text-[#C98A4B]' : 'text-[#0F1117] group-hover:text-[#C98A4B]'
+                        isOpen ? 'text-[#7D5D2A]' : 'text-[#181B22] group-hover:text-[#A88548]'
                       }`}>
                         {faq.q}
                       </span>
                     </div>
                     <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 shrink-0 transition-transform duration-300 ease-out ${
-                      isOpen ? 'rotate-180 text-[#C98A4B]' : 'rotate-0 text-slate-400 group-hover:text-[#C98A4B]'
+                      isOpen ? 'rotate-180 text-[#A88548]' : 'rotate-0 text-slate-400 group-hover:text-[#A88548]'
                     }`} />
                   </button>
                   <div 
@@ -403,12 +403,12 @@ export default function HomePage({ onOpenVisitModal }) {
       </section>
 
       {/* 8. High-Converting Instant WhatsApp Hook */}
-      <section className="py-16 bg-[#0F1117] text-white relative overflow-hidden border-t border-[#232733]">
+      <section className="py-16 bg-[#FAF9F6] text-[#1E232F] relative overflow-hidden border-t border-[#E7E2D8]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-tight text-[#1E232F]">
             Looking for something specific in Chennai?
           </h2>
-          <p className="text-slate-300 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-slate-600 text-base max-w-xl mx-auto leading-relaxed">
             Send our senior property consultants your exact requirements (Location, BHK, Budget). We will send curated brochures and verified unit options directly to your WhatsApp in 10 minutes.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
@@ -423,9 +423,9 @@ export default function HomePage({ onOpenVisitModal }) {
             </a>
             <a
               href={`tel:${BRAND.phoneRaw}`}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#161922] hover:bg-[#1E222D] text-white font-semibold text-sm border border-[#2B303C] flex items-center justify-center gap-2 transition-all"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white hover:bg-[#FAF9F6] text-[#1E232F] hover:text-[#A88548] font-bold text-sm border border-[#E7E2D8] flex items-center justify-center gap-2 transition-all shadow-xs"
             >
-              <Phone className="w-4 h-4 text-[#C98A4B]" />
+              <Phone className="w-4 h-4 text-[#A88548]" />
               <span>Call: {BRAND.phoneDisplay}</span>
             </a>
           </div>

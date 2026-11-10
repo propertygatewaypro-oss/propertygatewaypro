@@ -26,7 +26,7 @@ export default function PropertyCard({ property }) {
   };
 
   return (
-    <article className="group bg-white rounded-2xl border border-[#E6E1D6] hover:border-[#C98A4B]/60 overflow-hidden card-lift-transition shadow-subtle hover:shadow-card-hover flex flex-col justify-between transition-all duration-300">
+    <article className="group bg-white rounded-2xl border border-[#E6E1D6] hover:border-[#A88548]/70 overflow-hidden card-lift-transition shadow-subtle hover:shadow-card-hover flex flex-col justify-between transition-all duration-300">
       <div>
         {/* Image Container with 16:10 Aspect Ratio & Zoom Physics */}
         <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
@@ -44,7 +44,7 @@ export default function PropertyCard({ property }) {
             </span>
 
             {isFeatured && (
-              <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#C98A4B]/20 text-[#8E5D34] border border-[#C98A4B]/30 shadow-sm backdrop-blur-xs">
+              <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-[#A88548]/15 text-[#7D5D2A] border border-[#A88548]/30 shadow-xs backdrop-blur-xs">
                 ★ Exclusive
               </span>
             )}
@@ -52,8 +52,8 @@ export default function PropertyCard({ property }) {
 
           {/* RERA Verified Stamp */}
           <div className="absolute bottom-3 right-3 z-10">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#0F1117]/85 backdrop-blur-xs text-[10px] text-white font-medium border border-white/10">
-              <ShieldCheck className="w-3 h-3 text-[#C98A4B]" />
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/95 backdrop-blur-xs text-[10px] text-[#1E232F] font-bold border border-[#E7E2D8] shadow-xs">
+              <ShieldCheck className="w-3 h-3 text-[#A88548]" />
               <span>RERA Approved</span>
             </span>
           </div>
@@ -63,7 +63,7 @@ export default function PropertyCard({ property }) {
         <div className="p-5 space-y-3">
           {/* Builder & Location */}
           <div className="flex items-center justify-between text-xs text-slate-500">
-            <span className="font-semibold text-[#C98A4B] uppercase tracking-wider font-mono text-[11px]">
+            <span className="font-bold text-[#A88548] uppercase tracking-wider font-mono text-[11px]">
               {property.builder || 'Verified Project'}
             </span>
             <span className="flex items-center gap-1 text-slate-600">
@@ -73,7 +73,7 @@ export default function PropertyCard({ property }) {
           </div>
 
           {/* Property Title */}
-          <h3 className="text-lg font-bold text-[#0F1117] tracking-tight leading-snug group-hover:text-[#C98A4B] transition-colors">
+          <h3 className="text-lg font-bold text-[#181B22] tracking-tight leading-snug group-hover:text-[#A88548] transition-colors">
             <Link to={`/property/${property.slug}`}>
               {property.title}
             </Link>
@@ -105,7 +105,7 @@ export default function PropertyCard({ property }) {
           <span className="block text-[11px] uppercase tracking-wider text-slate-400 font-medium">
             Starting Price
           </span>
-          <span className="text-xl font-extrabold text-[#0F1117] tabular-nums">
+          <span className="text-xl font-extrabold text-[#181B22] tabular-nums">
             {property.priceDisplay}
           </span>
         </div>
@@ -128,10 +128,10 @@ export default function PropertyCard({ property }) {
             />
           </a>
 
-          {/* View Details Link */}
+          {/* View Details Link with Metallic Gold */}
           <Link
             to={`/property/${property.slug}`}
-            className="inline-flex items-center justify-center gap-1 px-3.5 py-2.5 rounded-xl bg-[#0F1117] hover:bg-[#C98A4B] text-white text-xs font-semibold shadow-xs transition-all active:scale-95"
+            className="inline-flex items-center justify-center gap-1 px-3.5 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold shadow-xs transition-all active:scale-95"
           >
             <span>Details</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

@@ -28,10 +28,10 @@ export default function EmiCalculator() {
     <section className="py-20 bg-[#FAF9F6] border-y border-[#E7E2D8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B] bg-[#C98A4B]/10 px-3.5 py-1 rounded-full border border-[#C98A4B]/30 inline-block">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#A88548] bg-[#A88548]/10 px-3.5 py-1 rounded-full border border-[#A88548]/30 inline-block">
             Financial Planning Desk
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#181B22] tracking-tight">
             Home Loan EMI Calculator
           </h2>
           <p className="text-base text-slate-600 leading-relaxed">
@@ -48,7 +48,7 @@ export default function EmiCalculator() {
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
                 <span className="text-slate-700">Loan Principal</span>
-                <span className="text-[#0F1117] font-bold text-base tabular-nums">
+                <span className="text-[#181B22] font-bold text-base tabular-nums">
                   {formatLakhs(loanAmount)}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export default function EmiCalculator() {
                 step="500000"
                 value={loanAmount}
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#A88548]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>₹10 Lakhs</span>
@@ -72,7 +72,7 @@ export default function EmiCalculator() {
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
                 <span className="text-slate-700">Interest Rate (% p.a.)</span>
-                <span className="text-[#0F1117] font-bold text-base tabular-nums">
+                <span className="text-[#181B22] font-bold text-base tabular-nums">
                   {interestRate}%
                 </span>
               </div>
@@ -83,7 +83,7 @@ export default function EmiCalculator() {
                 step="0.1"
                 value={interestRate}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#A88548]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>7.5% (Prime)</span>
@@ -96,7 +96,7 @@ export default function EmiCalculator() {
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm font-semibold">
                 <span className="text-slate-700">Tenure</span>
-                <span className="text-[#0F1117] font-bold text-base tabular-nums">
+                <span className="text-[#181B22] font-bold text-base tabular-nums">
                   {tenureYears} Years
                 </span>
               </div>
@@ -107,7 +107,7 @@ export default function EmiCalculator() {
                 step="1"
                 value={tenureYears}
                 onChange={(e) => setTenureYears(Number(e.target.value))}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#C98A4B]"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#A88548]"
               />
               <div className="flex justify-between text-[11px] text-slate-400">
                 <span>5 Yrs</span>
@@ -118,29 +118,30 @@ export default function EmiCalculator() {
           </div>
 
           {/* EMI Calculation Result Card (5 cols) */}
-          <div className="lg:col-span-5 bg-[#0F1117] text-white rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border border-slate-800 shadow-xl">
+          <div className="lg:col-span-5 bg-[#FAF9F6] text-[#181B22] rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border border-[#E7E2D8] shadow-lg relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#A88548]/10 rounded-full blur-2xl pointer-events-none" />
             <div>
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
+              <span className="text-xs uppercase tracking-wider text-slate-500 font-semibold font-mono">
                 Monthly Estimated EMI
               </span>
-              <div className="text-3xl sm:text-4xl font-serif font-bold text-brand-bronze-400 tabular-nums mt-1">
+              <div className="text-3xl sm:text-4xl font-serif font-bold text-[#7D5D2A] tabular-nums mt-1">
                 ₹{monthlyEmi.toLocaleString('en-IN')}
-                <span className="text-xs font-normal text-slate-300 ml-1">/ month</span>
+                <span className="text-xs font-normal text-slate-500 ml-1">/ month</span>
               </div>
             </div>
 
-            <div className="space-y-3 pt-4 border-t border-slate-800 text-xs">
-              <div className="flex justify-between text-slate-300">
+            <div className="space-y-3 pt-4 border-t border-[#E7E2D8] text-xs">
+              <div className="flex justify-between text-slate-600">
                 <span>Principal Amount:</span>
-                <span className="font-semibold text-white">{formatLakhs(loanAmount)}</span>
+                <span className="font-semibold text-[#181B22]">{formatLakhs(loanAmount)}</span>
               </div>
-              <div className="flex justify-between text-slate-300">
+              <div className="flex justify-between text-slate-600">
                 <span>Total Interest:</span>
-                <span className="font-semibold text-white">{formatLakhs(totalInterest)}</span>
+                <span className="font-semibold text-[#181B22]">{formatLakhs(totalInterest)}</span>
               </div>
-              <div className="flex justify-between text-slate-300 font-bold border-t border-slate-800 pt-2 text-sm">
+              <div className="flex justify-between text-slate-700 font-bold border-t border-[#E7E2D8] pt-2 text-sm">
                 <span>Total Outflow:</span>
-                <span className="text-brand-bronze-400">{formatLakhs(totalPayment)}</span>
+                <span className="text-[#7D5D2A]">{formatLakhs(totalPayment)}</span>
               </div>
             </div>
 
@@ -148,7 +149,7 @@ export default function EmiCalculator() {
               href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(`Hello Property Gateway,\n\nI used your EMI calculator and would like assistance with bank home loan pre-approval:\n• Required Loan Amount: ${formatLakhs(loanAmount)}\n• Estimated Monthly EMI: ₹${monthlyEmi.toLocaleString('en-IN')}\n• Preferred Tenor: ${tenureYears} Years\n\nPlease connect me with your banking desk for pre-approval from partner banks (SBI, HDFC, ICICI). Thank you!`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-brand-bronze-600 hover:bg-brand-bronze-700 active:scale-[0.98] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-bronze-glow transition-all"
+              className="w-full py-3.5 px-4 rounded-xl bg-gold-metallic text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-[#A88548]/30 active:scale-[0.98] transition-all"
             >
               <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
               <span>Get Bank Pre-Approval on WhatsApp</span>

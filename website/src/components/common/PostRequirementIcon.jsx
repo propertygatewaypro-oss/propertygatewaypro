@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PostRequirementIcon({ className = "w-5 h-5", color = "#C98A4B" }) {
+export default function PostRequirementIcon({ className = "w-5 h-5", color = "#A88548" }) {
   return (
     <svg 
       viewBox="0 0 24 24" 

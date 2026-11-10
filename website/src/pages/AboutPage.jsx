@@ -218,29 +218,29 @@ export default function AboutPage() {
     <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-12">
       
       {/* 1. EDITORIAL HERO SECTION */}
-      <section className="relative bg-[#0F1117] text-white pt-10 pb-14 sm:pt-14 sm:pb-16 border-b border-[#C98A4B]/20 overflow-hidden">
+      <section className="relative bg-[#FAF9F6] text-[#1E232F] pt-10 pb-14 sm:pt-14 sm:pb-16 border-b border-[#E7E2D8] overflow-hidden">
         {/* Subtle Architectural Glow & Grid Texture */}
         <div 
-          className="absolute inset-0 opacity-15 pointer-events-none"
+          className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
-            backgroundImage: `radial-gradient(#C98A4B 1px, transparent 1px), radial-gradient(#C98A4B 1px, #0F1117 1px)`,
+            backgroundImage: `radial-gradient(#A88548 1px, transparent 1px), radial-gradient(#A88548 1px, #FAF9F6 1px)`,
             backgroundSize: '40px 40px',
             backgroundPosition: '0 0, 20px 20px'
           }}
         />
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C98A4B]/10 rounded-full blur-3xl pointer-events-none animate-pulse duration-1000" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#A88548]/10 rounded-full blur-3xl pointer-events-none animate-pulse duration-1000" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb Navigation */}
           <nav 
-            className={`flex items-center gap-2 text-xs sm:text-sm text-[#E7E2D8]/60 mb-5 font-medium transition-all duration-700 ease-out ${
+            className={`flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-5 font-medium transition-all duration-700 ease-out ${
               isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
             }`}
           >
-            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
+            <Link to="/" className="hover:text-[#A88548] transition-colors">Home</Link>
             <span>/</span>
-            <span className="text-[#C98A4B]">About Us</span>
+            <span className="text-[#A88548] font-bold">About Us</span>
           </nav>
 
           {/* Hairline Editorial Eyebrow */}
@@ -249,24 +249,24 @@ export default function AboutPage() {
               isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
             }`}
           >
-            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
-            <span className="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-[#C98A4B]">
+            <span className="h-[1px] w-6 sm:w-10 bg-[#A88548]" />
+            <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] uppercase text-[#7D5D2A]">
               CHENNAI'S PREMIER REAL ESTATE ADVISORY
             </span>
-            <span className="h-[1px] w-6 sm:w-10 bg-[#C98A4B]" />
+            <span className="h-[1px] w-6 sm:w-10 bg-[#A88548]" />
           </div>
 
           <div className="max-w-3xl">
             <h1 
-              className={`text-3xl sm:text-5xl lg:text-5xl font-serif font-bold text-[#F1EEE7] tracking-tight leading-[1.15] transition-all duration-700 ease-out delay-150 ${
+              className={`text-3xl sm:text-5xl lg:text-5xl font-serif font-bold text-[#1E232F] tracking-tight leading-[1.15] transition-all duration-700 ease-out delay-150 ${
                 isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              Advising Chennai Homebuyers with <span className="text-[#C98A4B] italic">Uncompromising Integrity</span>
+              Advising Chennai Homebuyers with <span className="text-gold-metallic italic">Uncompromising Integrity</span>
             </h1>
             
             <p 
-              className={`mt-4 text-sm sm:text-base text-[#E7E2D8]/80 leading-relaxed font-sans max-w-2xl transition-all duration-700 ease-out delay-200 ${
+              className={`mt-4 text-sm sm:text-base text-slate-600 leading-relaxed font-sans max-w-2xl transition-all duration-700 ease-out delay-200 ${
                 isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
@@ -280,7 +280,7 @@ export default function AboutPage() {
             >
               <Link
                 to="/contact?purpose=site-visit"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#C98A4B] hover:bg-[#d99857] text-[#0F1117] font-bold text-sm transition-all shadow-lg active:scale-[0.98] hover:shadow-[0_10px_25px_rgba(201,138,75,0.35)]"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gold-metallic text-white font-bold text-sm transition-all shadow-md active:scale-[0.98]"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Schedule Property Visit</span>
@@ -290,7 +290,7 @@ export default function AboutPage() {
                 href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like to speak with a senior property advisor regarding verified homes in Chennai. Thank you!")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-[#F1EEE7] font-bold text-sm border border-white/15 transition-all active:scale-[0.98]"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-[#FAF9F6] text-[#1E232F] border border-[#E7E2D8] hover:border-[#A88548] font-bold text-sm transition-all shadow-xs"
               >
                 <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
                 <span>Chat with Advisor</span>
@@ -300,12 +300,12 @@ export default function AboutPage() {
 
           {/* Key Metrics Strip (With Smooth Deceleration Counter Animation) */}
           <div 
-            className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 pt-7 border-t border-white/10 max-w-4xl transition-all duration-700 ease-out delay-350 ${
+            className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 pt-7 border-t border-[#E7E2D8] max-w-4xl transition-all duration-700 ease-out delay-350 ${
               isHeroLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
-              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#E7E2D8] shadow-2xs group hover:border-[#A88548] hover:shadow-xs transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#7D5D2A]">
                 <AnimatedStatCounter 
                   end={4500} 
                   suffix="+" 
@@ -313,13 +313,13 @@ export default function AboutPage() {
                   duration={2200} 
                 />
               </div>
-              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+              <div className="text-xs text-slate-600 mt-1 uppercase tracking-wider font-sans font-semibold">
                 Properties Evaluated
               </div>
             </div>
 
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
-              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#E7E2D8] shadow-2xs group hover:border-[#A88548] hover:shadow-xs transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#7D5D2A]">
                 <AnimatedStatCounter 
                   end={950} 
                   suffix="+" 
@@ -327,13 +327,13 @@ export default function AboutPage() {
                   duration={2000} 
                 />
               </div>
-              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+              <div className="text-xs text-slate-600 mt-1 uppercase tracking-wider font-sans font-semibold">
                 Families Assisted
               </div>
             </div>
 
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
-              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B]">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#E7E2D8] shadow-2xs group hover:border-[#A88548] hover:shadow-xs transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#7D5D2A]">
                 <AnimatedStatCounter 
                   start={2} 
                   end={0} 
@@ -342,22 +342,22 @@ export default function AboutPage() {
                   duration={1600} 
                 />
               </div>
-              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+              <div className="text-xs text-slate-600 mt-1 uppercase tracking-wider font-sans font-semibold">
                 Buyer Brokerage
               </div>
             </div>
 
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm group hover:border-[#C98A4B]/50 hover:bg-white/[0.07] transition-all duration-300">
-              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#C98A4B] flex items-baseline gap-1">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#E7E2D8] shadow-2xs group hover:border-[#A88548] hover:shadow-xs transition-all duration-300">
+              <div className="text-2xl sm:text-3xl font-serif font-bold text-[#7D5D2A] flex items-baseline gap-1">
                 <AnimatedStatCounter 
                   end={4.9} 
                   decimals={1} 
                   trigger={isHeroLoaded} 
                   duration={1800} 
                 />
-                <span className="text-base text-[#E7E2D8]/60 font-sans font-normal">/ 5.0</span>
+                <span className="text-base text-slate-400 font-sans font-normal">/ 5.0</span>
               </div>
-              <div className="text-xs text-[#E7E2D8]/70 mt-1 uppercase tracking-wider font-sans">
+              <div className="text-xs text-slate-600 mt-1 uppercase tracking-wider font-sans font-semibold">
                 Verified Client Rating
               </div>
             </div>
@@ -380,13 +380,13 @@ export default function AboutPage() {
                 sec2InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
               }`}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#C98A4B] text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-[#A88548] text-xs font-semibold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 WHO WE ARE
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight leading-tight">
-                Not a Transactional Brokerage. Your Personal <span className="text-[#C98A4B] italic">Real Estate Counsel</span>.
+                Not a Transactional Brokerage. Your Personal <span className="text-[#A88548] italic">Real Estate Counsel</span>.
               </h2>
 
               <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
@@ -398,7 +398,7 @@ export default function AboutPage() {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#C98A4B]/40 transition-colors shadow-2xs">
+                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#A88548]/40 transition-colors shadow-2xs">
                   <div className="font-serif font-bold text-base text-slate-900 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>TNRERA Registered</span>
@@ -408,7 +408,7 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#C98A4B]/40 transition-colors shadow-2xs">
+                <div className="p-4 rounded-xl bg-[#FAF9F6] border border-slate-200 hover:border-[#A88548]/40 transition-colors shadow-2xs">
                   <div className="font-serif font-bold text-base text-slate-900 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>In-House Legal Advocates</span>
@@ -426,45 +426,45 @@ export default function AboutPage() {
                 sec2InView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-[0.98]'
               }`}
             >
-              <div className="relative rounded-3xl bg-[#0F1117] text-white p-7 sm:p-8 border border-[#C98A4B]/30 shadow-2xl overflow-hidden hover:border-[#C98A4B]/60 transition-all duration-500">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#C98A4B]/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="relative rounded-3xl bg-white text-[#1E232F] p-7 sm:p-8 border border-[#E7E2D8] shadow-xl overflow-hidden hover:border-[#A88548] transition-all duration-500">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#A88548]/10 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="relative z-10 space-y-5">
-                  <div className="flex items-center justify-between pb-3.5 border-b border-white/10">
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#C98A4B]">
+                  <div className="flex items-center justify-between pb-3.5 border-b border-[#E7E2D8]">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[#7D5D2A] font-bold">
                       AUTHORITY BADGE
                     </span>
-                    <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#C98A4B] text-[#0F1117]">
+                    <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8]">
                       VERIFIED AGENCY
                     </span>
                   </div>
 
-                  <h3 className="font-serif font-bold text-2xl text-[#F1EEE7]">
+                  <h3 className="font-serif font-bold text-2xl text-[#1E232F]">
                     The Property Gateway Standard
                   </h3>
 
-                  <ul className="space-y-3 text-xs text-[#E7E2D8]/80 font-sans">
+                  <ul className="space-y-3 text-xs text-slate-600 font-sans">
                     <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
                       <span><strong>Zero Buyer Commission:</strong> 100% free consultation on all new builder projects.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
                       <span><strong>Guided On-Site Inspections:</strong> Personalized property walkthroughs for your family.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
                       <span><strong>Tier-1 Developers Only:</strong> Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy.</span>
                     </li>
                     <li className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
                       <span><strong>Home Loan Desk:</strong> SBI, HDFC, ICICI instant sanctions with lowest floating rates.</span>
                     </li>
                   </ul>
 
                   <div className="pt-3.5 border-t border-white/10 flex items-center justify-between text-xs">
                     <span className="text-slate-400">Chennai Headquarters</span>
-                    <span className="font-bold text-[#C98A4B]">Adambakkam, Chennai - 600 088</span>
+                    <span className="font-bold text-[#A88548]">Adambakkam, Chennai - 600 088</span>
                   </div>
                 </div>
               </div>
@@ -487,7 +487,7 @@ export default function AboutPage() {
               sec3InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#A88548]">
               COMPREHENSIVE ADVISORY SUITE
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-1">
@@ -505,13 +505,13 @@ export default function AboutPage() {
                 <div
                   key={i}
                   style={{ transitionDelay: `${i * 75}ms` }}
-                  className={`p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-[#C98A4B]/60 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group ${
+                  className={`p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-[#A88548]/60 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group ${
                     sec3InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#C98A4B] group-hover:scale-110 group-hover:bg-[#C98A4B] group-hover:text-white transition-all duration-300">
+                      <div className="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#A88548] group-hover:scale-110 group-hover:bg-[#A88548] group-hover:text-white transition-all duration-300">
                         <Icon className="w-5 h-5" />
                       </div>
                       <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
@@ -519,7 +519,7 @@ export default function AboutPage() {
                       </span>
                     </div>
 
-                    <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-[#C98A4B] transition-colors">
+                    <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-[#A88548] transition-colors">
                       {svc.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed font-sans">
@@ -530,7 +530,7 @@ export default function AboutPage() {
                   <div className="mt-5 pt-3.5 border-t border-slate-100">
                     <Link
                       to="/contact"
-                      className="text-xs font-bold text-[#C98A4B] group-hover:text-[#9e632b] flex items-center gap-1.5"
+                      className="text-xs font-bold text-[#A88548] group-hover:text-[#9e632b] flex items-center gap-1.5"
                     >
                       <span>Inquire about this service</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -544,10 +544,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. WHY CHOOSE PROPERTY GATEWAY (Gaps Tightened to py-10 sm:py-14, Staggered Reveals) */}
+      {/* 4. WHY CHOOSE PROPERTY GATEWAY */}
       <section 
         ref={sec4Ref}
-        className="py-10 sm:py-14 bg-[#0F1117] text-white relative overflow-hidden border-b border-[#C98A4B]/20"
+        className="py-10 sm:py-14 bg-[#F5F2EA] text-[#1E232F] relative overflow-hidden border-b border-[#E6E1D6]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
@@ -556,13 +556,13 @@ export default function AboutPage() {
               sec4InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#7D5D2A]">
               THE CLIENT ADVANTAGE
             </span>
-            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-[#F1EEE7] mt-1">
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-[#1E232F] mt-1">
               Why Discerning Chennai Buyers Choose Us
             </h2>
-            <p className="text-xs sm:text-sm text-[#E7E2D8]/70 mt-2 font-sans">
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
               We eliminate friction, bias, and uncertainty from the real estate buying journey.
             </p>
           </div>
@@ -572,21 +572,21 @@ export default function AboutPage() {
               <div
                 key={idx}
                 style={{ transitionDelay: `${idx * 75}ms` }}
-                className={`p-6 rounded-2xl bg-[#151722] border border-white/10 hover:border-[#C98A4B]/60 hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col justify-between group ${
+                className={`p-6 rounded-2xl bg-white border border-[#E7E2D8] hover:border-[#A88548] hover:-translate-y-1.5 hover:shadow-[0_15px_30px_rgba(168,133,72,0.15)] transition-all duration-300 flex flex-col justify-between group ${
                   sec4InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono font-bold text-[#C98A4B]">0{idx + 1}</span>
-                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#C98A4B]/20 text-[#C98A4B] border border-[#C98A4B]/30">
+                    <span className="text-xs font-mono font-bold text-[#7D5D2A]">0{idx + 1}</span>
+                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8]">
                       {item.highlight}
                     </span>
                   </div>
-                  <h3 className="font-serif font-bold text-lg text-[#F1EEE7] group-hover:text-[#C98A4B] transition-colors">
+                  <h3 className="font-serif font-bold text-lg text-[#1E232F] group-hover:text-[#A88548] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#E7E2D8]/75 mt-2 leading-relaxed font-sans">
+                  <p className="text-xs text-slate-600 mt-2 leading-relaxed font-sans">
                     {item.desc}
                   </p>
                 </div>
@@ -609,7 +609,7 @@ export default function AboutPage() {
               sec5InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
             }`}
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#C98A4B]">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#A88548]">
               THE PROPERTY GATEWAY PROTOCOL
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-1">
@@ -625,12 +625,12 @@ export default function AboutPage() {
               <div 
                 key={idx}
                 style={{ transitionDelay: `${idx * 100}ms` }}
-                className={`p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200/90 flex flex-col justify-between hover:border-[#C98A4B]/60 hover:shadow-md hover:-translate-y-1 transition-all duration-300 ${
+                className={`p-6 rounded-2xl bg-[#FAF9F6] border border-slate-200/90 flex flex-col justify-between hover:border-[#A88548]/60 hover:shadow-md hover:-translate-y-1 transition-all duration-300 ${
                   sec5InView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 <div>
-                  <span className="text-3xl font-serif font-bold text-[#C98A4B] block mb-2.5">
+                  <span className="text-3xl font-serif font-bold text-[#A88548] block mb-2.5">
                     {step.num}
                   </span>
                   <h3 className="font-serif font-bold text-base text-slate-900 mb-1.5">
@@ -655,30 +655,30 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div 
-            className={`rounded-3xl bg-gradient-to-r from-[#151722] to-[#0F1117] text-white p-7 sm:p-10 lg:p-12 border border-[#C98A4B]/30 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 transition-all duration-700 ease-out ${
+            className={`rounded-3xl bg-white text-[#1E232F] p-7 sm:p-10 lg:p-12 border border-[#E7E2D8] shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 transition-all duration-700 ease-out ${
               sec6InView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-[0.98]'
             }`}
           >
             
             <div className="max-w-2xl space-y-3.5">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#C98A4B]/20 text-[#C98A4B] border border-[#C98A4B]/30">
-                <Building2 className="w-3.5 h-3.5" /> PHYSICAL ADVISORY HEADQUARTERS
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8]">
+                <Building2 className="w-3.5 h-3.5 text-[#A88548]" /> PHYSICAL ADVISORY HEADQUARTERS
               </span>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#F1EEE7] tracking-tight leading-snug">
-                Speak With Chennai’s <span className="text-[#C98A4B] italic">Property Advisory Team</span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#1E232F] tracking-tight leading-snug">
+                Speak With Chennai’s <span className="text-gold-metallic italic">Property Advisory Team</span>
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#E7E2D8]/80 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
                 Our central consulting office is located in Adambakkam, providing easy access to prime growth corridors including OMR, GST Road, Velachery, and ECR. Open Monday through Sunday, 9:00 AM – 8:00 PM.
               </p>
 
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-1 text-xs text-[#E7E2D8]/70">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-1 text-xs text-slate-600">
                 <div>
-                  <strong>Address:</strong> {BRAND.address}
+                  <strong className="text-[#1E232F]">Address:</strong> {BRAND.address}
                 </div>
                 <div>
-                  <strong>TNRERA:</strong> {BRAND.reraId}
+                  <strong className="text-[#1E232F]">TNRERA:</strong> {BRAND.reraId}
                 </div>
               </div>
             </div>
@@ -686,7 +686,7 @@ export default function AboutPage() {
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto shrink-0">
               <a
                 href={`tel:${BRAND.phone}`}
-                className="px-6 py-3.5 rounded-xl bg-[#C98A4B] text-[#0F1117] font-bold text-sm hover:bg-[#d99857] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-gold-metallic text-white font-bold text-sm active:scale-[0.98] transition-all shadow-md flex items-center justify-center gap-2"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call {BRAND.phoneDisplay}</span>
@@ -694,9 +694,9 @@ export default function AboutPage() {
 
               <Link
                 to="/contact"
-                className="px-6 py-3.5 rounded-xl bg-white/10 text-[#F1EEE7] border border-white/15 font-bold text-sm hover:bg-white/15 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                className="px-6 py-3.5 rounded-xl bg-white hover:bg-[#FAF9F6] text-[#1E232F] border border-[#E7E2D8] hover:border-[#A88548] font-bold text-sm active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs"
               >
-                <MessageSquare className="w-4 h-4 text-[#C98A4B]" />
+                <MessageSquare className="w-4 h-4 text-[#A88548]" />
                 <span>Submit Requirements</span>
               </Link>
             </div>

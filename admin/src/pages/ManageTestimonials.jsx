@@ -201,7 +201,7 @@ export default function ManageTestimonials() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-2 bg-[#C98A4B]/10 rounded-lg text-[#C98A4B]">
+            <span className="p-2 bg-[#A88548]/10 rounded-lg text-[#A88548]">
               <MessageSquareQuote className="w-5 h-5" />
             </span>
             <h1 className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
@@ -215,7 +215,7 @@ export default function ManageTestimonials() {
 
         <button
           onClick={openAddModal}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#C98A4B] hover:bg-[#b07436] text-white text-xs sm:text-sm font-semibold rounded-lg shadow-sm transition-all duration-200 active:scale-95"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gold-metallic text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm transition-all duration-200 active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Add Client Feedback</span>
@@ -247,10 +247,10 @@ export default function ManageTestimonials() {
         <div className="bg-white rounded-xl p-4 border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div>
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">5-Star Rated</p>
-            <p className="text-2xl font-bold text-[#C98A4B] mt-1">{fiveStarCount}</p>
+            <p className="text-2xl font-bold text-[#A88548] mt-1">{fiveStarCount}</p>
           </div>
-          <div className="w-10 h-10 rounded-full bg-[#C98A4B]/10 flex items-center justify-center text-[#C98A4B]">
-            <Star className="w-5 h-5 fill-[#C98A4B]" />
+          <div className="w-10 h-10 rounded-full bg-[#A88548]/10 flex items-center justify-center text-[#A88548]">
+            <Star className="w-5 h-5 fill-[#A88548]" />
           </div>
         </div>
       </div>
@@ -264,7 +264,7 @@ export default function ManageTestimonials() {
             placeholder="Search by client name, project, or review keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] transition-all"
+            className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] transition-all"
           />
         </div>
 
@@ -291,7 +291,7 @@ export default function ManageTestimonials() {
       {/* 4. Feedback Cards Grid */}
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3">
-          <Loader2 className="w-8 h-8 text-[#C98A4B] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#A88548] animate-spin" />
           <p className="text-xs text-slate-500 font-medium">Syncing live testimonials from Firebase...</p>
         </div>
       ) : filtered.length === 0 ? (
@@ -307,7 +307,7 @@ export default function ManageTestimonials() {
           </p>
           <button
             onClick={openAddModal}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#C98A4B] text-white text-xs font-semibold rounded-lg hover:bg-[#b07436] transition-all"
+            className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-gold-metallic text-white text-xs font-bold rounded-xl shadow-xs transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" /> Add Feedback
           </button>
@@ -329,9 +329,9 @@ export default function ManageTestimonials() {
                 <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     {/* Stars */}
-                    <div className="flex items-center text-[#C98A4B]">
+                    <div className="flex items-center text-[#A88548]">
                       {[...Array(item.rating || 5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#C98A4B]" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#A88548]" />
                       ))}
                     </div>
                     {item.verified !== false && (
@@ -354,7 +354,7 @@ export default function ManageTestimonials() {
                 {/* Card Body: Quote & Highlight */}
                 <div className="p-4 sm:p-5 flex-1">
                   <div className="text-slate-700 text-xs sm:text-sm leading-relaxed">
-                    <Quote className="w-4 h-4 text-[#C98A4B] mb-1 inline mr-1 opacity-70" />
+                    <Quote className="w-4 h-4 text-[#A88548] mb-1 inline mr-1 opacity-70" />
                     {item.beforeHighlight !== undefined ? (
                       <>
                         {item.beforeHighlight}
@@ -386,7 +386,7 @@ export default function ManageTestimonials() {
                         <img 
                           src={item.avatar} 
                           alt={item.author} 
-                          className="w-9 h-9 rounded-full object-cover ring-2 ring-[#C98A4B]/40"
+                          className="w-9 h-9 rounded-full object-cover ring-2 ring-[#A88548]/40"
                           onError={(e) => {
                             e.target.style.display = 'none';
                             if (e.target.nextElementSibling) {
@@ -396,7 +396,7 @@ export default function ManageTestimonials() {
                         />
                       ) : null}
                       <div 
-                        className={`w-9 h-9 rounded-full bg-gradient-to-br from-[#0F1117] to-[#272B38] text-[#C98A4B] font-bold text-xs ring-2 ring-[#C98A4B]/40 ${item.avatar ? 'hidden' : 'flex'} items-center justify-center`}
+                        className={`w-9 h-9 rounded-full bg-gradient-to-br from-[#FAF9F6] to-[#E7E2D8] text-[#7D5D2A] font-bold text-xs ring-2 ring-[#A88548]/40 ${item.avatar ? 'hidden' : 'flex'} items-center justify-center`}
                       >
                         {initials}
                       </div>
@@ -424,7 +424,7 @@ export default function ManageTestimonials() {
                     <button
                       onClick={() => openEditModal(item)}
                       title="Edit feedback"
-                      className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-[#C98A4B] hover:bg-amber-50/50 transition-colors"
+                      className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-[#A88548] hover:bg-amber-50/50 transition-colors"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                     </button>
@@ -461,7 +461,7 @@ export default function ManageTestimonials() {
             {/* Modal Header */}
             <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 bg-[#C98A4B]/10 rounded text-[#C98A4B]">
+                <span className="p-1.5 bg-[#A88548]/10 rounded text-[#A88548]">
                   <Sparkles className="w-4 h-4" />
                 </span>
                 <h3 className="font-serif font-bold text-base sm:text-lg text-slate-900">
@@ -497,7 +497,7 @@ export default function ManageTestimonials() {
                     placeholder="e.g. Anand & Meera Sundaram"
                     value={formData.author}
                     onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none"
                   />
                 </div>
 
@@ -510,7 +510,7 @@ export default function ManageTestimonials() {
                     placeholder="e.g. OMR Corridor • 3 BHK High-Rise"
                     value={formData.role}
                     onChange={(e) => setFormData(prev => ({ ...prev, role: e.target.value }))}
-                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none"
                   />
                 </div>
               </div>
@@ -524,7 +524,7 @@ export default function ManageTestimonials() {
                   <select
                     value={formData.rating}
                     onChange={(e) => setFormData(prev => ({ ...prev, rating: Number(e.target.value) }))}
-                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none"
                   >
                     <option value={5}>★★★★★ (5 Stars - Outstanding)</option>
                     <option value={4}>★★★★☆ (4 Stars - Very Good)</option>
@@ -540,7 +540,7 @@ export default function ManageTestimonials() {
                       type="checkbox"
                       checked={formData.verified}
                       onChange={(e) => setFormData(prev => ({ ...prev, verified: e.target.checked }))}
-                      className="w-4 h-4 text-[#C98A4B] rounded border-slate-300 focus:ring-[#C98A4B]"
+                      className="w-4 h-4 text-[#A88548] rounded border-slate-300 focus:ring-[#A88548]"
                     />
                     <span className="text-xs font-medium text-slate-700">Verified Buyer Badge</span>
                   </label>
@@ -550,7 +550,7 @@ export default function ManageTestimonials() {
                       type="checkbox"
                       checked={formData.active}
                       onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
-                      className="w-4 h-4 text-[#C98A4B] rounded border-slate-300 focus:ring-[#C98A4B]"
+                      className="w-4 h-4 text-[#A88548] rounded border-slate-300 focus:ring-[#A88548]"
                     />
                     <span className="text-xs font-medium text-slate-700">Publish Active</span>
                   </label>
@@ -567,7 +567,7 @@ export default function ManageTestimonials() {
                   placeholder="e.g. saving our family nearly ₹2.4 Lakhs in cash"
                   value={formData.highlight}
                   onChange={(e) => setFormData(prev => ({ ...prev, highlight: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none"
+                  className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none"
                 />
                 <p className="text-[11px] text-slate-500 mt-0.5">
                   This phrase will be highlighted with bold accent styling in the website review card.
@@ -585,7 +585,7 @@ export default function ManageTestimonials() {
                   placeholder="Share the client's authentic buying journey with Property Gateway..."
                   value={formData.content}
                   onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none leading-relaxed"
+                  className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none leading-relaxed"
                 />
               </div>
 
@@ -601,13 +601,13 @@ export default function ManageTestimonials() {
                       placeholder="Image URL (or upload below)"
                       value={formData.avatar}
                       onChange={(e) => setFormData(prev => ({ ...prev, avatar: e.target.value }))}
-                      className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] outline-none"
+                      className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] outline-none"
                     />
                   </div>
 
                   <label className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg cursor-pointer border border-slate-200 transition-colors">
                     {imageUploading ? (
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#C98A4B]" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#A88548]" />
                     ) : (
                       <UploadCloud className="w-3.5 h-3.5" />
                     )}
@@ -655,7 +655,7 @@ export default function ManageTestimonials() {
                 <button
                   type="submit"
                   disabled={formSubmitting || imageUploading}
-                  className="inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#C98A4B] hover:bg-[#b07436] rounded-lg shadow-sm transition-all disabled:opacity-50"
+                  className="inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm font-bold text-white bg-gold-metallic rounded-xl shadow-sm transition-all disabled:opacity-50 active:scale-95"
                 >
                   {formSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   <span>{editingItem ? 'Save Changes' : 'Create Feedback'}</span>

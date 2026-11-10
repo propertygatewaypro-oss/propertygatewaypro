@@ -1,16 +1,27 @@
-/* Hallmark v2.0 Anti-AI Design System Tokens */
+/* Luxury Architectural Travertine & Metallic Gold Light Theme Tokens */
 :root {
-  --color-canvas: #0A0C10;
-  --color-surface-panel: #0E121B;
-  --color-surface-card: #141722;
-  --color-surface-input: #0B0E17;
-  --color-border: #202636;
-  --color-border-focus: #C98A4B;
-  --color-accent-gold: #C98A4B;
-  --color-accent-gold-hover: #B57A3E;
-  --color-text-primary: #F1EEE7;
-  --color-text-secondary: #94A3B8;
-  --color-text-muted: #64748B;
+  --color-canvas: #FAF9F6;
+  --color-surface-panel: #FFFFFF;
+  --color-surface-card: #FFFFFF;
+  --color-surface-input: #FAF9F6;
+  --color-border: #E7E2D8;
+  --color-border-focus: #A88548;
+  --color-accent-gold: #A88548;
+  --color-accent-gold-hover: #7D5D2A;
+  --color-text-primary: #181B22;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #718096;
+}
+
+.bg-gold-metallic {
+  background: linear-gradient(135deg, #7D5D2A 0%, #A88548 28%, #E0C27E 65%, #9E7D3C 100%);
+  background-size: 200% auto;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-gold-metallic:hover {
+  background-position: right center;
+  box-shadow: 0 8px 25px rgba(168, 133, 72, 0.38);
 }
 
 @tailwind base;

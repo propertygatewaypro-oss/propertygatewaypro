@@ -36,7 +36,7 @@ export default function Footer() {
   return (
     <footer 
       ref={footerRef}
-      className="bg-[#0A0C10] text-slate-300 pt-10 sm:pt-12 lg:pt-14 pb-24 sm:pb-14 lg:pb-10 border-t border-[#1C1F28]"
+      className="bg-[#FAF9F6] text-slate-700 pt-10 sm:pt-12 lg:pt-14 pb-24 sm:pb-14 lg:pb-10 border-t border-[#E7E2D8]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -46,7 +46,7 @@ export default function Footer() {
             - Desktop (>=1024px): 12-column proportional layout (4 / 3 / 2 / 3) with zero voids
             - Motion: GPU-composited smooth staggered reveal when scrolled into view
         */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-10 sm:pb-12 border-b border-slate-800/80 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-10 sm:pb-12 border-b border-[#E7E2D8] items-start">
           
           {/* 1. Brand & Authority Column */}
           <div 
@@ -56,25 +56,25 @@ export default function Footer() {
             style={{ transitionDelay: '0ms' }}
           >
             <Link to="/" className="inline-flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl p-1.5 bg-[#0F1117] border border-slate-800 shadow-sm shrink-0 group-hover:border-[#C98A4B]/60 transition-colors">
+              <div className="w-10 h-10 rounded-xl p-1.5 bg-white border border-[#E7E2D8] shadow-xs shrink-0 group-hover:border-[#A88548]/60 transition-colors">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway" 
                   className="w-full h-full object-contain rounded-lg" 
                 />
               </div>
-              <span className="text-xl sm:text-[22px] font-serif font-bold tracking-tight text-white">
-                Property<span className="text-[#C98A4B] font-sans font-extrabold ml-1">Gateway</span>
+              <span className="text-xl sm:text-[22px] font-serif font-bold tracking-tight text-[#1E232F]">
+                Property<span className="text-[#A88548] font-sans font-extrabold ml-1">Gateway</span>
               </span>
             </Link>
 
-            <p className="text-[13px] sm:text-sm text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-[13px] sm:text-sm text-slate-600 leading-relaxed max-w-sm">
               Chennai's premier real estate consultancy. Direct developer launches, luxury villas, and verified residential communities with 0% brokerage.
             </p>
 
             <div className="pt-0.5">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141720] border border-slate-800 text-[11px] sm:text-xs text-[#C98A4B] font-medium animate-badge-shimmer">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B] shrink-0" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-[#E7E2D8] text-[11px] sm:text-xs text-[#8C6239] font-medium shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
                 <span>TNRERA Registered: {BRAND.reraId}</span>
               </div>
             </div>
@@ -87,14 +87,14 @@ export default function Footer() {
             }`}
             style={{ transitionDelay: '80ms' }}
           >
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E232F] mb-2.5 sm:mb-4">
               Properties
             </h4>
-            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-400">
+            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-600">
               <li>
                 <Link 
                   to="/properties?status=New+Launch" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   New Launches (0% Brokerage)
                 </Link>
@@ -102,7 +102,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?type=Luxury+Villa" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Luxury Villas &amp; Resale
                 </Link>
@@ -110,7 +110,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?type=Apartment" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Residential Apartments
                 </Link>
@@ -118,7 +118,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?type=Commercial" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Commercial Offices &amp; Tech Parks
                 </Link>
@@ -126,7 +126,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?type=Plot+/+Land" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Approved Plots &amp; Land
                 </Link>
@@ -141,14 +141,14 @@ export default function Footer() {
             }`}
             style={{ transitionDelay: '160ms' }}
           >
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E232F] mb-2.5 sm:mb-4">
               Locations
             </h4>
-            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-400">
+            <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-600">
               <li>
                 <Link 
                   to="/properties?location=East+Coast+Road+(ECR)" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   East Coast Road (ECR)
                 </Link>
@@ -156,7 +156,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?location=Old+Mahabalipuram+Road+(OMR)" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Old Mahabalipuram (OMR)
                 </Link>
@@ -164,7 +164,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?location=Anna+Nagar" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Anna Nagar
                 </Link>
@@ -172,7 +172,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?location=Porur" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Porur
                 </Link>
@@ -180,7 +180,7 @@ export default function Footer() {
               <li>
                 <Link 
                   to="/properties?location=Guindy" 
-                  className="inline-block py-0.5 hover:text-[#C98A4B] hover:translate-x-1 transition-all duration-200"
+                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
                 >
                   Guindy
                 </Link>
@@ -188,7 +188,7 @@ export default function Footer() {
               <li className="pt-1">
                 <Link 
                   to="/properties" 
-                  className="inline-flex items-center gap-1 font-semibold text-xs text-[#C98A4B] hover:text-[#e09d58] transition-colors"
+                  className="inline-flex items-center gap-1 font-semibold text-xs text-[#A88548] hover:text-[#7D5D2A] transition-colors"
                 >
                   <span>Browse All Properties</span>
                   <span>&rarr;</span>
@@ -204,25 +204,25 @@ export default function Footer() {
             }`}
             style={{ transitionDelay: '240ms' }}
           >
-            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200 mb-2.5 sm:mb-4">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E232F] mb-2.5 sm:mb-4">
               Contact
             </h4>
-            <div className="space-y-2.5 sm:space-y-3 text-[13.5px] sm:text-sm text-slate-400">
+            <div className="space-y-2.5 sm:space-y-3 text-[13.5px] sm:text-sm text-slate-600">
               <div>
                 <a 
                   href={`tel:${BRAND.phone}`} 
-                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-white font-mono text-slate-300 transition-colors group"
+                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-[#A88548] font-mono text-[#1E232F] font-semibold transition-colors group"
                 >
-                  <Phone className="w-4 h-4 text-[#C98A4B] shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                  <Phone className="w-4 h-4 text-[#A88548] shrink-0 group-hover:scale-110 transition-transform duration-200" />
                   <span>{BRAND.phoneDisplay}</span>
                 </a>
               </div>
               <div className="min-w-0">
                 <a 
                   href={`mailto:${BRAND.email}`} 
-                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-white text-slate-300 truncate max-w-full transition-colors group"
+                  className="inline-flex items-center gap-2.5 py-0.5 hover:text-[#A88548] text-[#1E232F] truncate max-w-full transition-colors group"
                 >
-                  <Mail className="w-4 h-4 text-[#C98A4B] shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                  <Mail className="w-4 h-4 text-[#A88548] shrink-0 group-hover:scale-110 transition-transform duration-200" />
                   <span className="truncate">{BRAND.email}</span>
                 </a>
               </div>
@@ -234,8 +234,8 @@ export default function Footer() {
                   className="flex items-start gap-2.5 py-0.5 group"
                   aria-label="View office on Google Maps"
                 >
-                  <MapPin className="w-4 h-4 text-[#C98A4B] shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
-                  <span className="leading-snug text-slate-400 group-hover:text-slate-200 text-xs sm:text-[13px] transition-colors">
+                  <MapPin className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
+                  <span className="leading-snug text-slate-600 group-hover:text-[#1E232F] text-xs sm:text-[13px] transition-colors">
                     {BRAND.address}
                   </span>
                 </a>
@@ -245,26 +245,23 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Copyright & Legal Links Bar:
-            - On mobile: Centered stack, with extra bottom padding (pb-24 on footer) so floating WhatsApp/Call buttons never collide.
-            - On desktop: Left-aligned copyright + right-aligned legal links with clearance padding.
-        */}
-        <div className="pt-6 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        {/* Bottom Copyright & Legal Links Bar */}
+        <div className="pt-6 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="text-center md:text-left leading-relaxed">
-            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. TNRERA: <span className="font-mono text-slate-300">{BRAND.reraId}</span>
+            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. TNRERA: <span className="font-mono text-[#1E232F] font-semibold">{BRAND.reraId}</span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2.5 pr-0 md:pr-20 lg:pr-24 text-xs">
-            <Link to="/privacy-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2.5 pr-0 md:pr-20 lg:pr-24 text-xs text-slate-500">
+            <Link to="/privacy-policy" className="py-0.5 hover:text-[#A88548] transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/terms-and-conditions" className="py-0.5 hover:text-[#C98A4B] transition-colors">
+            <Link to="/terms-and-conditions" className="py-0.5 hover:text-[#A88548] transition-colors">
               Terms &amp; Conditions
             </Link>
-            <Link to="/cookie-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
+            <Link to="/cookie-policy" className="py-0.5 hover:text-[#A88548] transition-colors">
               Cookie Policy
             </Link>
-            <Link to="/refund-policy" className="py-0.5 hover:text-[#C98A4B] transition-colors">
+            <Link to="/refund-policy" className="py-0.5 hover:text-[#A88548] transition-colors">
               Refund Policy
             </Link>
           </div>

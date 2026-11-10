@@ -194,7 +194,7 @@ export default function AddEditPropertyPage() {
   if (pageLoading) {
     return (
       <div className="py-24 flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-8 h-8 text-[#C98A4B] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#A88548] animate-spin" />
         <p className="text-xs text-slate-500 font-medium">Loading property details...</p>
       </div>
     );
@@ -215,7 +215,7 @@ export default function AddEditPropertyPage() {
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1 bg-[#C98A4B]/10 rounded text-[#C98A4B]">
+              <span className="p-1 bg-[#A88548]/10 rounded text-[#A88548]">
                 <Building2 className="w-4 h-4" />
               </span>
               <h1 className="text-lg sm:text-xl font-serif font-bold text-slate-900">
@@ -240,7 +240,7 @@ export default function AddEditPropertyPage() {
             type="button"
             onClick={handleSubmit}
             disabled={submitting || imageUploading}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-xs font-semibold bg-[#C98A4B] hover:bg-[#b07436] text-white shadow-sm transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold bg-gold-metallic text-white shadow-sm transition-all disabled:opacity-50 active:scale-95"
           >
             {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             <span>{isEditing ? 'Save Changes' : 'Create Listing'}</span>
@@ -262,7 +262,7 @@ export default function AddEditPropertyPage() {
         {/* Section 1: Basic Information & Pricing */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-5">
           <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B]">1. Project Overview & Pricing</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">1. Project Overview & Pricing</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
@@ -276,7 +276,7 @@ export default function AddEditPropertyPage() {
                 placeholder="e.g. Sovereign Bay Luxury 4 BHK Villa"
                 value={formData.title}
                 onChange={handleTitleChange}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
 
@@ -290,7 +290,7 @@ export default function AddEditPropertyPage() {
                 placeholder="sovereign-bay-villa"
                 value={formData.slug}
                 onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-100 border border-slate-300 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-100 border border-slate-300 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
           </div>
@@ -304,7 +304,7 @@ export default function AddEditPropertyPage() {
               placeholder="e.g. Unobstructed Bay of Bengal sea views with private plunge pool and 2-car covered garage."
               value={formData.tagline}
               onChange={(e) => setFormData(prev => ({ ...prev, tagline: e.target.value }))}
-              className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+              className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
             />
           </div>
 
@@ -316,7 +316,7 @@ export default function AddEditPropertyPage() {
               <select
                 value={formData.location}
                 onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               >
                 {CHENNAI_LOCATIONS.map(loc => (
                   <option key={loc} value={loc}>{loc}</option>
@@ -331,7 +331,7 @@ export default function AddEditPropertyPage() {
               <select
                 value={formData.type}
                 onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               >
                 {PROPERTY_TYPES.map(t => (
                   <option key={t} value={t}>{t}</option>
@@ -349,9 +349,9 @@ export default function AddEditPropertyPage() {
                 step="50000"
                 value={formData.price}
                 onChange={handlePriceChange}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] font-mono"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] font-mono"
               />
-              <div className="text-xs text-[#C98A4B] font-semibold mt-1">
+              <div className="text-xs text-[#A88548] font-semibold mt-1">
                 Display: {formData.priceDisplay}
               </div>
             </div>
@@ -361,7 +361,7 @@ export default function AddEditPropertyPage() {
         {/* Section 2: Specifications & Configuration */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-5">
           <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B]">2. Physical Specifications & Sanctions</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">2. Physical Specifications & Sanctions</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
@@ -374,7 +374,7 @@ export default function AddEditPropertyPage() {
                 placeholder="e.g. 3 BHK"
                 value={formData.bhk}
                 onChange={(e) => setFormData(prev => ({ ...prev, bhk: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
 
@@ -387,7 +387,7 @@ export default function AddEditPropertyPage() {
                 placeholder="1500"
                 value={formData.builtUpArea}
                 onChange={(e) => setFormData(prev => ({ ...prev, builtUpArea: Number(e.target.value) }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
 
@@ -400,7 +400,7 @@ export default function AddEditPropertyPage() {
                 placeholder="1200"
                 value={formData.carpetArea}
                 onChange={(e) => setFormData(prev => ({ ...prev, carpetArea: Number(e.target.value) }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
 
@@ -411,7 +411,7 @@ export default function AddEditPropertyPage() {
               <select
                 value={formData.possessionStatus}
                 onChange={(e) => setFormData(prev => ({ ...prev, possessionStatus: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               >
                 {POSSESSION_STATUSES.map(s => (
                   <option key={s} value={s}>{s}</option>
@@ -428,7 +428,7 @@ export default function AddEditPropertyPage() {
               <select
                 value={formData.facing}
                 onChange={(e) => setFormData(prev => ({ ...prev, facing: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               >
                 {FACING_OPTIONS.map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -445,7 +445,7 @@ export default function AddEditPropertyPage() {
                 placeholder="e.g. 5th of 14 Floors"
                 value={formData.floor}
                 onChange={(e) => setFormData(prev => ({ ...prev, floor: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
 
@@ -458,7 +458,7 @@ export default function AddEditPropertyPage() {
                 placeholder="e.g. TN/29/Building/0088/2024"
                 value={formData.reraId}
                 onChange={(e) => setFormData(prev => ({ ...prev, reraId: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg font-mono focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
               />
             </div>
           </div>
@@ -472,7 +472,7 @@ export default function AddEditPropertyPage() {
               placeholder="Describe architectural highlights, ventilation, Italian marble finishes, builder pedigree, and neighborhood highlights..."
               value={formData.overview}
               onChange={(e) => setFormData(prev => ({ ...prev, overview: e.target.value }))}
-              className="w-full text-xs sm:text-sm p-3.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] leading-relaxed"
+              className="w-full text-xs sm:text-sm p-3.5 bg-slate-50/50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] leading-relaxed"
             />
           </div>
         </div>
@@ -480,7 +480,7 @@ export default function AddEditPropertyPage() {
         {/* Section 3: Amenities & Features */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B]">3. Verified Amenities & Infrastructure</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">3. Verified Amenities & Infrastructure</span>
             <span className="text-xs text-slate-500 font-medium">{formData.amenities.length} selected</span>
           </div>
 
@@ -492,7 +492,7 @@ export default function AddEditPropertyPage() {
                   key={amenity}
                   className={`flex items-center gap-2.5 p-3 rounded-xl border text-xs cursor-pointer transition-all duration-150 ${
                     isChecked 
-                      ? 'bg-amber-50/70 border-[#C98A4B]/50 text-slate-900 font-semibold shadow-2xs' 
+                      ? 'bg-amber-50/70 border-[#A88548]/50 text-slate-900 font-semibold shadow-2xs' 
                       : 'bg-slate-50/60 border-slate-200 text-slate-600 hover:bg-slate-100/80'
                   }`}
                 >
@@ -500,7 +500,7 @@ export default function AddEditPropertyPage() {
                     type="checkbox"
                     checked={isChecked}
                     onChange={() => handleAmenityToggle(amenity)}
-                    className="h-4 w-4 rounded border-slate-300 text-[#C98A4B] focus:ring-[#C98A4B]"
+                    className="h-4 w-4 rounded border-slate-300 text-[#A88548] focus:ring-[#A88548]"
                   />
                   <span className="truncate">{amenity}</span>
                 </label>
@@ -513,7 +513,7 @@ export default function AddEditPropertyPage() {
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B]">4. Gallery & Media Assets *</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">4. Gallery & Media Assets *</span>
               <p className="text-[11px] text-slate-500 mt-0.5">High-res photos auto-compressed into lightweight WebP (&lt; 250 KB)</p>
             </div>
             <span className="text-xs text-slate-500 font-medium">{formData.images.length} photos</span>
@@ -539,7 +539,7 @@ export default function AddEditPropertyPage() {
               </div>
             ))}
 
-            <label className="border-2 border-dashed border-slate-300 hover:border-[#C98A4B] rounded-xl flex flex-col items-center justify-center cursor-pointer p-4 aspect-video transition-colors bg-slate-50/50 hover:bg-amber-50/20">
+            <label className="border-2 border-dashed border-slate-300 hover:border-[#A88548] rounded-xl flex flex-col items-center justify-center cursor-pointer p-4 aspect-video transition-colors bg-slate-50/50 hover:bg-amber-50/20">
               <input
                 type="file"
                 multiple
@@ -550,7 +550,7 @@ export default function AddEditPropertyPage() {
               />
               {imageUploading ? (
                 <div className="flex flex-col items-center gap-1">
-                  <Loader2 className="w-5 h-5 text-[#C98A4B] animate-spin" />
+                  <Loader2 className="w-5 h-5 text-[#A88548] animate-spin" />
                   <span className="text-[10px] text-slate-500">Compressing...</span>
                 </div>
               ) : (
@@ -566,7 +566,7 @@ export default function AddEditPropertyPage() {
         {/* Section 5: Visibility & Publishing Status */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-4">
           <div className="pb-3 border-b border-slate-100">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#C98A4B]">5. Publishing & Website Visibility</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">5. Publishing & Website Visibility</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -575,7 +575,7 @@ export default function AddEditPropertyPage() {
                 type="checkbox"
                 checked={formData.active}
                 onChange={(e) => setFormData(prev => ({ ...prev, active: e.target.checked }))}
-                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#C98A4B] focus:ring-[#C98A4B]"
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#A88548] focus:ring-[#A88548]"
               />
               <div>
                 <span className="text-xs font-bold text-slate-900 block">Publish Listing Live on Website</span>
@@ -590,7 +590,7 @@ export default function AddEditPropertyPage() {
                 type="checkbox"
                 checked={formData.featured}
                 onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
-                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#C98A4B] focus:ring-[#C98A4B]"
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#A88548] focus:ring-[#A88548]"
               />
               <div>
                 <span className="text-xs font-bold text-slate-900 block">Feature on Home Page Showcase</span>
@@ -614,7 +614,7 @@ export default function AddEditPropertyPage() {
           <button
             type="submit"
             disabled={submitting || imageUploading}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-xs font-semibold bg-[#C98A4B] hover:bg-[#b07436] text-white shadow-sm transition-all disabled:opacity-50 active:scale-95"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gold-metallic text-white shadow-sm transition-all disabled:opacity-50 active:scale-95"
           >
             {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
             <span>{isEditing ? 'Save Changes' : 'Create Listing'}</span>

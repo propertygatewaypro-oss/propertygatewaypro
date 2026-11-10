@@ -31,28 +31,28 @@ export default function TermsOfServiceContent() {
       {/* 1. Acceptance of Terms */}
       <section id="acceptance" className="scroll-mt-36 space-y-3.5">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             01
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Acceptance of Terms
           </h2>
         </div>
         <p>
-          These Terms of Service constitute a legally binding agreement between you (whether personally or on behalf of an entity, referred to as <strong>"User"</strong>, <strong>"You"</strong>, or <strong>"Your"</strong>) and <strong>Property Gateway</strong> (referred to as <strong>"Company"</strong>, <strong>"We"</strong>, <strong>"Us"</strong>, or <strong>"Our"</strong>), governing your access to and use of <a href="https://propertygateway.com" className="text-[#C98A4B] hover:underline font-medium">propertygateway.com</a> as well as any related web applications, forms, consultation channels, and concierge services.
+          These Terms of Service constitute a legally binding agreement between you (whether personally or on behalf of an entity, referred to as <strong>"User"</strong>, <strong>"You"</strong>, or <strong>"Your"</strong>) and <strong>Property Gateway</strong> (referred to as <strong>"Company"</strong>, <strong>"We"</strong>, <strong>"Us"</strong>, or <strong>"Our"</strong>), governing your access to and use of <a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a> as well as any related web applications, forms, consultation channels, and concierge services.
         </p>
         <p>
-          By accessing or utilizing any part of this Website, you acknowledge that you have read, understood, and irrevocably agreed to be bound by these Terms, together with our <Link to="/privacy-policy" className="text-[#C98A4B] hover:underline font-medium">Privacy Policy</Link> and <Link to="/cookie-policy" className="text-[#C98A4B] hover:underline font-medium">Cookie Policy</Link>. If you do not agree with all of these terms, you are expressly prohibited from using this site and must discontinue use immediately.
+          By accessing or utilizing any part of this Website, you acknowledge that you have read, understood, and irrevocably agreed to be bound by these Terms, together with our <Link to="/privacy-policy" className="text-[#A88548] hover:underline font-medium">Privacy Policy</Link> and <Link to="/cookie-policy" className="text-[#A88548] hover:underline font-medium">Cookie Policy</Link>. If you do not agree with all of these terms, you are expressly prohibited from using this site and must discontinue use immediately.
         </p>
       </section>
 
       {/* 2. About Property Gateway */}
       <section id="about-gateway" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             02
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             About Property Gateway
           </h2>
         </div>
@@ -60,20 +60,20 @@ export default function TermsOfServiceContent() {
           Property Gateway operates as a premier real estate consultancy and digital advisory platform based in Chennai, Tamil Nadu. The firm operates with full regulatory compliance under the Real Estate (Regulation and Development) Act, 2016 (RERA).
         </p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-1.5 text-xs font-mono">
-          <p><strong className="text-[#0F1117]">Licensed Real Estate Agent:</strong> {BRAND.name}</p>
-          <p><strong className="text-[#0F1117]">TNRERA Registration Number:</strong> {BRAND.reraId}</p>
-          <p><strong className="text-[#0F1117]">Registered Office Address:</strong> {BRAND.address}</p>
-          <p><strong className="text-[#0F1117]">Statutory Jurisdiction:</strong> Chennai, Tamil Nadu, Republic of India</p>
+          <p><strong className="text-[#181B22]">Licensed Real Estate Agent:</strong> {BRAND.name}</p>
+          <p><strong className="text-[#181B22]">TNRERA Registration Number:</strong> {BRAND.reraId}</p>
+          <p><strong className="text-[#181B22]">Registered Office Address:</strong> {BRAND.address}</p>
+          <p><strong className="text-[#181B22]">Statutory Jurisdiction:</strong> Chennai, Tamil Nadu, Republic of India</p>
         </div>
       </section>
 
       {/* 3. Nature and Scope of Real Estate Advisory */}
       <section id="nature-scope" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             03
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Nature & Scope of Real Estate Advisory
           </h2>
         </div>
@@ -85,19 +85,19 @@ export default function TermsOfServiceContent() {
         </p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2.5">
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Initiate any electronic message transmission without explicit user prompt or enquiry;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Select the recipient of transmission without verified customer consent;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Alter or fabricate technical project specifications provided by the sanctioning authority or developer.</span>
@@ -108,10 +108,10 @@ export default function TermsOfServiceContent() {
       {/* 4. Website Usage */}
       <section id="website-usage" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             04
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Website Usage & Permitted Activities
           </h2>
         </div>
@@ -130,10 +130,10 @@ export default function TermsOfServiceContent() {
       {/* 5. Property Listings and Descriptions */}
       <section id="listings-descriptions" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             05
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Property Listings & Descriptions
           </h2>
         </div>
@@ -148,16 +148,16 @@ export default function TermsOfServiceContent() {
       {/* 6. Accuracy of Prices and Availability */}
       <section id="prices-availability" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             06
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Accuracy of Prices & Real-Time Availability
           </h2>
         </div>
-        <div className="bg-[#FAF9F6] border-2 border-[#C98A4B]/30 rounded-2xl p-5 space-y-2.5">
-          <h3 className="font-serif font-bold text-[#0F1117] text-base flex items-center gap-2">
-            <AlertCircle className="w-5 h-5 text-[#C98A4B]" />
+        <div className="bg-[#FAF9F6] border-2 border-[#A88548]/30 rounded-2xl p-5 space-y-2.5">
+          <h3 className="font-serif font-bold text-[#181B22] text-base flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-[#A88548]" />
             <span>Pricing & Inventory Disclaimer</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
@@ -172,10 +172,10 @@ export default function TermsOfServiceContent() {
       {/* 7. Third-Party Developers and Builders */}
       <section id="third-party-developers" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             07
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Third-Party Developers & Builders
           </h2>
         </div>
@@ -187,10 +187,10 @@ export default function TermsOfServiceContent() {
       {/* 8. User Responsibilities */}
       <section id="user-responsibilities" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             08
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             User Responsibilities & Due Diligence
           </h2>
         </div>
@@ -208,10 +208,10 @@ export default function TermsOfServiceContent() {
       {/* 9. Property Enquiries */}
       <section id="property-enquiries" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             09
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Property Enquiries & Booking Disclaimers
           </h2>
         </div>
@@ -226,10 +226,10 @@ export default function TermsOfServiceContent() {
       {/* 10. Site Visits and Consultations */}
       <section id="site-visits" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             10
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Site Visits & Consultations
           </h2>
         </div>
@@ -241,15 +241,15 @@ export default function TermsOfServiceContent() {
       {/* 11. Brokerage and Advisory Charges */}
       <section id="brokerage-charges" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             11
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Brokerage & Advisory Charges
           </h2>
         </div>
         <div className="bg-[#FAF9F6] border-2 border-emerald-600/30 rounded-2xl p-5 space-y-2">
-          <h3 className="font-serif font-bold text-[#0F1117] text-base flex items-center gap-2">
+          <h3 className="font-serif font-bold text-[#181B22] text-base flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-600" />
             <span>Zero Brokerage Policy for Homebuyers</span>
           </h3>
@@ -265,10 +265,10 @@ export default function TermsOfServiceContent() {
       {/* 12. Property Transactions and Independent Verification */}
       <section id="independent-verification" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             12
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Property Transactions & Legal Due Diligence
           </h2>
         </div>
@@ -278,7 +278,7 @@ export default function TermsOfServiceContent() {
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2 text-xs">
           <p>• Parent title deeds, Patta/Chitta revenue records, and 30-year Encumbrance Certificates (EC);</p>
           <p>• CMDA / DTCP planning permissions, building sanctions, and environmental clearance orders;</p>
-          <p>• Live registration standing and compliance filings on the official TNRERA portal (<a href="https://rera.tn.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#C98A4B] hover:underline font-mono">rera.tn.gov.in</a>);</p>
+          <p>• Live registration standing and compliance filings on the official TNRERA portal (<a href="https://rera.tn.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#A88548] hover:underline font-mono">rera.tn.gov.in</a>);</p>
           <p>• Joint Venture (JV) agreements, power of attorney documents, and completion/occupancy certificates.</p>
         </div>
         <p className="text-xs text-slate-600 italic">
@@ -289,10 +289,10 @@ export default function TermsOfServiceContent() {
       {/* 13. Intellectual Property */}
       <section id="intellectual-property" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             13
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Intellectual Property Rights
           </h2>
         </div>
@@ -304,10 +304,10 @@ export default function TermsOfServiceContent() {
       {/* 14. Third-Party Websites */}
       <section id="third-party-websites" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             14
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Third-Party Websites & External Feeds
           </h2>
         </div>
@@ -319,10 +319,10 @@ export default function TermsOfServiceContent() {
       {/* 15. Limitation of Liability */}
       <section id="limitation-liability" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             15
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Limitation of Liability & Statutory Safe Harbor
           </h2>
         </div>
@@ -340,10 +340,10 @@ export default function TermsOfServiceContent() {
       {/* 16. Suspension or Modification of Services */}
       <section id="modification-services" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             16
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Suspension or Modification of Services
           </h2>
         </div>
@@ -355,17 +355,17 @@ export default function TermsOfServiceContent() {
       {/* 17. Governing Law and Jurisdiction */}
       <section id="governing-law" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             17
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Governing Law & Exclusive Jurisdiction
           </h2>
         </div>
         <p>
           These Terms of Service and any contractual or non-contractual disputes arising out of or in connection with them shall be governed by, and construed exclusively in accordance with, the laws of the Republic of India.
         </p>
-        <p className="font-semibold text-[#0F1117]">
+        <p className="font-semibold text-[#181B22]">
           You irrevocably submit to the exclusive jurisdiction of the competent civil courts and tribunals located in Chennai, Tamil Nadu, India, to settle any claim or dispute.
         </p>
       </section>
@@ -373,22 +373,22 @@ export default function TermsOfServiceContent() {
       {/* 18. Contact Information */}
       <section id="contact-info" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             18
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Contact Information & Compliance Notices
           </h2>
         </div>
         <p>
           If you require clarification regarding these Terms of Service or wish to serve formal legal notices, please communicate with our legal advisory desk:
         </p>
-        <div className="bg-[#0F1117] text-white p-5 sm:p-6 rounded-2xl border border-[#C98A4B]/30 space-y-2.5 text-xs font-mono">
-          <p><strong className="text-[#C98A4B]">Entity Name:</strong> {BRAND.name}</p>
-          <p><strong className="text-[#C98A4B]">TNRERA Registration:</strong> {BRAND.reraId}</p>
-          <p><strong className="text-[#C98A4B]">Legal Communications:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
-          <p><strong className="text-[#C98A4B]">Telephone Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
-          <p><strong className="text-[#C98A4B]">Office Address:</strong> {BRAND.address}</p>
+        <div className="bg-[#FAF9F6] text-[#1E232F] border border-[#E7E2D8] p-5 sm:p-6 rounded-2xl border border-[#A88548]/30 space-y-2.5 text-xs font-mono">
+          <p><strong className="text-[#A88548]">Entity Name:</strong> {BRAND.name}</p>
+          <p><strong className="text-[#A88548]">TNRERA Registration:</strong> {BRAND.reraId}</p>
+          <p><strong className="text-[#A88548]">Legal Communications:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
+          <p><strong className="text-[#A88548]">Telephone Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
+          <p><strong className="text-[#A88548]">Office Address:</strong> {BRAND.address}</p>
         </div>
       </section>
 

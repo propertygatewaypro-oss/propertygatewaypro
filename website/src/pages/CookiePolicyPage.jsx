@@ -9,39 +9,39 @@ export default function CookiePolicyPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#1E232F] antialiased selection:bg-[#C98A4B]/20 selection:text-[#0F1117]">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#1E232F] antialiased selection:bg-[#A88548]/20 selection:text-[#181B22]">
       
-      {/* 1. DARK BLACK HERO SECTION */}
-      <section className="bg-[#0F1117] text-white pt-28 pb-14 sm:pt-32 sm:pb-16 border-b border-[#232733] relative overflow-hidden print:bg-white print:text-black print:p-0 print:border-none">
+      {/* 1. HERO SECTION */}
+      <section className="bg-[#FAF9F6] text-[#1E232F] pt-28 pb-14 sm:pt-32 sm:pb-16 border-b border-[#E7E2D8] relative overflow-hidden print:bg-white print:text-black print:p-0 print:border-none">
         <div className="w-[90%] max-w-[1440px] mx-auto">
           
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-xs text-slate-400 mb-4 font-mono print:hidden" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-slate-400">Legal</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#C98A4B] font-medium">Cookie Policy</span>
+          <nav className="flex items-center gap-2 text-xs text-slate-500 mb-4 font-mono print:hidden" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-[#A88548] transition-colors">Home</Link>
+            <span className="text-slate-400">/</span>
+            <span className="text-slate-500">Legal</span>
+            <span className="text-slate-400">/</span>
+            <span className="text-[#A88548] font-bold">Cookie Policy</span>
           </nav>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="space-y-3 max-w-3xl">
-              <div className="inline-block text-[#C98A4B] text-xs font-semibold tracking-widest uppercase font-mono">
+              <div className="inline-block text-[#7D5D2A] text-xs font-bold tracking-widest uppercase font-mono">
                 PROPERTY GATEWAY | LEGAL
               </div>
               
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#FAF9F6] tracking-tight print:text-black">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1E232F] tracking-tight print:text-black">
                 Cookie Policy
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed pt-1 print:text-slate-700">
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed pt-1 print:text-slate-700">
                 Transparent information regarding how cookies, session tokens, and local storage mechanisms are utilized on Property Gateway, with your preference controls.
               </p>
             </div>
 
-            <div className="text-xs text-slate-400 font-mono space-y-1 lg:text-right shrink-0 print:text-black">
-              <p>TNRERA Agent: <strong className="text-white print:text-black">{BRAND.reraId}</strong></p>
-              <p>Effective Date: <span className="text-[#C98A4B]">November 2026</span></p>
+            <div className="text-xs text-slate-600 font-mono space-y-1 lg:text-right shrink-0 print:text-black">
+              <p>TNRERA Agent: <strong className="text-[#1E232F] print:text-black">{BRAND.reraId}</strong></p>
+              <p>Effective Date: <span className="text-[#7D5D2A] font-bold">November 2026</span></p>
               <p>Jurisdiction: Chennai, Tamil Nadu, India</p>
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function CookiePolicyPage() {
 
           {/* Section 1 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               1. What Are Cookies?
             </h2>
             <p>
@@ -68,7 +68,7 @@ export default function CookiePolicyPage() {
 
           {/* Section 2 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               2. Why We Use Cookies
             </h2>
             <p>Property Gateway uses cookies and client storage for clear, legitimate operational purposes:</p>
@@ -82,7 +82,7 @@ export default function CookiePolicyPage() {
 
           {/* Section 3: Categories of Cookies Used */}
           <section className="space-y-6 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               3. Categories of Cookies Used on Property Gateway
             </h2>
             <p>
@@ -93,7 +93,7 @@ export default function CookiePolicyPage() {
               {/* Category 1 */}
               <div className="p-5 rounded-2xl bg-white border border-[#E7E2D8] shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#0F1117]">Strictly Necessary Cookies</h3>
+                  <h3 className="font-bold text-base text-[#181B22]">Strictly Necessary Cookies</h3>
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
                     Always Active
                   </span>
@@ -109,8 +109,8 @@ export default function CookiePolicyPage() {
               {/* Category 2 */}
               <div className="p-5 rounded-2xl bg-white border border-[#E7E2D8] shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#0F1117]">Functional &amp; Preference Cookies</h3>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B]">
+                  <h3 className="font-bold text-base text-[#181B22]">Functional &amp; Preference Cookies</h3>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#A88548]/15 text-[#A88548]">
                     User Preference
                   </span>
                 </div>
@@ -125,7 +125,7 @@ export default function CookiePolicyPage() {
               {/* Category 3 */}
               <div className="p-5 rounded-2xl bg-white border border-[#E7E2D8] shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#0F1117]">Performance &amp; Analytics Cookies</h3>
+                  <h3 className="font-bold text-base text-[#181B22]">Performance &amp; Analytics Cookies</h3>
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
                     Anonymized
                   </span>
@@ -141,7 +141,7 @@ export default function CookiePolicyPage() {
               {/* Category 4 */}
               <div className="p-5 rounded-2xl bg-white border border-[#E7E2D8] shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-[#0F1117]">Advisory &amp; Communication Cookies</h3>
+                  <h3 className="font-bold text-base text-[#181B22]">Advisory &amp; Communication Cookies</h3>
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
                     Consent Based
                   </span>
@@ -158,7 +158,7 @@ export default function CookiePolicyPage() {
 
           {/* Section 4 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               4. Managing Cookies Manually in Your Browser
             </h2>
             <p>
@@ -186,11 +186,11 @@ export default function CookiePolicyPage() {
 
           {/* Section 5 */}
           <section className="space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               5. Contact Information
             </h2>
             <p>
-              For any questions regarding our Cookie Policy, please contact our privacy desk at <a href={`mailto:${BRAND.email}`} className="text-[#C98A4B] hover:underline font-mono">{BRAND.email}</a>.
+              For any questions regarding our Cookie Policy, please contact our privacy desk at <a href={`mailto:${BRAND.email}`} className="text-[#A88548] hover:underline font-mono">{BRAND.email}</a>.
             </p>
           </section>
 

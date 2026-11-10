@@ -8,52 +8,55 @@ export default {
     extend: {
       colors: {
         brand: {
-          // Obsidian Carbon (Primary Authority & Architectural Foundations)
+          // Architectural Graphite Slate (Replacing Pitch Black)
           obsidian: {
-            950: '#0A0C10',
-            900: '#0F1117', // Primary Luxury Dark
-            850: '#141720',
-            800: '#1B1E28',
-            700: '#272B38',
-            600: '#383C4B',
+            950: '#12151B',
+            900: '#181B22', // Primary Slate Surface
+            850: '#1E232E',
+            800: '#202531',
+            700: '#2A303C',
+            600: '#3A4252',
           },
-          // Alias navy to obsidian for seamless drop-in
+          // Alias navy to slate
           navy: {
-            950: '#0A0C10',
-            900: '#0F1117',
-            850: '#141720',
-            800: '#1B1E28',
-            700: '#272B38',
-            600: '#383C4B',
+            950: '#12151B',
+            900: '#181B22',
+            850: '#1E232E',
+            800: '#202531',
+            700: '#2A303C',
+            600: '#3A4252',
           },
-          // Warm Brushed Bronze (Primary Luxury Accent, Price Tags, CTAs)
+          // Luxury Metallic Brushed Gold (Client Reference Palette)
           bronze: {
-            800: '#754B27',
-            700: '#8E5D34',
-            600: '#C98A4B', // Primary Bronze Action Token
-            500: '#C58F5E',
-            400: '#D8A67B',
-            300: '#E4BF9C',
-            200: '#ECD6C3',
-            100: '#F6ECE1',
-            50:  '#FAF4EE',
+            800: '#664B20',
+            700: '#7D5D2A', // Deep Gold Bronze
+            600: '#A88548', // Primary Metallic Gold
+            500: '#B8914B',
+            400: '#D4AF37', // Radiant 24K Gold
+            300: '#E0C27E', // Luminous Highlight
+            200: '#F0DEC0',
+            100: '#FAF2DF',
+            50:  '#FDFBF5',
           },
-          // Alias emerald to bronze for smooth color transformation
+          // Alias emerald to metallic gold
           emerald: {
-            800: '#754B27',
-            700: '#8E5D34',
-            600: '#C98A4B',
-            500: '#C58F5E',
-            400: '#D8A67B',
-            100: '#F6ECE1',
-            50:  '#FAF4EE',
+            800: '#664B20',
+            700: '#7D5D2A',
+            600: '#A88548',
+            500: '#B8914B',
+            400: '#D4AF37',
+            100: '#FAF2DF',
+            50:  '#FDFBF5',
           },
-          // Champagne Gold (Villas & Exclusive Badges)
+          // Radiant Gold
           gold: {
-            700: '#8E5D34',
-            600: '#C98A4B',
-            500: '#C58F5E',
-            100: '#F6ECE1',
+            800: '#664B20',
+            700: '#7D5D2A',
+            600: '#A88548',
+            500: '#B8914B',
+            400: '#D4AF37',
+            300: '#E0C27E',
+            100: '#FAF2DF',
           },
           // Travertine Alabaster Canvas (Warm Gallery Surfaces)
           canvas: {
@@ -87,7 +90,7 @@ export default {
         'card-hover': '0 12px 30px -6px rgba(15, 17, 23, 0.09), 0 8px 12px -4px rgba(15, 17, 23, 0.04)',
         'modal': '0 25px 50px -12px rgba(15, 17, 23, 0.25)',
         'floating-cta': '0 4px 16px rgba(37, 211, 102, 0.35)',
-        'bronze-glow': '0 4px 20px -2px rgba(201, 138, 75, 0.35)',
+        'bronze-glow': '0 4px 20px -2px rgba(168, 133, 72, 0.40)',
       }
     },
   },

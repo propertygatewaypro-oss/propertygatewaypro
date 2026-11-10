@@ -150,15 +150,15 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
 
         {/* High-Resolution Media Gallery Showcase */}
         <div className="space-y-3 mb-10">
-          <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-md">
+          <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden bg-[#F5F2EA] border border-[#E7E2D8] shadow-md">
             <img
               src={images[activeImageIndex]}
               alt={property.title}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-4 left-4 z-10">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-brand-navy-950/85 backdrop-blur-md text-xs text-white font-medium">
-                <ShieldCheck className="w-4 h-4 text-brand-emerald-400" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-md text-xs text-[#1E232F] font-bold border border-[#E7E2D8] shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-[#A88548]" />
                 <span>TNRERA Registered: {property.reraId || BRAND.reraId}</span>
               </span>
             </div>

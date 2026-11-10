@@ -14,7 +14,7 @@
 
   /* Accessible focus indicators */
   :focus-visible {
-    outline: 2px solid #C98A4B;
+    outline: 2px solid #A88548;
     outline-offset: 2px;
   }
 
@@ -22,6 +22,24 @@
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* Luxury Metallic Brushed Gold Gradient (Client Reference) */
+.bg-gold-metallic {
+  background: linear-gradient(135deg, #7D5D2A 0%, #A88548 28%, #E0C27E 65%, #9E7D3C 100%);
+  background-size: 200% auto;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bg-gold-metallic:hover {
+  background-position: right center;
+  box-shadow: 0 8px 25px rgba(168, 133, 72, 0.38);
+}
+
+.text-gold-metallic {
+  background: linear-gradient(135deg, #7D5D2A 0%, #B8914B 35%, #E5C985 68%, #9E7D3C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Hide scrollbar utility */

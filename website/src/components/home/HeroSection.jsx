@@ -7,34 +7,41 @@ import {
   IndianRupee, 
   ArrowRight, 
   ChevronDown, 
-  Calendar,
   Check,
-  Phone
+  Phone,
+  ShieldCheck
 } from 'lucide-react';
-import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES } from '../../utils/constants';
+import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, BRAND } from '../../utils/constants';
 
-// Curated Architectural Photographs with crossfade (Desktop 16:9 + Mobile 9:16)
+// Option 3 Curated Architectural Photographs: Daylight Luxury Estates in Chennai
 const HERO_SLIDES = [
   {
-    webp: '/images/hero/hero-villa.webp',
-    mobileWebp: '/images/hero/hero-villa-mobile.webp',
-    jpg: '/images/hero/hero-villa.webp',
-    alt: 'Contemporary Luxury Independent Villa in Chennai with warm interior lighting',
-    label: 'Luxury Villas'
+    webp: '/images/hero/hero-architectural-travertine.jpg',
+    mobileWebp: '/images/hero/hero-architectural-travertine-mobile.jpg',
+    jpg: '/images/hero/hero-architectural-travertine.jpg',
+    alt: 'Executive Architectural Travertine Villa in Chennai bathed in warm natural daylight',
+    label: 'Travertine Residence'
   },
   {
-    webp: '/images/hero/hero-interior.webp',
-    mobileWebp: '/images/hero/hero-interior-mobile.webp',
-    jpg: '/images/hero/hero-interior.webp',
-    alt: 'Spacious Luxury Living Room and Curated Interior in Chennai',
-    label: 'Curated Interiors'
+    webp: '/images/hero/hero-architectural-villa.jpg',
+    mobileWebp: '/images/hero/hero-architectural-villa-mobile.jpg',
+    jpg: '/images/hero/hero-architectural-villa.jpg',
+    alt: 'Contemporary Luxury Villa in Chennai with Lap Pool and Tropical Palms',
+    label: 'Coastal Luxury Villa'
   },
   {
-    webp: '/images/hero/hero-apartments.webp',
-    mobileWebp: '/images/hero/hero-apartments-mobile.webp',
-    jpg: '/images/hero/hero-apartments.webp',
-    alt: 'Modern Luxury Residential Community in Chennai',
-    label: 'Luxury Apartments'
+    webp: '/images/hero/hero-architectural-penthouse.jpg',
+    mobileWebp: '/images/hero/hero-architectural-penthouse-mobile.jpg',
+    jpg: '/images/hero/hero-architectural-penthouse.jpg',
+    alt: 'Ultra-Luxury High-Rise Penthouse Terrace overlooking Chennai Coastline',
+    label: 'Penthouse Terrace'
+  },
+  {
+    webp: '/images/hero/hero-architectural-interior.jpg',
+    mobileWebp: '/images/hero/hero-architectural-interior-mobile.jpg',
+    jpg: '/images/hero/hero-architectural-interior.jpg',
+    alt: 'Sun-drenched Double-Height Travertine Living Pavilion with Garden Atrium',
+    label: 'Curated Pavilion'
   }
 ];
 
@@ -47,7 +54,7 @@ const POPULAR_LOCATIONS = [
   { label: 'Guindy', fullName: 'Guindy' }
 ];
 
-// Custom Obsidian Gold Luxury Dropdown Component
+// Executive Architectural Slate Luxury Dropdown Component
 function CustomSearchDropdown({
   label,
   icon: Icon,
@@ -78,32 +85,32 @@ function CustomSearchDropdown({
         onClick={() => setIsOpen(!isOpen)}
         className="w-full text-left flex items-center gap-3 focus:outline-none cursor-pointer group py-1"
       >
-        {Icon && <Icon className="w-5 h-5 text-[#C98A4B] shrink-0" />}
+        {Icon && <Icon className="w-5 h-5 text-[#A88548] shrink-0" />}
         <div className="w-full min-w-0 pr-1">
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-[#C98A4B] mb-0.5 leading-none cursor-pointer">
+          <label className="block text-[11px] font-bold uppercase tracking-wider text-[#8C6239] mb-0.5 leading-none cursor-pointer">
             {label}
           </label>
           <div className="flex items-center justify-between gap-1">
-            <span className="text-[14.5px] sm:text-[15px] font-semibold text-white truncate block">
+            <span className="text-[14.5px] sm:text-[15px] font-bold text-[#1E232F] truncate block">
               {value}
             </span>
             <ChevronDown 
-              className={`w-3.5 h-3.5 text-slate-300 group-hover:text-[#C98A4B] transition-transform duration-200 shrink-0 ${
-                isOpen ? 'rotate-180 text-[#C98A4B]' : ''
+              className={`w-3.5 h-3.5 text-slate-400 group-hover:text-[#A88548] transition-transform duration-200 shrink-0 ${
+                isOpen ? 'rotate-180 text-[#A88548]' : ''
               }`} 
             />
           </div>
         </div>
       </button>
 
-      {/* Luxury Obsidian Popover Menu */}
+      {/* Daylight Ivory Popover Menu */}
       {isOpen && (
         <div className={`absolute top-full left-0 mt-2.5 ${
           isTwoColumn ? 'w-[320px] sm:w-[490px]' : 'w-64 sm:w-72'
-        } bg-[#0F1117] rounded-2xl border border-[#C98A4B]/40 shadow-[0_25px_60px_rgba(0,0,0,0.95)] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150`}>
+        } bg-white rounded-2xl border border-[#E7E2D8] shadow-[0_25px_60px_rgba(20,25,35,0.18)] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150`}>
           {/* Subtle Popover Title */}
-          <div className="px-3 py-1 mb-1.5 border-b border-white/[0.08] flex items-center justify-between">
-            <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#C98A4B]">
+          <div className="px-3 py-1 mb-1.5 border-b border-[#E7E2D8] flex items-center justify-between">
+            <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6239]">
               Select {label}
             </span>
             <span className="text-[10px] text-slate-400">
@@ -124,12 +131,12 @@ function CustomSearchDropdown({
                   }}
                   className={`w-full text-left px-3 py-2 rounded-xl text-xs sm:text-[13px] transition-colors flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-[#C98A4B]/20 text-[#C98A4B] font-semibold border border-[#C98A4B]/30'
-                      : 'text-[#F1EEE7] hover:bg-white/[0.08] hover:text-[#C98A4B]'
+                      ? 'bg-[#A88548]/15 text-[#8C6239] font-bold border border-[#A88548]/30'
+                      : 'text-[#2D3748] hover:bg-[#F7F5F0] hover:text-[#8C6239]'
                   }`}
                 >
                   <span className="leading-snug pr-1 whitespace-nowrap">{opt}</span>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-[#C98A4B] shrink-0 ml-1.5" />}
+                  {isSelected && <Check className="w-3.5 h-3.5 text-[#A88548] shrink-0 ml-1.5" />}
                 </button>
               );
             })}
@@ -176,11 +183,11 @@ export default function HeroSection({ onOpenVisitModal }) {
 
   return (
     <section 
-      className="relative w-full bg-[#07090E] text-white border-b border-[#232733] flex flex-col justify-center"
+      className="relative w-full bg-[#FAF9F6] text-[#1E232F] border-b border-[#E7E2D8] flex flex-col justify-center"
       aria-label="Property Gateway Homepage Hero"
     >
       {/* 1. Background Slideshow with subtle Ken Burns drift */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[#07090E]" aria-hidden="true">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAF9F6]" aria-hidden="true">
         {HERO_SLIDES.map((slide, index) => {
           const isActive = index === currentSlide;
           return (
@@ -191,17 +198,13 @@ export default function HeroSection({ onOpenVisitModal }) {
               }`}
             >
               <picture>
-                {/* Mobile Viewport: Dedicated 9:16 Portrait Photograph */}
                 <source 
                   media="(max-width: 767px)" 
-                  srcSet={slide.mobileWebp} 
-                  type="image/webp" 
+                  srcSet={slide.mobileWebp || slide.jpg} 
                 />
-                {/* Desktop Viewport: 16:9 Landscape Photograph */}
                 <source 
                   media="(min-width: 768px)" 
-                  srcSet={slide.webp} 
-                  type="image/webp" 
+                  srcSet={slide.webp || slide.jpg} 
                 />
                 <img
                   src={slide.jpg}
@@ -216,14 +219,6 @@ export default function HeroSection({ onOpenVisitModal }) {
             </div>
           );
         })}
-
-        {/* Sophisticated Dark Vignette Gradient Overlays */}
-        {/* Left deep obsidian overlay for sharp text contrast; smoothly feathered to right */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-r from-[#07090E] via-[#07090E]/95 via-45% to-transparent lg:via-[#07090E]/90 lg:via-52%" />
-        {/* Bottom subtle grounding vignette for lawn & search panel */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-t from-[#07090E]/90 via-[#07090E]/20 to-transparent" />
-        {/* Top subtle shading under navbar */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-b from-[#07090E]/60 via-transparent to-transparent h-20" />
       </div>
 
       {/* 2. Main Hero Content Container (Left-aligned, max-w-7xl) */}
@@ -232,18 +227,26 @@ export default function HeroSection({ onOpenVisitModal }) {
         {/* Top Content Block */}
         <div className="flex flex-col items-start max-w-[760px] w-full text-left">
           
-          {/* Main Headline (Exact Display Serif with Animated Curved Underline under Chennai) */}
+          {/* Top Trust Badge */}
+          <div className="mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#A88548]/50 text-xs text-[#8C6239] font-bold tracking-wide shadow-xs backdrop-blur-md">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
+              <span>TN RERA Registered ({BRAND.reraId}) | 0% Brokerage on Builder Launches</span>
+            </div>
+          </div>
+
+          {/* Main Headline (Executive Serif with Metallic Brushed Gold accent under Chennai) */}
           <h1 
-            className="text-[38px] sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[68px] font-serif font-bold text-white tracking-tight leading-[1.08] animate-hero-fade-up"
+            className="text-[38px] sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[68px] font-serif font-bold text-[#1E232F] tracking-tight leading-[1.08] animate-hero-fade-up"
             style={{ animationDelay: '40ms' }}
           >
             Discover Exceptional <br />
             Properties in{' '}
-            <span className="relative inline-block text-[#C98A4B]">
+            <span className="relative inline-block text-gold-metallic font-serif">
               Chennai
               {/* Golden Graceful Curved Underline Stroke - Animated SVG Draw */}
               <svg 
-                className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-2.5 sm:h-3 text-[#C98A4B] overflow-visible pointer-events-none" 
+                className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-2.5 sm:h-3 text-[#B8914B] overflow-visible pointer-events-none" 
                 viewBox="0 0 200 12" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +255,7 @@ export default function HeroSection({ onOpenVisitModal }) {
                   className="animate-stroke-draw"
                   d="M2 9.5C55 2.5 145 2.5 198 9.5" 
                   stroke="currentColor" 
-                  strokeWidth="3" 
+                  strokeWidth="3.5" 
                   strokeLinecap="round" 
                 />
               </svg>
@@ -264,28 +267,28 @@ export default function HeroSection({ onOpenVisitModal }) {
             className="mt-4 sm:mt-5 max-w-[560px] animate-hero-fade-up"
             style={{ animationDelay: '140ms' }}
           >
-            <p className="text-[15px] sm:text-[16.5px] text-slate-200/90 font-normal leading-[1.6]">
+            <p className="text-[15px] sm:text-[16.5px] text-[#3E4756] font-normal leading-[1.6]">
               Explore handpicked homes, premium villas and investment opportunities across Chennai with trusted real-estate guidance.
             </p>
           </div>
 
-          {/* Two Action Buttons (Exact Rounded-2xl Style with subtle micro-interaction) */}
+          {/* Two Action Buttons */}
           <div 
             className="flex flex-wrap items-center gap-4 mt-7 sm:mt-8 animate-hero-fade-up"
             style={{ animationDelay: '220ms' }}
           >
             <Link
               to="/properties"
-              className="h-[50px] px-8 rounded-2xl bg-[#C98A4B] hover:bg-[#b87a3d] text-[#0F1117] font-bold text-sm tracking-wide transition-all shadow-lg hover:shadow-[#C98A4B]/20 active:scale-[0.98] inline-flex items-center gap-2.5 shrink-0 cursor-pointer"
+              className="h-[50px] px-8 rounded-2xl bg-gold-metallic text-white font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] inline-flex items-center gap-2.5 shrink-0 cursor-pointer"
             >
               <span>Explore Properties</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/contact"
-              className="h-[50px] px-8 rounded-2xl bg-[#0B0D13]/60 hover:bg-white/[0.08] text-white border border-[#C98A4B]/80 hover:border-[#C98A4B] font-semibold text-sm tracking-wide transition-all active:scale-[0.98] cursor-pointer inline-flex items-center gap-2.5 backdrop-blur-md shrink-0"
+              className="h-[50px] px-8 rounded-2xl bg-white/95 hover:bg-white text-[#1E232F] border border-[#D5CEBF] hover:border-[#A88548] font-bold text-sm tracking-wide transition-all active:scale-[0.98] cursor-pointer inline-flex items-center gap-2.5 shadow-xs backdrop-blur-md shrink-0"
             >
-              <Phone className="w-4 h-4 text-[#C98A4B]" />
+              <Phone className="w-4 h-4 text-[#A88548]" />
               <span>Contact an Advisor</span>
             </Link>
           </div>
@@ -294,14 +297,14 @@ export default function HeroSection({ onOpenVisitModal }) {
         {/* Bottom Hero Block (Floating Search Bar + Popular Locations) */}
         <div className="w-full mt-10 lg:mt-14">
           
-          {/* Floating Luxury Search Panel (3 Columns + Search Properties Button) */}
+          {/* Floating Daylight Ivory Search Panel (3 Columns + Search Properties Button) */}
           <div 
             className="w-full max-w-[1100px] animate-hero-fade-up relative z-30"
             style={{ animationDelay: '300ms' }}
           >
             <form 
               onSubmit={handleSearch}
-              className="bg-[#0E131F]/92 backdrop-blur-md rounded-2xl sm:rounded-[24px] border border-[#C98A4B]/50 shadow-[0_20px_50px_rgba(0,0,0,0.65)] p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center divide-y md:divide-y-0 md:divide-x divide-white/10 min-h-[74px] transition-all hover:border-[#C98A4B]/70 relative z-30"
+              className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-[24px] border border-[#E7E2D8] shadow-[0_20px_50px_rgba(20,25,35,0.12)] p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center divide-y md:divide-y-0 md:divide-x divide-slate-200 min-h-[74px] transition-all hover:border-[#A88548]/60 relative z-30"
             >
               {/* Field 1: LOCATION */}
               <div className="flex-1 w-full px-3.5 sm:px-4 py-2 flex items-center">
@@ -339,26 +342,26 @@ export default function HeroSection({ onOpenVisitModal }) {
                 />
               </div>
 
-              {/* Field 4: Search Properties Button */}
+              {/* Field 4: Search Properties Button in Metallic Brushed Gold Gradient */}
               <div className="w-full md:w-auto p-1.5 shrink-0">
                 <button
                   type="submit"
-                  className="w-full md:w-auto h-[50px] sm:h-[52px] px-8 rounded-xl sm:rounded-2xl bg-[#C98A4B] hover:bg-[#b87a3d] active:scale-[0.98] text-[#0F1117] font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer hover:shadow-[#C98A4B]/20"
+                  className="w-full md:w-auto h-[50px] sm:h-[52px] px-8 rounded-xl sm:rounded-2xl bg-gold-metallic active:scale-[0.98] text-white font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
                 >
-                  <Search className="w-4 h-4 text-[#0F1117]" />
+                  <Search className="w-4 h-4 text-white" />
                   <span>Search Properties</span>
                 </button>
               </div>
             </form>
           </div>
 
-          {/* Popular Locations Row */}
+          {/* Popular Locations Row & Slideshow Controls */}
           <div 
-            className="mt-4 sm:mt-5 flex items-center animate-hero-fade-up relative z-10"
+            className="mt-4 sm:mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-hero-fade-up relative z-10"
             style={{ animationDelay: '380ms' }}
           >
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 text-xs text-slate-300 overflow-x-auto no-scrollbar pb-0.5">
-              <span className="text-[#C98A4B] font-semibold text-sm shrink-0">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 text-xs text-slate-600 overflow-x-auto no-scrollbar pb-0.5">
+              <span className="text-[#7D5D2A] font-bold text-sm shrink-0">
                 Popular Locations:
               </span>
               {POPULAR_LOCATIONS.map((loc) => {
@@ -368,16 +371,34 @@ export default function HeroSection({ onOpenVisitModal }) {
                     key={loc.label}
                     type="button"
                     onClick={() => handleLocationChipClick(loc.fullName)}
-                    className={`h-[30px] px-4 rounded-full text-xs font-medium border transition-all cursor-pointer shrink-0 inline-flex items-center active:scale-95 ${
+                    className={`h-[30px] px-4 rounded-full text-xs font-semibold border transition-all cursor-pointer shrink-0 inline-flex items-center active:scale-95 ${
                       isSelected
-                        ? 'bg-[#C98A4B]/25 text-[#C98A4B] border-[#C98A4B]'
-                        : 'bg-black/40 text-white border-white/20 hover:border-[#C98A4B] hover:text-[#C98A4B]'
+                        ? 'bg-gold-metallic text-white border-transparent shadow-xs'
+                        : 'bg-white/90 hover:bg-white text-[#2D3748] border-[#E2DBD0] hover:border-[#A88548] hover:text-[#7D5D2A] shadow-2xs'
                     }`}
                   >
                     {loc.label}
                   </button>
                 );
               })}
+            </div>
+
+            {/* Interactive Slideshow Pagination Dots */}
+            <div className="flex items-center gap-2 self-start sm:self-auto py-1 px-2.5 rounded-full bg-white/80 backdrop-blur-md border border-[#E7E2D8] shadow-xs">
+              {HERO_SLIDES.map((slide, idx) => (
+                <button
+                  key={slide.label}
+                  type="button"
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    currentSlide === idx 
+                      ? 'w-7 bg-gold-metallic' 
+                      : 'w-2 bg-slate-300 hover:bg-slate-400'
+                  }`}
+                  aria-label={`Show ${slide.label}`}
+                  title={slide.label}
+                />
+              ))}
             </div>
           </div>
 

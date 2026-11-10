@@ -60,7 +60,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/properties/add"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C98A4B] hover:bg-[#b07436] text-white text-xs font-semibold tracking-wide transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm active:scale-95"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Add Property</span>
@@ -117,11 +117,11 @@ export default function DashboardPage() {
         {/* Client Testimonials */}
         <Link 
           to="/testimonials" 
-          className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs hover:border-[#C98A4B]/50 hover:shadow-md transition-all group"
+          className="bg-white p-5 rounded-xl border border-slate-200/90 shadow-xs hover:border-[#A88548]/50 hover:shadow-md transition-all group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-[#C98A4B] transition-colors">Client Feedbacks</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#C98A4B] flex items-center justify-center">
+            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider group-hover:text-[#A88548] transition-colors">Client Feedbacks</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#A88548] flex items-center justify-center">
               <MessageSquareQuote className="w-4 h-4" />
             </div>
           </div>

@@ -17,11 +17,11 @@ export default function WhatsAppChatbot() {
       {/* 1. Direct Dial Phone Button */}
       <a
         href={`tel:${BRAND.phone}`}
-        className="w-12 h-12 md:w-[54px] md:h-[54px] rounded-full bg-[#C98A4B] hover:bg-[#b87a3d] text-[#0F1117] flex items-center justify-center shadow-[0_8px_20px_rgba(201,138,75,0.4)] hover:shadow-[0_12px_28px_rgba(201,138,75,0.6)] transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer border border-white/20 group"
+        className="w-12 h-12 md:w-[54px] md:h-[54px] rounded-full bg-[#A88548] hover:bg-[#b87a3d] text-[#181B22] flex items-center justify-center shadow-[0_8px_20px_rgba(201,138,75,0.4)] hover:shadow-[0_12px_28px_rgba(201,138,75,0.6)] transition-all hover:scale-110 active:scale-95 duration-200 cursor-pointer border border-white/20 group"
         aria-label={`Direct Call: ${BRAND.phoneDisplay}`}
         title={`Direct Call: ${BRAND.phoneDisplay}`}
       >
-        <Phone className="w-5 h-5 md:w-6 md:h-6 text-[#0F1117] fill-current group-hover:rotate-12 transition-transform" />
+        <Phone className="w-5 h-5 md:w-6 md:h-6 text-[#181B22] fill-current group-hover:rotate-12 transition-transform" />
       </a>
 
       {/* 2. WhatsApp Direct Floating Action */}

@@ -30,34 +30,34 @@ export default function PrivacyPolicyContent() {
       {/* 1. Introduction & Data Fiduciary Identity */}
       <section id="introduction" className="scroll-mt-36 space-y-3.5">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             01
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Introduction & Data Fiduciary Identity
           </h2>
         </div>
         <p>
-          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#C98A4B] hover:underline font-medium">propertygateway.com</a>), your privacy and data autonomy are fundamental to our advisory relationship. This Privacy Policy outlines the categories of data we collect, why we collect it, how it is processed, and the statutory safeguards provided to you.
+          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), your privacy and data autonomy are fundamental to our advisory relationship. This Privacy Policy outlines the categories of data we collect, why we collect it, how it is processed, and the statutory safeguards provided to you.
         </p>
         <p>
           This document is published in strict conformity with the <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>, the Digital Personal Data Protection Rules, the <strong>Information Technology Act, 2000</strong>, and regulatory guidelines established by the <strong>Tamil Nadu Real Estate Regulatory Authority (TNRERA)</strong>.
         </p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-1.5 text-xs font-mono">
-          <p><strong className="text-[#0F1117]">Data Fiduciary Entity:</strong> {BRAND.name}</p>
-          <p><strong className="text-[#0F1117]">TNRERA Agent Registration:</strong> {BRAND.reraId}</p>
-          <p><strong className="text-[#0F1117]">Registered Advisory Office:</strong> {BRAND.address}</p>
-          <p><strong className="text-[#0F1117]">Authorized Digital Desk:</strong> {BRAND.email} | {BRAND.phoneDisplay}</p>
+          <p><strong className="text-[#181B22]">Data Fiduciary Entity:</strong> {BRAND.name}</p>
+          <p><strong className="text-[#181B22]">TNRERA Agent Registration:</strong> {BRAND.reraId}</p>
+          <p><strong className="text-[#181B22]">Registered Advisory Office:</strong> {BRAND.address}</p>
+          <p><strong className="text-[#181B22]">Authorized Digital Desk:</strong> {BRAND.email} | {BRAND.phoneDisplay}</p>
         </div>
       </section>
 
       {/* 2. Information We Collect */}
       <section id="information-we-collect" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             02
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Information We Collect
           </h2>
         </div>
@@ -67,13 +67,13 @@ export default function PrivacyPolicyContent() {
         <p>Information is collected through two principal channels:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
           <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E2D8] space-y-1.5">
-            <h3 className="font-bold text-xs text-[#0F1117] uppercase tracking-wider">Direct User Submission</h3>
+            <h3 className="font-bold text-xs text-[#181B22] uppercase tracking-wider">Direct User Submission</h3>
             <p className="text-xs text-slate-600">
               Information you deliberately submit via our Post Requirement popup, Schedule Visit modal, WhatsApp chatbot, contact forms, or phone consultations.
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E2D8] space-y-1.5">
-            <h3 className="font-bold text-xs text-[#0F1117] uppercase tracking-wider">Technical & Browsing Data</h3>
+            <h3 className="font-bold text-xs text-[#181B22] uppercase tracking-wider">Technical & Browsing Data</h3>
             <p className="text-xs text-slate-600">
               Aggregated browser type, device category, IP address, referral URLs, and filter states stored temporarily to ensure responsive site operation and bot protection.
             </p>
@@ -84,10 +84,10 @@ export default function PrivacyPolicyContent() {
       {/* 3. Personal Information */}
       <section id="personal-information" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             03
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Personal Information
           </h2>
         </div>
@@ -96,19 +96,19 @@ export default function PrivacyPolicyContent() {
         </p>
         <ul className="space-y-2 text-xs sm:text-sm pl-2">
           <li className="flex items-start gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C98A4B] shrink-0 mt-2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A88548] shrink-0 mt-2" />
             <span><strong>Full Legal Name:</strong> Used to personalize communication and register your site visit passes with developer security gates.</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C98A4B] shrink-0 mt-2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A88548] shrink-0 mt-2" />
             <span><strong>Verified Mobile Number:</strong> Required for tele-consultation, SMS OTP verification, and coordinating chauffeur arrival for site visits.</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C98A4B] shrink-0 mt-2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A88548] shrink-0 mt-2" />
             <span><strong>Email Address:</strong> Utilized to transmit comprehensive project brochures, unit floor plans, price breakdowns, and TNRERA sanction letters.</span>
           </li>
           <li className="flex items-start gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C98A4B] shrink-0 mt-2" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#A88548] shrink-0 mt-2" />
             <span><strong>Country of Residence & Dialing Code:</strong> Crucial for identifying Non-Resident Indian (NRI) compliance workflows, time-zone alignment, and FEMA guidelines.</span>
           </li>
         </ul>
@@ -117,10 +117,10 @@ export default function PrivacyPolicyContent() {
       {/* 4. Property Requirements and Preferences */}
       <section id="property-requirements" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             04
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Property Requirements & Preferences
           </h2>
         </div>
@@ -138,10 +138,10 @@ export default function PrivacyPolicyContent() {
       {/* 5. Enquiry Forms and Consultation Requests */}
       <section id="enquiry-forms" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             05
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Enquiry Forms & Consultation Requests
           </h2>
         </div>
@@ -153,35 +153,35 @@ export default function PrivacyPolicyContent() {
       {/* 6. How We Use Your Information */}
       <section id="how-we-use-information" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             06
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             How We Use Your Information
           </h2>
         </div>
         <p>Your data is processed strictly for lawful purposes directly connected to real estate advisory:</p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2.5">
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Synthesizing tailored recommendations matching your micro-market, lifestyle, and budget parameters;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Transmitting authenticated developer cost sheets, floor plans, and TNRERA sanction document links;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Arranging personalized on-site inspections with licensed developer representatives;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Verifying user identity to protect our community against automated scraping, fraudulent listings, and bot attacks.</span>
@@ -192,19 +192,19 @@ export default function PrivacyPolicyContent() {
       {/* 7. Communication Through Calls, Email and WhatsApp */}
       <section id="communications" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             07
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Communication Through Calls, Email & WhatsApp
           </h2>
         </div>
         <p>
           When you submit your phone number or email, our verified property specialists may contact you via telephonic voice calls, SMS, WhatsApp Business messaging, or direct email to fulfill your specific enquiry.
         </p>
-        <div className="bg-[#FAF9F6] border-2 border-[#C98A4B]/30 rounded-2xl p-4 sm:p-5 space-y-2">
-          <h4 className="font-bold text-xs uppercase tracking-wider text-[#0F1117] flex items-center gap-2">
-            <Phone className="w-4 h-4 text-[#C98A4B]" />
+        <div className="bg-[#FAF9F6] border-2 border-[#A88548]/30 rounded-2xl p-4 sm:p-5 space-y-2">
+          <h4 className="font-bold text-xs uppercase tracking-wider text-[#181B22] flex items-center gap-2">
+            <Phone className="w-4 h-4 text-[#A88548]" />
             <span>National DND / NDNC Registry Exemption</span>
           </h4>
           <p className="text-xs text-slate-700 leading-relaxed">
@@ -216,10 +216,10 @@ export default function PrivacyPolicyContent() {
       {/* 8. Marketing and Promotional Communication */}
       <section id="marketing-communications" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             08
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Marketing & Promotional Communication
           </h2>
         </div>
@@ -229,22 +229,22 @@ export default function PrivacyPolicyContent() {
         <ul className="space-y-1.5 text-xs text-slate-700 pl-4 list-disc">
           <li>Clicking the "Unsubscribe" link in any promotional email;</li>
           <li>Replying <strong>"STOP"</strong> or <strong>"UNSUBSCRIBE"</strong> to any WhatsApp communication;</li>
-          <li>Sending an email to <a href={`mailto:${BRAND.email}`} className="text-[#C98A4B] hover:underline font-mono">{BRAND.email}</a> with the subject line <em>"Opt-Out Communications"</em>.</li>
+          <li>Sending an email to <a href={`mailto:${BRAND.email}`} className="text-[#A88548] hover:underline font-mono">{BRAND.email}</a> with the subject line <em>"Opt-Out Communications"</em>.</li>
         </ul>
       </section>
 
       {/* 9. Sharing Information With Developers and Partners */}
       <section id="sharing-with-developers" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             09
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Sharing Information With Developers & Partners
           </h2>
         </div>
         <div className="bg-[#FAF9F6] border-2 border-emerald-600/30 rounded-2xl p-5 space-y-3">
-          <h3 className="font-serif font-bold text-[#0F1117] text-base flex items-center gap-2">
+          <h3 className="font-serif font-bold text-[#181B22] text-base flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-emerald-600" />
             <span>Our Zero Third-Party Telemarketing Sale Policy</span>
           </h3>
@@ -260,10 +260,10 @@ export default function PrivacyPolicyContent() {
       {/* 10. Third-Party Service Providers */}
       <section id="third-party-services" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             10
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Third-Party Service Providers
           </h2>
         </div>
@@ -275,10 +275,10 @@ export default function PrivacyPolicyContent() {
       {/* 11. Data Storage and Retention */}
       <section id="data-storage-retention" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             11
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Data Storage & Retention
           </h2>
         </div>
@@ -290,10 +290,10 @@ export default function PrivacyPolicyContent() {
       {/* 12. Data Security */}
       <section id="data-security" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             12
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Data Security Measures
           </h2>
         </div>
@@ -305,44 +305,44 @@ export default function PrivacyPolicyContent() {
       {/* 13. Cookies and Website Analytics */}
       <section id="cookies-analytics" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             13
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Cookies & Website Analytics
           </h2>
         </div>
         <p>
-          Property Gateway utilizes cookies to preserve your filter criteria (such as budget range and micro-market selections), safeguard form submissions against Cross-Site Request Forgery (CSRF), and assess website load speeds. Please consult our detailed <Link to="/cookie-policy" className="text-[#C98A4B] font-medium hover:underline">Cookie Policy</Link> for comprehensive technical disclosures and our interactive preference toggle.
+          Property Gateway utilizes cookies to preserve your filter criteria (such as budget range and micro-market selections), safeguard form submissions against Cross-Site Request Forgery (CSRF), and assess website load speeds. Please consult our detailed <Link to="/cookie-policy" className="text-[#A88548] font-medium hover:underline">Cookie Policy</Link> for comprehensive technical disclosures and our interactive preference toggle.
         </p>
       </section>
 
       {/* 14. Privacy Rights and Consent Withdrawal */}
       <section id="privacy-rights" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             14
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Privacy Rights & Consent Withdrawal (DPDP Act 2023)
           </h2>
         </div>
         <p>As a Data Principal under India's DPDP Act, 2023, you hold enforceable statutory rights:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
           <div className="p-3.5 bg-[#FAF9F6] rounded-xl border border-[#E7E2D8]">
-            <h4 className="font-bold text-xs text-[#0F1117]">Right to Access Summary</h4>
+            <h4 className="font-bold text-xs text-[#181B22]">Right to Access Summary</h4>
             <p className="text-[11px] text-slate-600 mt-1">Obtain a transparent summary of all personal data held and processed by Property Gateway.</p>
           </div>
           <div className="p-3.5 bg-[#FAF9F6] rounded-xl border border-[#E7E2D8]">
-            <h4 className="font-bold text-xs text-[#0F1117]">Right to Rectification</h4>
+            <h4 className="font-bold text-xs text-[#181B22]">Right to Rectification</h4>
             <p className="text-[11px] text-slate-600 mt-1">Update, correct, or complete any inaccurate or obsolete contact details or property preferences.</p>
           </div>
           <div className="p-3.5 bg-[#FAF9F6] rounded-xl border border-[#E7E2D8]">
-            <h4 className="font-bold text-xs text-[#0F1117]">Right to Erasure (Data Purge)</h4>
+            <h4 className="font-bold text-xs text-[#181B22]">Right to Erasure (Data Purge)</h4>
             <p className="text-[11px] text-slate-600 mt-1">Request complete deletion of your records from active marketing and advisory databases within 48 business hours.</p>
           </div>
           <div className="p-3.5 bg-[#FAF9F6] rounded-xl border border-[#E7E2D8]">
-            <h4 className="font-bold text-xs text-[#0F1117]">Right of Grievance Redressal</h4>
+            <h4 className="font-bold text-xs text-[#181B22]">Right of Grievance Redressal</h4>
             <p className="text-[11px] text-slate-600 mt-1">Direct access to our Chennai-based Compliance Officer before approaching the Data Protection Board.</p>
           </div>
         </div>
@@ -351,10 +351,10 @@ export default function PrivacyPolicyContent() {
       {/* 15. Children's Privacy */}
       <section id="childrens-privacy" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             15
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Children's Privacy
           </h2>
         </div>
@@ -366,10 +366,10 @@ export default function PrivacyPolicyContent() {
       {/* 16. Policy Updates */}
       <section id="policy-updates" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             16
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Policy Updates & Amendments
           </h2>
         </div>
@@ -381,23 +381,23 @@ export default function PrivacyPolicyContent() {
       {/* 17. Contact and Grievance Redressal */}
       <section id="contact-grievance" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             17
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Contact & Grievance Redressal Desk
           </h2>
         </div>
         <p>
           In compliance with the DPDP Act 2023 and the Information Technology Rules, the designated Grievance & Compliance Officer for Property Gateway is:
         </p>
-        <div className="bg-[#0F1117] text-white p-5 sm:p-6 rounded-2xl border border-[#C98A4B]/30 space-y-2.5 text-xs font-mono">
-          <p><strong className="text-[#C98A4B]">Designation:</strong> Data Protection & Grievance Officer</p>
-          <p><strong className="text-[#C98A4B]">Entity:</strong> {BRAND.name} (TNRERA {BRAND.reraId})</p>
-          <p><strong className="text-[#C98A4B]">Official Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
-          <p><strong className="text-[#C98A4B]">Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
-          <p><strong className="text-[#C98A4B]">Registered Office:</strong> {BRAND.address}</p>
-          <p><strong className="text-[#C98A4B]">Response Timeline:</strong> Formal grievance acknowledgement within 24 hours; resolution within 30 statutory days.</p>
+        <div className="bg-[#FAF9F6] text-[#1E232F] border border-[#E7E2D8] p-5 sm:p-6 rounded-2xl border border-[#A88548]/30 space-y-2.5 text-xs font-mono">
+          <p><strong className="text-[#A88548]">Designation:</strong> Data Protection & Grievance Officer</p>
+          <p><strong className="text-[#A88548]">Entity:</strong> {BRAND.name} (TNRERA {BRAND.reraId})</p>
+          <p><strong className="text-[#A88548]">Official Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
+          <p><strong className="text-[#A88548]">Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
+          <p><strong className="text-[#A88548]">Registered Office:</strong> {BRAND.address}</p>
+          <p><strong className="text-[#A88548]">Response Timeline:</strong> Formal grievance acknowledgement within 24 hours; resolution within 30 statutory days.</p>
         </div>
       </section>
 

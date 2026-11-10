@@ -110,7 +110,7 @@ export default function ManageProperties() {
 
         <Link
           to="/properties/add"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C98A4B] hover:bg-[#b07436] text-white text-xs font-semibold tracking-wide transition-colors shadow-sm self-start sm:self-auto active:scale-95"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm self-start sm:self-auto active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Property</span>
@@ -126,7 +126,7 @@ export default function ManageProperties() {
             placeholder="Search by title, location (e.g. OMR)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
           />
         </div>
 
@@ -137,7 +137,7 @@ export default function ManageProperties() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] w-full sm:w-auto font-medium"
+              className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] w-full sm:w-auto font-medium"
             >
               <option value="All">All Statuses ({properties.length})</option>
               <option value="Active">Active / Published ({activeCount})</option>
@@ -156,7 +156,7 @@ export default function ManageProperties() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C98A4B]/30 focus:border-[#C98A4B] w-full sm:w-auto"
+              className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] w-full sm:w-auto"
             >
               <option value="All">All Property Types</option>
               {PROPERTY_TYPES.map(t => (
@@ -171,7 +171,7 @@ export default function ManageProperties() {
       <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-xs text-slate-500 flex flex-col items-center justify-center gap-2">
-            <Loader2 className="w-5 h-5 animate-spin text-[#C98A4B]" />
+            <Loader2 className="w-5 h-5 animate-spin text-[#A88548]" />
             <span>Loading property catalog...</span>
           </div>
         ) : filtered.length === 0 ? (
@@ -270,7 +270,7 @@ export default function ManageProperties() {
 
                         <Link
                           to={`/properties/edit/${prop.id}`}
-                          className="p-1.5 rounded-md text-slate-500 hover:text-[#C98A4B] hover:bg-amber-50 transition-colors"
+                          className="p-1.5 rounded-md text-slate-500 hover:text-[#A88548] hover:bg-amber-50 transition-colors"
                           title="Edit Full Details"
                         >
                           <Edit3 className="w-3.5 h-3.5" />

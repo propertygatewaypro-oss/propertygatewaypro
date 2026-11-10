@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: transparent; display: flex; align-items: center; justify-content: center; width: 1024px; height: 1024px; }
+  svg { width: 1024px; height: 1024px; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Luxury Brushed Metallic Gold Gradients (User Reference Swatch) -->
+    <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7D5D2A" />
+      <stop offset="22%" stop-color="#A88548" />
+      <stop offset="48%" stop-color="#F2DEC0" />
+      <stop offset="68%" stop-color="#D4AF37" />
+      <stop offset="85%" stop-color="#A88548" />
+      <stop offset="100%" stop-color="#6E4E20" />
+    </linearGradient>
+
+    <linearGradient id="goldGleam" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EED8B3" />
+      <stop offset="50%" stop-color="#A88548" />
+      <stop offset="100%" stop-color="#7D5D2A" />
+    </linearGradient>
+
+    <radialGradient id="pearlGlow" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="70%" stop-color="#FAF8F3" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#F3EFE6" stop-opacity="0.9" />
+    </radialGradient>
+
+    <!-- Subtle Drop Shadow for Crest -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#7D5D2A" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Pearl Alabaster Luxury Medallion Canvas -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#pearlGlow)" stroke="url(#goldMetallic)" stroke-width="6" filter="url(#softShadow)" />
+
+  <!-- Inner Concentric Hairline Filigree Ring -->
+  <rect x="36" y="36" width="440" height="440" rx="96" fill="none" stroke="url(#goldGleam)" stroke-width="1.75" stroke-dasharray="6 4" opacity="0.65" />
+
+  <!-- Crest Apex: 4-Point Daylight Star -->
+  <g transform="translate(256, 76)">
+    <path d="M0 -22 L4.5 -6 L20 0 L4.5 6 L0 22 L-4.5 6 L-20 0 L-4.5 -6 Z" fill="url(#goldMetallic)" />
+    <circle cx="0" cy="0" r="3" fill="#FFF6E5" />
+  </g>
+
+  <!-- Central Architectural Gateway Arch -->
+  <!-- Outer Archway Pillars and Curved Keystone Head -->
+  <path 
+    d="M 148 410 
+       L 148 220 
+       C 148 152, 200 108, 256 108 
+       C 312 108, 364 152, 364 220 
+       L 364 410 
+       L 340 410 
+       L 340 224 
+       C 340 170, 300 132, 256 132 
+       C 212 132, 172 170, 172 224 
+       L 172 410 
+       Z" 
+    fill="url(#goldMetallic)" 
+  />
+
+  <!-- Architectural Keystone Crown at Center Arch Apex -->
+  <polygon points="244,104 268,104 274,138 238,138" fill="url(#goldGleam)" stroke="url(#goldMetallic)" stroke-width="1.5" />
+
+  <!-- Inner Symmetrical Roman Arch Inset Line -->
+  <path 
+    d="M 190 410 
+       L 190 230 
+       C 190 188, 218 156, 256 156 
+       C 294 156, 322 188, 322 230 
+       L 322 410" 
+    fill="none" 
+    stroke="url(#goldMetallic)" 
+    stroke-width="3" 
+    stroke-linecap="round"
+  />
+
+  <!-- Monogram PG - Architectural Luxury Interlocking Form -->
+  <!-- Letter P (Left to Center) -->
+  <path 
+    d="M 204 380 
+       L 204 195 
+       L 262 195 
+       C 288 195, 305 210, 305 234 
+       C 305 258, 288 273, 262 273 
+       L 230 273 
+       L 230 380 
+       Z
+       M 230 220 
+       L 230 248 
+       L 258 248 
+       C 272 248, 280 242, 280 234 
+       C 280 226, 272 220, 258 220 
+       Z" 
+    fill="url(#goldMetallic)" 
+  />
+
+  <!-- Letter G (Interlocking lower foundation and sweeping right arm) -->
+  <path 
+    d="M 278 290 
+       L 304 290 
+       L 304 350 
+       C 292 360, 274 366, 254 366 
+       C 218 366, 192 338, 192 296 
+       C 192 284, 196 272, 202 262 
+       L 220 274 
+       C 217 281, 215 288, 215 296 
+       C 215 324, 232 344, 255 344 
+       C 268 344, 277 339, 283 333 
+       L 283 312 
+       L 256 312 
+       L 256 290 
+       L 278 290 
+       Z" 
+    fill="url(#goldGleam)" 
+  />
+
+  <!-- Plinth / Base Foundation Pedestal -->
+  <rect x="130" y="410" width="252" height="12" rx="3" fill="url(#goldMetallic)" />
+  <rect x="116" y="426" width="280" height="8" rx="2" fill="url(#goldGleam)" />
+</svg>
+</body>
+</html>

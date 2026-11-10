@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Menu, 
   X, 
-  Phone
+  Phone,
+  ShieldCheck,
+  ChevronRight
 } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
@@ -35,7 +38,7 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
   const isContactActive = location.pathname.startsWith('/contact');
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0F1117] border-b border-[#C98A4B]/30 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-[#E7E2D8] shadow-[0_4px_25px_rgba(20,25,35,0.06)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <nav 
           className="flex items-center justify-between h-[74px] sm:h-[80px]"
@@ -44,8 +47,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
           {/* 1. LEFT WING: BRAND LOGO & WORDMARK */}
           <div className="flex-1 flex items-center justify-start min-w-0">
             <Link to="/" className="flex items-center group shrink-0">
-              {/* Dark Rounded Badge with Gold Architectural Emblem */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#17191F] border border-[#C98A4B]/30 flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+              {/* Slate/Ivory Rounded Badge with Gold Architectural Emblem */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#FAF9F6] border border-[#A88548]/45 flex items-center justify-center p-1.5 shadow-xs group-hover:scale-105 transition-transform shrink-0">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway Emblem" 
@@ -54,10 +57,10 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               </div>
 
               {/* Subtle Vertical Divider */}
-              <div className="h-6 sm:h-7 w-[1.5px] bg-[#E7E2D8]/20 mx-3 sm:mx-3.5 shrink-0" />
+              <div className="h-6 sm:h-7 w-[1.5px] bg-[#E7E2D8] mx-3 sm:mx-3.5 shrink-0" />
 
-              {/* Brand Typography in Ivory */}
-              <span className="font-serif font-bold text-[19px] sm:text-[21px] xl:text-[22px] text-[#F1EEE7] tracking-tight leading-none group-hover:text-[#C98A4B] transition-colors whitespace-nowrap">
+              {/* Brand Typography in Architectural Slate */}
+              <span className="font-serif font-bold text-[19px] sm:text-[21px] xl:text-[22px] text-[#1E232F] tracking-tight leading-none group-hover:text-[#A88548] transition-colors whitespace-nowrap">
                 Property Gateway
               </span>
             </Link>
@@ -71,8 +74,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               to="/"
               className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isHomeActive 
-                  ? 'text-[#C98A4B] font-semibold' 
-                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+                  ? 'text-[#A88548] font-bold' 
+                  : 'text-[#2D3748] hover:text-[#A88548]'
               }`}
             >
               Home
@@ -83,8 +86,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               to="/properties"
               className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isPropertiesActive 
-                  ? 'text-[#C98A4B] font-semibold' 
-                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+                  ? 'text-[#A88548] font-bold' 
+                  : 'text-[#2D3748] hover:text-[#A88548]'
               }`}
             >
               Properties
@@ -95,8 +98,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               to="/about"
               className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isAboutActive 
-                  ? 'text-[#C98A4B] font-semibold' 
-                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+                  ? 'text-[#A88548] font-bold' 
+                  : 'text-[#2D3748] hover:text-[#A88548]'
               }`}
             >
               About Us
@@ -107,8 +110,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               to="/services"
               className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isServicesActive 
-                  ? 'text-[#C98A4B] font-semibold' 
-                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+                  ? 'text-[#A88548] font-bold' 
+                  : 'text-[#2D3748] hover:text-[#A88548]'
               }`}
             >
               Services
@@ -119,8 +122,8 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               to="/contact"
               className={`py-1 text-[14px] xl:text-[15px] font-medium transition-colors whitespace-nowrap ${
                 isContactActive 
-                  ? 'text-[#C98A4B] font-semibold' 
-                  : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+                  ? 'text-[#A88548] font-bold' 
+                  : 'text-[#2D3748] hover:text-[#A88548]'
               }`}
             >
               Contact
@@ -134,11 +137,11 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
             <div className="hidden lg:flex items-center">
               <a
                 href={`tel:${BRAND.phone}`}
-                className="flex items-center gap-2 h-[40px] xl:h-[42px] px-3.5 xl:px-4 rounded-xl bg-[#171922] hover:bg-[#C98A4B] text-[#F1EEE7] hover:text-[#0F1117] border border-[#C98A4B]/60 hover:border-[#C98A4B] transition-all duration-200 text-xs xl:text-[13.5px] font-bold tracking-wide group shrink-0 shadow-sm shadow-[#C98A4B]/10 active:scale-[0.98]"
+                className="flex items-center gap-2 h-[40px] xl:h-[42px] px-3.5 xl:px-4 rounded-xl bg-gold-metallic text-white transition-all duration-200 text-xs xl:text-[13.5px] font-bold tracking-wide group shrink-0 shadow-md shadow-[#A88548]/30 active:scale-[0.98]"
                 aria-label={`Direct Call: ${BRAND.phoneDisplay}`}
                 title={`Direct Call: ${BRAND.phoneDisplay}`}
               >
-                <Phone className="w-3.5 h-3.5 text-[#C98A4B] group-hover:text-[#0F1117] fill-current transition-colors shrink-0" />
+                <Phone className="w-3.5 h-3.5 text-white fill-current transition-colors shrink-0" />
                 <span className="font-mono tracking-tight whitespace-nowrap">{BRAND.phoneDisplay}</span>
               </a>
             </div>
@@ -147,7 +150,7 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
             <div className="flex lg:hidden items-center gap-2">
               <a
                 href={`tel:${BRAND.phone}`}
-                className="p-2 rounded-xl text-[#C98A4B] hover:bg-white/[0.08] transition-colors"
+                className="p-2 rounded-xl text-[#A88548] hover:bg-slate-100 transition-colors"
                 aria-label={`Call ${BRAND.phoneDisplay}`}
                 title={`Call ${BRAND.phoneDisplay}`}
               >
@@ -155,94 +158,177 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
               </a>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-xl text-[#F1EEE7] hover:bg-white/[0.08] hover:text-[#C98A4B] focus:outline-none transition-colors"
+                className="p-2 rounded-xl text-[#1E232F] hover:bg-slate-100 hover:text-[#A88548] focus:outline-none transition-colors"
                 aria-label="Toggle Navigation"
               >
-                {mobileMenuOpen ? <X className="w-5 h-5 text-[#F1EEE7]" /> : <Menu className="w-5 h-5 text-[#F1EEE7]" />}
+                {mobileMenuOpen ? <X className="w-5 h-5 text-[#1E232F]" /> : <Menu className="w-5 h-5 text-[#1E232F]" />}
               </button>
             </div>
           </div>
         </nav>
       </div>
 
-      {/* 4. MOBILE DRAWER MENU (Scrollable, Safe Area Inset, Compact Rhythm) */}
-      {mobileMenuOpen && (
+      {/* 4. MOBILE OFF-CANVAS LEFT SIDEBAR DRAWER (Portaled to document.body) */}
+      {typeof document !== 'undefined' && createPortal(
         <div 
-          className="border-t border-[#C98A4B]/30 bg-[#0F1117] px-4 pt-3 text-[#F1EEE7] space-y-1 sm:space-y-1.5 lg:hidden shadow-2xl max-h-[calc(100dvh-4.25rem)] overflow-y-auto overscroll-contain"
-          style={{ paddingBottom: 'max(1.75rem, env(safe-area-inset-bottom))' }}
+          className={`fixed inset-0 z-[9999] lg:hidden transition-all duration-300 ${
+            mobileMenuOpen ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
+          }`}
         >
-          <Link
-            to="/"
-            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-              isHomeActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+          {/* Backdrop Overlay */}
+          <div 
+            className={`fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ${
+              mobileMenuOpen ? 'opacity-100' : 'opacity-0'
             }`}
-          >
-            Home
-          </Link>
-
-          {/* Properties (Direct Link) */}
-          <Link
-            to="/properties"
             onClick={() => setMobileMenuOpen(false)}
-            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-              isPropertiesActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
-            }`}
-          >
-            Properties
-          </Link>
+            aria-hidden="true"
+          />
 
-          <Link
-            to="/about"
-            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-              isAboutActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
+          {/* Slide-over Left Drawer Panel */}
+          <div 
+            className={`fixed top-0 bottom-0 left-0 w-[82vw] max-w-[320px] h-[100dvh] bg-white flex flex-col justify-between shadow-[0_0_60px_rgba(0,0,0,0.35)] border-r border-[#E7E2D8] transition-transform duration-300 ease-out z-10 ${
+              mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation Menu"
           >
-            About Us
-          </Link>
+            {/* Drawer Header: Brand Watermark & Close Button (shrink-0) */}
+            <div className="shrink-0 flex items-center justify-between p-4 sm:p-5 border-b border-[#E7E2D8] bg-[#FAF9F6]">
+              <Link 
+                to="/" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 min-w-0"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white border border-[#A88548]/45 p-1.5 shadow-xs shrink-0">
+                  <img 
+                    src="/logo.png" 
+                    alt="Property Gateway" 
+                    className="w-full h-full object-contain" 
+                  />
+                </div>
+                <div className="min-w-0">
+                  <span className="font-serif font-bold text-base text-[#1E232F] tracking-tight block truncate">
+                    Property Gateway
+                  </span>
+                  <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-[#7D5D2A] block">
+                    Chennai Real Estate
+                  </span>
+                </div>
+              </Link>
 
-          <Link
-            to="/services"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-              isServicesActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
-            }`}
-          >
-            Services
-          </Link>
-
-          <Link
-            to="/contact"
-            className={`block px-3 py-2 rounded-xl text-sm font-medium ${
-              isContactActive ? 'text-[#C98A4B] bg-[#C98A4B]/15 font-semibold' : 'text-[#F1EEE7] hover:text-[#C98A4B]'
-            }`}
-          >
-            Contact
-          </Link>
-
-          {/* Post Requirement & Direct Dial in Mobile Menu */}
-          <div className="pt-2 px-0.5 pb-2 space-y-2">
-            {onOpenRequirementModal && (
               <button
                 type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenRequirementModal();
-                }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-[#171922] border border-[#C98A4B]/50 hover:bg-[#C98A4B] text-[#C98A4B] hover:text-[#0F1117] font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-xl text-slate-500 hover:text-[#1E232F] hover:bg-white border border-transparent hover:border-[#E7E2D8] transition-all cursor-pointer"
+                aria-label="Close Navigation"
               >
-                <span>Post Requirement</span>
+                <X className="w-5 h-5" />
               </button>
-            )}
+            </div>
 
-            <a
-              href={`tel:${BRAND.phone}`}
-              className="flex items-center justify-center gap-2.5 w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#C98A4B] text-[#0F1117] font-bold text-xs sm:text-sm tracking-wide shadow-md active:scale-[0.98] transition-all"
+            {/* Drawer Body: Navigation Links (flex-1 min-h-0 overflow-y-auto) */}
+            <div className="flex-1 min-h-0 overflow-y-auto px-3.5 py-4 space-y-1.5 overscroll-contain">
+              <Link
+                to="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isHomeActive 
+                    ? 'text-[#7D5D2A] bg-[#A88548]/12 font-bold border-l-4 border-[#A88548] pl-3' 
+                    : 'text-[#1E232F] hover:text-[#A88548] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <span>Home</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                to="/properties"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isPropertiesActive 
+                    ? 'text-[#7D5D2A] bg-[#A88548]/12 font-bold border-l-4 border-[#A88548] pl-3' 
+                    : 'text-[#1E232F] hover:text-[#A88548] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <span>Properties</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                to="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isAboutActive 
+                    ? 'text-[#7D5D2A] bg-[#A88548]/12 font-bold border-l-4 border-[#A88548] pl-3' 
+                    : 'text-[#1E232F] hover:text-[#A88548] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <span>About Us</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                to="/services"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isServicesActive 
+                    ? 'text-[#7D5D2A] bg-[#A88548]/12 font-bold border-l-4 border-[#A88548] pl-3' 
+                    : 'text-[#1E232F] hover:text-[#A88548] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <span>Services</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                to="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                  isContactActive 
+                    ? 'text-[#7D5D2A] bg-[#A88548]/12 font-bold border-l-4 border-[#A88548] pl-3' 
+                    : 'text-[#1E232F] hover:text-[#A88548] hover:bg-[#FAF9F6]'
+                }`}
+              >
+                <span>Contact</span>
+                <ChevronRight className="w-4 h-4 text-slate-400" />
+              </Link>
+            </div>
+
+            {/* Drawer Footer: Action Buttons & Legal Stamp (shrink-0) */}
+            <div 
+              className="shrink-0 p-4 border-t border-[#E7E2D8] bg-[#FAF9F6] space-y-2.5"
+              style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
             >
-              <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-[#0F1117]" />
-              <span>Direct Dial: {BRAND.phoneDisplay}</span>
-            </a>
+              {onOpenRequirementModal && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenRequirementModal();
+                  }}
+                  className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-white border border-[#A88548]/45 hover:bg-[#A88548] text-[#7D5D2A] hover:text-white font-bold text-xs uppercase tracking-wider shadow-xs transition-all cursor-pointer"
+                >
+                  <span>Post Requirement</span>
+                </button>
+              )}
+
+              <a
+                href={`tel:${BRAND.phone}`}
+                className="flex items-center justify-center gap-2.5 w-full py-3 px-4 rounded-xl bg-gold-metallic text-white font-bold text-xs sm:text-sm tracking-wide shadow-md active:scale-[0.98] transition-all"
+              >
+                <Phone className="w-4 h-4 fill-current text-white" />
+                <span>Direct Dial: {BRAND.phoneDisplay}</span>
+              </a>
+
+              <div className="pt-1 flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-500">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>TNRERA: TN/Agent/020/2019</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );

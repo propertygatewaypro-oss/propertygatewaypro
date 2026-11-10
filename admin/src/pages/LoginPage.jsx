@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Lock, 
@@ -16,7 +16,46 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
+// Curated Architectural Slideshow for Admin Hero Showcase
+const LOGIN_SLIDES = [
+  {
+    image: '/images/hero/hero-architectural-travertine.jpg',
+    tag: 'CURATED CHENNAI LUXURY',
+    title: 'The Gateway to Exceptional Real Estate',
+    subtitle: 'Direct developer launches, luxury residences, and verified legal scrutiny across Chennai.'
+  },
+  {
+    image: '/images/hero/hero-architectural-villa.jpg',
+    tag: 'PRIVATE COASTAL ESTATES',
+    title: 'Unrivaled Coastal Living & Modern Architecture',
+    subtitle: 'Exclusive beachfront villas and secluded contemporary compounds on ECR.'
+  },
+  {
+    image: '/images/hero/hero-architectural-penthouse.jpg',
+    tag: 'PANORAMIC SKY RESIDENCES',
+    title: 'Elevated Chennai Penthouses & Skyline Views',
+    subtitle: 'Bespoke high-floor residences designed for discerning homeowners and investors.'
+  },
+  {
+    image: '/images/hero/hero-architectural-interior.jpg',
+    tag: 'TIMELESS INTERIOR MASTERY',
+    title: 'Double-Height Atriums & Travertine Finishes',
+    subtitle: 'Handcrafted luxury spaces with natural light, cross ventilation, and serene gardens.'
+  }
+];
+
 export default function LoginPage() {
+  // Sliding Image Carousel State
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-slide carousel every 4 seconds with smooth crossfade
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % LOGIN_SLIDES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   // Load remembered admin email from storage
   const [email, setEmail] = useState(() => {
     try {
@@ -74,91 +113,73 @@ export default function LoginPage() {
         {/* ========================================================= */}
         {/* LEFT COLUMN: HERO SHOWCASE (Desktop Only ≥ 1024px)         */}
         {/* ========================================================= */}
-        <div className="hidden lg:flex relative flex-col justify-between p-8 xl:p-14 overflow-hidden border-r border-[var(--color-border)] bg-[var(--color-surface-panel)] min-w-0">
+        <div className="hidden lg:flex relative flex-col justify-between p-10 xl:p-14 overflow-hidden border-r border-[#E7E2D8] min-w-0 bg-[#FAF9F6]">
           
-          {/* Villa Architecture Twilight Background with warm glow */}
-          <div 
-            className="absolute inset-0 bg-cover bg-bottom opacity-35 mix-blend-luminosity pointer-events-none"
-            style={{ backgroundImage: `url('/hero-villa.webp')` }}
-          />
+          {/* Pristine Full-Bleed Sliding Image Slideshow with Crossfade */}
+          {LOGIN_SLIDES.map((slide, idx) => (
+            <div 
+              key={slide.image}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                idx === currentSlide ? 'opacity-100 z-0' : 'opacity-0 z-0 pointer-events-none'
+              }`}
+            >
+              <img 
+                src={slide.image} 
+                alt={slide.title} 
+                className="w-full h-full object-cover object-center select-none"
+              />
+            </div>
+          ))}
 
-          {/* Deep Obsidian Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-canvas)] via-[var(--color-canvas)]/85 to-transparent pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-canvas)] via-transparent to-transparent pointer-events-none" />
-
-          {/* Upper Branding Block */}
-          <div className="relative z-10 my-auto text-center py-6 xl:py-8 max-w-lg mx-auto w-full">
-            
-            {/* Architectural Logo Emblem */}
-            <div className="inline-flex flex-col items-center">
-              <div className="w-18 h-18 xl:w-20 xl:h-20 rounded-2xl bg-[var(--color-surface-card)] border border-[var(--color-accent-gold)]/40 p-2.5 xl:p-3 shadow-lg flex items-center justify-center mb-4 transition-transform duration-150 motion-reduce:transition-none hover:scale-105">
-                <img 
-                  src="/logo.png" 
-                  alt="Property Gateway" 
-                  className="w-full h-full rounded-xl object-contain" 
-                />
-              </div>
-
-              {/* Brand Title */}
-              <h1 className="font-serif text-3xl xl:text-4xl font-bold tracking-tight text-[var(--color-text-primary)] break-words min-w-0">
+          {/* Minimal Top Brand Watermark (Zero Opaque Box) */}
+          <div className="relative z-10 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md border border-[#A88548]/45 p-1.5 shadow-sm">
+              <img 
+                src="/logo.png" 
+                alt="Property Gateway" 
+                className="w-full h-full object-contain" 
+              />
+            </div>
+            <div>
+              <span className="font-serif font-bold text-lg text-[#181B22] tracking-tight block drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
                 Property Gateway
-              </h1>
-
-              {/* Natural Sentence-Case Label */}
-              <div className="flex items-center justify-center gap-2.5 mt-2">
-                <span className="h-[1px] w-6 bg-[var(--color-accent-gold)]/50" />
-                <span className="text-xs text-[var(--color-accent-gold)] font-medium">
-                  Administration and lead console
-                </span>
-                <span className="h-[1px] w-6 bg-[var(--color-accent-gold)]/50" />
-              </div>
-
-              {/* Tagline */}
-              <p className="mt-3 text-xs xl:text-sm text-[var(--color-text-secondary)] max-w-sm mx-auto leading-relaxed">
-                Manage verified Chennai properties, buyer inquiries, and site visit bookings.
-              </p>
+              </span>
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#7D5D2A] block drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                Executive Console
+              </span>
             </div>
-
-            {/* 3 Feature Pills */}
-            <div className="grid grid-cols-[repeat(3,minmax(0,1fr))] gap-2.5 xl:gap-3.5 max-w-xs xl:max-w-md mx-auto mt-6 xl:mt-8">
-              
-              {/* Feature 1: Properties */}
-              <div className="bg-[var(--color-surface-card)]/80 border border-[var(--color-border)] rounded-2xl p-2.5 xl:p-3.5 text-center shadow-md transition-transform duration-150 motion-reduce:transition-none hover:-translate-y-0.5">
-                <div className="w-8 h-8 xl:w-9 xl:h-9 rounded-xl bg-[var(--color-accent-gold)]/10 border border-[var(--color-accent-gold)]/25 flex items-center justify-center mx-auto mb-1.5 text-[var(--color-accent-gold)]">
-                  <Home className="w-4 h-4 xl:w-4.5 xl:h-4.5" aria-hidden="true" />
-                </div>
-                <span className="block text-xs font-medium text-[var(--color-text-primary)] truncate">
-                  Properties
-                </span>
-              </div>
-
-              {/* Feature 2: Leads */}
-              <div className="bg-[var(--color-surface-card)]/80 border border-[var(--color-border)] rounded-2xl p-2.5 xl:p-3.5 text-center shadow-md transition-transform duration-150 motion-reduce:transition-none hover:-translate-y-0.5">
-                <div className="w-8 h-8 xl:w-9 xl:h-9 rounded-xl bg-[var(--color-accent-gold)]/10 border border-[var(--color-accent-gold)]/25 flex items-center justify-center mx-auto mb-1.5 text-[var(--color-accent-gold)]">
-                  <Users className="w-4 h-4 xl:w-4.5 xl:h-4.5" aria-hidden="true" />
-                </div>
-                <span className="block text-xs font-medium text-[var(--color-text-primary)] truncate">
-                  Leads
-                </span>
-              </div>
-
-              {/* Feature 3: Site Visits */}
-              <div className="bg-[var(--color-surface-card)]/80 border border-[var(--color-border)] rounded-2xl p-2.5 xl:p-3.5 text-center shadow-md transition-transform duration-150 motion-reduce:transition-none hover:-translate-y-0.5">
-                <div className="w-8 h-8 xl:w-9 xl:h-9 rounded-xl bg-[var(--color-accent-gold)]/10 border border-[var(--color-accent-gold)]/25 flex items-center justify-center mx-auto mb-1.5 text-[var(--color-accent-gold)]">
-                  <Calendar className="w-4 h-4 xl:w-4.5 xl:h-4.5" aria-hidden="true" />
-                </div>
-                <span className="block text-xs font-medium text-[var(--color-text-primary)] truncate">
-                  Site visits
-                </span>
-              </div>
-
-            </div>
-
           </div>
 
-          {/* Compliance Credit */}
-          <div className="relative z-10 text-center py-2 text-[11px] text-[var(--color-text-muted)] font-mono">
-            TNRERA Agent: TN/Agent/020/2019
+          {/* Minimal Editorial Typography (Direct on photo, zero white boxes) */}
+          <div className="relative z-10 max-w-md space-y-2 pt-20">
+            <span className="text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#7D5D2A] block transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+              {LOGIN_SLIDES[currentSlide].tag}
+            </span>
+            <h2 className="font-serif text-3xl xl:text-4xl font-bold text-[#181B22] tracking-tight leading-tight transition-opacity duration-300 drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)] min-h-[4.5rem]">
+              {LOGIN_SLIDES[currentSlide].title}
+            </h2>
+            <p className="text-xs xl:text-sm text-slate-800 font-medium leading-relaxed transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] min-h-[2.5rem]">
+              {LOGIN_SLIDES[currentSlide].subtitle}
+            </p>
+
+            {/* Sleek Dot Progress Indicators for the Sliding Images */}
+            <div className="flex items-center gap-2 pt-2">
+              {LOGIN_SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === currentSlide ? 'w-8 bg-gold-metallic' : 'w-2 bg-[#181B22]/40 hover:bg-[#181B22]/70'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="pt-2 text-[11px] font-mono text-slate-700 font-semibold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+              TNRERA Registered Agent: TN/Agent/020/2019
+            </div>
           </div>
 
         </div>
@@ -305,11 +326,11 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-xl bg-[var(--color-accent-gold)] hover:bg-[var(--color-accent-gold-hover)] text-[#0A0C10] font-bold text-xs sm:text-sm tracking-wide transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-canvas)]"
+                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-5 rounded-xl bg-gold-metallic text-white font-bold text-xs sm:text-sm tracking-wide transition-transform duration-150 motion-reduce:transition-none active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A88548] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-canvas)]"
                 >
                   {loading ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-[#0A0C10] border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
                       <span>Signing in to console...</span>
                     </>
                   ) : (

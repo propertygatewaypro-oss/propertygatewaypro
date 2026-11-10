@@ -74,59 +74,59 @@ export default function LegalLayout({
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-slate-800 antialiased selection:bg-[#C98A4B]/20 selection:text-[#0F1117]">
+    <div className="min-h-screen bg-[#FAF9F6] text-slate-800 antialiased selection:bg-[#A88548]/20 selection:text-[#181B22]">
       
-      {/* 1. HERO / HEADER SECTION (~220-260px desktop height) */}
-      <header className="bg-[#0F1117] text-white pt-14 pb-12 sm:pt-16 sm:pb-14 border-b border-[#232733] relative overflow-hidden print:hidden">
+      {/* 1. HERO / HEADER SECTION */}
+      <header className="bg-[#FAF9F6] text-[#1E232F] pt-14 pb-12 sm:pt-16 sm:pb-14 border-b border-[#E7E2D8] relative overflow-hidden print:hidden">
         {/* Subtle decorative gold ambient glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C98A4B]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#A88548]/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-[1150px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-xs text-slate-400 mb-3 font-mono" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
-            <ChevronRight className="w-3 h-3 text-slate-600" />
-            <span className="text-slate-400">Legal Centre</span>
-            <ChevronRight className="w-3 h-3 text-slate-600" />
-            <span className="text-[#C98A4B] font-medium">{title}</span>
+          <nav className="flex items-center gap-2 text-xs text-slate-500 mb-3 font-mono" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-[#A88548] transition-colors">Home</Link>
+            <ChevronRight className="w-3 h-3 text-slate-400" />
+            <span className="text-slate-500">Legal Centre</span>
+            <ChevronRight className="w-3 h-3 text-slate-400" />
+            <span className="text-[#A88548] font-bold">{title}</span>
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3">
               {/* Bronze Eyebrow Label */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1A1E29] border border-[#C98A4B]/40 text-[#C98A4B] text-[11px] font-semibold uppercase tracking-widest">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#C98A4B]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E7E2D8] text-[#7D5D2A] text-[11px] font-bold uppercase tracking-widest shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#A88548]" />
                 <span>PROPERTY GATEWAY | LEGAL CENTRE</span>
               </div>
               
               {/* Large Ivory Page Heading */}
-              <h1 className="text-3xl sm:text-4xl md:text-[42px] font-serif font-bold text-[#FAF9F6] tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-[42px] font-serif font-bold text-[#1E232F] tracking-tight leading-tight">
                 {title}
               </h1>
 
               {/* Short descriptive introduction */}
-              <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
                 {description}
               </p>
             </div>
 
             {/* Meta & Print Action */}
-            <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-3 text-xs text-slate-400 font-mono shrink-0">
-              <div className="flex items-center gap-2 bg-[#1A1E29]/80 px-3 py-1.5 rounded-lg border border-slate-800 text-slate-300">
-                <Calendar className="w-3.5 h-3.5 text-[#C98A4B]" />
-                <span>Last Updated: <strong className="text-white">{lastUpdated}</strong></span>
+            <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-3 text-xs text-slate-500 font-mono shrink-0">
+              <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-[#E7E2D8] text-slate-700 shadow-2xs">
+                <Calendar className="w-3.5 h-3.5 text-[#A88548]" />
+                <span>Last Updated: <strong className="text-[#1E232F]">{lastUpdated}</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-[#C98A4B] font-semibold">TNRERA: {BRAND.reraId}</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-[#7D5D2A] font-bold">TNRERA: {BRAND.reraId}</span>
+                <span className="text-slate-300">|</span>
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white px-2.5 py-1 rounded-md bg-[#232733] hover:bg-[#2e3343] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs text-slate-700 hover:text-[#1E232F] px-2.5 py-1 rounded-md bg-white hover:bg-[#FAF9F6] border border-[#E7E2D8] transition-colors cursor-pointer shadow-2xs"
                   title="Print this legal policy"
                 >
-                  <Printer className="w-3.5 h-3.5 text-[#C98A4B]" />
+                  <Printer className="w-3.5 h-3.5 text-[#A88548]" />
                   <span>Print Document</span>
                 </button>
               </div>
@@ -148,11 +148,11 @@ export default function LegalLayout({
                   to={tab.path}
                   className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#0F1117] text-white shadow-sm border border-[#C98A4B]/50'
-                      : 'bg-white text-slate-700 hover:text-[#0F1117] hover:bg-[#F3EFE7] border border-[#E0D9CD]'
+                      ? 'bg-gold-metallic text-white shadow-sm border-transparent'
+                      : 'bg-white text-slate-700 hover:text-[#1E232F] hover:bg-[#F3EFE7] border border-[#E0D9CD]'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#C98A4B]' : 'text-slate-500'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500'}`} />
                   <span>{tab.label}</span>
                 </Link>
               );
@@ -172,8 +172,8 @@ export default function LegalLayout({
               onClick={() => setIsMobileTocOpen(!isMobileTocOpen)}
               className="w-full flex items-center justify-between p-4 bg-white rounded-2xl border border-[#E7E2D8] shadow-sm text-left"
             >
-              <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-[#0F1117]">
-                <List className="w-4 h-4 text-[#C98A4B]" />
+              <div className="flex items-center gap-2.5 text-xs font-bold uppercase tracking-wider text-[#181B22]">
+                <List className="w-4 h-4 text-[#A88548]" />
                 <span>On This Page ({sections.length} Sections)</span>
               </div>
               <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${isMobileTocOpen ? 'rotate-180' : ''}`} />
@@ -188,11 +188,11 @@ export default function LegalLayout({
                     onClick={() => scrollToSection(sec.id)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex items-center gap-2 ${
                       activeSectionId === sec.id
-                        ? 'bg-[#0F1117] text-white font-semibold'
-                        : 'text-slate-600 hover:bg-[#FAF9F6] hover:text-[#0F1117]'
+                        ? 'bg-gold-metallic text-white font-semibold shadow-xs'
+                        : 'text-slate-600 hover:bg-[#FAF9F6] hover:text-[#181B22]'
                     }`}
                   >
-                    <span className="font-mono text-[10px] text-[#C98A4B] w-5 shrink-0">
+                    <span className={`font-mono text-[10px] w-5 shrink-0 ${activeSectionId === sec.id ? 'text-white' : 'text-[#A88548]'}`}>
                       {sec.number}.
                     </span>
                     <span className="truncate">{sec.title}</span>
@@ -211,8 +211,8 @@ export default function LegalLayout({
               <div className="bg-white rounded-2xl border border-[#E7E2D8] p-5 shadow-sm space-y-4">
                 
                 <div className="flex items-center justify-between pb-3 border-b border-[#E7E2D8]">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0F1117]">
-                    <List className="w-4 h-4 text-[#C98A4B]" />
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#181B22]">
+                    <List className="w-4 h-4 text-[#A88548]" />
                     <span>On This Page</span>
                   </div>
                   <span className="text-[10px] font-mono text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
@@ -230,12 +230,12 @@ export default function LegalLayout({
                         onClick={() => scrollToSection(sec.id)}
                         className={`w-full text-left px-2.5 py-1.5 rounded-lg transition-all flex items-start gap-2 group cursor-pointer ${
                           isCurrent
-                            ? 'bg-[#0F1117] text-white font-semibold shadow-xs'
-                            : 'text-slate-600 hover:text-[#0F1117] hover:bg-[#FAF9F6]'
+                            ? 'bg-gold-metallic text-white font-semibold shadow-xs'
+                            : 'text-slate-600 hover:text-[#181B22] hover:bg-[#FAF9F6]'
                         }`}
                       >
                         <span className={`font-mono text-[10px] shrink-0 mt-0.5 ${
-                          isCurrent ? 'text-[#C98A4B] font-bold' : 'text-slate-400 group-hover:text-[#C98A4B]'
+                          isCurrent ? 'text-white font-bold' : 'text-slate-400 group-hover:text-[#A88548]'
                         }`}>
                           {sec.number}.
                         </span>
@@ -250,9 +250,9 @@ export default function LegalLayout({
                   <button
                     type="button"
                     onClick={handlePrint}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#FAF9F6] border border-[#E0D9CD] hover:bg-[#F3EFE7] text-[#0F1117] text-xs font-semibold transition-colors cursor-pointer"
+                    className="w-full flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#FAF9F6] border border-[#E0D9CD] hover:bg-[#F3EFE7] text-[#181B22] text-xs font-semibold transition-colors cursor-pointer"
                   >
-                    <Printer className="w-3.5 h-3.5 text-[#C98A4B]" />
+                    <Printer className="w-3.5 h-3.5 text-[#A88548]" />
                     <span>Print Official Copy</span>
                   </button>
                 </div>
@@ -268,16 +268,16 @@ export default function LegalLayout({
               {/* Document Header (Visible in print too) */}
               <div className="pb-8 mb-8 border-b border-[#E7E2D8]">
                 <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-slate-500 mb-2">
-                  <div className="inline-flex items-center gap-2 text-[#0F1117] font-semibold">
-                    <Building2 className="w-4 h-4 text-[#C98A4B]" />
+                  <div className="inline-flex items-center gap-2 text-[#181B22] font-semibold">
+                    <Building2 className="w-4 h-4 text-[#A88548]" />
                     <span>{BRAND.name}</span>
                   </div>
                   <span>TNRERA Registered Agent: {BRAND.reraId}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
                   {title}
                 </h2>
-                <div className="w-12 h-1 bg-[#C98A4B] rounded-full mt-3" />
+                <div className="w-12 h-1 bg-[#A88548] rounded-full mt-3" />
               </div>
 
               {/* Main Document Content */}
@@ -290,7 +290,7 @@ export default function LegalLayout({
                   <p>Governing Jurisdiction: Courts of Chennai, Tamil Nadu, India.</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[#C98A4B] font-semibold">Official Legal Center Document</p>
+                  <p className="text-[#A88548] font-semibold">Official Legal Center Document</p>
                   <p>Inquiries: {BRAND.email}</p>
                 </div>
               </div>

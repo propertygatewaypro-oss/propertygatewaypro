@@ -19,10 +19,10 @@ function ProtectedRoute({ children }) {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0C10] flex items-center justify-center" aria-label="Authenticating session">
+      <div className="min-h-screen bg-[var(--color-canvas)] flex items-center justify-center" aria-label="Authenticating session">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-[#C98A4B] border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-slate-400 font-mono">Authenticating...</span>
+          <div className="w-8 h-8 border-2 border-[#A88548] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-slate-500 font-mono">Authenticating...</span>
         </div>
       </div>
     );
@@ -40,8 +40,8 @@ function AdminRoutes() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0A0C10] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#C98A4B] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-[var(--color-canvas)] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#A88548] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }

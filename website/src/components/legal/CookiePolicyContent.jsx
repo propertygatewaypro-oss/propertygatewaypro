@@ -25,10 +25,10 @@ export default function CookiePolicyContent() {
       {/* 1. What Are Cookies? */}
       <section id="what-are-cookies" className="scroll-mt-36 space-y-3.5">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             01
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             What Are Cookies?
           </h2>
         </div>
@@ -36,42 +36,42 @@ export default function CookiePolicyContent() {
           Cookies are compact text files containing alphanumeric strings that are transferred to your computer, tablet, or smartphone when you visit a website. Together with modern browser storage mechanisms such as <code>localStorage</code> and <code>sessionStorage</code>, cookies enable web servers to identify your device, recall browsing preferences, and provide persistent navigation experiences.
         </p>
         <p>
-          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#C98A4B] hover:underline font-medium">propertygateway.com</a>), cookies help streamline your home search across Chennai micro-markets without requiring you to re-enter filters on every page reload.
+          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), cookies help streamline your home search across Chennai micro-markets without requiring you to re-enter filters on every page reload.
         </p>
       </section>
 
       {/* 2. Why We Use Cookies */}
       <section id="why-we-use-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             02
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Why We Use Cookies
           </h2>
         </div>
         <p>We use cookies and device identifiers for distinct, transparent operational goals:</p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2.5">
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Ensuring cryptographic security against Cross-Site Request Forgery (CSRF) in consultation forms;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Retaining your selected real estate filter parameters (e.g. OMR, ECR, Villa vs Apartment, Budget tier);</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Preventing annoying popup fatigue by remembering when you dismiss consultation prompts;</span>
           </div>
           <div className="flex items-start gap-2.5">
-            <span className="w-5 h-5 rounded-full bg-[#C98A4B]/15 text-[#C98A4B] flex items-center justify-center shrink-0 mt-0.5">
+            <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
             <span>Evaluating anonymous technical metrics to optimize high-resolution floor plan image delivery.</span>
@@ -82,10 +82,10 @@ export default function CookiePolicyContent() {
       {/* 3. Essential Cookies */}
       <section id="essential-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             03
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Strictly Necessary (Essential) Cookies
           </h2>
         </div>
@@ -93,19 +93,19 @@ export default function CookiePolicyContent() {
           These cookies are vital for the core technical operation of Property Gateway. Without them, secure authentication, form tokens, and foundational routing functions cannot operate. Under the DPDP Act 2023, these essential session cookies do not require prior consent because they are deployed strictly to deliver services requested by the user.
         </p>
         <div className="p-4 rounded-2xl bg-white border border-[#E7E2D8] space-y-2 font-mono text-xs">
-          <p><span className="text-[#C98A4B] font-semibold">Cookie / Key:</span> <code>pg_session_id</code>, <code>pg_csrf_token</code>, <code>pg_cookie_consent</code></p>
-          <p><span className="text-[#C98A4B] font-semibold">Purpose:</span> Session integrity, form submission validation, and recording your cookie preferences.</p>
-          <p><span className="text-[#C98A4B] font-semibold">Duration:</span> Session duration or up to 1 year for persistent consent.</p>
+          <p><span className="text-[#A88548] font-semibold">Cookie / Key:</span> <code>pg_session_id</code>, <code>pg_csrf_token</code>, <code>pg_cookie_consent</code></p>
+          <p><span className="text-[#A88548] font-semibold">Purpose:</span> Session integrity, form submission validation, and recording your cookie preferences.</p>
+          <p><span className="text-[#A88548] font-semibold">Duration:</span> Session duration or up to 1 year for persistent consent.</p>
         </div>
       </section>
 
       {/* 4. Functional Cookies */}
       <section id="functional-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             04
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Functional & Preference Cookies
           </h2>
         </div>
@@ -117,10 +117,10 @@ export default function CookiePolicyContent() {
       {/* 5. Analytics Cookies */}
       <section id="analytics-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             05
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Performance & Analytics Cookies
           </h2>
         </div>
@@ -132,10 +132,10 @@ export default function CookiePolicyContent() {
       {/* 6. Advertising and Marketing Cookies */}
       <section id="marketing-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             06
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Marketing & Campaign Cookies
           </h2>
         </div>
@@ -147,10 +147,10 @@ export default function CookiePolicyContent() {
       {/* 7. Third-Party Cookies */}
       <section id="third-party-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             07
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Third-Party Cookies & Embeds
           </h2>
         </div>
@@ -162,22 +162,22 @@ export default function CookiePolicyContent() {
       {/* 8. Cookie Storage Duration */}
       <section id="storage-duration" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             08
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Cookie Storage Duration & Lifespans
           </h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E2D8] space-y-1.5">
-            <h3 className="font-bold text-xs text-[#0F1117] uppercase tracking-wider">Session Cookies</h3>
+            <h3 className="font-bold text-xs text-[#181B22] uppercase tracking-wider">Session Cookies</h3>
             <p className="text-xs text-slate-600">
               Temporary cookies that exist solely while your browser tab remains open. They are automatically deleted from memory when you close your browser.
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#E7E2D8] space-y-1.5">
-            <h3 className="font-bold text-xs text-[#0F1117] uppercase tracking-wider">Persistent Cookies</h3>
+            <h3 className="font-bold text-xs text-[#181B22] uppercase tracking-wider">Persistent Cookies</h3>
             <p className="text-xs text-slate-600">
               Remain saved on your hard drive for a designated duration (ranging from 30 days to 12 months) or until you manually clear your browser cache.
             </p>
@@ -188,10 +188,10 @@ export default function CookiePolicyContent() {
       {/* 9. Managing Cookie Preferences */}
       <section id="manage-preferences" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             09
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Managing Cookie Preferences
           </h2>
         </div>
@@ -211,10 +211,10 @@ export default function CookiePolicyContent() {
       {/* 10. Disabling Cookies via Browser Settings */}
       <section id="disabling-cookies" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             10
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Disabling Cookies via Browser Settings
           </h2>
         </div>
@@ -235,10 +235,10 @@ export default function CookiePolicyContent() {
       {/* 11. Policy Updates */}
       <section id="policy-updates" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             11
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Policy Updates & Legislative Compliance
           </h2>
         </div>
@@ -250,22 +250,22 @@ export default function CookiePolicyContent() {
       {/* 12. Contact Information */}
       <section id="contact-info" className="scroll-mt-36 space-y-3.5 pt-6 border-t border-slate-100">
         <div className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-lg bg-[#0F1117] text-[#C98A4B] font-mono font-bold text-xs flex items-center justify-center">
+          <span className="w-7 h-7 rounded-lg bg-[#FAF9F6] text-[#7D5D2A] border border-[#E7E2D8] font-mono font-bold text-xs flex items-center justify-center">
             12
           </span>
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#0F1117] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#181B22] tracking-tight">
             Contact Information & Privacy Officer
           </h2>
         </div>
         <p>
           If you have questions regarding our cookie practices or local data storage mechanisms, please contact:
         </p>
-        <div className="bg-[#0F1117] text-white p-5 sm:p-6 rounded-2xl border border-[#C98A4B]/30 space-y-2.5 text-xs font-mono">
-          <p><strong className="text-[#C98A4B]">Officer:</strong> Privacy & Cookie Compliance Desk</p>
-          <p><strong className="text-[#C98A4B]">Entity:</strong> {BRAND.name} (TNRERA {BRAND.reraId})</p>
-          <p><strong className="text-[#C98A4B]">Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
-          <p><strong className="text-[#C98A4B]">Phone:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
-          <p><strong className="text-[#C98A4B]">Office:</strong> {BRAND.address}</p>
+        <div className="bg-[#FAF9F6] text-[#1E232F] border border-[#E7E2D8] p-5 sm:p-6 rounded-2xl border border-[#A88548]/30 space-y-2.5 text-xs font-mono">
+          <p><strong className="text-[#A88548]">Officer:</strong> Privacy & Cookie Compliance Desk</p>
+          <p><strong className="text-[#A88548]">Entity:</strong> {BRAND.name} (TNRERA {BRAND.reraId})</p>
+          <p><strong className="text-[#A88548]">Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-emerald-400 hover:underline">{BRAND.email}</a></p>
+          <p><strong className="text-[#A88548]">Phone:</strong> <a href={`tel:${BRAND.phone}`} className="text-emerald-400 hover:underline">{BRAND.phoneDisplay}</a></p>
+          <p><strong className="text-[#A88548]">Office:</strong> {BRAND.address}</p>
         </div>
       </section>
 

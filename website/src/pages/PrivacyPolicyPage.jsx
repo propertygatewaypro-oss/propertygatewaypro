@@ -9,43 +9,43 @@ export default function PrivacyPolicyPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#1E232F] antialiased selection:bg-[#C98A4B]/20 selection:text-[#0F1117]">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#1E232F] antialiased selection:bg-[#A88548]/20 selection:text-[#181B22]">
       
-      {/* 1. DARK BLACK HERO SECTION */}
-      <section className="bg-[#0F1117] text-white pt-28 pb-14 sm:pt-32 sm:pb-16 border-b border-[#232733] relative overflow-hidden print:bg-white print:text-black print:p-0 print:border-none">
+      {/* 1. HERO SECTION */}
+      <section className="bg-[#FAF9F6] text-[#1E232F] pt-28 pb-14 sm:pt-32 sm:pb-16 border-b border-[#E7E2D8] relative overflow-hidden print:bg-white print:text-black print:p-0 print:border-none">
         <div className="w-[90%] max-w-[1440px] mx-auto">
           
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-xs text-slate-400 mb-4 font-mono print:hidden" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-[#C98A4B] transition-colors">Home</Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-slate-400">Legal</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#C98A4B] font-medium">Privacy Policy</span>
+          <nav className="flex items-center gap-2 text-xs text-slate-500 mb-4 font-mono print:hidden" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-[#A88548] transition-colors">Home</Link>
+            <span className="text-slate-400">/</span>
+            <span className="text-slate-500">Legal</span>
+            <span className="text-slate-400">/</span>
+            <span className="text-[#A88548] font-bold">Privacy Policy</span>
           </nav>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="space-y-3 max-w-3xl">
               {/* Bronze Eyebrow */}
-              <div className="inline-block text-[#C98A4B] text-xs font-semibold tracking-widest uppercase font-mono">
+              <div className="inline-block text-[#7D5D2A] text-xs font-bold tracking-widest uppercase font-mono">
                 PROPERTY GATEWAY | LEGAL
               </div>
               
               {/* Large Ivory Page Heading */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#FAF9F6] tracking-tight print:text-black">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1E232F] tracking-tight print:text-black">
                 Privacy Policy
               </h1>
 
               {/* Short Description */}
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed pt-1 print:text-slate-700">
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed pt-1 print:text-slate-700">
                 Learn how Property Gateway handles your personal information, consultation inquiries, and communication preferences with complete transparency.
               </p>
             </div>
 
             {/* Regulatory & Updated Meta */}
-            <div className="text-xs text-slate-400 font-mono space-y-1 lg:text-right shrink-0 print:text-black">
-              <p>TNRERA Agent: <strong className="text-white print:text-black">{BRAND.reraId}</strong></p>
-              <p>Effective Date: <span className="text-[#C98A4B]">November 2026</span></p>
+            <div className="text-xs text-slate-600 font-mono space-y-1 lg:text-right shrink-0 print:text-black">
+              <p>TNRERA Agent: <strong className="text-[#1E232F] print:text-black">{BRAND.reraId}</strong></p>
+              <p>Effective Date: <span className="text-[#7D5D2A] font-bold">November 2026</span></p>
               <p>Jurisdiction: Chennai, Tamil Nadu, India</p>
             </div>
           </div>
@@ -59,14 +59,14 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 1 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               1. Introduction & Privacy Commitment
             </h2>
             <p>
               Property Gateway operates as a trusted real estate consultancy and digital advisory platform in Chennai, Tamil Nadu, registered under the Tamil Nadu Real Estate Regulatory Authority (TNRERA Registration: <strong>{BRAND.reraId}</strong>). We connect prospective homebuyers and investors with verified residential apartments, coastal villas, plotted layouts, and commercial properties.
             </p>
             <p>
-              This Privacy Policy explains how Property Gateway collects, uses, maintains, and safeguards information obtained from users through our website (<a href="https://propertygateway.com" className="text-[#C98A4B] hover:underline font-medium">propertygateway.com</a>), enquiry forms, WhatsApp advisory chats, telephonic consultations, and site visit coordination services. We are dedicated to handling your personal data responsibly, ethically, and in accordance with applicable Indian privacy standards and regulatory guidelines.
+              This Privacy Policy explains how Property Gateway collects, uses, maintains, and safeguards information obtained from users through our website (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), enquiry forms, WhatsApp advisory chats, telephonic consultations, and site visit coordination services. We are dedicated to handling your personal data responsibly, ethically, and in accordance with applicable Indian privacy standards and regulatory guidelines.
             </p>
             <p>
               By accessing our website or registering an enquiry for any property listing, you acknowledge the data handling practices outlined in this policy. If you do not agree with any aspect of this policy, please refrain from submitting personal information or using our online services.
@@ -75,14 +75,14 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 2 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               2. Information We Collect
             </h2>
             <p>
               We collect information that is strictly necessary to assist your property search, arrange developer site visits, evaluate home loan options, and provide accurate real estate guidance. Information is collected primarily through direct user submissions and standard technical logging.
             </p>
             <div className="space-y-3 pt-2">
-              <h3 className="text-lg font-serif font-semibold text-[#0F1117]">A. Personal Information Submitted Voluntarily</h3>
+              <h3 className="text-lg font-serif font-semibold text-[#181B22]">A. Personal Information Submitted Voluntarily</h3>
               <p>When you fill out a consultation form, post a requirement, or request a call from our advisors, we may collect:</p>
               <ul className="list-disc pl-6 space-y-1.5 text-slate-700">
                 <li><strong>Full Legal Name:</strong> To address you properly and register authorized visitor passes at developer sales offices and security gates.</li>
@@ -92,7 +92,7 @@ export default function PrivacyPolicyPage() {
               </ul>
             </div>
             <div className="space-y-3 pt-3">
-              <h3 className="text-lg font-serif font-semibold text-[#0F1117]">B. Property Preferences</h3>
+              <h3 className="text-lg font-serif font-semibold text-[#181B22]">B. Property Preferences</h3>
               <p>To deliver relevant recommendations and avoid presenting unsuitable inventory, we record details regarding:</p>
               <ul className="list-disc pl-6 space-y-1.5 text-slate-700">
                 <li>Preferred micro-markets in Chennai (e.g., OMR, ECR, Anna Nagar, Porur, Velachery, Adyar).</li>
@@ -102,7 +102,7 @@ export default function PrivacyPolicyPage() {
               </ul>
             </div>
             <div className="space-y-3 pt-3">
-              <h3 className="text-lg font-serif font-semibold text-[#0F1117]">C. Technical Browsing Information</h3>
+              <h3 className="text-lg font-serif font-semibold text-[#181B22]">C. Technical Browsing Information</h3>
               <p>
                 When you browse our portal, our servers automatically record standard non-identifying technical data, including your IP address, browser type, device operating system, referring URL, pages viewed, and visit timestamps. This data is utilized solely for technical troubleshooting, platform security, and server capacity planning.
               </p>
@@ -111,7 +111,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 3 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               3. How We Use Your Information
             </h2>
             <p>
@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 4 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               4. Property Enquiries & Contact Information
             </h2>
             <p>
@@ -141,7 +141,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 5 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               5. Phone Calls, WhatsApp & Communication
             </h2>
             <p>
@@ -159,7 +159,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 6 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               6. Sharing of Personal Information
             </h2>
             <p>
@@ -183,20 +183,20 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 7 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               7. Third-Party Services & External Links
             </h2>
             <p>
               Our website may utilize trusted third-party service providers to support our operations—such as secure cloud hosting facilities, transactional email gateways, mapping services, and WhatsApp communication APIs. These service providers process data strictly on our instructions and under contractual confidentiality standards.
             </p>
             <p>
-              Our portal may also contain links to external websites, including builder portals, the official TNRERA portal (<a href="https://rera.tn.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#C98A4B] hover:underline font-mono">rera.tn.gov.in</a>), and video platforms. Property Gateway does not control and is not responsible for the privacy practices or content of these independent websites. We encourage you to review their terms independently.
+              Our portal may also contain links to external websites, including builder portals, the official TNRERA portal (<a href="https://rera.tn.gov.in" target="_blank" rel="noopener noreferrer" className="text-[#A88548] hover:underline font-mono">rera.tn.gov.in</a>), and video platforms. Property Gateway does not control and is not responsible for the privacy practices or content of these independent websites. We encourage you to review their terms independently.
             </p>
           </section>
 
           {/* Section 8 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               8. Data Storage & Retention
             </h2>
             <p>
@@ -209,7 +209,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 9 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               9. Data Security
             </h2>
             <p>
@@ -222,7 +222,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 10 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               10. Your Privacy Rights
             </h2>
             <p>
@@ -235,13 +235,13 @@ export default function PrivacyPolicyPage() {
               <li><strong>Right to Erasure:</strong> You may request that your personal contact records be permanently removed from our active marketing and advisory desks.</li>
             </ul>
             <p className="pt-2">
-              To exercise any of these rights, please send a written request to <a href={`mailto:${BRAND.email}`} className="text-[#C98A4B] hover:underline font-mono">{BRAND.email}</a>. We respond to all verified privacy requests within a reasonable timeframe.
+              To exercise any of these rights, please send a written request to <a href={`mailto:${BRAND.email}`} className="text-[#A88548] hover:underline font-mono">{BRAND.email}</a>. We respond to all verified privacy requests within a reasonable timeframe.
             </p>
           </section>
 
           {/* Section 11 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               11. Children's Privacy
             </h2>
             <p>
@@ -251,7 +251,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 12 */}
           <section className="space-y-4 border-b border-[#E7E2D8] pb-10">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               12. Policy Updates
             </h2>
             <p>
@@ -261,19 +261,19 @@ export default function PrivacyPolicyPage() {
 
           {/* Section 13 */}
           <section className="space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#0F1117] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#181B22] tracking-tight">
               13. Contact & Grievance Information
             </h2>
             <p>
               If you have any questions, comments, concerns, or grievances regarding this Privacy Policy or our handling of your personal data, please reach out to our designated compliance desk:
             </p>
             <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-6 sm:p-8 space-y-2 text-sm font-mono text-slate-800">
-              <p><strong className="text-[#0F1117]">Entity Name:</strong> {BRAND.name}</p>
-              <p><strong className="text-[#0F1117]">TNRERA Registration:</strong> {BRAND.reraId}</p>
-              <p><strong className="text-[#0F1117]">Compliance & Grievance Officer:</strong> Grievance Officer, Property Gateway</p>
-              <p><strong className="text-[#0F1117]">Official Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-[#C98A4B] hover:underline">{BRAND.email}</a></p>
-              <p><strong className="text-[#0F1117]">Advisory Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-[#C98A4B] hover:underline">{BRAND.phoneDisplay}</a></p>
-              <p><strong className="text-[#0F1117]">Registered Office Address:</strong> {BRAND.address}</p>
+              <p><strong className="text-[#181B22]">Entity Name:</strong> {BRAND.name}</p>
+              <p><strong className="text-[#181B22]">TNRERA Registration:</strong> {BRAND.reraId}</p>
+              <p><strong className="text-[#181B22]">Compliance & Grievance Officer:</strong> Grievance Officer, Property Gateway</p>
+              <p><strong className="text-[#181B22]">Official Email:</strong> <a href={`mailto:${BRAND.email}`} className="text-[#A88548] hover:underline">{BRAND.email}</a></p>
+              <p><strong className="text-[#181B22]">Advisory Helpline:</strong> <a href={`tel:${BRAND.phone}`} className="text-[#A88548] hover:underline">{BRAND.phoneDisplay}</a></p>
+              <p><strong className="text-[#181B22]">Registered Office Address:</strong> {BRAND.address}</p>
             </div>
             <p className="text-xs text-slate-500 pt-2 font-mono">
               Written grievances will be acknowledged within 48 hours and addressed diligently in accordance with applicable Indian dispute resolution guidelines.
