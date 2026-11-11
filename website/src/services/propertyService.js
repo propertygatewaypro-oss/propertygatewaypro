@@ -21,11 +21,24 @@ function getLocalProperties() {
 
 // In-memory filter & sort pipeline
 export function filterAndSortProperties(rawList, filters = {}) {
-  const { location, category, budgetMin, budgetMax, status, sortBy = "latest", pageSize = 12 } = filters;
+  const { search, location, category, budgetMin, budgetMax, status, sortBy = "latest", pageSize = 12 } = filters;
   let results = Array.isArray(rawList) ? [...rawList] : [];
 
   // Active / Published only
   results = results.filter(p => p.active !== false && p.isActive !== false);
+
+  // Free-text Search (Project Name / Builder / Location / Type / Description)
+  if (search && search.trim()) {
+    const q = search.trim().toLowerCase();
+    results = results.filter(p => {
+      const title = (p.title || "").toLowerCase();
+      const loc = (p.location || "").toLowerCase();
+      const builder = (p.builder || "").toLowerCase();
+      const desc = (p.description || "").toLowerCase();
+      const type = (p.propertyType || p.type || "").toLowerCase();
+      return title.includes(q) || loc.includes(q) || builder.includes(q) || desc.includes(q) || type.includes(q);
+    });
+  }
 
   if (category && category !== "All Types") {
     results = results.filter(p => {

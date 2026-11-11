@@ -39,7 +39,7 @@ export default function EmiCalculator() {
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#E7E2D8] shadow-xl max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-white rounded-3xl p-5 sm:p-10 border border-[#E7E2D8] shadow-xl max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Sliders Control Rail (7 cols) */}
           <div className="lg:col-span-7 space-y-6">

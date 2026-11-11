@@ -11,7 +11,8 @@ export default function PropertiesPage() {
   const [location, setLocation] = useState(searchParams.get('location') || 'All Locations');
   const [category, setCategory] = useState(searchParams.get('category') || 'All Types');
   const [budgetLabel, setBudgetLabel] = useState(searchParams.get('budget') || 'Any Budget');
-  const [status, setStatus] = useState('All Statuses');
+  const [status, setStatus] = useState(searchParams.get('status') || 'All Statuses');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || searchParams.get('q') || '');
   const [sortBy, setSortBy] = useState('latest');
   
   const [properties, setProperties] = useState([]);
@@ -25,6 +26,8 @@ export default function PropertiesPage() {
     if (cat) setCategory(cat);
     if (searchParams.get('budget')) setBudgetLabel(searchParams.get('budget'));
     if (searchParams.get('status')) setStatus(searchParams.get('status'));
+    if (searchParams.get('search') !== null) setSearchQuery(searchParams.get('search'));
+    else if (searchParams.get('q') !== null) setSearchQuery(searchParams.get('q'));
   }, [searchParams]);
 
   useEffect(() => {
@@ -36,6 +39,7 @@ export default function PropertiesPage() {
       setProperties(liveResults);
       setLoading(false);
     }, {
+      search: searchQuery,
       location,
       category,
       budgetMin: budgetObj.min,
@@ -50,7 +54,7 @@ export default function PropertiesPage() {
         unsubscribe();
       }
     };
-  }, [location, category, budgetLabel, status, sortBy]);
+  }, [searchQuery, location, category, budgetLabel, status, sortBy]);
 
   const handleReset = () => {
     setLocation('All Locations');

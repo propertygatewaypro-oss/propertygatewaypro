@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Search, 
   MapPin, 
   Home, 
-  IndianRupee, 
-  ArrowRight, 
+  Building2,
+  X,
   ChevronDown, 
-  Check,
-  Phone,
-  ShieldCheck
+  ShieldCheck,
+  Check
 } from 'lucide-react';
-import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, BRAND } from '../../utils/constants';
+import { CHENNAI_LOCATIONS, BRAND } from '../../utils/constants';
 
 // Option 3 Curated Architectural Photographs: Daylight Luxury Estates in Chennai
 const HERO_SLIDES = [
@@ -45,113 +44,21 @@ const HERO_SLIDES = [
   }
 ];
 
-// Popular Chennai Location Shortcuts
-const POPULAR_LOCATIONS = [
-  { label: 'ECR', fullName: 'East Coast Road (ECR)' },
-  { label: 'OMR', fullName: 'Old Mahabalipuram Road (OMR)' },
-  { label: 'Anna Nagar', fullName: 'Anna Nagar' },
-  { label: 'Porur', fullName: 'Porur' },
-  { label: 'Guindy', fullName: 'Guindy' }
+// Quick Category & Status Filters (Directly beneath search bar, highlighting Apartment and Villa)
+const QUICK_FILTERS = [
+  { label: 'Apartment', type: 'category', value: 'Apartment', isFlagship: true },
+  { label: 'Villa', type: 'category', value: 'Luxury Villa', isFlagship: true },
+  { label: 'Plots', type: 'category', value: 'Plot / Land', isFlagship: false },
+  { label: 'Up Coming', type: 'status', value: 'New Launch', isFlagship: false },
+  { label: 'New Launch', type: 'status', value: 'New Launch', isFlagship: false },
+  { label: 'Under Construction', type: 'status', value: 'Under Construction', isFlagship: false },
+  { label: 'Ready to move', type: 'status', value: 'Ready to Move', isFlagship: false },
 ];
-
-// Executive Architectural Slate Luxury Dropdown Component
-function CustomSearchDropdown({
-  label,
-  icon: Icon,
-  value,
-  options,
-  onChange,
-  className = ""
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const isTwoColumn = options.length > 6;
-
-  return (
-    <div ref={dropdownRef} className={`relative ${isOpen ? 'z-50' : 'z-10'} ${className}`}>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left flex items-center gap-3 focus:outline-none cursor-pointer group py-1"
-      >
-        {Icon && <Icon className="w-5 h-5 text-[#A88548] shrink-0" />}
-        <div className="w-full min-w-0 pr-1">
-          <label className="block text-[11px] font-bold uppercase tracking-wider text-[#8C6239] mb-0.5 leading-none cursor-pointer">
-            {label}
-          </label>
-          <div className="flex items-center justify-between gap-1">
-            <span className="text-[14.5px] sm:text-[15px] font-bold text-[#1E232F] truncate block">
-              {value}
-            </span>
-            <ChevronDown 
-              className={`w-3.5 h-3.5 text-slate-400 group-hover:text-[#A88548] transition-transform duration-200 shrink-0 ${
-                isOpen ? 'rotate-180 text-[#A88548]' : ''
-              }`} 
-            />
-          </div>
-        </div>
-      </button>
-
-      {/* Daylight Ivory Popover Menu */}
-      {isOpen && (
-        <div className={`absolute top-full left-0 mt-2.5 ${
-          isTwoColumn ? 'w-[320px] sm:w-[490px]' : 'w-64 sm:w-72'
-        } bg-white rounded-2xl border border-[#E7E2D8] shadow-[0_25px_60px_rgba(20,25,35,0.18)] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150`}>
-          {/* Subtle Popover Title */}
-          <div className="px-3 py-1 mb-1.5 border-b border-[#E7E2D8] flex items-center justify-between">
-            <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#8C6239]">
-              Select {label}
-            </span>
-            <span className="text-[10px] text-slate-400">
-              {options.length} Options
-            </span>
-          </div>
-
-          <div className={isTwoColumn ? "grid grid-cols-1 sm:grid-cols-2 gap-1.5" : "space-y-1"}>
-            {options.map((opt) => {
-              const isSelected = opt === value;
-              return (
-                <button
-                  key={opt}
-                  type="button"
-                  onClick={() => {
-                    onChange(opt);
-                    setIsOpen(false);
-                  }}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs sm:text-[13px] transition-colors flex items-center justify-between cursor-pointer ${
-                    isSelected
-                      ? 'bg-[#A88548]/15 text-[#8C6239] font-bold border border-[#A88548]/30'
-                      : 'text-[#2D3748] hover:bg-[#F7F5F0] hover:text-[#8C6239]'
-                  }`}
-                >
-                  <span className="leading-snug pr-1 whitespace-nowrap">{opt}</span>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-[#A88548] shrink-0 ml-1.5" />}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function HeroSection({ onOpenVisitModal }) {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
-  const [selectedCategory, setSelectedCategory] = useState('All Types');
-  const [selectedBudget, setSelectedBudget] = useState('Any Budget');
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Automatic slideshow crossfade
@@ -167,18 +74,31 @@ export default function HeroSection({ onOpenVisitModal }) {
   }, []);
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     const params = new URLSearchParams();
-    if (selectedLocation !== 'All Locations') params.set('location', selectedLocation);
-    if (selectedCategory !== 'All Types') params.set('category', selectedCategory);
-    if (selectedBudget !== 'Any Budget') params.set('budget', selectedBudget);
-
+    if (selectedLocation && selectedLocation !== 'All Locations') {
+      params.set('location', selectedLocation);
+    }
+    if (searchQuery.trim()) {
+      params.set('search', searchQuery.trim());
+    }
     navigate(`/properties?${params.toString()}`);
   };
 
-  const handleLocationChipClick = (locFullName) => {
-    setSelectedLocation(locFullName);
-    navigate(`/properties?location=${encodeURIComponent(locFullName)}`);
+  const handlePillClick = (filter) => {
+    const params = new URLSearchParams();
+    if (selectedLocation && selectedLocation !== 'All Locations') {
+      params.set('location', selectedLocation);
+    }
+    if (searchQuery.trim()) {
+      params.set('search', searchQuery.trim());
+    }
+    if (filter.type === 'category') {
+      params.set('category', filter.value);
+    } else if (filter.type === 'status') {
+      params.set('status', filter.value);
+    }
+    navigate(`/properties?${params.toString()}`);
   };
 
   return (
@@ -219,187 +139,125 @@ export default function HeroSection({ onOpenVisitModal }) {
             </div>
           );
         })}
+
+        {/* Daylight Pearl Editorial Fog: subtle gradient preserving full clarity of luxury architectural photos */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-[#FAF9F6]/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[#FAF9F6]/25 pointer-events-none" />
       </div>
 
-      {/* 2. Main Hero Content Container (Left-aligned, max-w-7xl) */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-12 pb-10 sm:pb-12 flex flex-col justify-center">
+      {/* 2. Hero Content Container */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16 w-full flex flex-col justify-center">
         
-        {/* Top Content Block */}
-        <div className="flex flex-col items-start max-w-[760px] w-full text-left">
+        <div className="max-w-4xl space-y-4 sm:space-y-6">
           
-          {/* Top Trust Badge */}
-          <div className="mb-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#A88548]/50 text-xs text-[#8C6239] font-bold tracking-wide shadow-xs backdrop-blur-md">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
-              <span>TN RERA Registered ({BRAND.reraId}) | 0% Brokerage on Builder Launches</span>
-            </div>
+          {/* Trust Authority Badge in Daylight Pearl & Gold */}
+          <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E7E2D8] text-[11px] sm:text-xs text-[#8C6239] font-medium shadow-xs animate-hero-fade-up">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
+            <span>TN RERA Registered ({BRAND.reraId}) | 0% Brokerage on Builder Launches</span>
           </div>
 
-          {/* Main Headline (Executive Serif with Metallic Brushed Gold accent under Chennai) */}
-          <h1 
-            className="text-[38px] sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[68px] font-serif font-bold text-[#1E232F] tracking-tight leading-[1.08] animate-hero-fade-up"
-            style={{ animationDelay: '40ms' }}
-          >
-            Discover Exceptional <br />
-            Properties in{' '}
-            <span className="relative inline-block text-gold-metallic font-serif">
-              Chennai
-              {/* Golden Graceful Curved Underline Stroke - Animated SVG Draw */}
-              <svg 
-                className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-2.5 sm:h-3 text-[#B8914B] overflow-visible pointer-events-none" 
-                viewBox="0 0 200 12" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  className="animate-stroke-draw"
-                  d="M2 9.5C55 2.5 145 2.5 198 9.5" 
-                  stroke="currentColor" 
-                  strokeWidth="3.5" 
-                  strokeLinecap="round" 
-                />
-              </svg>
+          {/* Headline in High-Contrast Slate Typography */}
+          <div className="space-y-1.5 sm:space-y-2 animate-hero-fade-up" style={{ animationDelay: '100ms' }}>
+            <span className="text-[12px] sm:text-xs font-mono font-bold tracking-[0.25em] text-[#7D5D2A] uppercase block">
+              Curated Chennai Real Estate Advisory
             </span>
-          </h1>
-
-          {/* Supporting Description */}
-          <div 
-            className="mt-4 sm:mt-5 max-w-[560px] animate-hero-fade-up"
-            style={{ animationDelay: '140ms' }}
-          >
-            <p className="text-[15px] sm:text-[16.5px] text-[#3E4756] font-normal leading-[1.6]">
-              Explore handpicked homes, premium villas and investment opportunities across Chennai with trusted real-estate guidance.
-            </p>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-[#1E232F] leading-[1.12]">
+              Find Your Ideal Home in Chennai. <br className="hidden sm:inline" />
+              <span className="text-gold-metallic italic font-serif font-bold">Direct Developer Pricing.</span>
+            </h1>
           </div>
 
-          {/* Two Action Buttons */}
-          <div 
-            className="flex flex-wrap items-center gap-4 mt-7 sm:mt-8 animate-hero-fade-up"
-            style={{ animationDelay: '220ms' }}
+          {/* Value Proposition Subtitle */}
+          <p 
+            className="text-sm sm:text-base lg:text-lg text-slate-700 font-sans max-w-2xl leading-relaxed animate-hero-fade-up"
+            style={{ animationDelay: '200ms' }}
           >
-            <Link
-              to="/properties"
-              className="h-[50px] px-8 rounded-2xl bg-gold-metallic text-white font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] inline-flex items-center gap-2.5 shrink-0 cursor-pointer"
-            >
-              <span>Explore Properties</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/contact"
-              className="h-[50px] px-8 rounded-2xl bg-white/95 hover:bg-white text-[#1E232F] border border-[#D5CEBF] hover:border-[#A88548] font-bold text-sm tracking-wide transition-all active:scale-[0.98] cursor-pointer inline-flex items-center gap-2.5 shadow-xs backdrop-blur-md shrink-0"
-            >
-              <Phone className="w-4 h-4 text-[#A88548]" />
-              <span>Contact an Advisor</span>
-            </Link>
-          </div>
-        </div>
+            Verified RERA apartments, beachfront villas along ECR, and gated plotted communities. Zero buyer brokerage, guaranteed title scrutiny, and dedicated advisory.
+          </p>
 
-        {/* Bottom Hero Block (Floating Search Bar + Popular Locations) */}
-        <div className="w-full mt-10 lg:mt-14">
-          
-          {/* Floating Daylight Ivory Search Panel (3 Columns + Search Properties Button) */}
+          {/* 3. Streamlined Responsive Search Bar (Inspiration Image 2) */}
           <div 
-            className="w-full max-w-[1100px] animate-hero-fade-up relative z-30"
+            className="w-full max-w-[1050px] animate-hero-fade-up relative z-30 pt-2"
             style={{ animationDelay: '300ms' }}
           >
+            {/* The Integrated Horizontal Search Box (Responsive 2-tier on mobile, 1-row on desktop) */}
             <form 
               onSubmit={handleSearch}
-              className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-[24px] border border-[#E7E2D8] shadow-[0_20px_50px_rgba(20,25,35,0.12)] p-2.5 sm:p-3 flex flex-col md:flex-row items-stretch md:items-center divide-y md:divide-y-0 md:divide-x divide-slate-200 min-h-[74px] transition-all hover:border-[#A88548]/60 relative z-30"
+              className="bg-white rounded-xl sm:rounded-2xl border-2 border-[#E7E2D8] shadow-[0_15px_35px_rgba(20,25,35,0.08)] flex flex-col sm:flex-row items-stretch overflow-hidden transition-all hover:border-[#A88548] focus-within:border-[#A88548] focus-within:shadow-[0_15px_40px_rgba(168,133,72,0.16)]"
             >
-              {/* Field 1: LOCATION */}
-              <div className="flex-1 w-full px-3.5 sm:px-4 py-2 flex items-center">
-                <CustomSearchDropdown
-                  label="LOCATION"
-                  icon={MapPin}
+              {/* Location Select (Stacked on mobile, Left segment on desktop) */}
+              <div className="relative shrink-0 border-b sm:border-b-0 sm:border-r border-[#E7E2D8] flex items-center bg-[#FAF9F6] sm:bg-white px-3 sm:px-4 py-2.5 sm:py-0 min-w-0 sm:min-w-[150px] md:min-w-[165px]">
+                <MapPin className="w-4 h-4 text-[#A88548] shrink-0 mr-2" />
+                <select
                   value={selectedLocation}
-                  options={CHENNAI_LOCATIONS}
-                  onChange={(loc) => setSelectedLocation(loc)}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Field 2: PROPERTY TYPE */}
-              <div className="flex-1 w-full px-3.5 sm:px-4 py-2 flex items-center">
-                <CustomSearchDropdown
-                  label="PROPERTY TYPE"
-                  icon={Home}
-                  value={selectedCategory}
-                  options={PROPERTY_TYPES}
-                  onChange={(cat) => setSelectedCategory(cat)}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Field 3: BUDGET */}
-              <div className="flex-1 w-full px-3.5 sm:px-4 py-2 flex items-center">
-                <CustomSearchDropdown
-                  label="BUDGET"
-                  icon={IndianRupee}
-                  value={selectedBudget}
-                  options={BUDGET_RANGES.map((b) => b.label)}
-                  onChange={(b) => setSelectedBudget(b)}
-                  className="w-full"
-                />
-              </div>
-
-              {/* Field 4: Search Properties Button in Metallic Brushed Gold Gradient */}
-              <div className="w-full md:w-auto p-1.5 shrink-0">
-                <button
-                  type="submit"
-                  className="w-full md:w-auto h-[50px] sm:h-[52px] px-8 rounded-xl sm:rounded-2xl bg-gold-metallic active:scale-[0.98] text-white font-bold text-sm tracking-wide flex items-center justify-center gap-2.5 transition-all shadow-md cursor-pointer"
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  className="w-full py-1 sm:py-4 bg-transparent text-xs sm:text-sm font-bold text-[#1E232F] cursor-pointer appearance-none focus:outline-none pr-6"
+                  aria-label="Select Location"
                 >
-                  <Search className="w-4 h-4 text-white" />
-                  <span>Search Properties</span>
-                </button>
+                  <option value="All Locations">Chennai (All Locations)</option>
+                  {CHENNAI_LOCATIONS.filter(l => l !== 'All Locations').map(loc => (
+                    <option key={loc} value={loc}>{loc}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </div>
               </div>
-            </form>
-          </div>
 
-          {/* Popular Locations Row & Slideshow Controls */}
-          <div 
-            className="mt-4 sm:mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-hero-fade-up relative z-10"
-            style={{ animationDelay: '380ms' }}
-          >
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 text-xs text-slate-600 overflow-x-auto no-scrollbar pb-0.5">
-              <span className="text-[#7D5D2A] font-bold text-sm shrink-0">
-                Popular Locations:
-              </span>
-              {POPULAR_LOCATIONS.map((loc) => {
-                const isSelected = selectedLocation === loc.fullName;
-                return (
-                  <button
-                    key={loc.label}
-                    type="button"
-                    onClick={() => handleLocationChipClick(loc.fullName)}
-                    className={`h-[30px] px-4 rounded-full text-xs font-semibold border transition-all cursor-pointer shrink-0 inline-flex items-center active:scale-95 ${
-                      isSelected
-                        ? 'bg-gold-metallic text-white border-transparent shadow-xs'
-                        : 'bg-white/90 hover:bg-white text-[#2D3748] border-[#E2DBD0] hover:border-[#A88548] hover:text-[#7D5D2A] shadow-2xs'
-                    }`}
-                  >
-                    {loc.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Interactive Slideshow Pagination Dots */}
-            <div className="flex items-center gap-2 self-start sm:self-auto py-1 px-2.5 rounded-full bg-white/80 backdrop-blur-md border border-[#E7E2D8] shadow-xs">
-              {HERO_SLIDES.map((slide, idx) => (
-                <button
-                  key={slide.label}
-                  type="button"
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    currentSlide === idx 
-                      ? 'w-7 bg-gold-metallic' 
-                      : 'w-2 bg-slate-300 hover:bg-slate-400'
-                  }`}
-                  aria-label={`Show ${slide.label}`}
-                  title={slide.label}
+              {/* Text Search Input (Fills center) */}
+              <div className="flex-1 flex items-center min-w-0 px-3.5 sm:px-4 py-3 sm:py-0">
+                <Search className="w-4 h-4 text-slate-400 shrink-0 mr-2 sm:hidden" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search by: Project Name/ Property Name/ Location"
+                  className="w-full py-1 sm:py-4 text-xs sm:text-[14.5px] text-[#1E232F] placeholder:text-slate-400 bg-transparent focus:outline-none"
                 />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="p-1.5 text-slate-400 hover:text-slate-600 transition-colors mr-1 cursor-pointer"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Search Submit Button - 100% Full Height, Flush to Right Edge, Zero White Margins */}
+              <button
+                type="submit"
+                className="bg-gold-metallic hover:opacity-95 active:scale-[0.98] text-white flex items-center justify-center gap-2 py-3.5 sm:py-0 px-5 sm:w-16 md:w-20 shrink-0 self-stretch transition-all cursor-pointer shadow-none"
+                aria-label="Search Properties"
+                title="Search Properties"
+              >
+                <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.5]" />
+                <span className="sm:hidden text-xs font-bold uppercase tracking-wider">Search Properties</span>
+              </button>
+            </form>
+
+            {/* Quick Filter Pills Row (Highlighting Apartment and Villa) */}
+            <div className="mt-3 sm:mt-3.5 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-0.5 -mx-1 sm:mx-0">
+              {QUICK_FILTERS.map((pill) => (
+                <button
+                  key={pill.label}
+                  type="button"
+                  onClick={() => handlePillClick(pill)}
+                  className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-xs shrink-0 ${
+                    pill.isFlagship
+                      ? 'bg-white hover:bg-amber-50/80 text-[#7D5D2A] font-bold border-2 border-[#A88548] shadow-sm hover:shadow-md ring-2 ring-[#A88548]/15'
+                      : 'bg-white hover:bg-slate-50 text-[#1E232F] font-semibold border border-[#E7E2D8] hover:border-[#A88548]'
+                  }`}
+                >
+                  {pill.label === 'Apartment' && <Building2 className="w-3.5 h-3.5 text-[#A88548]" />}
+                  {pill.label === 'Villa' && <Home className="w-3.5 h-3.5 text-[#A88548]" />}
+                  <span>{pill.label}</span>
+                </button>
               ))}
             </div>
+
           </div>
 
         </div>
