@@ -1,0 +1,21 @@
+# Property Gateway Robots.txt
+# Controls search engine indexing for Googlebot, Bingbot, and web crawlers
+
+User-agent: *
+Allow: /
+Allow: /properties
+Allow: /property/
+Allow: /about
+Allow: /services
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-and-conditions
+Allow: /cookie-policy
+Allow: /refund-policy
+
+# Disallow private internal routes
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://www.propertygatewaypro.com/sitemap.xml

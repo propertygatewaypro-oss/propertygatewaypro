@@ -23,19 +23,29 @@ export function AuthProvider({ children }) {
   // Production-level session subscriber via official Firebase SDK
   useEffect(() => {
     if (isFirebaseConfigured && auth) {
+      // Safety timeout: prevent indefinite spinner on slow/offline networks
+      const safetyTimer = setTimeout(() => {
+        setLoading(false);
+      }, 2500);
+
       const unsubscribe = onAuthStateChanged(
         auth, 
         (currentUser) => {
+          clearTimeout(safetyTimer);
           setUser(currentUser);
           setLoading(false);
         },
         (error) => {
+          clearTimeout(safetyTimer);
           console.error("Firebase Auth observer error:", error);
           setUser(null);
           setLoading(false);
         }
       );
-      return () => unsubscribe();
+      return () => {
+        clearTimeout(safetyTimer);
+        unsubscribe();
+      };
     } else {
       // No demo fallback — pure production initialization state
       setUser(null);

@@ -14,6 +14,8 @@ import {
 import confetti from 'canvas-confetti';
 import { BRAND, CHENNAI_LOCATIONS } from '../utils/constants';
 import { submitLeadInquiry } from '../services/propertyService';
+import SEO from '../components/common/SEO';
+import { getRealEstateAgentSchema, getBreadcrumbSchema } from '../utils/seoSchemas';
 
 export default function ContactPage() {
   const [searchParams] = useSearchParams();
@@ -123,8 +125,25 @@ export default function ContactPage() {
     }
   };
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRealEstateAgentSchema(),
+      getBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Contact Us', url: '/contact' }
+      ])
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] pb-16 sm:pb-20">
+      <SEO
+        title="Contact Property Gateway | Real Estate Advisory Saidapet, Chennai"
+        description="Connect directly with Property Gateway real estate consultants in Saidapet, Chennai. Call +91 75989 54635 or schedule a personalized property site inspection across OMR, ECR & Central Chennai."
+        canonicalUrl="/contact"
+        schemaData={contactSchema}
+      />
       
       {/* 1. EDITORIAL HERO SECTION */}
       <section className="bg-[#FAF9F6] text-[#1E232F] pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-[#E7E2D8] relative overflow-hidden">

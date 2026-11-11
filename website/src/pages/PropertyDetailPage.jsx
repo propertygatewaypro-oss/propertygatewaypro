@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { fetchPropertyBySlug, subscribePropertyBySlug, submitLeadInquiry } from '../services/propertyService';
 import { BRAND, generateWhatsAppLink } from '../utils/constants';
+import SEO from '../components/common/SEO';
+import { getPropertyListingSchema, getBreadcrumbSchema } from '../utils/seoSchemas';
 
 export default function PropertyDetailPage({ onOpenVisitModal }) {
   const { slug } = useParams();
@@ -95,8 +97,28 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
 
   const images = property.images && property.images.length > 0 ? property.images : [property.mainImage];
 
+  const detailSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      getPropertyListingSchema(property),
+      getBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Properties', url: '/properties' },
+        { name: property.title, url: `/property/${property.slug}` }
+      ])
+    ]
+  };
+
   return (
     <div className="bg-brand-canvas-base min-h-screen pb-24">
+      <SEO
+        title={`${property.title} in ${property.location}, Chennai | ${property.priceDisplay}`}
+        description={`${property.title} - ${property.bhk} ${property.propertyType || property.type || 'property'} for sale in ${property.location}, Chennai. Price: ${property.priceDisplay}. TNRERA ID: ${property.reraId || 'Verified'}. Direct builder launch with 0% brokerage.`}
+        canonicalUrl={`/property/${property.slug}`}
+        ogImage={images[0] || '/images/hero/hero-architectural-travertine.jpg'}
+        ogType="article"
+        schemaData={detailSchema}
+      />
       {/* Top Breadcrumb Header */}
       <div className="bg-white border-b border-slate-200 py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2 text-xs text-slate-500 overflow-x-auto whitespace-nowrap">

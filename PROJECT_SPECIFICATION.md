@@ -203,7 +203,7 @@ A single Git repository is connected to **two separate Vercel projects**:
 | **Build Command** | `npm run build` | `npm run build` |
 | **Output Directory** | `dist` | `dist` |
 | **Default Vercel URL** | `https://propertygateway-web.vercel.app` | `https://propertygateway-admin.vercel.app` |
-| **Final Custom Domain** | `propertygateway.in` (or `.com`) | `admin.propertygateway.in` |
+| **Final Custom Domain** | `https://www.propertygatewaypro.com` | `admin.propertygatewaypro.com` |
 
 *Both apps use the identical Firebase configuration environment variables.*
 

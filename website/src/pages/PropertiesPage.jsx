@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { SlidersHorizontal, X, Search, RotateCcw } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
+import SEO from '../components/common/SEO';
 import { subscribeProperties } from '../services/propertyService';
 import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
+import { getBreadcrumbSchema } from '../utils/seoSchemas';
 
 export default function PropertiesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,8 +69,19 @@ export default function PropertiesPage() {
 
   const hasActiveFilters = location !== 'All Locations' || category !== 'All Types' || budgetLabel !== 'Any Budget' || status !== 'All Statuses';
 
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Properties', url: '/properties' }
+  ]);
+
   return (
     <div className="bg-brand-canvas-base min-h-screen py-10">
+      <SEO
+        title="Verified Chennai Properties For Sale & Rent | RERA Approved Flats & Villas"
+        description="Browse RERA-approved luxury apartments, beachside villas along ECR, and gated communities along OMR Chennai. Filter by budget, BHK, location, and possession status."
+        canonicalUrl="/properties"
+        schemaData={breadcrumbSchema}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Title & Breadcrumb */}
@@ -161,7 +174,11 @@ export default function PropertiesPage() {
         {/* Results Count Header */}
         <div className="flex justify-between items-center mb-6">
           <p className="text-xs uppercase tracking-wider font-bold text-slate-500">
-            Showing <span className="text-brand-navy-950 font-extrabold">{properties.length}</span> Verified Properties
+            {loading && properties.length === 0 ? (
+              <span>Searching verified properties...</span>
+            ) : (
+              <>Showing <span className="text-brand-navy-950 font-extrabold">{properties.length}</span> Verified Properties</>
+            )}
           </p>
         </div>
 

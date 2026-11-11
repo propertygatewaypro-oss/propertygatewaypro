@@ -11,9 +11,11 @@ import {
 import HeroSection from '../components/home/HeroSection';
 import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
+import SEO from '../components/common/SEO';
 import { subscribeProperties, subscribeTestimonials } from '../services/propertyService';
 import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
 import { BRAND } from '../utils/constants';
+import { getRealEstateAgentSchema, getFaqSchema } from '../utils/seoSchemas';
 
 export default function HomePage({ onOpenVisitModal }) {
   const [featuredProperties, setFeaturedProperties] = useState([]);
@@ -119,8 +121,24 @@ export default function HomePage({ onOpenVisitModal }) {
     }
   ];
 
+  // Schema.org Graph for Homepage
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRealEstateAgentSchema(),
+      getFaqSchema(faqs)
+    ]
+  };
+
   return (
     <div className="space-y-0">
+      <SEO
+        title="Verified Chennai Real Estate & RERA Approved Properties"
+        description="Explore RERA-approved luxury apartments, beachside villas along ECR, and gated communities along OMR Chennai. Direct developer pricing, title verification & 0% buyer brokerage."
+        canonicalUrl="/"
+        schemaData={homeSchema}
+      />
+
       {/* 1. Hero Section with Search Bar */}
       <HeroSection onOpenVisitModal={onOpenVisitModal} />
 

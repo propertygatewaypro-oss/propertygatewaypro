@@ -15,6 +15,7 @@ export const BRAND = {
   reraFileNo: "TNRERA/AF/0035/2026",
   udyamRegNo: "UDYAM-TN-02-0464324",
   agency: "Strategy 360 Digital Marketing Agency",
+  websiteUrl: "https://www.propertygatewaypro.com",
   adminUrl: import.meta.env.VITE_ADMIN_URL || "http://localhost:3001",
 };
 

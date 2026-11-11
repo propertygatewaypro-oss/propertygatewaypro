@@ -86,6 +86,10 @@ export function filterAndSortProperties(rawList, filters = {}) {
 }
 
 export function subscribeProperties(onUpdate, filters = {}) {
+  // Provide instant local/cached dataset immediately for zero-delay UX
+  const local = getLocalProperties();
+  onUpdate(filterAndSortProperties(local, filters));
+
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(
@@ -100,13 +104,11 @@ export function subscribeProperties(onUpdate, filters = {}) {
             const processed = filterAndSortProperties(rawDocs, filters);
             onUpdate(processed);
           } else {
-            const local = getLocalProperties();
             onUpdate(filterAndSortProperties(local, filters));
           }
         },
         (err) => {
           console.warn("Firestore realtime properties subscription notice:", err.message);
-          const local = getLocalProperties();
           onUpdate(filterAndSortProperties(local, filters));
         }
       );
@@ -115,9 +117,6 @@ export function subscribeProperties(onUpdate, filters = {}) {
     }
   }
 
-  // Local fallback
-  const local = getLocalProperties();
-  onUpdate(filterAndSortProperties(local, filters));
   return () => {};
 }
 
@@ -258,6 +257,9 @@ function getLocalTestimonials() {
 }
 
 export function subscribeTestimonials(onUpdate, onError) {
+  // Provide instant local/cached reviews immediately
+  onUpdate(getLocalTestimonials());
+
   if (isFirebaseConfigured && db) {
     try {
       const q = query(collection(db, "testimonials"));

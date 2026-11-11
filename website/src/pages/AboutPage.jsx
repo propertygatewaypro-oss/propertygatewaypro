@@ -11,6 +11,8 @@ import {
   MessageSquare 
 } from 'lucide-react';
 import { BRAND } from '../utils/constants';
+import SEO from '../components/common/SEO';
+import { getRealEstateAgentSchema, getBreadcrumbSchema } from '../utils/seoSchemas';
 
 // Luxury Quartic Ease-Out Number Counter
 function AnimatedStatCounter({ 
@@ -202,8 +204,25 @@ export default function AboutPage() {
     }
   ];
 
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      getRealEstateAgentSchema(),
+      getBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'About Us', url: '/about' }
+      ])
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-12">
+      <SEO
+        title="About Property Gateway | Licensed TNRERA Real Estate Advisors Chennai"
+        description="Property Gateway is a licensed Tamil Nadu RERA real estate consultancy (TN/Agent/0117/2026) headquartered in Saidapet, Chennai. Discover our advisory-first approach, legal due diligence, and 0% brokerage model."
+        canonicalUrl="/about"
+        schemaData={aboutSchema}
+      />
       
       {/* 1. EDITORIAL HERO SECTION */}
       <section className="relative bg-[#FAF9F6] text-[#1E232F] pt-10 pb-14 sm:pt-14 sm:pb-16 border-b border-[#E7E2D8] overflow-hidden">

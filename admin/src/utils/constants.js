@@ -14,7 +14,7 @@ export const BRAND = {
   reraDate: "09.04.2026",
   reraFileNo: "TNRERA/AF/0035/2026",
   udyamRegNo: "UDYAM-TN-02-0464324",
-  websiteUrl: import.meta.env.VITE_WEBSITE_URL || "http://localhost:3000",
+  websiteUrl: import.meta.env.VITE_WEBSITE_URL || "https://www.propertygatewaypro.com",
 };
 
 export const CHENNAI_LOCATIONS = [

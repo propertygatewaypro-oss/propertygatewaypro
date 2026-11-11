@@ -34,7 +34,7 @@ export function getPropertyWhatsAppLink(property) {
 I am interested in: *${property.title}*
 📍 Location: ${property.location}
 💰 Price: ${property.priceDisplay}
-🔗 Reference: https://propertygateway.in/property/${property.slug}
+🔗 Reference: https://www.propertygatewaypro.com/property/${property.slug}
 
 Please share the brochure, available floor plans, and site visit details.`;
 

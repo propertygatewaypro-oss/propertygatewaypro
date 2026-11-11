@@ -21,6 +21,8 @@ import {
   BadgePercent
 } from 'lucide-react';
 import { BRAND, generateSiteVisitWhatsAppLink } from '../utils/constants';
+import SEO from '../components/common/SEO';
+import { getBreadcrumbSchema } from '../utils/seoSchemas';
 
 // Luxury Quartic Ease-Out Number Counter
 function AnimatedStatCounter({ 
@@ -250,8 +252,19 @@ export default function ServicesPage() {
     ? allServices 
     : allServices.filter(s => s.category === activeTab);
 
+  const servicesSchema = getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' }
+  ]);
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-12">
+      <SEO
+        title="Real Estate Advisory & NRI Property Services in Chennai"
+        description="Comprehensive Chennai real estate advisory services: Zero-brokerage new builder acquisitions, beachfront villas on ECR, NRI remote acquisition concierge, and 30-year parent deed legal due diligence."
+        canonicalUrl="/services"
+        schemaData={servicesSchema}
+      />
       
       {/* 1. HERO DIRECTORY HEADER */}
       <section className="relative bg-[#FAF9F6] text-[#1E232F] pt-10 pb-14 sm:pt-14 sm:pb-16 border-b border-[#E7E2D8] overflow-hidden">
