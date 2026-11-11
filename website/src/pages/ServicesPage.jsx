@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Building2, 
-  Home, 
-  ShieldCheck, 
   Scale, 
   Coins, 
   Globe2, 

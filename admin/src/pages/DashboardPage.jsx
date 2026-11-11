@@ -41,7 +41,6 @@ export default function DashboardPage() {
   }, []);
 
   const activePropertiesCount = properties.filter(p => p.active !== false).length;
-  const visitRequestsCount = leads.filter(l => l.leadType?.includes('Site Visit') || l.preferredDate).length;
   const newLeadsCount = leads.filter(l => l.status === 'New').length;
 
   return (

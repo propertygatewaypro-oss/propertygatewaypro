@@ -7,8 +7,7 @@ import {
   Building2,
   X,
   ChevronDown, 
-  ShieldCheck,
-  Check
+  ShieldCheck 
 } from 'lucide-react';
 import { CHENNAI_LOCATIONS, BRAND } from '../../utils/constants';
 
@@ -55,7 +54,7 @@ const QUICK_FILTERS = [
   { label: 'Ready to move', type: 'status', value: 'Ready to Move', isFlagship: false },
 ];
 
-export default function HeroSection({ onOpenVisitModal }) {
+export default function HeroSection() {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
   const [searchQuery, setSearchQuery] = useState('');

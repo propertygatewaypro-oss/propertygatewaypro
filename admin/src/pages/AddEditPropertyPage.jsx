@@ -4,17 +4,9 @@ import {
   ArrowLeft, 
   UploadCloud, 
   X, 
-  Check, 
   AlertCircle, 
   Loader2, 
-  Building2, 
-  Sparkles, 
-  ShieldCheck, 
-  Eye, 
-  Star,
-  Layers,
-  FileText,
-  Image as ImageIcon
+  Building2 
 } from 'lucide-react';
 import { 
   fetchAdminProperties, 
@@ -25,7 +17,6 @@ import {
   CHENNAI_LOCATIONS, 
   PROPERTY_TYPES, 
   POSSESSION_STATUSES, 
-  FURNISHING_OPTIONS, 
   FACING_OPTIONS, 
   AMENITIES_CATALOG, 
   formatIndianCurrency 

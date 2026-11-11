@@ -81,7 +81,7 @@ function SpotlightCard({ item, idx, isVisible }) {
   );
 }
 
-export default function WhyChooseUs({ onOpenVisitModal }) {
+export default function WhyChooseUs() {
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 

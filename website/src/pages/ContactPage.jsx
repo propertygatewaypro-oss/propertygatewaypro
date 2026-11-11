@@ -9,7 +9,6 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Building2, 
-  Calendar,
   ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -20,7 +19,6 @@ export default function ContactPage() {
   const [searchParams] = useSearchParams();
   const propertyParam = searchParams.get('property') || '';
   const locationParam = searchParams.get('location') || '';
-  const purposeParam = searchParams.get('purpose') || '';
 
   const [formData, setFormData] = useState({
     name: '',

@@ -84,7 +84,7 @@ function setLocalLeads(leads) {
 // -------------------------------------------------------------
 // IMAGE COMPRESSION & UPLOAD (< 250KB WebP)
 // -------------------------------------------------------------
-export async function compressAndUploadImage(file, onProgress) {
+export async function compressAndUploadImage(file) {
   const options = {
     maxSizeMB: 0.25, // 250 KB budget
     maxWidthOrHeight: 1600,
@@ -408,7 +408,6 @@ export async function fetchAdminTestimonials() {
 }
 
 export async function saveTestimonial(testimonialData) {
-  const isNew = !testimonialData.id;
   const id = testimonialData.id || `testi_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
   
   const formatted = {

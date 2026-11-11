@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Check, Phone, Mail, MapPin, AlertCircle, Building2, ExternalLink, Scale } from 'lucide-react';
+import { ShieldCheck, Check, AlertCircle } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
 export const TERMS_SECTIONS = [

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Cookie, Check, Phone, Mail, MapPin, Sliders, ShieldCheck, Info } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
 export const COOKIE_SECTIONS = [

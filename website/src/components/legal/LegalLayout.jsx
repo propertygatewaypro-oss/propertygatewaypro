@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { 
   ShieldCheck, 
   FileText, 
@@ -10,8 +10,7 @@ import {
   List, 
   ChevronDown, 
   Calendar, 
-  Building2,
-  ExternalLink 
+  Building2 
 } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 

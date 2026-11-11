@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, addDoc, query, where, orderBy, limit, serverTimestamp, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, addDoc, query, where, limit, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { db, isFirebaseConfigured } from "./firebase";
 import { INITIAL_PROPERTIES, INITIAL_TESTIMONIALS } from "../data/initialProperties";
 

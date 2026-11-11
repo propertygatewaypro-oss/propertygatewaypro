@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Filter, SlidersHorizontal, X, Search, RotateCcw, MapPin } from 'lucide-react';
+import { SlidersHorizontal, X, Search, RotateCcw } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
-import { fetchProperties, subscribeProperties } from '../services/propertyService';
+import { subscribeProperties } from '../services/propertyService';
 import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
 
 export default function PropertiesPage() {

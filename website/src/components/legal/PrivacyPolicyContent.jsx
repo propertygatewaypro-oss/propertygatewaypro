@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Check, Phone, Mail, MapPin, AlertCircle, Building2, UserCheck, Lock } from 'lucide-react';
+import { ShieldCheck, Check, Phone } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
 export const PRIVACY_SECTIONS = [

@@ -7,9 +7,6 @@ import {
   AlertCircle, 
   Eye, 
   EyeOff,
-  Home,
-  Users,
-  Calendar,
   Building2,
   ShieldCheck,
   AlertTriangle

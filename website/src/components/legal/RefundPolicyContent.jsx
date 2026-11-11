@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ShieldCheck, Check, Phone, Mail, MapPin, AlertCircle, RotateCcw, Building2, CreditCard } from 'lucide-react';
+import { ShieldCheck, AlertCircle, Building2 } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
 export const REFUND_SECTIONS = [

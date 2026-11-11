@@ -2,19 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
-  Building, 
   Phone, 
   ChevronDown, 
-  ChevronUp, 
   ShieldCheck, 
   CheckCircle2, 
-  Quote,
   Star 
 } from 'lucide-react';
 import HeroSection from '../components/home/HeroSection';
 import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
-import { fetchProperties, subscribeProperties, subscribeTestimonials } from '../services/propertyService';
+import { subscribeProperties, subscribeTestimonials } from '../services/propertyService';
 import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
 import { BRAND } from '../utils/constants';
 

@@ -8,11 +8,9 @@ import {
   ExternalLink, 
   Eye, 
   EyeOff, 
-  Loader2,
-  Building2
+  Loader2 
 } from 'lucide-react';
 import { 
-  fetchAdminProperties, 
   subscribeAdminProperties,
   deleteProperty, 
   togglePropertyStatus 
@@ -25,7 +23,7 @@ import {
 } from '../utils/constants';
 
 export default function ManageProperties() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const [properties, setProperties] = useState([]);

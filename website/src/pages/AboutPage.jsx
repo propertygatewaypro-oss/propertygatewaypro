@@ -1,24 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { 
   ShieldCheck, 
-  Award, 
-  Users, 
-  Calendar, 
   CheckCircle2, 
-  Phone, 
-  MessageSquare, 
+  Calendar, 
   ArrowRight, 
   Building2, 
-  FileCheck2, 
-  Scale, 
-  Globe2, 
-  BadgePercent, 
-  Coins, 
   Sparkles, 
-  Landmark, 
-  Compass, 
-  Star 
+  Phone, 
+  MessageSquare 
 } from 'lucide-react';
 import { BRAND } from '../utils/constants';
 
@@ -100,8 +90,6 @@ function useScrollReveal(options = { threshold: 0.12 }) {
 }
 
 export default function AboutPage() {
-  const navigate = useNavigate();
-
   // Mount animation for hero
   const [isHeroLoaded, setIsHeroLoaded] = useState(false);
   useEffect(() => {
