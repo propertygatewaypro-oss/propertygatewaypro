@@ -65,8 +65,8 @@ export default function AdminLayout() {
         <div>
           <div className="p-5 border-b border-[#E7E2D8]">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#FAF9F6] border border-[#A88548]/40 p-1.5 flex items-center justify-center shadow-2xs shrink-0">
-                <img src="/logo.png" alt="Property Gateway" className="w-full h-full object-contain rounded" />
+              <div className="w-10 h-10 rounded-xl bg-[#FAF9F6] border border-[#A88548]/40 p-1 flex items-center justify-center shadow-2xs shrink-0">
+                <img src="/logo.png" alt="Property Gateway" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h2 className="text-sm font-serif font-bold text-[#181B22] tracking-tight">Property Gateway</h2>

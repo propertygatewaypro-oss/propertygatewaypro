@@ -56,11 +56,11 @@ export default function Footer() {
             style={{ transitionDelay: '0ms' }}
           >
             <Link to="/" className="inline-flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl p-1.5 bg-white border border-[#E7E2D8] shadow-xs shrink-0 group-hover:border-[#A88548]/60 transition-colors">
+              <div className="w-10 h-10 rounded-xl p-1 bg-white border border-[#E7E2D8] shadow-xs shrink-0 group-hover:border-[#A88548]/60 transition-colors flex items-center justify-center">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway" 
-                  className="w-full h-full object-contain rounded-lg" 
+                  className="w-full h-full object-contain" 
                 />
               </div>
               <span className="text-xl sm:text-[22px] font-serif font-bold tracking-tight text-[#1E232F]">

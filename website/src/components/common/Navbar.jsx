@@ -48,11 +48,11 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
           <div className="flex-1 flex items-center justify-start min-w-0">
             <Link to="/" className="flex items-center group shrink-0">
               {/* Slate/Ivory Rounded Badge with Gold Architectural Emblem */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#FAF9F6] border border-[#A88548]/45 flex items-center justify-center p-1.5 shadow-xs group-hover:scale-105 transition-transform shrink-0">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#FAF9F6] border border-[#A88548]/45 flex items-center justify-center p-1 shadow-xs group-hover:scale-105 transition-transform shrink-0">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway Emblem" 
-                  className="w-full h-full object-contain rounded-lg" 
+                  className="w-full h-full object-contain" 
                 />
               </div>
 
@@ -200,7 +200,7 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 min-w-0"
               >
-                <div className="w-10 h-10 rounded-xl bg-white border border-[#A88548]/45 p-1.5 shadow-xs shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-white border border-[#A88548]/45 p-1 shadow-xs shrink-0 flex items-center justify-center">
                   <img 
                     src="/logo.png" 
                     alt="Property Gateway" 

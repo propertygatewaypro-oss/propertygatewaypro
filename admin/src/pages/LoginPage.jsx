@@ -131,7 +131,7 @@ export default function LoginPage() {
 
           {/* Minimal Top Brand Watermark (Zero Opaque Box) */}
           <div className="relative z-10 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md border border-[#A88548]/45 p-1.5 shadow-sm">
+            <div className="w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md border border-[#A88548]/45 p-1 shadow-sm flex items-center justify-center">
               <img 
                 src="/logo.png" 
                 alt="Property Gateway" 
@@ -192,11 +192,11 @@ export default function LoginPage() {
             
             {/* Mobile & Tablet Focused Branding (< 1024px) */}
             <div className="lg:hidden text-center mb-5">
-              <div className="w-14 h-14 rounded-2xl bg-[var(--color-surface-panel)] border border-[var(--color-accent-gold)]/40 p-2 shadow-md mx-auto flex items-center justify-center mb-2">
+              <div className="w-14 h-14 rounded-2xl bg-[var(--color-surface-panel)] border border-[var(--color-accent-gold)]/40 p-1.5 shadow-md mx-auto flex items-center justify-center mb-2">
                 <img 
                   src="/logo.png" 
                   alt="Property Gateway" 
-                  className="w-full h-full rounded-xl object-contain" 
+                  className="w-full h-full object-contain" 
                 />
               </div>
               <h1 className="font-serif text-2xl font-bold text-[var(--color-text-primary)]">
