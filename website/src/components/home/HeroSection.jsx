@@ -102,11 +102,11 @@ export default function HeroSection() {
 
   return (
     <section 
-      className="relative w-full bg-[#FAF9F6] text-[#1E232F] border-b border-[#E7E2D8] flex flex-col justify-center"
+      className="relative w-full bg-[#12151B] text-white border-b border-[#2A303C] flex flex-col justify-center overflow-hidden"
       aria-label="Property Gateway Homepage Hero"
     >
       {/* 1. Background Slideshow with subtle Ken Burns drift */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAF9F6]" aria-hidden="true">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#12151B]" aria-hidden="true">
         {HERO_SLIDES.map((slide, index) => {
           const isActive = index === currentSlide;
           return (
@@ -139,9 +139,10 @@ export default function HeroSection() {
           );
         })}
 
-        {/* Daylight Pearl Editorial Fog: subtle gradient preserving full clarity of luxury architectural photos */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-[#FAF9F6]/40 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-[#FAF9F6]/25 pointer-events-none" />
+        {/* Deep Architectural Cinematic Scrim (Moody Luxury Dim - Option 1) */}
+        <div className="absolute inset-0 bg-[#12151B]/75 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#12151B]/95 via-[#12151B]/80 to-[#12151B]/55 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#12151B] via-transparent to-[#12151B]/70 pointer-events-none" />
       </div>
 
       {/* 2. Hero Content Container */}
@@ -149,43 +150,43 @@ export default function HeroSection() {
         
         <div className="max-w-4xl space-y-4 sm:space-y-6">
           
-          {/* Trust Authority Badge in Daylight Pearl & Gold */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E7E2D8] text-[11px] sm:text-xs text-[#8C6239] font-medium shadow-xs animate-hero-fade-up">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#A88548] shrink-0" />
+          {/* Trust Authority Badge in Deep Slate & Gold */}
+          <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#1E232E]/90 backdrop-blur-md border border-[#A88548]/45 text-[11px] sm:text-xs text-[#E0C27E] font-medium shadow-sm animate-hero-fade-up">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
             <span>TN RERA Registered ({BRAND.reraId}) | 0% Brokerage on Builder Launches</span>
           </div>
 
-          {/* Headline in High-Contrast Slate Typography */}
+          {/* Headline in High-Contrast White & Radiant Gold */}
           <div className="space-y-1.5 sm:space-y-2 animate-hero-fade-up" style={{ animationDelay: '100ms' }}>
-            <span className="text-[12px] sm:text-xs font-mono font-bold tracking-[0.25em] text-[#7D5D2A] uppercase block">
+            <span className="text-[12px] sm:text-xs font-mono font-bold tracking-[0.25em] text-[#D4AF37] uppercase block drop-shadow-xs">
               Curated Chennai Real Estate Advisory
             </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-[#1E232F] leading-[1.12]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-[1.12]">
               Find Your Ideal Home in Chennai. <br className="hidden sm:inline" />
-              <span className="text-gold-metallic italic font-serif font-bold">Direct Developer Pricing.</span>
+              <span className="text-gold-metallic italic font-serif font-bold drop-shadow-sm">Direct Developer Pricing.</span>
             </h1>
           </div>
 
           {/* Value Proposition Subtitle */}
           <p 
-            className="text-sm sm:text-base lg:text-lg text-slate-700 font-sans max-w-2xl leading-relaxed animate-hero-fade-up"
+            className="text-sm sm:text-base lg:text-lg text-slate-300 font-sans max-w-2xl leading-relaxed animate-hero-fade-up"
             style={{ animationDelay: '200ms' }}
           >
             Verified RERA apartments, beachfront villas along ECR, and gated plotted communities. Zero buyer brokerage, guaranteed title scrutiny, and dedicated advisory.
           </p>
 
-          {/* 3. Streamlined Responsive Search Bar (Inspiration Image 2) */}
+          {/* 3. Streamlined Responsive Search Bar (High Contrast on Dark Hero) */}
           <div 
             className="w-full max-w-[1050px] animate-hero-fade-up relative z-30 pt-2"
             style={{ animationDelay: '300ms' }}
           >
-            {/* The Integrated Horizontal Search Box (Responsive 2-tier on mobile, 1-row on desktop) */}
+            {/* The Integrated Horizontal Search Box */}
             <form 
               onSubmit={handleSearch}
-              className="bg-white rounded-xl sm:rounded-2xl border-2 border-[#E7E2D8] shadow-[0_15px_35px_rgba(20,25,35,0.08)] flex flex-col sm:flex-row items-stretch overflow-hidden transition-all hover:border-[#A88548] focus-within:border-[#A88548] focus-within:shadow-[0_15px_40px_rgba(168,133,72,0.16)]"
+              className="bg-white rounded-xl sm:rounded-2xl border-2 border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.45)] flex flex-col sm:flex-row items-stretch overflow-hidden transition-all hover:border-[#D4AF37] focus-within:border-[#D4AF37] focus-within:shadow-[0_20px_50px_rgba(212,175,55,0.25)]"
             >
               {/* Location Select (Stacked on mobile, Left segment on desktop) */}
-              <div className="relative shrink-0 border-b sm:border-b-0 sm:border-r border-[#E7E2D8] flex items-center bg-[#FAF9F6] sm:bg-white px-3 sm:px-4 py-2.5 sm:py-0 min-w-0 sm:min-w-[150px] md:min-w-[165px]">
+              <div className="relative shrink-0 border-b sm:border-b-0 sm:border-r border-slate-200 flex items-center bg-slate-50 sm:bg-white px-3 sm:px-4 py-2.5 sm:py-0 min-w-0 sm:min-w-[150px] md:min-w-[165px]">
                 <MapPin className="w-4 h-4 text-[#A88548] shrink-0 mr-2" />
                 <select
                   value={selectedLocation}
@@ -225,10 +226,10 @@ export default function HeroSection() {
                 )}
               </div>
 
-              {/* Search Submit Button - 100% Full Height, Flush to Right Edge, Zero White Margins */}
+              {/* Search Submit Button - 100% Full Height, Flush to Right Edge */}
               <button
                 type="submit"
-                className="bg-gold-metallic hover:opacity-95 active:scale-[0.98] text-white flex items-center justify-center gap-2 py-3.5 sm:py-0 px-5 sm:w-16 md:w-20 shrink-0 self-stretch transition-all cursor-pointer shadow-none"
+                className="bg-gold-metallic hover:brightness-105 active:scale-[0.98] text-white flex items-center justify-center gap-2 py-3.5 sm:py-0 px-5 sm:w-16 md:w-20 shrink-0 self-stretch transition-all cursor-pointer shadow-none"
                 aria-label="Search Properties"
                 title="Search Properties"
               >
@@ -238,20 +239,20 @@ export default function HeroSection() {
             </form>
 
             {/* Quick Filter Pills Row (Highlighting Apartment and Villa) */}
-            <div className="mt-3 sm:mt-3.5 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-0.5 -mx-1 sm:mx-0">
+            <div className="mt-3.5 sm:mt-4 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-0.5 -mx-1 sm:mx-0">
               {QUICK_FILTERS.map((pill) => (
                 <button
                   key={pill.label}
                   type="button"
                   onClick={() => handlePillClick(pill)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-xs shrink-0 ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] transition-all cursor-pointer whitespace-nowrap active:scale-95 shrink-0 ${
                     pill.isFlagship
-                      ? 'bg-white hover:bg-amber-50/80 text-[#7D5D2A] font-bold border-2 border-[#A88548] shadow-sm hover:shadow-md ring-2 ring-[#A88548]/15'
-                      : 'bg-white hover:bg-slate-50 text-[#1E232F] font-semibold border border-[#E7E2D8] hover:border-[#A88548]'
+                      ? 'bg-amber-400/15 backdrop-blur-md hover:bg-[#D4AF37] text-[#E0C27E] hover:text-slate-950 font-bold border border-[#D4AF37]/70 shadow-sm ring-1 ring-[#D4AF37]/25'
+                      : 'bg-[#1E232E]/80 backdrop-blur-md hover:bg-[#2A303C] text-slate-200 hover:text-white font-semibold border border-white/15 hover:border-[#D4AF37]'
                   }`}
                 >
-                  {pill.label === 'Apartment' && <Building2 className="w-3.5 h-3.5 text-[#A88548]" />}
-                  {pill.label === 'Villa' && <Home className="w-3.5 h-3.5 text-[#A88548]" />}
+                  {pill.label === 'Apartment' && <Building2 className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                  {pill.label === 'Villa' && <Home className="w-3.5 h-3.5 text-[#D4AF37]" />}
                   <span>{pill.label}</span>
                 </button>
               ))}

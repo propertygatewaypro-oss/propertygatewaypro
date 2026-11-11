@@ -8,7 +8,12 @@ import {
   Building2, 
   Sparkles, 
   Phone, 
-  MessageSquare 
+  MessageSquare,
+  Compass,
+  Globe2,
+  FileCheck2,
+  Coins,
+  BadgePercent
 } from 'lucide-react';
 import { BRAND } from '../utils/constants';
 import SEO from '../components/common/SEO';
