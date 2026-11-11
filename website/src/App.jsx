@@ -6,6 +6,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import CookieConsent from './components/common/CookieConsent';
 import WhatsAppChatbot from './components/common/WhatsAppChatbot';
+import MobileBottomActionBar from './components/common/MobileBottomActionBar';
 import FloatingRequirementTab from './components/common/FloatingRequirementTab';
 import PostRequirementModal from './components/common/PostRequirementModal';
 import { usePsychologicalModalTrigger } from './hooks/usePsychologicalModalTrigger';
@@ -59,7 +60,7 @@ function AppContent() {
       />
 
       {/* Main Routed Content */}
-      <main className="flex-grow">
+      <main className="flex-grow pb-16 md:pb-0">
         <Routes>
           <Route 
             path="/" 
@@ -111,8 +112,11 @@ function AppContent() {
       {/* Cookie Consent Banner */}
       <CookieConsent />
 
-      {/* Floating Direct WhatsApp Action */}
+      {/* Floating Direct WhatsApp Action (Desktop Only) */}
       <WhatsAppChatbot />
+
+      {/* Sticky Mobile 4-Column Bottom Action Bar (Mobile Only) */}
+      <MobileBottomActionBar onOpenRequirementModal={handleOpenReqModal} />
 
       {/* Desktop Floating "Post Requirement" Tab */}
       <FloatingRequirementTab onClick={openModal} />

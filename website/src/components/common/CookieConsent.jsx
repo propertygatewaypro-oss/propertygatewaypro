@@ -21,7 +21,7 @@ export default function CookieConsent() {
 
   return (
     <div 
-      className="fixed bottom-4 sm:bottom-6 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-2xl bg-white/95 backdrop-blur-xl border border-[#E7E2D8] rounded-2xl shadow-[0_20px_50px_rgba(20,25,35,0.15)] p-3.5 sm:px-5 sm:py-3.5 z-40 animate-slideUp text-[#1E232F]"
+      className="fixed bottom-16 sm:bottom-6 left-4 right-4 sm:left-6 sm:right-auto sm:max-w-2xl bg-white/95 backdrop-blur-xl border border-[#E7E2D8] rounded-2xl shadow-[0_20px_50px_rgba(20,25,35,0.15)] p-3.5 sm:px-5 sm:py-3.5 z-40 animate-slideUp text-[#1E232F]"
       role="dialog"
       aria-live="polite"
     >

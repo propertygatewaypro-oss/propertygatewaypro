@@ -8,8 +8,8 @@
 * **Brand Name:** Property Gateway
 * **Primary Phone / WhatsApp:** `+91 7598954635` (Display: `+91 75989 54635`)
 * **Primary Contact Email:** `propertygatewy@gmail.com`
-* **Office Location:** 37/48, 1st Floor, Vellalar Street, TNGO Colony, Adambakkam, Chennai - 600 088
-* **TNRERA Registration:** `TN/Agent/020/2019`
+* **Office Location:** Flat No. Flat No 2, Door No. Old No 20 New No 25, Alandur Road, Saidapet, Chennai - 600015
+* **TNRERA Registration:** `TN/Agent/0117/2026`
 * **Local Ports:**
   * Public Website: `http://localhost:3000`
   * Admin Portal: `http://localhost:3001`
@@ -132,7 +132,7 @@ export const DIRECT_PHONE_LINK = "tel:+917598954635";
 
 ### Page 5: Contact Us Page (`/contact`)
 
-* **Direct Office Details:** Adambakkam registered address, Google Maps direction embed.
+* **Direct Office Details:** Saidapet registered address, Google Maps direction embed.
 * **Working Hours:** Monday to Sunday (9:00 AM – 8:00 PM).
 * **Direct Contacts:** Phone click-to-call, email mailto, WhatsApp chat.
 * **General Inquiry Form:** Honeypot protected, 60s cooldown, instant Firestore lead creation.

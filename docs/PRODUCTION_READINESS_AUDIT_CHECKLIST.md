@@ -22,8 +22,8 @@
 | **Core Legal Policies** | Privacy, Terms, Cookie & Refund Policies | 4 dedicated routes: `/privacy-policy`, `/terms-and-conditions`, `/cookie-policy`, and `/refund-policy` linked in footer. |
 | **DPDP Act Compliance** | User consent & minimal data collection | Mandatory consent checkbox on lead capture forms. Operational data collection only (`Name`, `Phone`, `Email`, `Budget`). |
 | **Data Rights & Deletion** | Right to erasure & age consent | Documented process in Privacy Policy: users email `propertygatewy@gmail.com` to purge records. Services restricted to adults (18+). |
-| **Consumer Protection** | Transparent pricing & legitimate identity | Clear Chennai address (Adambakkam), official phone & email. Statutory disclaimer: *"Base price shown. Govt taxes & stamp duty extra"*. |
-| **Anti-Fabrication** | Eliminate fake reviews & claims | Hallmark & RERA standard: zero fake testimonials or stock buyer headshots. Real RERA registration number displayed (`TN/Agent/020/2019`). |
+| **Consumer Protection** | Transparent pricing & legitimate identity | Clear Chennai address (Saidapet), official phone & email. Statutory disclaimer: *"Base price shown. Govt taxes & stamp duty extra"*. |
+| **Anti-Fabrication** | Eliminate fake reviews & claims | Hallmark & RERA standard: zero fake testimonials or stock buyer headshots. Real RERA registration number displayed (`TN/Agent/0117/2026`). |
 
 ---
 

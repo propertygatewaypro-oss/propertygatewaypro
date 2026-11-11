@@ -13,7 +13,7 @@ export default function WhatsAppChatbot() {
   const whatsappUrl = `https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(message)}`;
 
   return (
-    <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-5 md:bottom-7 md:right-7 z-40 flex flex-col items-center gap-2.5 sm:gap-3">
+    <div className="hidden md:flex fixed md:bottom-7 md:right-7 z-40 flex-col items-center gap-3">
       {/* 1. Direct Dial Phone Button */}
       <a
         href={`tel:${BRAND.phone}`}

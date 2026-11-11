@@ -268,7 +268,7 @@ export default function ContactPage() {
                     <strong className="block text-slate-900 font-semibold mb-0.5">Office Address</strong>
                     <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">{BRAND.address}</p>
                     <a
-                      href="https://maps.google.com/?q=Adambakkam+Chennai"
+                      href={`https://maps.google.com/?q=${encodeURIComponent(BRAND.name + ' ' + BRAND.address)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#A88548] hover:underline mt-1.5"
@@ -303,10 +303,15 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* RERA Notice Pill */}
-              <div className="pt-3 border-t border-slate-100 flex items-center gap-2.5 text-xs text-slate-500">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>TNRERA Registered Agent: <strong className="text-slate-800">{BRAND.reraId}</strong></span>
+              {/* RERA & MSME Notice Pill */}
+              <div className="pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-500">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>TNRERA Registered Agent: <strong className="text-slate-800">{BRAND.reraDisplay}</strong></span>
+                </div>
+                <div className="pl-6 text-[11px] font-mono text-slate-500">
+                  File No: {BRAND.reraFileNo} | MSME: {BRAND.udyamRegNo}
+                </div>
               </div>
             </div>
 

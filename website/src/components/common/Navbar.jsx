@@ -323,7 +323,7 @@ export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
 
               <div className="pt-1 flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-500">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>TNRERA: TN/Agent/020/2019</span>
+                <span>TNRERA: {BRAND.reraId}</span>
               </div>
             </div>
           </div>

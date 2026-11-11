@@ -464,7 +464,7 @@ export default function AboutPage() {
 
                   <div className="pt-3.5 border-t border-white/10 flex items-center justify-between text-xs">
                     <span className="text-slate-400">Chennai Headquarters</span>
-                    <span className="font-bold text-[#A88548]">Adambakkam, Chennai - 600 088</span>
+                    <span className="font-bold text-[#A88548]">Saidapet, Chennai - 600 015</span>
                   </div>
                 </div>
               </div>
@@ -670,15 +670,18 @@ export default function AboutPage() {
               </h2>
 
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                Our central consulting office is located in Adambakkam, providing easy access to prime growth corridors including OMR, GST Road, Velachery, and ECR. Open Monday through Sunday, 9:00 AM – 8:00 PM.
+                Our central consulting office is located in Saidapet, providing easy access to prime growth corridors including Guindy, OMR, GST Road, and ECR. Open Monday through Sunday, 9:00 AM – 8:00 PM.
               </p>
 
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-1 text-xs text-slate-600">
+              <div className="flex flex-col sm:flex-row sm:items-center flex-wrap gap-3 sm:gap-6 pt-1 text-xs text-slate-600">
                 <div>
                   <strong className="text-[#1E232F]">Address:</strong> {BRAND.address}
                 </div>
                 <div>
-                  <strong className="text-[#1E232F]">TNRERA:</strong> {BRAND.reraId}
+                  <strong className="text-[#1E232F]">TNRERA:</strong> {BRAND.reraId} (dated {BRAND.reraDate})
+                </div>
+                <div>
+                  <strong className="text-[#1E232F]">MSME:</strong> {BRAND.udyamRegNo}
                 </div>
               </div>
             </div>

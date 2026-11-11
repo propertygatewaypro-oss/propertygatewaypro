@@ -112,7 +112,7 @@ export default function WhyChooseUs({ onOpenVisitModal }) {
   const pillars = [
     {
       index: "01",
-      tag: "TNRERA #020/2019",
+      tag: `TNRERA #${BRAND.reraId.replace('TN/Agent/', '')}`,
       title: "TNRERA Licensed Advisory",
       description: `Registered with Tamil Nadu RERA (${BRAND.reraId}). We only list properties with approved building sanctions and zero legal encumbrances.`,
       highlight: "100% Legal Scrutiny"

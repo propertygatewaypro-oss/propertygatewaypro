@@ -15,6 +15,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { BRAND } from '../utils/constants';
 
 // Curated Architectural Slideshow for Admin Hero Showcase
 const LOGIN_SLIDES = [
@@ -178,7 +179,7 @@ export default function LoginPage() {
             </div>
 
             <div className="pt-2 text-[11px] font-mono text-slate-700 font-semibold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-              TNRERA Registered Agent: TN/Agent/020/2019
+              TNRERA Registered Agent: {BRAND.reraId}
             </div>
           </div>
 

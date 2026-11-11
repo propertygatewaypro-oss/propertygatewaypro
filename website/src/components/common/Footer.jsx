@@ -248,7 +248,7 @@ export default function Footer() {
         {/* Bottom Copyright & Legal Links Bar */}
         <div className="pt-6 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div className="text-center md:text-left leading-relaxed">
-            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. TNRERA: <span className="font-mono text-[#1E232F] font-semibold">{BRAND.reraId}</span>
+            © {new Date().getFullYear()} {BRAND.name}. All rights reserved. TNRERA: <span className="font-mono text-[#1E232F] font-semibold">{BRAND.reraId}</span> | MSME: <span className="font-mono text-[#1E232F] font-semibold">{BRAND.udyamRegNo}</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2.5 pr-0 md:pr-20 lg:pr-24 text-xs text-slate-500">

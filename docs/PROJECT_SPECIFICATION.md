@@ -9,7 +9,7 @@
 * **Client Company:** Property Gateway (PropertyGateway)
 * **Client Email:** `propertygatewy@gmail.com`
 * **Client Phone / WhatsApp:** `+91 7598954635`
-* **Agency:** Strategy 360 Digital Marketing Agency, Adambakkam, Chennai - 600 088
+* **Agency:** Strategy 360 Digital Marketing Agency, Saidapet, Chennai - 600 088
 * **Quotation Date:** 04 November 2026 (Validity: 15 Days)
 * **Total Project Budget:** **₹18,000 INR** (Rupees Eighteen Thousand Only)
 
@@ -168,7 +168,7 @@ property_gateway/
   ],
   "amenities": ["Covered Parking", "Swimming Pool", "24/7 Security", "Gym", "Power Backup"],
   "description": "Premium sea-facing apartment with world-class amenities...",
-  "reraId": "TN/AGENT/020/2019",
+  "reraId": "TN/Agent/0117/2026",
   "createdAt": "Timestamp",
   "updatedAt": "Timestamp"
 }
