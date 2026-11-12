@@ -8,18 +8,13 @@ import {
   ExternalLink, 
   Eye, 
   EyeOff, 
-  Loader2,
-  CloudUpload,
-  Sparkles,
-  CheckCircle2
+  Loader2 
 } from 'lucide-react';
 import { 
   subscribeAdminProperties,
-  saveProperty,
   deleteProperty, 
   togglePropertyStatus 
 } from '../services/adminService';
-import { VERIFIED_20_PROPERTIES } from '../data/verifiedCatalog';
 import { 
   PROPERTY_TYPES, 
   POSSESSION_STATUSES, 
@@ -36,10 +31,8 @@ export default function ManageProperties() {
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncProgress, setSyncProgress] = useState({ current: 0, total: 0 });
 
-  // Realtime subscription to property catalog directly from Firebase Cloud
+  // Realtime subscription directly from Cloud Firestore
   useEffect(() => {
     setLoading(true);
     const unsubscribe = subscribeAdminProperties((liveProps) => {
@@ -48,27 +41,6 @@ export default function ManageProperties() {
     });
     return () => unsubscribe();
   }, []);
-
-  const handleSyncVerifiedProjects = async () => {
-    if (!window.confirm("Do you want to sync all 20 verified Chennai projects (TVS, Prestige, Brigade, Urbanrise, Sobha) directly into Firebase Cloud?")) {
-      return;
-    }
-    setIsSyncing(true);
-    setSyncProgress({ current: 0, total: VERIFIED_20_PROPERTIES.length });
-
-    try {
-      for (let i = 0; i < VERIFIED_20_PROPERTIES.length; i++) {
-        const prop = VERIFIED_20_PROPERTIES[i];
-        await saveProperty(prop);
-        setSyncProgress({ current: i + 1, total: VERIFIED_20_PROPERTIES.length });
-      }
-    } catch (err) {
-      console.error("Cloud sync error:", err);
-      alert("Error syncing properties: " + err.message);
-    } finally {
-      setIsSyncing(false);
-    }
-  };
 
   // Redirect legacy ?new=1 query param to full page /properties/add
   useEffect(() => {
@@ -130,38 +102,17 @@ export default function ManageProperties() {
             Property Catalog Management
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Cloud-synced verified Chennai residential and commercial properties (Firebase Cloud)
+            Add, edit, and publish verified Chennai residential and commercial properties
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-          <button
-            onClick={handleSyncVerifiedProjects}
-            disabled={isSyncing}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-[#A88548]/30 bg-[#A88548]/10 hover:bg-[#A88548]/20 text-[#7D5D2A] text-xs font-bold tracking-wide transition-all shadow-xs disabled:opacity-50 active:scale-95"
-            title="Sync all 20 verified Chennai projects directly into Firebase Cloud Firestore"
-          >
-            {isSyncing ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin text-[#7D5D2A]" />
-                <span>Syncing {syncProgress.current}/{syncProgress.total}...</span>
-              </>
-            ) : (
-              <>
-                <CloudUpload className="w-4 h-4 text-[#A88548]" />
-                <span>Sync 20 Verified Projects</span>
-              </>
-            )}
-          </button>
-
-          <Link
-            to="/properties/add"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm active:scale-95"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add New Property</span>
-          </Link>
-        </div>
+        <Link
+          to="/properties/add"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm self-start sm:self-auto active:scale-95"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add New Property</span>
+        </Link>
       </div>
 
       {/* 2. Filter and Search Bar */}
@@ -222,45 +173,21 @@ export default function ManageProperties() {
             <span>Loading property catalog...</span>
           </div>
         ) : properties.length === 0 ? (
-          <div className="p-10 text-center max-w-lg mx-auto space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#A88548]/10 text-[#7D5D2A] flex items-center justify-center mx-auto border border-[#A88548]/20">
-              <CloudUpload className="w-6 h-6 text-[#A88548]" />
+          <div className="p-12 text-center max-w-sm mx-auto space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
+              <Search className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-serif font-bold text-slate-900">
-                Firebase Cloud Property Catalog is Empty
-              </h3>
-              <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                All property data is stored directly in Firebase Cloud. You can one-click sync all 20 verified Chennai projects (TVS, Prestige, Brigade, Urbanrise, Sobha) with exact TNRERA registration IDs, specifications, and lightweight WebP images, or add properties manually.
-              </p>
+              <h3 className="text-sm font-semibold text-slate-800">No properties in catalog</h3>
+              <p className="text-xs text-slate-400 mt-1">Start by adding your first Chennai residential or commercial project.</p>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
-              <button
-                onClick={handleSyncVerifiedProjects}
-                disabled={isSyncing}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold shadow-sm transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
-              >
-                {isSyncing ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin text-white" />
-                    <span>Syncing {syncProgress.current}/{syncProgress.total}...</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-4 h-4" />
-                    <span>Sync 20 Verified Projects to Firebase</span>
-                  </>
-                )}
-              </button>
-
-              <Link
-                to="/properties/add"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-all"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Property Manually</span>
-              </Link>
-            </div>
+            <Link
+              to="/properties/add"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gold-metallic text-white text-xs font-semibold shadow-xs"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Property</span>
+            </Link>
           </div>
         ) : filtered.length === 0 ? (
           <div className="p-12 text-center text-xs text-slate-500">
@@ -298,7 +225,7 @@ export default function ManageProperties() {
                               <span>•</span>
                               <span>{prop.builtUpArea} sq.ft</span>
                               {prop.featured && (
-                                <span className="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-semibold text-[9px] uppercase">
+                                <span className="px-1.5 py-0.2 rounded bg-amber-50 text-[#7D5D2A] border border-[#A88548]/30 font-semibold text-[9px] uppercase tracking-wider">
                                   Featured
                                 </span>
                               )}
@@ -306,31 +233,24 @@ export default function ManageProperties() {
                           </div>
                         </div>
                       </td>
-
-                      <td className="py-3.5 px-4 text-slate-700">
-                        <div className="font-medium">{prop.location}</div>
-                        <div className="text-[11px] text-slate-400">{prop.type || prop.propertyType}</div>
+                      <td className="py-3.5 px-4 text-slate-600">
+                        <div className="font-medium text-slate-800">{prop.location}</div>
+                        <div className="text-[11px] text-slate-400">{prop.propertyType || prop.type}</div>
                       </td>
-
-                      <td className="py-3.5 px-4">
-                        <span className="font-semibold text-slate-900 font-mono text-sm">
-                          {prop.priceDisplay || formatIndianCurrency(prop.price)}
-                        </span>
+                      <td className="py-3.5 px-4 font-semibold text-slate-900 font-mono">
+                        {prop.priceDisplay || formatIndianCurrency(prop.price)}
                       </td>
-
-                      <td className="py-3.5 px-4 text-slate-500 font-mono text-[11px]">
+                      <td className="py-3.5 px-4 text-slate-600 font-mono text-[11px]">
                         {prop.reraId || 'Sanction Pending'}
                       </td>
-
                       <td className="py-3.5 px-4 text-center">
                         <button
                           onClick={() => handleToggleStatus(prop.id, prop.active !== false && prop.isActive !== false)}
-                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold transition-colors ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-colors cursor-pointer ${
                             prop.active !== false && prop.isActive !== false
                               ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' 
                               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                           }`}
-                          title="Click to toggle visibility"
                         >
                           {prop.active !== false && prop.isActive !== false ? (
                             <>
@@ -345,27 +265,24 @@ export default function ManageProperties() {
                           )}
                         </button>
                       </td>
-
                       <td className="py-3.5 px-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1.5">
                           <a
                             href={`${BRAND.websiteUrl}/property/${prop.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-1.5 rounded-md text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
-                            title="View on Website"
+                            title="Preview on Live Site"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
                           </a>
-
                           <Link
                             to={`/properties/edit/${prop.id}`}
-                            className="p-1.5 rounded-md text-slate-500 hover:text-[#A88548] hover:bg-amber-50 transition-colors"
-                            title="Edit Full Details"
+                            className="p-1.5 rounded-md text-slate-500 hover:text-[#7D5D2A] hover:bg-[#A88548]/10 transition-colors"
+                            title="Edit Property"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </Link>
-
                           <button
                             onClick={() => handleDelete(prop.id, prop.title)}
                             className="p-1.5 rounded-md text-slate-500 hover:text-red-700 hover:bg-red-50 transition-colors"
