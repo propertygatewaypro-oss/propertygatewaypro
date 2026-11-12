@@ -88,7 +88,7 @@ export function subscribeProperties(onUpdate, filters = {}) {
         collection(db, "properties"),
         (snapshot) => {
           if (!snapshot.empty) {
-            const rawDocs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const rawDocs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             const processed = filterAndSortProperties(rawDocs, filters);
             onUpdate(processed);
           } else {
@@ -118,7 +118,7 @@ export async function fetchProperties(filters = {}) {
     try {
       const snap = await getDocs(collection(db, "properties"));
       if (!snap.empty) {
-        const rawDocs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const rawDocs = snap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
         return filterAndSortProperties(rawDocs, filters);
       }
       return [];
@@ -137,7 +137,7 @@ export function subscribePropertyBySlug(slug, onUpdate) {
     try {
       return onSnapshot(collection(db, "properties"), (snap) => {
         if (!snap.empty) {
-          const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const list = snap.docs.map(d => ({ ...d.data(), id: d.id }));
           const match = list.find(p => p.slug === slug || p.id === slug);
           if (match) {
             onUpdate(match);
@@ -161,11 +161,11 @@ export async function fetchPropertyBySlug(slug) {
       const q = query(collection(db, "properties"), where("slug", "==", slug), limit(1));
       const snap = await getDocs(q);
       if (!snap.empty) {
-        return { id: snap.docs[0].id, ...snap.docs[0].data() };
+        return { ...snap.docs[0].data(), id: snap.docs[0].id };
       }
       const directDoc = await getDoc(doc(db, "properties", slug));
       if (directDoc.exists()) {
-        return { id: directDoc.id, ...directDoc.data() };
+        return { ...directDoc.data(), id: directDoc.id };
       }
     } catch (e) {
       console.warn("Firestore slug fetch error:", e);
@@ -225,7 +225,7 @@ export function subscribeTestimonials(onUpdate, onError) {
         collection(db, "testimonials"),
         (snapshot) => {
           if (!snapshot.empty) {
-            const allItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+            const allItems = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
             const activeOnly = allItems.filter(t => t.active !== false);
             activeOnly.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
             onUpdate(activeOnly);
@@ -253,7 +253,7 @@ export async function fetchTestimonials() {
     try {
       const snap = await getDocs(collection(db, "testimonials"));
       if (!snap.empty) {
-        const allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const allItems = snap.docs.map(d => ({ ...d.data(), id: d.id }));
         const activeOnly = allItems.filter(t => t.active !== false);
         activeOnly.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
         return activeOnly;

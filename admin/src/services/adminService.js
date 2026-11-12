@@ -69,7 +69,7 @@ export function subscribeAdminProperties(onUpdate, onError) {
     try {
       return onSnapshot(collection(db, "properties"), (snap) => {
         if (!snap.empty) {
-          const liveProps = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          const liveProps = snap.docs.map(d => ({ ...d.data(), id: d.id, _docId: d.id }));
           liveProps.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
           onUpdate(liveProps);
         } else {
@@ -94,7 +94,7 @@ export async function fetchAdminProperties() {
     try {
       const snap = await getDocs(collection(db, "properties"));
       if (!snap.empty) {
-        const liveProps = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const liveProps = snap.docs.map(doc => ({ ...doc.data(), id: doc.id, _docId: doc.id }));
         liveProps.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
         return liveProps;
       }
@@ -138,8 +138,12 @@ export async function saveProperty(propertyData) {
 }
 
 export async function deleteProperty(propertyId) {
+  if (!propertyId) {
+    throw new Error("Cannot delete property: missing property ID.");
+  }
+  const cleanId = String(propertyId).trim();
   if (isFirebaseConfigured && db) {
-    await deleteDoc(doc(db, "properties", propertyId));
+    await deleteDoc(doc(db, "properties", cleanId));
     return true;
   }
   throw new Error("Firebase Cloud Firestore is not configured.");
@@ -269,7 +273,7 @@ export function subscribeAdminTestimonials(onUpdate, onError) {
       return onSnapshot(
         collection(db, "testimonials"),
         (snapshot) => {
-          const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          const liveItems = snapshot.docs.map(d => ({ ...d.data(), id: d.id, _docId: d.id }));
           liveItems.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
           onUpdate(liveItems);
         },
@@ -292,7 +296,7 @@ export async function fetchAdminTestimonials() {
   if (isFirebaseConfigured && db) {
     try {
       const snapshot = await getDocs(collection(db, "testimonials"));
-      const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      const liveItems = snapshot.docs.map(d => ({ ...d.data(), id: d.id, _docId: d.id }));
       liveItems.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
       return liveItems;
     } catch (err) {
@@ -341,8 +345,12 @@ export async function saveTestimonial(testimonialData) {
 }
 
 export async function deleteTestimonial(testimonialId) {
+  if (!testimonialId) {
+    throw new Error("Cannot delete testimonial: missing feedback ID.");
+  }
+  const cleanId = String(testimonialId).trim();
   if (isFirebaseConfigured && db) {
-    await deleteDoc(doc(db, "testimonials", testimonialId));
+    await deleteDoc(doc(db, "testimonials", cleanId));
     return true;
   }
   throw new Error("Firebase Cloud Firestore is not configured.");
