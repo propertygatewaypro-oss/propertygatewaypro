@@ -11,7 +11,6 @@ import {
   onSnapshot 
 } from "firebase/firestore";
 import { db, isFirebaseConfigured } from "./firebase";
-import { INITIAL_TESTIMONIALS } from "../data/initialProperties";
 
 // In-memory filter & sort pipeline
 export function filterAndSortProperties(rawList, filters = {}) {
@@ -222,22 +221,22 @@ export async function submitLeadInquiry(leadData) {
 export function subscribeTestimonials(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "testimonials"));
       return onSnapshot(
-        q,
+        collection(db, "testimonials"),
         (snapshot) => {
           if (!snapshot.empty) {
             const allItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
             const activeOnly = allItems.filter(t => t.active !== false);
-            onUpdate(activeOnly.length > 0 ? activeOnly : INITIAL_TESTIMONIALS);
+            activeOnly.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+            onUpdate(activeOnly);
           } else {
-            onUpdate(INITIAL_TESTIMONIALS);
+            onUpdate([]);
           }
         },
         (err) => {
           console.warn("Firestore website testimonials subscriber warning:", err.message);
           if (onError) onError(err);
-          onUpdate(INITIAL_TESTIMONIALS);
+          onUpdate([]);
         }
       );
     } catch (err) {
@@ -245,7 +244,7 @@ export function subscribeTestimonials(onUpdate, onError) {
     }
   }
 
-  onUpdate(INITIAL_TESTIMONIALS);
+  onUpdate([]);
   return () => {};
 }
 
@@ -256,11 +255,12 @@ export async function fetchTestimonials() {
       if (!snap.empty) {
         const allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         const activeOnly = allItems.filter(t => t.active !== false);
-        return activeOnly.length > 0 ? activeOnly : INITIAL_TESTIMONIALS;
+        activeOnly.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        return activeOnly;
       }
     } catch (err) {
       console.warn("Firestore fetch testimonials warning:", err.message);
     }
   }
-  return INITIAL_TESTIMONIALS;
+  return [];
 }

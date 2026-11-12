@@ -14,9 +14,9 @@ service cloud.firestore {
     // - Publicly creatable by prospective clients submitting contact forms
     // - Readable and manageable ONLY by authenticated administrators
     match /leads/{leadId} {
-      allow create: if request.resource.data.name is string 
-                    && request.resource.data.phone is string;
-      allow read, update, delete: if request.auth != null;
+      allow create: if (request.resource.data.name is string 
+                    && request.resource.data.phone is string) || request.auth != null;
+      allow read, write: if request.auth != null;
     }
 
     // Testimonials / Client Feedbacks Collection:

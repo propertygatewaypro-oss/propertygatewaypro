@@ -7,9 +7,12 @@ import {
   Trash2, 
   Filter,
   Loader2,
-  Inbox
+  Inbox,
+  Plus,
+  X,
+  AlertCircle
 } from 'lucide-react';
-import { subscribeAdminLeads, updateLeadStatus, deleteLead } from '../services/adminService';
+import { subscribeAdminLeads, saveLead, updateLeadStatus, deleteLead } from '../services/adminService';
 
 const STATUS_OPTIONS = [
   'New',
@@ -31,6 +34,73 @@ export default function ManageLeads() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+
+  // Manual Inquiry Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalSubmitting, setModalSubmitting] = useState(false);
+  const [modalError, setModalError] = useState('');
+  const [modalForm, setModalForm] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    propertyTitle: '',
+    leadType: 'General Consultation',
+    preferredLocation: '',
+    preferredDate: '',
+    message: '',
+    status: 'New'
+  });
+
+  const handleOpenAddModal = () => {
+    setModalForm({
+      name: '',
+      phone: '',
+      email: '',
+      propertyTitle: '',
+      leadType: 'General Consultation',
+      preferredLocation: '',
+      preferredDate: '',
+      message: '',
+      status: 'New'
+    });
+    setModalError('');
+    setIsModalOpen(true);
+  };
+
+  const handleSaveLead = async (e) => {
+    e.preventDefault();
+    if (!modalForm.name.trim()) {
+      setModalError('Customer name is required.');
+      return;
+    }
+    if (!modalForm.phone.trim()) {
+      setModalError('Customer contact phone is required.');
+      return;
+    }
+
+    try {
+      setModalSubmitting(true);
+      setModalError('');
+      await saveLead({
+        name: modalForm.name.trim(),
+        phone: modalForm.phone.trim(),
+        email: modalForm.email.trim(),
+        propertyTitle: modalForm.propertyTitle.trim() || 'General Consultation',
+        leadType: modalForm.leadType,
+        preferredLocation: modalForm.preferredLocation.trim(),
+        preferredDate: modalForm.preferredDate.trim(),
+        message: modalForm.message.trim(),
+        status: modalForm.status || 'New',
+        submittedAt: new Date().toISOString()
+      });
+      setIsModalOpen(false);
+    } catch (err) {
+      console.error('Error saving inquiry:', err);
+      setModalError('Failed to record inquiry: ' + (err.message || 'Unknown error'));
+    } finally {
+      setModalSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -85,10 +155,17 @@ export default function ManageLeads() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-600 font-medium">
+        <div className="flex items-center gap-3">
+          <span className="text-xs text-slate-600 font-medium hidden sm:inline">
             Total Inquiries: <strong className="text-slate-900">{leads.length}</strong>
           </span>
+          <button
+            onClick={handleOpenAddModal}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors shadow-2xs"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Record Inquiry</span>
+          </button>
         </div>
       </div>
 
@@ -370,6 +447,192 @@ export default function ManageLeads() {
           </div>
         )}
       </div>
+
+      {/* Record New Inquiry Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-serif font-bold text-slate-900">Record Client Inquiry</h3>
+                <p className="text-xs text-slate-500">Log incoming client phone call, WhatsApp, or walk-in inquiry</p>
+              </div>
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveLead} className="p-6 space-y-4">
+              {modalError && (
+                <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{modalError}</span>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Customer Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Ramesh Kumar"
+                    value={modalForm.name}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="e.g. +91 98400 12345"
+                    value={modalForm.phone}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, phone: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="e.g. ramesh@gmail.com"
+                    value={modalForm.email}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Project / Property Interest
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. TVS Emerald Elements"
+                    value={modalForm.propertyTitle}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, propertyTitle: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Inquiry Type
+                  </label>
+                  <select
+                    value={modalForm.leadType}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, leadType: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  >
+                    <option value="General Consultation">General Consultation</option>
+                    <option value="Schedule Site Visit">Schedule Site Visit</option>
+                    <option value="Brochure & Floor Plan">Brochure & Floor Plan</option>
+                    <option value="Pricing & Payment Plan">Pricing & Payment Plan</option>
+                    <option value="Post Requirement">Custom Requirement</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Initial Status
+                  </label>
+                  <select
+                    value={modalForm.status}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, status: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  >
+                    {STATUS_OPTIONS.map(opt => (
+                      <option key={opt} value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Preferred Location
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. OMR, Porur, Kovilambakkam"
+                    value={modalForm.preferredLocation}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, preferredLocation: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Site Visit Date (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Tomorrow 4 PM / Saturday"
+                    value={modalForm.preferredDate}
+                    onChange={(e) => setModalForm(prev => ({ ...prev, preferredDate: e.target.value }))}
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Client Notes / Message
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Notes from customer call, budget range, 2/3 BHK requirements..."
+                  value={modalForm.message}
+                  onChange={(e) => setModalForm(prev => ({ ...prev, message: e.target.value }))}
+                  className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={modalSubmitting}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-colors shadow-sm disabled:opacity-50"
+                >
+                  {modalSubmitting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving to Cloud...</span>
+                    </>
+                  ) : (
+                    <span>Save Inquiry</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

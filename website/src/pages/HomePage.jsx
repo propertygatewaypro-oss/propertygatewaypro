@@ -13,13 +13,12 @@ import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import SEO from '../components/common/SEO';
 import { subscribeProperties, subscribeTestimonials } from '../services/propertyService';
-import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
 import { BRAND } from '../utils/constants';
 import { getRealEstateAgentSchema, getFaqSchema } from '../utils/seoSchemas';
 
 export default function HomePage({ onOpenVisitModal }) {
   const [featuredProperties, setFeaturedProperties] = useState([]);
-  const [testimonials, setTestimonials] = useState(INITIAL_TESTIMONIALS);
+  const [testimonials, setTestimonials] = useState([]);
   const [activeTab, setActiveTab] = useState('All');
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
@@ -80,9 +79,7 @@ export default function HomePage({ onOpenVisitModal }) {
 
     // Live subscription to client feedbacks / testimonials
     const unsubscribeTestimonials = subscribeTestimonials((liveData) => {
-      if (liveData && liveData.length > 0) {
-        setTestimonials(liveData);
-      }
+      setTestimonials(Array.isArray(liveData) ? liveData : []);
     });
 
     return () => {
@@ -232,111 +229,113 @@ export default function HomePage({ onOpenVisitModal }) {
       <WhyChooseUs onOpenVisitModal={onOpenVisitModal} />
 
       {/* 4. Authentic Homebuyer Case Studies & Reviews - Compact Two-Tier Modern Marquee */}
-      <section className="pt-10 sm:pt-12 md:pt-14 pb-4 sm:pb-6 bg-[#FAF9F6] border-t border-[#EAE6DE] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 sm:gap-2.5">
-              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
-              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#7D5D2A]">
-                Verified Client Journeys
-              </span>
-              <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
+      {testimonials.length > 0 && (
+        <section className="pt-10 sm:pt-12 md:pt-14 pb-4 sm:pb-6 bg-[#FAF9F6] border-t border-[#EAE6DE] relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+              <div className="inline-flex items-center gap-2 sm:gap-2.5">
+                <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
+                <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#7D5D2A]">
+                  Verified Client Journeys
+                </span>
+                <span className="w-5 sm:w-6 h-[1px] bg-[#A88548]/50" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#181B22] tracking-tight mt-1.5 leading-snug sm:leading-tight">
+                Trusted by Homebuyers <span className="text-gold-metallic font-serif">Across Chennai</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
+                Real families and investors sharing authentic experiences purchasing verified homes through Property Gateway.
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-serif font-bold text-[#181B22] tracking-tight mt-1.5 leading-snug sm:leading-tight">
-              Trusted by Homebuyers <span className="text-gold-metallic font-serif">Across Chennai</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
-              Real families and investors sharing authentic experiences purchasing verified homes through Property Gateway.
-            </p>
           </div>
-        </div>
 
-        {/* Continuous Right-to-Left Marquee Carousel */}
-        <div className="relative w-full overflow-hidden">
-          {/* Edge Fade Gradients (Vignettes - Scaled for mobile) */}
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
+          {/* Continuous Right-to-Left Marquee Carousel */}
+          <div className="relative w-full overflow-hidden">
+            {/* Edge Fade Gradients (Vignettes - Scaled for mobile) */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-16 md:w-28 z-20 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/85 to-transparent" />
 
-          {/* Marquee Track */}
-          <div className="animate-marquee-rtl py-2 px-1 sm:px-2 flex gap-3.5 sm:gap-5">
-            {[...testimonials, ...testimonials].map((t, idx) => {
-              const displayInitials = t.initials || (t.author ? t.author.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : 'PG');
-              return (
-                <div 
-                  key={`${t.id || 't'}-${idx}`}
-                  className="w-[285px] sm:w-[350px] md:w-[410px] shrink-0 bg-[#F8FAFC] rounded-2xl p-4 sm:p-5 md:p-6 border border-[#E2E8F0] shadow-xs flex flex-col justify-between hover:shadow-md hover:border-[#A88548]/50 transition-all duration-300"
-                >
-                  <div>
-                    {/* Rating stars & verified tag */}
-                    <div className="flex items-center justify-between gap-1 mb-2.5">
-                      <div className="flex items-center gap-0.5 text-[#D4AF37]">
-                        {[...Array(t.rating || 5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
-                        ))}
+            {/* Marquee Track */}
+            <div className="animate-marquee-rtl py-2 px-1 sm:px-2 flex gap-3.5 sm:gap-5">
+              {[...testimonials, ...testimonials].map((t, idx) => {
+                const displayInitials = t.initials || (t.author ? t.author.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() : 'PG');
+                return (
+                  <div 
+                    key={`${t.id || 't'}-${idx}`}
+                    className="w-[285px] sm:w-[350px] md:w-[410px] shrink-0 bg-[#F8FAFC] rounded-2xl p-4 sm:p-5 md:p-6 border border-[#E2E8F0] shadow-xs flex flex-col justify-between hover:shadow-md hover:border-[#A88548]/50 transition-all duration-300"
+                  >
+                    <div>
+                      {/* Rating stars & verified tag */}
+                      <div className="flex items-center justify-between gap-1 mb-2.5">
+                        <div className="flex items-center gap-0.5 text-[#D4AF37]">
+                          {[...Array(t.rating || 5)].map((_, i) => (
+                            <Star key={i} className="w-3.5 h-3.5 fill-[#D4AF37] text-[#D4AF37]" />
+                          ))}
+                        </div>
+                        {t.verified !== false && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Verified Homeowner
+                          </span>
+                        )}
                       </div>
-                      {t.verified !== false && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                          <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Verified Homeowner
-                        </span>
-                      )}
+
+                      {/* Top: Quote with styled quotation marks and bolded highlights */}
+                      <p className="text-slate-700 text-xs sm:text-sm md:text-[14px] leading-relaxed">
+                        <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl mr-1 select-none">“</span>
+                        {t.beforeHighlight !== undefined ? (
+                          <>
+                            {t.beforeHighlight}
+                            {t.highlight && <strong className="font-bold text-slate-900">{t.highlight}</strong>}
+                            {t.afterHighlight}
+                          </>
+                        ) : (
+                          <>
+                            {t.highlight && <strong className="font-bold text-slate-900 mr-1">{t.highlight}</strong>}
+                            {t.content || t.quote}
+                          </>
+                        )}
+                        <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl ml-1 select-none">”</span>
+                      </p>
                     </div>
 
-                    {/* Top: Quote with styled quotation marks and bolded highlights */}
-                    <p className="text-slate-700 text-xs sm:text-sm md:text-[14px] leading-relaxed">
-                      <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl mr-1 select-none">“</span>
-                      {t.beforeHighlight !== undefined ? (
-                        <>
-                          {t.beforeHighlight}
-                          {t.highlight && <strong className="font-bold text-slate-900">{t.highlight}</strong>}
-                          {t.afterHighlight}
-                        </>
-                      ) : (
-                        <>
-                          {t.highlight && <strong className="font-bold text-slate-900 mr-1">{t.highlight}</strong>}
-                          {t.content || t.quote}
-                        </>
-                      )}
-                      <span className="text-[#A88548] font-serif font-black text-lg sm:text-xl ml-1 select-none">”</span>
-                    </p>
-                  </div>
-
-                  {/* Bottom Inset Panel: Avatar, Name, and Role */}
-                  <div className="bg-white rounded-xl p-3 sm:p-3.5 md:p-4 border border-slate-100 shadow-xs flex items-center gap-2.5 sm:gap-3.5 mt-3.5 sm:mt-4 md:mt-5">
-                    <div className="relative shrink-0">
-                      {t.avatar ? (
-                        <img 
-                          src={t.avatar} 
-                          alt={t.author} 
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-[#A88548] ring-offset-2 ring-offset-white"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            if (e.target.nextElementSibling) {
-                              e.target.nextElementSibling.style.display = 'flex';
-                            }
-                          }}
-                        />
-                      ) : null}
-                      <div 
-                        className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#181B22] to-[#272B38] text-[#A88548] font-bold text-xs ring-2 ring-[#A88548] ring-offset-2 ring-offset-white ${t.avatar ? 'hidden' : 'flex'} items-center justify-center`}
-                      >
-                        {displayInitials}
+                    {/* Bottom Inset Panel: Avatar, Name, and Role */}
+                    <div className="bg-white rounded-xl p-3 sm:p-3.5 md:p-4 border border-slate-100 shadow-xs flex items-center gap-2.5 sm:gap-3.5 mt-3.5 sm:mt-4 md:mt-5">
+                      <div className="relative shrink-0">
+                        {t.avatar ? (
+                          <img 
+                            src={t.avatar} 
+                            alt={t.author} 
+                            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-[#A88548] ring-offset-2 ring-offset-white"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              if (e.target.nextElementSibling) {
+                                e.target.nextElementSibling.style.display = 'flex';
+                              }
+                            }}
+                          />
+                        ) : null}
+                        <div 
+                          className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#181B22] to-[#272B38] text-[#A88548] font-bold text-xs ring-2 ring-[#A88548] ring-offset-2 ring-offset-white ${t.avatar ? 'hidden' : 'flex'} items-center justify-center`}
+                        >
+                          {displayInitials}
+                        </div>
                       </div>
-                    </div>
-                    <div className="min-w-0">
-                      <div className="font-bold text-xs sm:text-sm md:text-[15px] text-[#181B22] truncate">
-                        {t.author}
-                      </div>
-                      <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5 font-medium">
-                        {t.role}
+                      <div className="min-w-0">
+                        <div className="font-bold text-xs sm:text-sm md:text-[15px] text-[#181B22] truncate">
+                          {t.author}
+                        </div>
+                        <div className="text-[10px] sm:text-[11px] text-slate-500 truncate mt-0.5 font-medium">
+                          {t.role}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 7. Frequently Asked Questions (FAQ) Accordion - Full Width Animated Lite Editorial */}
       <section 

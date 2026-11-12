@@ -5,6 +5,7 @@ import {
   getDocs, 
   doc, 
   setDoc, 
+  addDoc,
   updateDoc, 
   deleteDoc, 
   query, 
@@ -12,36 +13,50 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
 
 // -------------------------------------------------------------
-// IMAGE COMPRESSION & UPLOAD TO FIREBASE STORAGE (< 250KB WebP)
+// IMAGE COMPRESSION & CLOUDINARY CLOUD UPLOAD (FREE 25GB TIER)
 // -------------------------------------------------------------
 export async function compressAndUploadImage(file) {
   const options = {
-    maxSizeMB: 0.25, // 250 KB budget
-    maxWidthOrHeight: 1600,
+    maxSizeMB: 0.35, // 350 KB budget
+    maxWidthOrHeight: 1800,
     useWebWorker: true,
     fileType: 'image/webp'
   };
 
   try {
-    const compressedFile = await imageCompression(file, options);
-    
-    // Upload directly to Firebase Storage Cloud
-    if (isFirebaseConfigured && storage) {
-      const fileName = `properties/${Date.now()}_${Math.random().toString(36).substring(2, 9)}.webp`;
-      const storageRef = ref(storage, fileName);
-      const snapshot = await uploadBytes(storageRef, compressedFile, {
-        contentType: 'image/webp'
-      });
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-      return downloadUrl;
+    // 1. Client-side WebP compression to save bandwidth & upload instantly
+    let fileToUpload = file;
+    try {
+      fileToUpload = await imageCompression(file, options);
+    } catch (compressionErr) {
+      console.warn("Client compression skipped, uploading original:", compressionErr);
     }
 
-    throw new Error("Firebase Storage is not configured.");
+    // 2. Upload directly to Cloudinary using Unsigned Preset
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'py5x0ppi';
+    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'property_gateway';
+
+    const formData = new FormData();
+    formData.append('file', fileToUpload);
+    formData.append('upload_preset', uploadPreset);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData?.error?.message || `Cloudinary upload failed: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    // Return high-efficiency secure URL delivered via global CDN
+    return data.secure_url;
   } catch (error) {
-    console.error("Error compressing and uploading image to Firebase:", error);
+    console.error("Error compressing and uploading image to Cloudinary:", error);
     throw error;
   }
 }
@@ -149,11 +164,15 @@ export async function togglePropertyStatus(propertyId, currentStatus) {
 export function subscribeAdminLeads(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
       return onSnapshot(
-        q, 
+        collection(db, "leads"), 
         (snapshot) => {
           const liveLeads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          liveLeads.sort((a, b) => {
+            const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
+            const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
+            return timeB - timeA;
+          });
           onUpdate(liveLeads);
         },
         (err) => {
@@ -174,14 +193,39 @@ export function subscribeAdminLeads(onUpdate, onError) {
 export async function fetchAdminLeads() {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "leads"), orderBy("submittedAt", "desc"));
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const snapshot = await getDocs(collection(db, "leads"));
+      const liveLeads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      liveLeads.sort((a, b) => {
+        const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
+        const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
+        return timeB - timeA;
+      });
+      return liveLeads;
     } catch (err) {
       console.warn("Firestore fetch leads error:", err.message);
     }
   }
   return [];
+}
+
+export async function saveLead(leadData) {
+  if (isFirebaseConfigured && db) {
+    const isNew = !leadData.id;
+    if (isNew) {
+      const docRef = await addDoc(collection(db, "leads"), {
+        ...leadData,
+        submittedAt: leadData.submittedAt || new Date().toISOString()
+      });
+      return { id: docRef.id, ...leadData };
+    } else {
+      await setDoc(doc(db, "leads", leadData.id), {
+        ...leadData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      return leadData;
+    }
+  }
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function updateLeadStatus(leadId, newStatus) {
@@ -216,21 +260,17 @@ function computeInitials(author) {
 export function subscribeAdminTestimonials(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
       return onSnapshot(
-        q,
+        collection(db, "testimonials"),
         (snapshot) => {
-          if (!snapshot.empty) {
-            const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-            onUpdate(liveItems);
-          } else {
-            onUpdate(INITIAL_TESTIMONIALS);
-          }
+          const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          liveItems.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+          onUpdate(liveItems);
         },
         (err) => {
           console.warn("Firestore testimonials subscriber notice:", err.message);
           if (onError) onError(err);
-          onUpdate(INITIAL_TESTIMONIALS);
+          onUpdate([]);
         }
       );
     } catch (err) {
@@ -238,23 +278,22 @@ export function subscribeAdminTestimonials(onUpdate, onError) {
     }
   }
 
-  onUpdate(INITIAL_TESTIMONIALS);
+  onUpdate([]);
   return () => {};
 }
 
 export async function fetchAdminTestimonials() {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) {
-        return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-      }
+      const snapshot = await getDocs(collection(db, "testimonials"));
+      const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      liveItems.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+      return liveItems;
     } catch (err) {
       console.warn("Firestore fetch testimonials error:", err.message);
     }
   }
-  return INITIAL_TESTIMONIALS;
+  return [];
 }
 
 export async function saveTestimonial(testimonialData) {

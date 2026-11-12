@@ -54,7 +54,18 @@ export default function AddEditPropertyPage() {
   const [pageLoading, setPageLoading] = useState(isEditing);
   const [submitting, setSubmitting] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
+  const [imageUrlInput, setImageUrlInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleAddImageUrl = () => {
+    const trimmed = imageUrlInput.trim();
+    if (!trimmed) return;
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, trimmed]
+    }));
+    setImageUrlInput('');
+  };
 
   // Load existing property data if in edit mode
   useEffect(() => {
@@ -551,6 +562,35 @@ export default function AddEditPropertyPage() {
                 </>
               )}
             </label>
+          </div>
+
+          {/* Direct Image URL Input (No Cloud Storage billing required) */}
+          <div className="pt-3 border-t border-slate-100">
+            <label className="block text-[11px] font-semibold text-slate-600 mb-1.5">
+              Or paste direct Image URL (CDN / Web link)
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="url"
+                placeholder="https://images.unsplash.com/... or any hosted image link"
+                value={imageUrlInput}
+                onChange={(e) => setImageUrlInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddImageUrl();
+                  }
+                }}
+                className="flex-1 text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
+              />
+              <button
+                type="button"
+                onClick={handleAddImageUrl}
+                className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-2xs whitespace-nowrap"
+              >
+                + Add Image URL
+              </button>
+            </div>
           </div>
         </div>
 
