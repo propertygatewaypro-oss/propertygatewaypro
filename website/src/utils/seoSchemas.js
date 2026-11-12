@@ -22,7 +22,7 @@ export function getRealEstateAgentSchema() {
     "priceRange": "₹₹₹",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Flat No. Flat No 2, Door No. Old No 20 New No 25, Alandur Road",
+      "streetAddress": "Flat No. 2, New No 25, Alandur Road",
       "addressLocality": "Saidapet",
       "addressRegion": "Tamil Nadu",
       "postalCode": "600015",

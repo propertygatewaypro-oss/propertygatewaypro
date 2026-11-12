@@ -4,14 +4,14 @@ import {
   Search, 
   MapPin, 
   Home, 
-  Building2,
-  X,
-  ChevronDown, 
-  ShieldCheck 
+  Building2, 
+  X, 
+  ChevronDown,
+  CheckCircle2
 } from 'lucide-react';
 import { CHENNAI_LOCATIONS, BRAND } from '../../utils/constants';
 
-// Option 3 Curated Architectural Photographs: Daylight Luxury Estates in Chennai
+// Curated Architectural Photographs: Daylight Luxury Estates in Chennai
 const HERO_SLIDES = [
   {
     webp: '/images/hero/hero-architectural-travertine.jpg',
@@ -43,19 +43,27 @@ const HERO_SLIDES = [
   }
 ];
 
-// Quick Category & Status Filters (Directly beneath search bar, highlighting Apartment and Villa)
-const QUICK_FILTERS = [
-  { label: 'Apartment', type: 'category', value: 'Apartment', isFlagship: true },
-  { label: 'Villa', type: 'category', value: 'Luxury Villa', isFlagship: true },
-  { label: 'Plots', type: 'category', value: 'Plot / Land', isFlagship: false },
-  { label: 'Up Coming', type: 'status', value: 'New Launch', isFlagship: false },
-  { label: 'New Launch', type: 'status', value: 'New Launch', isFlagship: false },
-  { label: 'Under Construction', type: 'status', value: 'Under Construction', isFlagship: false },
-  { label: 'Ready to move', type: 'status', value: 'Ready to Move', isFlagship: false },
+// Search Category Tabs (PropLeaf Inspired)
+const SEARCH_TABS = [
+  { id: 'all', label: 'All Projects', category: null },
+  { id: 'villa', label: 'Luxury Villas', category: 'Luxury Villa' },
+  { id: 'plots', label: 'Plots & Land', category: 'Plot / Land' },
 ];
+
+// Quick Category & Status Filters
+const QUICK_FILTERS = [
+  { label: 'Apartment', type: 'category', value: 'Apartment', icon: Building2 },
+  { label: 'Villa', type: 'category', value: 'Luxury Villa', icon: Home },
+  { label: 'Plots', type: 'category', value: 'Plot / Land', icon: MapPin },
+  { label: 'New Launch', type: 'status', value: 'New Launch', isLive: true },
+  { label: 'Ready to Move', type: 'status', value: 'Ready to Move', icon: CheckCircle2 },
+];
+
+
 
 export default function HeroSection() {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -72,6 +80,21 @@ export default function HeroSection() {
     return () => clearInterval(timer);
   }, []);
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab.id);
+    if (tab.category) {
+      const params = new URLSearchParams();
+      if (selectedLocation && selectedLocation !== 'All Locations') {
+        params.set('location', selectedLocation);
+      }
+      if (searchQuery.trim()) {
+        params.set('search', searchQuery.trim());
+      }
+      params.set('category', tab.category);
+      navigate(`/properties?${params.toString()}`);
+    }
+  };
+
   const handleSearch = (e) => {
     e?.preventDefault();
     const params = new URLSearchParams();
@@ -80,6 +103,10 @@ export default function HeroSection() {
     }
     if (searchQuery.trim()) {
       params.set('search', searchQuery.trim());
+    }
+    const currentTabObj = SEARCH_TABS.find(t => t.id === activeTab);
+    if (currentTabObj?.category) {
+      params.set('category', currentTabObj.category);
     }
     navigate(`/properties?${params.toString()}`);
   };
@@ -102,18 +129,18 @@ export default function HeroSection() {
 
   return (
     <section 
-      className="relative w-full bg-[#12151B] text-white border-b border-[#2A303C] flex flex-col justify-center overflow-hidden"
+      className="relative w-full bg-[#FAF9F6] text-[#181B22] border-b border-[#E7E2D8] flex flex-col justify-center overflow-hidden"
       aria-label="Property Gateway Homepage Hero"
     >
       {/* 1. Background Slideshow with subtle Ken Burns drift */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[#12151B]" aria-hidden="true">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAF9F6]" aria-hidden="true">
         {HERO_SLIDES.map((slide, index) => {
           const isActive = index === currentSlide;
           return (
             <div
               key={slide.webp}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                isActive ? 'opacity-100 z-1' : 'opacity-0 z-0 pointer-events-none'
               }`}
             >
               <picture>
@@ -139,130 +166,134 @@ export default function HeroSection() {
           );
         })}
 
-        {/* Deep Architectural Cinematic Scrim (Moody Luxury Dim - Option 1) */}
-        <div className="absolute inset-0 bg-[#12151B]/75 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#12151B]/95 via-[#12151B]/80 to-[#12151B]/55 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#12151B] via-transparent to-[#12151B]/70 pointer-events-none" />
+        {/* Luminous Daylight Pearl Editorial Scrim (Zero Dark Theme) */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/95 to-[#FAF9F6]/35 sm:to-transparent/20 pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#FAF9F6] via-transparent to-white/40 pointer-events-none" />
       </div>
 
-      {/* 2. Hero Content Container */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16 w-full flex flex-col justify-center">
+      {/* 2. Hero Content Container (Compact 100% First-View Profile) */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 w-full flex flex-col justify-center">
         
-        <div className="max-w-4xl space-y-4 sm:space-y-6">
-          
-          {/* Trust Authority Badge in Deep Slate & Gold */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#1E232E]/90 backdrop-blur-md border border-[#A88548]/45 text-[11px] sm:text-xs text-[#E0C27E] font-medium shadow-sm animate-hero-fade-up">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-            <span>TN RERA Registered ({BRAND.reraId}) | 0% Brokerage on Builder Launches</span>
-          </div>
-
-          {/* Headline in High-Contrast White & Radiant Gold */}
-          <div className="space-y-1.5 sm:space-y-2 animate-hero-fade-up" style={{ animationDelay: '100ms' }}>
-            <span className="text-[12px] sm:text-xs font-mono font-bold tracking-[0.25em] text-[#D4AF37] uppercase block drop-shadow-xs">
-              Curated Chennai Real Estate Advisory
-            </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-[1.12]">
-              Find Your Ideal Home in Chennai. <br className="hidden sm:inline" />
-              <span className="text-gold-metallic italic font-serif font-bold drop-shadow-sm">Direct Developer Pricing.</span>
-            </h1>
-          </div>
-
-          {/* Value Proposition Subtitle */}
-          <p 
-            className="text-sm sm:text-base lg:text-lg text-slate-300 font-sans max-w-2xl leading-relaxed animate-hero-fade-up"
-            style={{ animationDelay: '200ms' }}
-          >
-            Verified RERA apartments, beachfront villas along ECR, and gated plotted communities. Zero buyer brokerage, guaranteed title scrutiny, and dedicated advisory.
+        {/* Top Header with Headline */}
+        <div className="max-w-2xl animate-hero-fade-up mb-5 sm:mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold tracking-tight text-[#181B22] leading-[1.14]">
+            No Brokerage.<span className="text-[#A88548]">*</span> <br className="hidden sm:inline" />
+            <span className="text-[#181B22]">Verified Chennai Properties.</span>
+          </h1>
+          <p className="text-sm sm:text-base text-slate-600 font-sans mt-2 sm:mt-2.5 max-w-xl leading-relaxed">
+            Find your perfect home with direct developer pricing across prime corridors.
           </p>
+        </div>
 
-          {/* 3. Streamlined Responsive Search Bar (High Contrast on Dark Hero) */}
-          <div 
-            className="w-full max-w-[1050px] animate-hero-fade-up relative z-30 pt-2"
-            style={{ animationDelay: '300ms' }}
-          >
-            {/* The Integrated Horizontal Search Box */}
-            <form 
-              onSubmit={handleSearch}
-              className="bg-white rounded-xl sm:rounded-2xl border-2 border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.45)] flex flex-col sm:flex-row items-stretch overflow-hidden transition-all hover:border-[#D4AF37] focus-within:border-[#D4AF37] focus-within:shadow-[0_20px_50px_rgba(212,175,55,0.25)]"
-            >
-              {/* Location Select (Stacked on mobile, Left segment on desktop) */}
-              <div className="relative shrink-0 border-b sm:border-b-0 sm:border-r border-slate-200 flex items-center bg-slate-50 sm:bg-white px-3 sm:px-4 py-2.5 sm:py-0 min-w-0 sm:min-w-[150px] md:min-w-[165px]">
-                <MapPin className="w-4 h-4 text-[#A88548] shrink-0 mr-2" />
-                <select
-                  value={selectedLocation}
-                  onChange={(e) => setSelectedLocation(e.target.value)}
-                  className="w-full py-1 sm:py-4 bg-transparent text-xs sm:text-sm font-bold text-[#1E232F] cursor-pointer appearance-none focus:outline-none pr-6"
-                  aria-label="Select Location"
+        {/* 3. Search Engine Hub (Tabs + Search Bar + Filter Pills) */}
+        <div className="w-full max-w-[1050px] animate-hero-fade-up relative z-30" style={{ animationDelay: '100ms' }}>
+          
+          {/* Tabs Above Search (Inspired by PropLeaf) */}
+          <div className="flex items-center gap-2 mb-2">
+            {SEARCH_TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => handleTabClick(tab)}
+                  className={`px-3.5 sm:px-4 py-1.5 rounded-lg text-xs sm:text-[13px] font-semibold transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-[#181B22] text-white shadow-xs'
+                      : 'bg-white/95 hover:bg-white text-slate-700 hover:text-[#181B22] border border-[#E7E2D8]'
+                  }`}
                 >
-                  <option value="All Locations">Chennai (All Locations)</option>
-                  {CHENNAI_LOCATIONS.filter(l => l !== 'All Locations').map(loc => (
-                    <option key={loc} value={loc}>{loc}</option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                </div>
-              </div>
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
 
-              {/* Text Search Input (Fills center) */}
-              <div className="flex-1 flex items-center min-w-0 px-3.5 sm:px-4 py-3 sm:py-0">
-                <Search className="w-4 h-4 text-slate-400 shrink-0 mr-2 sm:hidden" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by: Project Name/ Property Name/ Location"
-                  className="w-full py-1 sm:py-4 text-xs sm:text-[14.5px] text-[#1E232F] placeholder:text-slate-400 bg-transparent focus:outline-none"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 transition-colors mr-1 cursor-pointer"
-                    aria-label="Clear search"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-
-              {/* Search Submit Button - 100% Full Height, Flush to Right Edge */}
-              <button
-                type="submit"
-                className="bg-gold-metallic hover:brightness-105 active:scale-[0.98] text-white flex items-center justify-center gap-2 py-3.5 sm:py-0 px-5 sm:w-16 md:w-20 shrink-0 self-stretch transition-all cursor-pointer shadow-none"
-                aria-label="Search Properties"
-                title="Search Properties"
+          {/* The Integrated Horizontal Search Box */}
+          <form 
+            onSubmit={handleSearch}
+            className="bg-white rounded-xl sm:rounded-2xl border-2 border-[#E7E2D8] shadow-[0_15px_35px_rgba(20,25,35,0.08)] flex flex-col sm:flex-row items-stretch overflow-hidden transition-all hover:border-[#A88548] focus-within:border-[#A88548] focus-within:shadow-[0_15px_40px_rgba(168,133,72,0.16)]"
+          >
+            {/* Location Select (Stacked on mobile, Left segment on desktop) */}
+            <div className="relative shrink-0 border-b sm:border-b-0 sm:border-r border-[#E7E2D8] flex items-center bg-[#FAF9F6] sm:bg-white px-3.5 sm:px-4 py-2.5 sm:py-0 min-w-0 sm:min-w-[150px] md:min-w-[170px]">
+              <MapPin className="w-4 h-4 text-[#A88548] shrink-0 mr-2" />
+              <select
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                className="w-full py-1 sm:py-3.5 bg-transparent text-xs sm:text-sm font-bold text-[#1E232F] cursor-pointer appearance-none focus:outline-none pr-6"
+                aria-label="Select Location"
               >
-                <Search className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.5]" />
-                <span className="sm:hidden text-xs font-bold uppercase tracking-wider">Search Properties</span>
-              </button>
-            </form>
+                <option value="All Locations">Chennai (All Locations)</option>
+                {CHENNAI_LOCATIONS.filter(l => l !== 'All Locations').map(loc => (
+                  <option key={loc} value={loc}>{loc}</option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                <ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </div>
+            </div>
 
-            {/* Quick Filter Pills Row (Highlighting Apartment and Villa) */}
-            <div className="mt-3.5 sm:mt-4 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 px-0.5 -mx-1 sm:mx-0">
-              {QUICK_FILTERS.map((pill) => (
+            {/* Text Search Input (Fills center) */}
+            <div className="flex-1 flex items-center min-w-0 px-3.5 sm:px-4 py-2.5 sm:py-0">
+              <Search className="w-4 h-4 text-slate-400 shrink-0 mr-2 sm:hidden" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by: Project Name, Builder, Location..."
+                className="w-full py-1 sm:py-3.5 text-xs sm:text-[14.5px] text-[#1E232F] placeholder:text-slate-400 bg-transparent focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="p-1.5 text-slate-400 hover:text-slate-600 transition-colors mr-1 cursor-pointer"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Search Submit Button - Full Height, Flush to Right Edge */}
+            <button
+              type="submit"
+              className="bg-gold-metallic hover:opacity-95 active:scale-[0.98] text-white flex items-center justify-center gap-2 py-3 sm:py-0 px-5 sm:w-16 md:w-20 shrink-0 self-stretch transition-all cursor-pointer shadow-none"
+              aria-label="Search Properties"
+              title="Search Properties"
+            >
+              <Search className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white stroke-[2.5]" />
+              <span className="sm:hidden text-xs font-bold uppercase tracking-wider">Search Properties</span>
+            </button>
+          </form>
+
+          {/* Quick Filter Pills Row (Highlighting Core Property Types) */}
+          <div className="mt-3 flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 px-0.5 -mx-1 sm:mx-0">
+            <span className="text-[11px] font-mono font-bold uppercase text-slate-400 hidden sm:inline mr-1 shrink-0">
+              Popular:
+            </span>
+            {QUICK_FILTERS.map((pill) => {
+              const Icon = pill.icon;
+              return (
                 <button
                   key={pill.label}
                   type="button"
                   onClick={() => handlePillClick(pill)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] transition-all cursor-pointer whitespace-nowrap active:scale-95 shrink-0 ${
-                    pill.isFlagship
-                      ? 'bg-amber-400/15 backdrop-blur-md hover:bg-[#D4AF37] text-[#E0C27E] hover:text-slate-950 font-bold border border-[#D4AF37]/70 shadow-sm ring-1 ring-[#D4AF37]/25'
-                      : 'bg-[#1E232E]/80 backdrop-blur-md hover:bg-[#2A303C] text-slate-200 hover:text-white font-semibold border border-white/15 hover:border-[#D4AF37]'
-                  }`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-slate-50 text-[#181B22] border border-[#E7E2D8] hover:border-[#A88548] transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-2xs shrink-0"
                 >
-                  {pill.label === 'Apartment' && <Building2 className="w-3.5 h-3.5 text-[#D4AF37]" />}
-                  {pill.label === 'Villa' && <Home className="w-3.5 h-3.5 text-[#D4AF37]" />}
+                  {Icon && <Icon className="w-3.5 h-3.5 text-[#A88548]" />}
+                  {pill.isLive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#A88548] animate-pulse shrink-0" />
+                  )}
                   <span>{pill.label}</span>
                 </button>
-              ))}
-            </div>
-
+              );
+            })}
           </div>
-
         </div>
 
       </div>
     </section>
   );
 }
+

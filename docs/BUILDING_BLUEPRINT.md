@@ -8,7 +8,7 @@
 * **Brand Name:** Property Gateway
 * **Primary Phone / WhatsApp:** `+91 7598954635` (Display: `+91 75989 54635`)
 * **Primary Contact Email:** `propertygatewy@gmail.com`
-* **Office Location:** Flat No. Flat No 2, Door No. Old No 20 New No 25, Alandur Road, Saidapet, Chennai - 600015
+* **Office Location:** Flat No. 2, New No 25, Alandur Road, Saidapet, Chennai - 600015
 * **TNRERA Registration:** `TN/Agent/0117/2026`
 * **Local Ports:**
   * Public Website: `http://localhost:3000`
