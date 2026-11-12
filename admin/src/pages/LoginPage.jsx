@@ -129,9 +129,9 @@ export default function LoginPage() {
             </div>
           ))}
 
-          {/* Minimal Top Brand Watermark (Zero Opaque Box) */}
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/90 backdrop-blur-md border border-[#A88548]/45 p-1 shadow-sm flex items-center justify-center">
+          {/* Top Brand Watermark in Frosted Pill */}
+          <div className="relative z-10 flex items-center gap-3 bg-white/85 backdrop-blur-md border border-[#E7E2D8] rounded-2xl py-2 px-3.5 shadow-xs w-fit">
+            <div className="w-9 h-9 rounded-xl bg-white border border-[#A88548]/45 p-1 shadow-2xs flex items-center justify-center shrink-0">
               <img 
                 src="/logo.png" 
                 alt="Property Gateway" 
@@ -139,44 +139,49 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <span className="font-serif font-bold text-lg text-[#181B22] tracking-tight block drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+              <span className="font-serif font-bold text-base text-[#181B22] tracking-tight block leading-tight">
                 Property Gateway
               </span>
-              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#7D5D2A] block drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#7D5D2A] block">
                 Executive Console
               </span>
             </div>
           </div>
 
-          {/* Minimal Editorial Typography (Direct on photo, zero white boxes) */}
-          <div className="relative z-10 max-w-md space-y-2 pt-20">
-            <span className="text-[11px] font-mono font-bold tracking-[0.2em] uppercase text-[#7D5D2A] block transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
-              {LOGIN_SLIDES[currentSlide].tag}
-            </span>
-            <h2 className="font-serif text-3xl xl:text-4xl font-bold text-[#181B22] tracking-tight leading-tight transition-opacity duration-300 drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)] min-h-[4.5rem]">
+          {/* Luxury Frosted Alabaster Glass Card (100% Crisp Visibility) */}
+          <div className="relative z-10 max-w-lg bg-white/85 backdrop-blur-xl border border-white/90 rounded-2xl p-6 sm:p-7 shadow-[0_20px_50px_rgba(20,25,35,0.12)] space-y-3">
+            <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#FAF2DF] border border-[#A88548]/35 text-[10.5px] font-mono font-bold tracking-wider uppercase text-[#7D5D2A]">
+              <span>{LOGIN_SLIDES[currentSlide].tag}</span>
+            </div>
+
+            <h2 className="font-serif text-2xl xl:text-3xl font-extrabold text-[#181B22] tracking-tight leading-snug transition-opacity duration-300 min-h-[3.8rem]">
               {LOGIN_SLIDES[currentSlide].title}
             </h2>
-            <p className="text-xs xl:text-sm text-slate-800 font-medium leading-relaxed transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] min-h-[2.5rem]">
+
+            <p className="text-xs xl:text-sm text-slate-600 font-sans leading-relaxed transition-opacity duration-300 min-h-[2.5rem]">
               {LOGIN_SLIDES[currentSlide].subtitle}
             </p>
 
-            {/* Sleek Dot Progress Indicators for the Sliding Images */}
-            <div className="flex items-center gap-2 pt-2">
-              {LOGIN_SLIDES.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === currentSlide ? 'w-8 bg-gold-metallic' : 'w-2 bg-[#181B22]/40 hover:bg-[#181B22]/70'
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
+            {/* Bottom Row: Slide Indicator Dots & RERA Tag */}
+            <div className="pt-3 border-t border-[#E7E2D8]/80 flex items-center justify-between">
+              {/* Sleek Dot Progress Indicators for the Sliding Images */}
+              <div className="flex items-center gap-2">
+                {LOGIN_SLIDES.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === currentSlide ? 'w-7 bg-gold-metallic' : 'w-2 bg-slate-300 hover:bg-slate-400'
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
 
-            <div className="pt-2 text-[11px] font-mono text-slate-700 font-semibold drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-              TNRERA Registered Agent: {BRAND.reraId}
+              <span className="text-[10.5px] font-mono text-slate-500 font-semibold">
+                TNRERA: {BRAND.reraId}
+              </span>
             </div>
           </div>
 
