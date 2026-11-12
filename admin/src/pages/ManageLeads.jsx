@@ -121,14 +121,33 @@ export default function ManageLeads() {
     }
   };
 
-  const handleDelete = async (leadId, name) => {
-    if (window.confirm(`Permanently remove lead record for "${name}"?`)) {
-      setLeads(prev => prev.filter(l => l.id !== leadId));
-      try {
-        await deleteLead(leadId);
-      } catch (err) {
-        console.error("Delete failed:", err);
-      }
+  // Delete Confirmation Modal State
+  const [leadToDelete, setLeadToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+
+  const confirmDeleteLead = async () => {
+    if (!leadToDelete) return;
+    const targetId = leadToDelete.id || leadToDelete._docId;
+    if (!targetId) {
+      setDeleteError("Missing lead ID. Cannot delete.");
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      setDeleteError('');
+      // Optimistic instant state update
+      setLeads(prev => prev.filter(l => l.id !== targetId));
+      await deleteLead(targetId);
+      setLeadToDelete(null);
+    } catch (err) {
+      console.error("Delete failed:", err);
+      // Rollback if failed
+      setLeads(prev => prev.some(l => l.id === targetId) ? prev : [...prev, leadToDelete]);
+      setDeleteError(err.message || "Failed to delete inquiry from Firestore database.");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -333,7 +352,10 @@ export default function ManageLeads() {
                               <Phone className="w-3.5 h-3.5" />
                             </a>
                             <button
-                              onClick={() => handleDelete(lead.id, lead.name)}
+                              onClick={() => {
+                                setDeleteError('');
+                                setLeadToDelete(lead);
+                              }}
                               className="p-1.5 rounded-md text-slate-400 hover:text-red-700 hover:bg-red-50 transition-colors"
                               title="Delete Record"
                             >
@@ -433,7 +455,10 @@ export default function ManageLeads() {
                         <span>Call</span>
                       </a>
                       <button
-                        onClick={() => handleDelete(lead.id, lead.name)}
+                        onClick={() => {
+                          setDeleteError('');
+                          setLeadToDelete(lead);
+                        }}
                         className="p-2 rounded-lg border border-red-200 text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors"
                         title="Delete Record"
                       >
@@ -630,6 +655,63 @@ export default function ManageLeads() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {leadToDelete && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <div className="p-6 space-y-4">
+              <div className="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto">
+                <Trash2 className="w-6 h-6" />
+              </div>
+
+              <div className="text-center space-y-1">
+                <h3 className="text-base font-serif font-bold text-slate-900">
+                  Delete Client Inquiry?
+                </h3>
+                <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+                  Are you sure you want to permanently remove the inquiry from{' '}
+                  <strong className="text-slate-800">{leadToDelete.name || 'this customer'}</strong> regarding{' '}
+                  <strong className="text-slate-800">{leadToDelete.propertyTitle || 'Chennai property'}</strong>?
+                </p>
+              </div>
+
+              {deleteError && (
+                <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{deleteError}</span>
+                </div>
+              )}
+
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setLeadToDelete(null)}
+                  disabled={isDeleting}
+                  className="flex-1 px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmDeleteLead}
+                  disabled={isDeleting}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold text-xs transition-colors shadow-sm disabled:opacity-50"
+                >
+                  {isDeleting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Deleting...</span>
+                    </>
+                  ) : (
+                    <span>Yes, Delete</span>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

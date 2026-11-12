@@ -167,7 +167,8 @@ export function subscribeAdminLeads(onUpdate, onError) {
       return onSnapshot(
         collection(db, "leads"), 
         (snapshot) => {
-          const liveLeads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          // Put id LAST so true Firestore doc.id is never overwritten by doc.data().id
+          const liveLeads = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, _docId: doc.id }));
           liveLeads.sort((a, b) => {
             const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
             const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
@@ -194,7 +195,8 @@ export async function fetchAdminLeads() {
   if (isFirebaseConfigured && db) {
     try {
       const snapshot = await getDocs(collection(db, "leads"));
-      const liveLeads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Put id LAST so true Firestore doc.id is never overwritten by doc.data().id
+      const liveLeads = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, _docId: doc.id }));
       liveLeads.sort((a, b) => {
         const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
         const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
@@ -240,8 +242,12 @@ export async function updateLeadStatus(leadId, newStatus) {
 }
 
 export async function deleteLead(leadId) {
+  if (!leadId) {
+    throw new Error("Cannot delete inquiry: missing document ID.");
+  }
+  const cleanId = String(leadId).trim();
   if (isFirebaseConfigured && db) {
-    await deleteDoc(doc(db, "leads", leadId));
+    await deleteDoc(doc(db, "leads", cleanId));
     return true;
   }
   throw new Error("Firebase Cloud Firestore is not configured.");
