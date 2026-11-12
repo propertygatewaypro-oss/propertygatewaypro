@@ -12,77 +12,10 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { INITIAL_PROPERTIES, INITIAL_TESTIMONIALS } from '../data/initialProperties';
-
-const LOCAL_STORAGE_PROPERTIES_KEY = 'pg_admin_properties';
-const LOCAL_STORAGE_LEADS_KEY = 'pg_admin_leads';
-const LOCAL_STORAGE_TESTIMONIALS_KEY = 'pg_admin_testimonials';
-
-// In-memory or localStorage helper
-function getLocalTestimonials() {
-  const saved = localStorage.getItem(LOCAL_STORAGE_TESTIMONIALS_KEY);
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    } catch (e) {
-      console.error("Failed to parse local testimonials", e);
-    }
-  }
-  localStorage.setItem(LOCAL_STORAGE_TESTIMONIALS_KEY, JSON.stringify(INITIAL_TESTIMONIALS));
-  return INITIAL_TESTIMONIALS;
-}
-
-function setLocalTestimonials(testimonials) {
-  localStorage.setItem(LOCAL_STORAGE_TESTIMONIALS_KEY, JSON.stringify(testimonials));
-}
-
-// In-memory or localStorage helper
-function getLocalProperties() {
-  const saved = localStorage.getItem(LOCAL_STORAGE_PROPERTIES_KEY);
-  if (saved) {
-    try {
-      return JSON.parse(saved);
-    } catch (e) {
-      console.error("Failed to parse local properties", e);
-    }
-  }
-  localStorage.setItem(LOCAL_STORAGE_PROPERTIES_KEY, JSON.stringify(INITIAL_PROPERTIES));
-  return INITIAL_PROPERTIES;
-}
-
-function setLocalProperties(properties) {
-  localStorage.setItem(LOCAL_STORAGE_PROPERTIES_KEY, JSON.stringify(properties));
-}
-
-function getLocalLeads() {
-  const saved = localStorage.getItem(LOCAL_STORAGE_LEADS_KEY);
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      // Ensure all sample/mock leads are completely purged from storage
-      const realOnly = Array.isArray(parsed)
-        ? parsed.filter(l => !l.id?.startsWith('lead-0') && l.name !== 'Karthik Subramanian' && l.name !== 'Deepa Narayanan' && l.name !== 'Ramesh Kannan')
-        : [];
-      if (realOnly.length !== parsed.length) {
-        localStorage.setItem(LOCAL_STORAGE_LEADS_KEY, JSON.stringify(realOnly));
-      }
-      return realOnly;
-    } catch (e) {
-      console.error("Failed to parse local leads", e);
-    }
-  }
-  return [];
-}
-
-function setLocalLeads(leads) {
-  localStorage.setItem(LOCAL_STORAGE_LEADS_KEY, JSON.stringify(leads));
-}
+import { INITIAL_TESTIMONIALS } from '../data/initialProperties';
 
 // -------------------------------------------------------------
-// IMAGE COMPRESSION & UPLOAD (< 250KB WebP)
+// IMAGE COMPRESSION & UPLOAD TO FIREBASE STORAGE (< 250KB WebP)
 // -------------------------------------------------------------
 export async function compressAndUploadImage(file) {
   const options = {
@@ -95,53 +28,49 @@ export async function compressAndUploadImage(file) {
   try {
     const compressedFile = await imageCompression(file, options);
     
-    // If live Firebase Storage is configured
+    // Upload directly to Firebase Storage Cloud
     if (isFirebaseConfigured && storage) {
       const fileName = `properties/${Date.now()}_${Math.random().toString(36).substring(2, 9)}.webp`;
       const storageRef = ref(storage, fileName);
-      const snapshot = await uploadBytes(storageRef, compressedFile);
+      const snapshot = await uploadBytes(storageRef, compressedFile, {
+        contentType: 'image/webp'
+      });
       const downloadUrl = await getDownloadURL(snapshot.ref);
       return downloadUrl;
     }
 
-    // In local development / mock mode, return data URL
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(compressedFile);
-    });
+    throw new Error("Firebase Storage is not configured.");
   } catch (error) {
-    console.error("Error compressing image:", error);
+    console.error("Error compressing and uploading image to Firebase:", error);
     throw error;
   }
 }
 
 // -------------------------------------------------------------
-// PROPERTIES CRUD
+// PROPERTIES MANAGEMENT (100% REALTIME FIREBASE CLOUD)
 // -------------------------------------------------------------
 export function subscribeAdminProperties(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(collection(db, "properties"), (snap) => {
         if (!snap.empty) {
-          const liveProps = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          const liveProps = snap.docs.map(d => ({ id: d.id, ...d.data() }));
           liveProps.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-          setLocalProperties(liveProps);
           onUpdate(liveProps);
         } else {
-          onUpdate(getLocalProperties());
+          // Cloud Firestore has 0 documents
+          onUpdate([]);
         }
       }, (err) => {
         console.warn("Realtime properties listener warning:", err.message);
         if (onError) onError(err);
-        onUpdate(getLocalProperties());
+        onUpdate([]);
       });
     } catch (err) {
       console.warn("Could not attach properties listener:", err);
     }
   }
-  onUpdate(getLocalProperties());
+  onUpdate([]);
   return () => {};
 }
 
@@ -154,27 +83,12 @@ export async function fetchAdminProperties() {
         liveProps.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
         return liveProps;
       }
-
-      // If Firestore is empty, auto-seed the initial catalog to Firestore
-      if (INITIAL_PROPERTIES.length > 0) {
-        console.log("Seeding initial catalog to Firestore...");
-        for (const prop of INITIAL_PROPERTIES) {
-          try {
-            await setDoc(doc(db, "properties", prop.id), {
-              ...prop,
-              createdAt: prop.createdAt || new Date().toISOString()
-            }, { merge: true });
-          } catch (seedErr) {
-            console.warn("Could not seed property:", prop.id, seedErr.message);
-          }
-        }
-        return INITIAL_PROPERTIES;
-      }
+      return [];
     } catch (err) {
-      console.warn("Firestore fetch properties failed, falling back to local storage:", err.message);
+      console.warn("Firestore fetch properties failed:", err.message);
     }
   }
-  return getLocalProperties();
+  return [];
 }
 
 export async function saveProperty(propertyData) {
@@ -184,8 +98,8 @@ export async function saveProperty(propertyData) {
   const active = propertyData.active !== false && propertyData.isActive !== false;
   const status = propertyData.possessionStatus || propertyData.status || 'Ready to Move';
   const possessionStatus = propertyData.possessionStatus || propertyData.status || 'Ready to Move';
-  const type = propertyData.propertyType || propertyData.type || 'Luxury Villa';
-  const propertyType = propertyData.propertyType || propertyData.type || 'Luxury Villa';
+  const type = propertyData.propertyType || propertyData.type || 'Apartment';
+  const propertyType = propertyData.propertyType || propertyData.type || 'Apartment';
 
   const payload = {
     ...propertyData,
@@ -201,64 +115,36 @@ export async function saveProperty(propertyData) {
   };
 
   if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, "properties", id), payload, { merge: true });
-    } catch (err) {
-      console.warn("Firestore save failed, saving locally:", err.message);
-    }
+    await setDoc(doc(db, "properties", id), payload, { merge: true });
+    return payload;
   }
 
-  // Also update local storage cache
-  const localList = getLocalProperties();
-  const existingIdx = localList.findIndex(p => p.id === id);
-  let updatedList;
-  if (existingIdx >= 0) {
-    updatedList = [...localList];
-    updatedList[existingIdx] = payload;
-  } else {
-    updatedList = [payload, ...localList];
-  }
-  setLocalProperties(updatedList);
-  return payload;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function deleteProperty(propertyId) {
   if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, "properties", propertyId));
-    } catch (err) {
-      console.warn("Firestore delete failed:", err.message);
-    }
+    await deleteDoc(doc(db, "properties", propertyId));
+    return true;
   }
-
-  const localList = getLocalProperties();
-  const filtered = localList.filter(p => p.id !== propertyId);
-  setLocalProperties(filtered);
-  return true;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function togglePropertyStatus(propertyId, currentStatus) {
   const newStatus = !currentStatus;
   if (isFirebaseConfigured && db) {
-    try {
-      await updateDoc(doc(db, "properties", propertyId), { 
-        active: newStatus,
-        isActive: newStatus,
-        updatedAt: new Date().toISOString()
-      });
-    } catch (err) {
-      console.warn("Firestore status toggle failed:", err.message);
-    }
+    await updateDoc(doc(db, "properties", propertyId), { 
+      active: newStatus,
+      isActive: newStatus,
+      updatedAt: new Date().toISOString()
+    });
+    return newStatus;
   }
-
-  const localList = getLocalProperties();
-  const updated = localList.map(p => p.id === propertyId ? { ...p, active: newStatus, isActive: newStatus } : p);
-  setLocalProperties(updated);
-  return newStatus;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 // -------------------------------------------------------------
-// LEADS & INQUIRIES MANAGEMENT (100% Realtime Production)
+// LEADS & INQUIRIES MANAGEMENT (100% REALTIME FIREBASE CLOUD)
 // -------------------------------------------------------------
 export function subscribeAdminLeads(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
@@ -273,7 +159,7 @@ export function subscribeAdminLeads(onUpdate, onError) {
         (err) => {
           console.warn("Firestore leads live subscriber warning:", err.message);
           if (onError) onError(err);
-          onUpdate(getLocalLeads());
+          onUpdate([]);
         }
       );
     } catch (err) {
@@ -281,8 +167,7 @@ export function subscribeAdminLeads(onUpdate, onError) {
     }
   }
 
-  // Fallback to real local storage leads
-  onUpdate(getLocalLeads());
+  onUpdate([]);
   return () => {};
 }
 
@@ -296,51 +181,31 @@ export async function fetchAdminLeads() {
       console.warn("Firestore fetch leads error:", err.message);
     }
   }
-  return getLocalLeads();
+  return [];
 }
 
 export async function updateLeadStatus(leadId, newStatus) {
   if (isFirebaseConfigured && db) {
-    try {
-      await updateDoc(doc(db, "leads", leadId), { 
-        status: newStatus,
-        updatedAt: new Date().toISOString()
-      });
-    } catch (err) {
-      console.warn("Firestore updateLeadStatus notice:", err.message);
-    }
+    await updateDoc(doc(db, "leads", leadId), { 
+      status: newStatus,
+      updatedAt: new Date().toISOString()
+    });
+    return { id: leadId, status: newStatus };
   }
-
-  const localLeads = getLocalLeads();
-  let updated;
-  if (localLeads.some(l => l.id === leadId)) {
-    updated = localLeads.map(l => l.id === leadId ? { ...l, status: newStatus } : l);
-  } else {
-    updated = [{ id: leadId, status: newStatus, updatedAt: new Date().toISOString() }, ...localLeads];
-  }
-  setLocalLeads(updated);
-  return { id: leadId, status: newStatus };
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function deleteLead(leadId) {
   if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, "leads", leadId));
-    } catch (err) {
-      console.warn("Firestore deleteLead notice:", err.message);
-    }
+    await deleteDoc(doc(db, "leads", leadId));
+    return true;
   }
-
-  const localLeads = getLocalLeads();
-  const filtered = localLeads.filter(l => l.id !== leadId);
-  setLocalLeads(filtered);
-  return filtered;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 // -------------------------------------------------------------
-// TESTIMONIALS / CLIENT FEEDBACKS (Realtime CRUD Sync)
+// TESTIMONIALS / CLIENT FEEDBACKS (FIREBASE CLOUD)
 // -------------------------------------------------------------
-
 function computeInitials(author) {
   if (!author) return "PG";
   const parts = author.trim().replace(/^(Dr\.|Capt\.|Mr\.|Mrs\.|Ms\.)\s*/i, '').split(/[\s&]+/);
@@ -357,27 +222,15 @@ export function subscribeAdminTestimonials(onUpdate, onError) {
         (snapshot) => {
           if (!snapshot.empty) {
             const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-            setLocalTestimonials(liveItems);
             onUpdate(liveItems);
           } else {
-            // Deliver local seed data
-            const local = getLocalTestimonials();
-            onUpdate(local);
-
-            // Auto-seed to Firestore if collection is empty
-            if (INITIAL_TESTIMONIALS && INITIAL_TESTIMONIALS.length > 0) {
-              INITIAL_TESTIMONIALS.forEach(async (item) => {
-                try {
-                  await setDoc(doc(db, "testimonials", item.id), item, { merge: true });
-                } catch (_) {}
-              });
-            }
+            onUpdate(INITIAL_TESTIMONIALS);
           }
         },
         (err) => {
           console.warn("Firestore testimonials subscriber notice:", err.message);
           if (onError) onError(err);
-          onUpdate(getLocalTestimonials());
+          onUpdate(INITIAL_TESTIMONIALS);
         }
       );
     } catch (err) {
@@ -385,8 +238,7 @@ export function subscribeAdminTestimonials(onUpdate, onError) {
     }
   }
 
-  // Fallback to local storage testimonials
-  onUpdate(getLocalTestimonials());
+  onUpdate(INITIAL_TESTIMONIALS);
   return () => {};
 }
 
@@ -396,15 +248,13 @@ export async function fetchAdminTestimonials() {
       const q = query(collection(db, "testimonials"), orderBy("createdAt", "desc"));
       const snapshot = await getDocs(q);
       if (!snapshot.empty) {
-        const liveItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        setLocalTestimonials(liveItems);
-        return liveItems;
+        return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
       }
     } catch (err) {
       console.warn("Firestore fetch testimonials error:", err.message);
     }
   }
-  return getLocalTestimonials();
+  return INITIAL_TESTIMONIALS;
 }
 
 export async function saveTestimonial(testimonialData) {
@@ -426,7 +276,6 @@ export async function saveTestimonial(testimonialData) {
     updatedAt: new Date().toISOString()
   };
 
-  // If beforeHighlight / afterHighlight are missing and content exists, configure highlight segments
   if (!formatted.beforeHighlight && formatted.content && formatted.highlight) {
     const idx = formatted.content.indexOf(formatted.highlight);
     if (idx !== -1) {
@@ -438,60 +287,30 @@ export async function saveTestimonial(testimonialData) {
     }
   }
 
-  // 1. Write to Firestore if available
   if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, "testimonials", id), formatted, { merge: true });
-    } catch (err) {
-      console.warn("Firestore save testimonial failed, updating local storage:", err.message);
-    }
+    await setDoc(doc(db, "testimonials", id), formatted, { merge: true });
+    return formatted;
   }
 
-  // 2. Update local storage
-  const localList = getLocalTestimonials();
-  const existingIndex = localList.findIndex(t => t.id === id);
-  let updatedList;
-  if (existingIndex >= 0) {
-    updatedList = [...localList];
-    updatedList[existingIndex] = formatted;
-  } else {
-    updatedList = [formatted, ...localList];
-  }
-  setLocalTestimonials(updatedList);
-
-  return formatted;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function deleteTestimonial(testimonialId) {
   if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, "testimonials", testimonialId));
-    } catch (err) {
-      console.warn("Firestore delete testimonial failed:", err.message);
-    }
+    await deleteDoc(doc(db, "testimonials", testimonialId));
+    return true;
   }
-
-  const localList = getLocalTestimonials();
-  const filtered = localList.filter(t => t.id !== testimonialId);
-  setLocalTestimonials(filtered);
-  return filtered;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }
 
 export async function toggleTestimonialStatus(testimonialId, currentStatus) {
   const newStatus = !currentStatus;
   if (isFirebaseConfigured && db) {
-    try {
-      await updateDoc(doc(db, "testimonials", testimonialId), { 
-        active: newStatus,
-        updatedAt: new Date().toISOString()
-      });
-    } catch (err) {
-      console.warn("Firestore toggle testimonial status failed:", err.message);
-    }
+    await updateDoc(doc(db, "testimonials", testimonialId), { 
+      active: newStatus,
+      updatedAt: new Date().toISOString()
+    });
+    return newStatus;
   }
-
-  const localList = getLocalTestimonials();
-  const updated = localList.map(t => t.id === testimonialId ? { ...t, active: newStatus } : t);
-  setLocalTestimonials(updated);
-  return newStatus;
+  throw new Error("Firebase Cloud Firestore is not configured.");
 }

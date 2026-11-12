@@ -1,23 +1,17 @@
-import { collection, getDocs, doc, getDoc, addDoc, query, where, limit, serverTimestamp, onSnapshot } from "firebase/firestore";
+import { 
+  collection, 
+  getDocs, 
+  doc, 
+  getDoc, 
+  addDoc, 
+  query, 
+  where, 
+  limit, 
+  serverTimestamp, 
+  onSnapshot 
+} from "firebase/firestore";
 import { db, isFirebaseConfigured } from "./firebase";
-import { INITIAL_PROPERTIES, INITIAL_TESTIMONIALS } from "../data/initialProperties";
-
-const LOCAL_STORAGE_KEY = "pg_admin_properties";
-const LEADS_STORAGE_KEY = "pg_admin_leads";
-const TESTIMONIALS_STORAGE_KEY = "pg_admin_testimonials";
-
-// Initialize local cache if empty
-function getLocalProperties() {
-  try {
-    const cached = localStorage.getItem(LOCAL_STORAGE_KEY) || localStorage.getItem("pg_properties_cache");
-    if (cached) {
-      return JSON.parse(cached);
-    }
-  } catch (e) {
-    console.warn("Local storage not accessible, falling back to static", e);
-  }
-  return INITIAL_PROPERTIES;
-}
+import { INITIAL_TESTIMONIALS } from "../data/initialProperties";
 
 // In-memory filter & sort pipeline
 export function filterAndSortProperties(rawList, filters = {}) {
@@ -34,7 +28,7 @@ export function filterAndSortProperties(rawList, filters = {}) {
       const title = (p.title || "").toLowerCase();
       const loc = (p.location || "").toLowerCase();
       const builder = (p.builder || "").toLowerCase();
-      const desc = (p.description || "").toLowerCase();
+      const desc = (p.description || p.overview || "").toLowerCase();
       const type = (p.propertyType || p.type || "").toLowerCase();
       return title.includes(q) || loc.includes(q) || builder.includes(q) || desc.includes(q) || type.includes(q);
     });
@@ -85,11 +79,10 @@ export function filterAndSortProperties(rawList, filters = {}) {
   return pageSize ? results.slice(0, pageSize) : results;
 }
 
+// -------------------------------------------------------------
+// REALTIME FIRESTORE CLOUD PROPERTIES SUBSCRIPTION
+// -------------------------------------------------------------
 export function subscribeProperties(onUpdate, filters = {}) {
-  // Provide instant local/cached dataset immediately for zero-delay UX
-  const local = getLocalProperties();
-  onUpdate(filterAndSortProperties(local, filters));
-
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(
@@ -97,19 +90,16 @@ export function subscribeProperties(onUpdate, filters = {}) {
         (snapshot) => {
           if (!snapshot.empty) {
             const rawDocs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            // Cache locally
-            try {
-              localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rawDocs));
-            } catch (_) {}
             const processed = filterAndSortProperties(rawDocs, filters);
             onUpdate(processed);
           } else {
-            onUpdate(filterAndSortProperties(local, filters));
+            // Cloud Firestore is empty -> exactly 0 properties
+            onUpdate([]);
           }
         },
         (err) => {
           console.warn("Firestore realtime properties subscription notice:", err.message);
-          onUpdate(filterAndSortProperties(local, filters));
+          onUpdate([]);
         }
       );
     } catch (err) {
@@ -117,29 +107,32 @@ export function subscribeProperties(onUpdate, filters = {}) {
     }
   }
 
+  onUpdate([]);
   return () => {};
 }
 
+// -------------------------------------------------------------
+// ONE-SHOT FIRESTORE CLOUD FETCH
+// -------------------------------------------------------------
 export async function fetchProperties(filters = {}) {
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, "properties"));
       if (!snap.empty) {
         const rawDocs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        try {
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rawDocs));
-        } catch (_) {}
         return filterAndSortProperties(rawDocs, filters);
       }
+      return [];
     } catch (err) {
-      console.warn("Firestore fetch error, falling back to local dataset:", err.message);
+      console.warn("Firestore fetch error:", err.message);
     }
   }
-
-  // Fallback to local properties
-  return filterAndSortProperties(getLocalProperties(), filters);
+  return [];
 }
 
+// -------------------------------------------------------------
+// SINGLE PROPERTY LOOKUP (REALTIME & ONE-SHOT)
+// -------------------------------------------------------------
 export function subscribePropertyBySlug(slug, onUpdate) {
   if (isFirebaseConfigured && db) {
     try {
@@ -152,16 +145,14 @@ export function subscribePropertyBySlug(slug, onUpdate) {
             return;
           }
         }
-        const local = getLocalProperties().find(p => p.slug === slug || p.id === slug) || null;
-        onUpdate(local);
+        onUpdate(null);
       });
     } catch (err) {
       console.warn("Could not attach slug listener:", err);
     }
   }
 
-  const local = getLocalProperties().find(p => p.slug === slug || p.id === slug) || null;
-  onUpdate(local);
+  onUpdate(null);
   return () => {};
 }
 
@@ -181,11 +172,12 @@ export async function fetchPropertyBySlug(slug) {
       console.warn("Firestore slug fetch error:", e);
     }
   }
-
-  const localList = getLocalProperties();
-  return localList.find(p => p.slug === slug || p.id === slug) || null;
+  return null;
 }
 
+// -------------------------------------------------------------
+// LEADS SUBMISSION (DIRECT TO FIRESTORE CLOUD)
+// -------------------------------------------------------------
 export async function submitLeadInquiry(leadData) {
   // 1. Bot Honeypot Check
   if (leadData.website_trap_field || leadData.website_hp) {
@@ -199,7 +191,6 @@ export async function submitLeadInquiry(leadData) {
   }
 
   const newLead = {
-    id: `lead_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     name: leadData.name.trim(),
     phone: leadData.phone.trim(),
     email: (leadData.email || "").trim(),
@@ -213,53 +204,22 @@ export async function submitLeadInquiry(leadData) {
     submittedAt: new Date().toISOString()
   };
 
-  // 3. Write to Firestore if configured
-  if (isFirebaseConfigured) {
-    try {
-      const docRef = await addDoc(collection(db, "leads"), {
-        ...newLead,
-        timestamp: serverTimestamp()
-      });
-      newLead.id = docRef.id;
-    } catch (err) {
-      console.warn("Firestore lead submission failed, caching locally:", err.message);
-    }
-  }
-
-  // 4. Always cache in localStorage for Admin synchronization
-  try {
-    const existing = JSON.parse(localStorage.getItem(LEADS_STORAGE_KEY) || "[]");
-    localStorage.setItem(LEADS_STORAGE_KEY, JSON.stringify([newLead, ...existing]));
-  } catch (e) {
-    console.error("Local leads cache error", e);
+  // 3. Write directly to Firestore Cloud
+  if (isFirebaseConfigured && db) {
+    const docRef = await addDoc(collection(db, "leads"), {
+      ...newLead,
+      timestamp: serverTimestamp()
+    });
+    newLead.id = docRef.id;
   }
 
   return { success: true, lead: newLead };
 }
 
 // -------------------------------------------------------------
-// TESTIMONIALS & CLIENT FEEDBACKS (Realtime Website Sync)
+// TESTIMONIALS & CLIENT FEEDBACKS (FIRESTORE CLOUD)
 // -------------------------------------------------------------
-
-function getLocalTestimonials() {
-  try {
-    const cached = localStorage.getItem(TESTIMONIALS_STORAGE_KEY);
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.filter(t => t.active !== false);
-      }
-    }
-  } catch (e) {
-    console.warn("Could not read local testimonials cache", e);
-  }
-  return INITIAL_TESTIMONIALS;
-}
-
 export function subscribeTestimonials(onUpdate, onError) {
-  // Provide instant local/cached reviews immediately
-  onUpdate(getLocalTestimonials());
-
   if (isFirebaseConfigured && db) {
     try {
       const q = query(collection(db, "testimonials"));
@@ -268,20 +228,16 @@ export function subscribeTestimonials(onUpdate, onError) {
         (snapshot) => {
           if (!snapshot.empty) {
             const allItems = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-            // Save to localStorage for instant hydration across sessions
-            try {
-              localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(allItems));
-            } catch (_) {}
             const activeOnly = allItems.filter(t => t.active !== false);
             onUpdate(activeOnly.length > 0 ? activeOnly : INITIAL_TESTIMONIALS);
           } else {
-            onUpdate(getLocalTestimonials());
+            onUpdate(INITIAL_TESTIMONIALS);
           }
         },
         (err) => {
           console.warn("Firestore website testimonials subscriber warning:", err.message);
           if (onError) onError(err);
-          onUpdate(getLocalTestimonials());
+          onUpdate(INITIAL_TESTIMONIALS);
         }
       );
     } catch (err) {
@@ -289,8 +245,7 @@ export function subscribeTestimonials(onUpdate, onError) {
     }
   }
 
-  // Fallback to local cached testimonials
-  onUpdate(getLocalTestimonials());
+  onUpdate(INITIAL_TESTIMONIALS);
   return () => {};
 }
 
@@ -300,9 +255,6 @@ export async function fetchTestimonials() {
       const snap = await getDocs(collection(db, "testimonials"));
       if (!snap.empty) {
         const allItems = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        try {
-          localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(allItems));
-        } catch (_) {}
         const activeOnly = allItems.filter(t => t.active !== false);
         return activeOnly.length > 0 ? activeOnly : INITIAL_TESTIMONIALS;
       }
@@ -310,5 +262,5 @@ export async function fetchTestimonials() {
       console.warn("Firestore fetch testimonials warning:", err.message);
     }
   }
-  return getLocalTestimonials();
+  return INITIAL_TESTIMONIALS;
 }

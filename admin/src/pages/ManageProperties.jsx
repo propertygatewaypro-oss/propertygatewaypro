@@ -8,13 +8,18 @@ import {
   ExternalLink, 
   Eye, 
   EyeOff, 
-  Loader2 
+  Loader2,
+  CloudUpload,
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 import { 
   subscribeAdminProperties,
+  saveProperty,
   deleteProperty, 
   togglePropertyStatus 
 } from '../services/adminService';
+import { VERIFIED_20_PROPERTIES } from '../data/verifiedCatalog';
 import { 
   PROPERTY_TYPES, 
   POSSESSION_STATUSES, 
@@ -31,8 +36,10 @@ export default function ManageProperties() {
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncProgress, setSyncProgress] = useState({ current: 0, total: 0 });
 
-  // Realtime subscription to property catalog
+  // Realtime subscription to property catalog directly from Firebase Cloud
   useEffect(() => {
     setLoading(true);
     const unsubscribe = subscribeAdminProperties((liveProps) => {
@@ -41,6 +48,27 @@ export default function ManageProperties() {
     });
     return () => unsubscribe();
   }, []);
+
+  const handleSyncVerifiedProjects = async () => {
+    if (!window.confirm("Do you want to sync all 20 verified Chennai projects (TVS, Prestige, Brigade, Urbanrise, Sobha) directly into Firebase Cloud?")) {
+      return;
+    }
+    setIsSyncing(true);
+    setSyncProgress({ current: 0, total: VERIFIED_20_PROPERTIES.length });
+
+    try {
+      for (let i = 0; i < VERIFIED_20_PROPERTIES.length; i++) {
+        const prop = VERIFIED_20_PROPERTIES[i];
+        await saveProperty(prop);
+        setSyncProgress({ current: i + 1, total: VERIFIED_20_PROPERTIES.length });
+      }
+    } catch (err) {
+      console.error("Cloud sync error:", err);
+      alert("Error syncing properties: " + err.message);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   // Redirect legacy ?new=1 query param to full page /properties/add
   useEffect(() => {
@@ -102,17 +130,38 @@ export default function ManageProperties() {
             Property Catalog Management
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Add, edit, and publish verified Chennai residential and commercial properties
+            Cloud-synced verified Chennai residential and commercial properties (Firebase Cloud)
           </p>
         </div>
 
-        <Link
-          to="/properties/add"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm self-start sm:self-auto active:scale-95"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add New Property</span>
-        </Link>
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          <button
+            onClick={handleSyncVerifiedProjects}
+            disabled={isSyncing}
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-[#A88548]/30 bg-[#A88548]/10 hover:bg-[#A88548]/20 text-[#7D5D2A] text-xs font-bold tracking-wide transition-all shadow-xs disabled:opacity-50 active:scale-95"
+            title="Sync all 20 verified Chennai projects directly into Firebase Cloud Firestore"
+          >
+            {isSyncing ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin text-[#7D5D2A]" />
+                <span>Syncing {syncProgress.current}/{syncProgress.total}...</span>
+              </>
+            ) : (
+              <>
+                <CloudUpload className="w-4 h-4 text-[#A88548]" />
+                <span>Sync 20 Verified Projects</span>
+              </>
+            )}
+          </button>
+
+          <Link
+            to="/properties/add"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold tracking-wide transition-all shadow-sm active:scale-95"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add New Property</span>
+          </Link>
+        </div>
       </div>
 
       {/* 2. Filter and Search Bar */}
@@ -171,6 +220,47 @@ export default function ManageProperties() {
           <div className="p-12 text-center text-xs text-slate-500 flex flex-col items-center justify-center gap-2">
             <Loader2 className="w-5 h-5 animate-spin text-[#A88548]" />
             <span>Loading property catalog...</span>
+          </div>
+        ) : properties.length === 0 ? (
+          <div className="p-10 text-center max-w-lg mx-auto space-y-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#A88548]/10 text-[#7D5D2A] flex items-center justify-center mx-auto border border-[#A88548]/20">
+              <CloudUpload className="w-6 h-6 text-[#A88548]" />
+            </div>
+            <div>
+              <h3 className="text-base font-serif font-bold text-slate-900">
+                Firebase Cloud Property Catalog is Empty
+              </h3>
+              <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                All property data is stored directly in Firebase Cloud. You can one-click sync all 20 verified Chennai projects (TVS, Prestige, Brigade, Urbanrise, Sobha) with exact TNRERA registration IDs, specifications, and lightweight WebP images, or add properties manually.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-2">
+              <button
+                onClick={handleSyncVerifiedProjects}
+                disabled={isSyncing}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gold-metallic text-white text-xs font-bold shadow-sm transition-all disabled:opacity-50 active:scale-95 cursor-pointer"
+              >
+                {isSyncing ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Syncing {syncProgress.current}/{syncProgress.total}...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" />
+                    <span>Sync 20 Verified Projects to Firebase</span>
+                  </>
+                )}
+              </button>
+
+              <Link
+                to="/properties/add"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-all"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Add Property Manually</span>
+              </Link>
+            </div>
           </div>
         ) : filtered.length === 0 ? (
           <div className="p-12 text-center text-xs text-slate-500">
