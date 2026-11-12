@@ -116,7 +116,9 @@ export default function AddEditPropertyPage() {
     setFormData(prev => ({
       ...prev,
       price: val,
-      priceDisplay: formatIndianCurrency(val)
+      priceDisplay: (!prev.priceDisplay || prev.priceDisplay === formatIndianCurrency(prev.price))
+        ? formatIndianCurrency(val)
+        : prev.priceDisplay
     }));
   };
 
@@ -181,7 +183,7 @@ export default function AddEditPropertyPage() {
       await saveProperty({
         ...formData,
         id: isEditing ? id : undefined,
-        priceDisplay: formatIndianCurrency(formData.price)
+        priceDisplay: formData.priceDisplay?.trim() || formatIndianCurrency(formData.price)
       });
       navigate('/properties');
     } catch (err) {
@@ -310,7 +312,7 @@ export default function AddEditPropertyPage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                 Chennai Micro-Market *
@@ -342,20 +344,46 @@ export default function AddEditPropertyPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Price in INR (₹) *
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                  Base Price in INR (₹) *
+                </label>
+              </div>
               <input
                 type="number"
                 required
                 step="50000"
+                placeholder="4100000"
                 value={formData.price}
                 onChange={handlePriceChange}
                 className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] font-mono"
               />
-              <div className="text-xs text-[#A88548] font-semibold mt-1">
-                Display: {formData.priceDisplay}
+              <span className="text-[10px] text-slate-400 block mt-1">Used for price filters & sliders</span>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                  Price Display Label *
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, priceDisplay: formatIndianCurrency(prev.price) }))}
+                  className="text-[10px] font-semibold text-[#A88548] hover:underline"
+                  title="Format automatically from Base Price"
+                >
+                  Auto-sync
+                </button>
               </div>
+              <input
+                type="text"
+                required
+                placeholder="e.g. ₹41 Lakh - ₹2.20 Cr"
+                value={formData.priceDisplay}
+                onChange={(e) => setFormData(prev => ({ ...prev, priceDisplay: e.target.value }))}
+                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548] font-semibold text-[#7D5D2A]"
+              />
+              <span className="text-[10px] text-slate-400 block mt-1">Shown to website visitors</span>
             </div>
           </div>
         </div>
