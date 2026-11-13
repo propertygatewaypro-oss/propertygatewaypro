@@ -57,6 +57,7 @@ export default function AddEditPropertyPage() {
   const [uploadStatus, setUploadStatus] = useState('');
   const [imageUrlInput, setImageUrlInput] = useState('');
   const [customAmenityInput, setCustomAmenityInput] = useState('');
+  const [availableLocations, setAvailableLocations] = useState(CHENNAI_LOCATIONS);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddCustomAmenity = () => {
@@ -81,33 +82,44 @@ export default function AddEditPropertyPage() {
     setImageUrlInput('');
   };
 
-  // Load existing property data if in edit mode
+  // Load existing property data & dynamic micro-markets
   useEffect(() => {
-    async function loadTargetProperty() {
-      if (!id) return;
+    async function initPageData() {
       try {
-        setPageLoading(true);
+        if (isEditing) setPageLoading(true);
         const allProps = await fetchAdminProperties();
-        const found = allProps.find(p => p.id === id || p.slug === id);
-        if (found) {
-          setFormData({
-            ...INITIAL_FORM,
-            ...found,
-            active: found.active !== false && found.isActive !== false,
-            priceDisplay: found.priceDisplay || formatIndianCurrency(found.price || 10000000)
-          });
-        } else {
-          setErrorMessage('Property listing not found.');
+
+        // Dynamically extract all existing micro-markets from live properties
+        const liveLocations = Array.from(new Set([
+          ...CHENNAI_LOCATIONS,
+          ...allProps.map(p => p.location?.trim()).filter(Boolean)
+        ])).sort((a, b) => a.localeCompare(b));
+        setAvailableLocations(liveLocations);
+
+        if (id) {
+          const found = allProps.find(p => p.id === id || p.slug === id);
+          if (found) {
+            setFormData({
+              ...INITIAL_FORM,
+              ...found,
+              active: found.active !== false && found.isActive !== false,
+              priceDisplay: found.priceDisplay || formatIndianCurrency(found.price || 10000000)
+            });
+          } else {
+            setErrorMessage('Property listing not found.');
+          }
         }
       } catch (err) {
-        console.error('Failed to load property:', err);
-        setErrorMessage('Could not load property details: ' + err.message);
+        console.error('Failed to load property/locations:', err);
+        if (isEditing) {
+          setErrorMessage('Could not load property details: ' + err.message);
+        }
       } finally {
         setPageLoading(false);
       }
     }
-    loadTargetProperty();
-  }, [id]);
+    initPageData();
+  }, [id, isEditing]);
 
   const handleTitleChange = (e) => {
     const val = e.target.value;
@@ -337,15 +349,23 @@ export default function AddEditPropertyPage() {
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                 Chennai Micro-Market *
               </label>
-              <select
-                value={formData.location}
-                onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
-              >
-                {CHENNAI_LOCATIONS.map(loc => (
-                  <option key={loc} value={loc}>{loc}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <input
+                  type="text"
+                  list="chennai-micro-markets"
+                  value={formData.location}
+                  onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                  placeholder="Select or type micro-market"
+                  required
+                  className="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
+                />
+                <datalist id="chennai-micro-markets">
+                  {availableLocations.map(loc => (
+                    <option key={loc} value={loc} />
+                  ))}
+                </datalist>
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">Pick existing or type any new area</p>
             </div>
 
             <div>

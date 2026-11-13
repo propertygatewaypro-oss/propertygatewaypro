@@ -4,11 +4,13 @@ import { SlidersHorizontal, X, Search, RotateCcw } from 'lucide-react';
 import PropertyCard from '../components/property/PropertyCard';
 import SEO from '../components/common/SEO';
 import { subscribeProperties } from '../services/propertyService';
-import { CHENNAI_LOCATIONS, PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
+import { useDynamicLocations } from '../hooks/useDynamicLocations';
+import { PROPERTY_TYPES, BUDGET_RANGES, POSSESSION_STATUSES, BRAND } from '../utils/constants';
 import { getBreadcrumbSchema } from '../utils/seoSchemas';
 
 export default function PropertiesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { locations, counts } = useDynamicLocations();
   
   const [location, setLocation] = useState(searchParams.get('location') || 'All Locations');
   const [category, setCategory] = useState(searchParams.get('category') || 'All Types');
@@ -117,7 +119,11 @@ export default function PropertiesPage() {
                 onChange={(e) => setLocation(e.target.value)}
                 className="px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-emerald-600"
               >
-                {CHENNAI_LOCATIONS.map(loc => <option key={loc} value={loc}>{loc}</option>)}
+                {locations.map(loc => (
+                  <option key={loc} value={loc}>
+                    {loc === 'All Locations' ? 'All Locations' : `${loc} ${counts[loc] ? `(${counts[loc]})` : ''}`}
+                  </option>
+                ))}
               </select>
 
               <select
@@ -262,7 +268,11 @@ export default function PropertiesPage() {
                   onChange={(e) => setLocation(e.target.value)}
                   className="w-full p-3 rounded-xl border border-slate-300 text-base"
                 >
-                  {CHENNAI_LOCATIONS.map(l => <option key={l} value={l}>{l}</option>)}
+                  {locations.map(l => (
+                    <option key={l} value={l}>
+                      {l === 'All Locations' ? 'All Locations' : `${l} ${counts[l] ? `(${counts[l]})` : ''}`}
+                    </option>
+                  ))}
                 </select>
               </div>
 

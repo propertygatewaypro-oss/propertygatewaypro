@@ -9,7 +9,8 @@ import {
   ChevronDown,
   CheckCircle2
 } from 'lucide-react';
-import { CHENNAI_LOCATIONS, BRAND } from '../../utils/constants';
+import { BRAND } from '../../utils/constants';
+import { useDynamicLocations } from '../../hooks/useDynamicLocations';
 
 // Curated Architectural Photographs: Daylight Luxury Estates in Chennai
 const HERO_SLIDES = [
@@ -63,6 +64,7 @@ const QUICK_FILTERS = [
 
 export default function HeroSection() {
   const navigate = useNavigate();
+  const { locations, counts } = useDynamicLocations();
   const [activeTab, setActiveTab] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('All Locations');
   const [searchQuery, setSearchQuery] = useState('');
@@ -224,8 +226,10 @@ export default function HeroSection() {
                 aria-label="Select Location"
               >
                 <option value="All Locations">Chennai (All Locations)</option>
-                {CHENNAI_LOCATIONS.filter(l => l !== 'All Locations').map(loc => (
-                  <option key={loc} value={loc}>{loc}</option>
+                {locations.filter(l => l !== 'All Locations').map(loc => (
+                  <option key={loc} value={loc}>
+                    {loc} {counts[loc] ? `(${counts[loc]})` : ''}
+                  </option>
                 ))}
               </select>
               <div className="pointer-events-none absolute right-3 sm:right-3.5 top-1/2 -translate-y-1/2 text-slate-500">

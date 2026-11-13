@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
+import { useDynamicLocations } from '../../hooks/useDynamicLocations';
 
 export default function Footer() {
+  const { topLocations, counts } = useDynamicLocations();
   const [isInView, setIsInView] = useState(false);
   const footerRef = useRef(null);
 
@@ -142,49 +144,22 @@ export default function Footer() {
             style={{ transitionDelay: '160ms' }}
           >
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1E232F] mb-2.5 sm:mb-4">
-              Locations
+              Prime Locations
             </h4>
             <ul className="space-y-2 sm:space-y-2.5 text-[13.5px] sm:text-sm text-slate-600">
-              <li>
-                <Link 
-                  to="/properties?location=East+Coast+Road+(ECR)" 
-                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
-                >
-                  East Coast Road (ECR)
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/properties?location=Old+Mahabalipuram+Road+(OMR)" 
-                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
-                >
-                  Old Mahabalipuram (OMR)
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/properties?location=Anna+Nagar" 
-                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
-                >
-                  Anna Nagar
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/properties?location=Porur" 
-                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
-                >
-                  Porur
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/properties?location=Guindy" 
-                  className="inline-block py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
-                >
-                  Guindy
-                </Link>
-              </li>
+              {topLocations.map(loc => (
+                <li key={loc}>
+                  <Link 
+                    to={`/properties?location=${encodeURIComponent(loc)}`} 
+                    className="inline-flex items-center justify-between w-full py-0.5 hover:text-[#A88548] hover:translate-x-1 transition-all duration-200"
+                  >
+                    <span>{loc}</span>
+                    {counts[loc] && (
+                      <span className="text-[11px] text-slate-400 font-normal">({counts[loc]})</span>
+                    )}
+                  </Link>
+                </li>
+              ))}
               <li className="pt-1">
                 <Link 
                   to="/properties" 

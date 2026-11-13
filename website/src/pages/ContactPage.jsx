@@ -12,13 +12,15 @@ import {
   ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { BRAND, CHENNAI_LOCATIONS } from '../utils/constants';
+import { BRAND } from '../utils/constants';
 import { submitLeadInquiry } from '../services/propertyService';
+import { useDynamicLocations } from '../hooks/useDynamicLocations';
 import SEO from '../components/common/SEO';
 import { getRealEstateAgentSchema, getBreadcrumbSchema } from '../utils/seoSchemas';
 
 export default function ContactPage() {
   const [searchParams] = useSearchParams();
+  const { locations, counts } = useDynamicLocations();
   const propertyParam = searchParams.get('property') || '';
   const locationParam = searchParams.get('location') || '';
 
@@ -435,8 +437,10 @@ export default function ContactPage() {
                         className="w-full text-sm px-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#A88548] focus:border-[#A88548] bg-white cursor-pointer shadow-2xs"
                       >
                         <option value="All Locations">Any Prime Location in Chennai</option>
-                        {CHENNAI_LOCATIONS.filter(l => l !== "All Locations").map(loc => (
-                          <option key={loc} value={loc}>{loc}</option>
+                        {locations.filter(l => l !== "All Locations").map(loc => (
+                          <option key={loc} value={loc}>
+                            {loc} {counts[loc] ? `(${counts[loc]} active projects)` : ''}
+                          </option>
                         ))}
                       </select>
                     </div>

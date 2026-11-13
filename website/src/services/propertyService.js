@@ -175,6 +175,64 @@ export async function fetchPropertyBySlug(slug) {
 }
 
 // -------------------------------------------------------------
+// DYNAMIC MICRO-MARKETS / LOCATIONS EXTRACTION
+// -------------------------------------------------------------
+export function extractDynamicLocationStats(properties = []) {
+  const activeProps = (properties || []).filter(p => p.active !== false && p.isActive !== false);
+  const counts = {};
+
+  activeProps.forEach(p => {
+    const loc = p.location?.trim();
+    if (loc) {
+      counts[loc] = (counts[loc] || 0) + 1;
+    }
+  });
+
+  const sortedLocations = Object.keys(counts).sort((a, b) => a.localeCompare(b));
+  
+  // Top 5 locations sorted by listing count for Footers and highlights
+  const topLocations = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([loc]) => loc);
+
+  return {
+    locations: ["All Locations", ...sortedLocations],
+    counts,
+    topLocations,
+    totalProperties: activeProps.length
+  };
+}
+
+export function subscribePropertyLocations(onUpdate) {
+  if (isFirebaseConfigured && db) {
+    try {
+      return onSnapshot(
+        collection(db, "properties"),
+        (snapshot) => {
+          if (!snapshot.empty) {
+            const rawDocs = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
+            const stats = extractDynamicLocationStats(rawDocs);
+            onUpdate(stats);
+          } else {
+            onUpdate({ locations: ["All Locations"], counts: {}, topLocations: [], totalProperties: 0 });
+          }
+        },
+        (err) => {
+          console.warn("Firestore dynamic locations listener error:", err.message);
+          onUpdate({ locations: ["All Locations"], counts: {}, topLocations: [], totalProperties: 0 });
+        }
+      );
+    } catch (err) {
+      console.warn("Could not attach locations listener:", err);
+    }
+  }
+
+  onUpdate({ locations: ["All Locations"], counts: {}, topLocations: [], totalProperties: 0 });
+  return () => {};
+}
+
+// -------------------------------------------------------------
 // LEADS SUBMISSION (DIRECT TO FIRESTORE CLOUD)
 // -------------------------------------------------------------
 export async function submitLeadInquiry(leadData) {

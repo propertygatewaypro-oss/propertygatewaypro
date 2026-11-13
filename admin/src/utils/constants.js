@@ -18,19 +18,26 @@ export const BRAND = {
 };
 
 export const CHENNAI_LOCATIONS = [
-  "East Coast Road (ECR)",
-  "Old Mahabalipuram Road (OMR)",
   "Anna Nagar",
-  "Porur",
-  "Guindy",
-  "Velachery",
-  "Medavakkam",
+  "East Coast Road (ECR)",
+  "Kelambakkam",
   "Kovilambakkam",
-  "Perumbakkam",
-  "Thoraipakkam",
+  "Madhavaram",
+  "Manapakkam",
+  "Medavakkam",
+  "Old Mahabalipuram Road (OMR)",
+  "Padur",
+  "Pallavaram",
+  "Perungalathur",
+  "Perungudi",
+  "Porur",
   "Sholinganallur",
-  "Pallikaranai",
-  "Tambaram",
+  "Singaperumal Koil",
+  "Siruseri",
+  "Thirumazhisai",
+  "Velachery",
+  "Guindy",
+  "Tambaram"
 ];
 
 export const PROPERTY_TYPES = [
