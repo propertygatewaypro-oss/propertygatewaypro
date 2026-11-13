@@ -54,6 +54,7 @@ export default function AddEditPropertyPage() {
   const [pageLoading, setPageLoading] = useState(isEditing);
   const [submitting, setSubmitting] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState('');
   const [imageUrlInput, setImageUrlInput] = useState('');
   const [customAmenityInput, setCustomAmenityInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -154,17 +155,23 @@ export default function AddEditPropertyPage() {
     setImageUploading(true);
     setErrorMessage('');
     try {
-      const uploadPromises = files.map(file => compressAndUploadImage(file));
-      const uploadedUrls = await Promise.all(uploadPromises);
+      const uploadedUrls = [];
+      for (let i = 0; i < files.length; i++) {
+        setUploadStatus(`WebP optimizing & uploading (${i + 1}/${files.length})...`);
+        const url = await compressAndUploadImage(files[i], { type: 'property' });
+        uploadedUrls.push(url);
+      }
       setFormData(prev => ({
         ...prev,
         images: [...prev.images, ...uploadedUrls]
       }));
     } catch (err) {
       console.error(err);
-      setErrorMessage('Failed to compress and upload image. Please try again.');
+      setErrorMessage('Failed to optimize and upload image. Please try again.');
     } finally {
       setImageUploading(false);
+      setUploadStatus('');
+      if (e.target) e.target.value = '';
     }
   };
 
@@ -639,10 +646,15 @@ export default function AddEditPropertyPage() {
                     Cover
                   </span>
                 )}
+                {imgUrl.includes('webp') && (
+                  <span className="absolute bottom-1.5 right-1.5 bg-emerald-600/90 text-white text-[8px] px-1 py-0.2 rounded font-bold uppercase tracking-wider backdrop-blur-xs">
+                    WebP
+                  </span>
+                )}
               </div>
             ))}
 
-            <label className="border-2 border-dashed border-slate-300 hover:border-[#A88548] rounded-xl flex flex-col items-center justify-center cursor-pointer p-4 aspect-video transition-colors bg-slate-50/50 hover:bg-amber-50/20">
+            <label className="border-2 border-dashed border-slate-300 hover:border-[#A88548] rounded-xl flex flex-col items-center justify-center cursor-pointer p-4 aspect-video transition-colors bg-slate-50/50 hover:bg-amber-50/20 text-center">
               <input
                 type="file"
                 multiple
@@ -652,14 +664,17 @@ export default function AddEditPropertyPage() {
                 className="hidden"
               />
               {imageUploading ? (
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-1 px-1">
                   <Loader2 className="w-5 h-5 text-[#A88548] animate-spin" />
-                  <span className="text-[10px] text-slate-500">Compressing...</span>
+                  <span className="text-[10px] font-semibold text-[#A88548] leading-tight">
+                    {uploadStatus || 'Converting to WebP...'}
+                  </span>
                 </div>
               ) : (
                 <>
                   <UploadCloud className="w-5 h-5 text-slate-400 mb-1" />
-                  <span className="text-[11px] font-semibold text-slate-600">+ Upload Photos</span>
+                  <span className="text-[11px] font-semibold text-slate-700">+ Upload Photos</span>
+                  <span className="text-[9px] text-[#A88548] font-medium mt-0.5">Auto-WebP Lite</span>
                 </>
               )}
             </label>

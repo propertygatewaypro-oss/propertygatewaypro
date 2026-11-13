@@ -128,13 +128,14 @@ export default function ManageTestimonials() {
     try {
       setImageUploading(true);
       setFormError('');
-      const compressedUrl = await compressAndUploadImage(file);
+      const compressedUrl = await compressAndUploadImage(file, { type: 'avatar' });
       setFormData(prev => ({ ...prev, avatar: compressedUrl }));
     } catch (err) {
       console.error('Image compression failed:', err);
       setFormError('Could not process avatar image. Please try another file.');
     } finally {
       setImageUploading(false);
+      if (e.target) e.target.value = '';
     }
   };
 
@@ -625,13 +626,13 @@ export default function ManageTestimonials() {
                     />
                   </div>
 
-                  <label className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg cursor-pointer border border-slate-200 transition-colors">
+                  <label className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-amber-50/60 hover:bg-amber-100/70 text-[#A88548] text-xs font-semibold rounded-lg cursor-pointer border border-[#A88548]/30 transition-colors shadow-2xs">
                     {imageUploading ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin text-[#A88548]" />
                     ) : (
-                      <UploadCloud className="w-3.5 h-3.5" />
+                      <UploadCloud className="w-3.5 h-3.5 text-[#A88548]" />
                     )}
-                    <span>{imageUploading ? 'Compressing...' : 'Upload Photo'}</span>
+                    <span>{imageUploading ? 'Converting to WebP...' : 'Upload Photo (WebP)'}</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -643,17 +644,25 @@ export default function ManageTestimonials() {
                 </div>
 
                 {formData.avatar && (
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2.5 flex items-center gap-2.5 p-2 bg-slate-50 border border-slate-200/80 rounded-lg">
                     <img
                       src={formData.avatar}
                       alt="Avatar preview"
-                      className="w-8 h-8 rounded-full object-cover ring-1 ring-slate-300"
+                      className="w-9 h-9 rounded-full object-cover ring-2 ring-[#A88548]/40 shrink-0"
                     />
-                    <span className="text-[11px] text-slate-500 truncate max-w-xs">{formData.avatar}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[11px] font-semibold text-slate-800">Avatar Ready</span>
+                        {formData.avatar.includes('webp') && (
+                          <span className="px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 text-[9px] font-bold">WebP Lite</span>
+                        )}
+                      </div>
+                      <span className="text-[10px] text-slate-500 truncate block">{formData.avatar}</span>
+                    </div>
                     <button
                       type="button"
                       onClick={() => setFormData(prev => ({ ...prev, avatar: '' }))}
-                      className="text-xs text-rose-500 hover:text-rose-700 ml-auto font-medium"
+                      className="text-xs text-rose-500 hover:text-rose-700 font-medium px-2 py-1 rounded hover:bg-rose-50 transition-colors"
                     >
                       Remove
                     </button>

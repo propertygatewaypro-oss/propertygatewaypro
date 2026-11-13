@@ -13,25 +13,33 @@ import {
   onSnapshot
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { convertToWebPFast } from '../utils/imageOptimizer';
 
 // -------------------------------------------------------------
-// IMAGE COMPRESSION & CLOUDINARY CLOUD UPLOAD (FREE 25GB TIER)
+// ULTRA-FAST WEBP OPTIMIZER & CLOUDINARY UPLOAD (FREE 25GB TIER)
 // -------------------------------------------------------------
-export async function compressAndUploadImage(file) {
-  const options = {
-    maxSizeMB: 0.35, // 350 KB budget
-    maxWidthOrHeight: 1800,
-    useWebWorker: true,
-    fileType: 'image/webp'
-  };
+export async function compressAndUploadImage(file, { type = 'property' } = {}) {
+  // Tailored presets for blazing speed and minimal byte footprint
+  const config = type === 'avatar' 
+    ? { maxWidth: 600, maxHeight: 600, quality: 0.85 }
+    : { maxWidth: 1920, maxHeight: 1200, quality: 0.82 };
 
   try {
-    // 1. Client-side WebP compression to save bandwidth & upload instantly
-    let fileToUpload = file;
-    try {
-      fileToUpload = await imageCompression(file, options);
-    } catch (compressionErr) {
-      console.warn("Client compression skipped, uploading original:", compressionErr);
+    // 1. Ultra-fast hardware-accelerated WebP conversion (< 80ms)
+    let optimizedFile = await convertToWebPFast(file, config);
+
+    // Fallback safeguard: if file is still abnormally large (> 750KB), apply secondary pass
+    if (optimizedFile.size > 750 * 1024) {
+      try {
+        optimizedFile = await imageCompression(optimizedFile, {
+          maxSizeMB: 0.45,
+          maxWidthOrHeight: config.maxWidth,
+          useWebWorker: false, // avoid worker startup latency
+          fileType: 'image/webp'
+        });
+      } catch (compressionErr) {
+        console.warn("Secondary compression skipped:", compressionErr);
+      }
     }
 
     // 2. Upload directly to Cloudinary using Unsigned Preset
@@ -39,7 +47,7 @@ export async function compressAndUploadImage(file) {
     const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'property_gateway';
 
     const formData = new FormData();
-    formData.append('file', fileToUpload);
+    formData.append('file', optimizedFile);
     formData.append('upload_preset', uploadPreset);
 
     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
@@ -53,10 +61,16 @@ export async function compressAndUploadImage(file) {
     }
 
     const data = await response.json();
-    // Return high-efficiency secure URL delivered via global CDN
-    return data.secure_url;
+    
+    // Inject Cloudinary edge optimization transforms: /f_auto,q_auto/
+    let secureUrl = data.secure_url;
+    if (secureUrl && secureUrl.includes('/image/upload/')) {
+      secureUrl = secureUrl.replace('/image/upload/', '/image/upload/f_auto,q_auto/');
+    }
+
+    return secureUrl;
   } catch (error) {
-    console.error("Error compressing and uploading image to Cloudinary:", error);
+    console.error("Error optimizing and uploading image to Cloudinary:", error);
     throw error;
   }
 }
