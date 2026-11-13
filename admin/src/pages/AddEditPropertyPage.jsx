@@ -55,7 +55,20 @@ export default function AddEditPropertyPage() {
   const [submitting, setSubmitting] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
   const [imageUrlInput, setImageUrlInput] = useState('');
+  const [customAmenityInput, setCustomAmenityInput] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleAddCustomAmenity = () => {
+    const trimmed = customAmenityInput.trim();
+    if (!trimmed) return;
+    if (!(formData.amenities || []).includes(trimmed)) {
+      setFormData(prev => ({
+        ...prev,
+        amenities: [...(prev.amenities || []), trimmed]
+      }));
+    }
+    setCustomAmenityInput('');
+  };
 
   const handleAddImageUrl = () => {
     const trimmed = imageUrlInput.trim();
@@ -510,13 +523,44 @@ export default function AddEditPropertyPage() {
         {/* Section 3: Amenities & Features */}
         <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-7 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">3. Verified Amenities & Infrastructure</span>
-            <span className="text-xs text-slate-500 font-medium">{formData.amenities.length} selected</span>
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#A88548]">3. Verified Amenities & Infrastructure</span>
+              <p className="text-[11px] text-slate-500 mt-0.5">Select from standard amenities or add custom project-specific facilities</p>
+            </div>
+            <span className="text-xs text-slate-500 font-medium">{(formData.amenities || []).length} selected</span>
           </div>
 
+          {/* Active Amenities Tag Chips (with 1-click remove) */}
+          {(formData.amenities || []).length > 0 && (
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+              <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                Currently Active on Listing ({(formData.amenities || []).length}):
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {formData.amenities.map(a => (
+                  <span 
+                    key={a} 
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 border border-[#A88548]/40 text-slate-900 text-xs font-semibold shadow-2xs"
+                  >
+                    <span>{a}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleAmenityToggle(a)}
+                      className="p-0.5 rounded-full hover:bg-red-100 text-slate-400 hover:text-red-700 transition-colors"
+                      title={`Remove "${a}"`}
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Quick Checklist (Standard Catalog + Any Custom Amenities) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
-            {AMENITIES_CATALOG.map((amenity) => {
-              const isChecked = formData.amenities.includes(amenity);
+            {Array.from(new Set([...AMENITIES_CATALOG, ...(formData.amenities || [])])).map((amenity) => {
+              const isChecked = (formData.amenities || []).includes(amenity);
               return (
                 <label 
                   key={amenity}
@@ -536,6 +580,35 @@ export default function AddEditPropertyPage() {
                 </label>
               );
             })}
+          </div>
+
+          {/* Add Custom Amenity Input */}
+          <div className="pt-2 border-t border-slate-100">
+            <label className="block text-[11px] font-semibold text-slate-600 mb-1.5">
+              Add Custom Amenity or Special Facility
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                placeholder="e.g. Squash Court, Rooftop Helipad, Beach Access, Private Plunge Pool..."
+                value={customAmenityInput}
+                onChange={(e) => setCustomAmenityInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddCustomAmenity();
+                  }
+                }}
+                className="flex-1 text-xs px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A88548]/30 focus:border-[#A88548]"
+              />
+              <button
+                type="button"
+                onClick={handleAddCustomAmenity}
+                className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-lg transition-colors shadow-2xs whitespace-nowrap"
+              >
+                + Add Amenity
+              </button>
+            </div>
           </div>
         </div>
 
