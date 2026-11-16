@@ -9,6 +9,7 @@ import {
   Star 
 } from 'lucide-react';
 import HeroSection from '../components/home/HeroSection';
+import BuilderAlliances from '../components/home/BuilderAlliances';
 import PropertyCard from '../components/property/PropertyCard';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import SEO from '../components/common/SEO';
@@ -139,7 +140,10 @@ export default function HomePage({ onOpenVisitModal }) {
       {/* 1. Hero Section with Search Bar */}
       <HeroSection onOpenVisitModal={onOpenVisitModal} />
 
-      {/* 2. Featured Projects Grid - Warm Travertine Luxury Gallery */}
+      {/* 2. Our Builder Alliances (Right-to-Left Sliding Section) */}
+      <BuilderAlliances />
+
+      {/* 3. Featured Projects Grid - Warm Travertine Luxury Gallery */}
       <section 
         ref={featuredSectionRef}
         className="bg-[#FAF9F6] border-b border-[#E6E1D6] pt-12 sm:pt-16 pb-20 sm:pb-24"
