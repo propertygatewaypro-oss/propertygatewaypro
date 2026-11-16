@@ -7,7 +7,7 @@
 - `firestore.rules` is deployed. The `properties` slug/active composite index is READY.
 - The website and admin app are deployed to `www.propertygatewaypro.com` and `admin.propertygatewaypro.com`.
 - Public Firestore queries for active properties, property details, and testimonials succeeded. Anonymous unfiltered property reads and lead reads returned 403. A public test lead was created successfully and immediately deleted.
-- Firebase Storage has no default bucket in this project, so `storage.rules` could not be deployed. New property photos and testimonial avatars uploaded through the admin app go to Cloudinary; Firestore stores their URLs and the related records. Existing media also includes Unsplash URLs. No active upload path uses Firebase Storage.
+- Firebase Storage has no default bucket in this project. New property photos and testimonial avatars uploaded through the admin app go to Cloudinary; Firestore stores their URLs and the related records. Existing media also includes Unsplash URLs.
 
 The admin account must sign out and sign in again to refresh its ID token before using the updated admin app. Authenticated admin CRUD still requires an interactive smoke test.
 
@@ -26,4 +26,4 @@ npx firebase-tools deploy --only firestore:indexes --project propertygatewaypro-
 npx firebase-tools deploy --only firestore:rules --project propertygatewaypro-8bc3f
 ```
 
-Deploy `storage.rules` only after configuring a Firebase Storage bucket. Existing properties and testimonials need `active: true` to remain public.
+Existing properties and testimonials need `active: true` to remain public.

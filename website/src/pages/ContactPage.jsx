@@ -138,7 +138,7 @@ export default function ContactPage() {
           origin: { y: 0.6 },
           colors: ['#A88548', '#181B22', '#E0C27E', '#25D366']
         });
-      } catch (e) {
+      } catch {
         // Confetti fallback
       }
 

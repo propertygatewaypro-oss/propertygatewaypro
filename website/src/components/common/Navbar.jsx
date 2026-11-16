@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { BRAND } from '../../utils/constants';
 
-export default function Navbar({ onOpenVisitModal, onOpenRequirementModal }) {
+export default function Navbar({ onOpenRequirementModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 

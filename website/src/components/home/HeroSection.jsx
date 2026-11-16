@@ -9,7 +9,6 @@ import {
   ChevronDown,
   CheckCircle2
 } from 'lucide-react';
-import { BRAND } from '../../utils/constants';
 import { useDynamicLocations } from '../../hooks/useDynamicLocations';
 
 // Curated Architectural Photographs: Daylight Luxury Estates in Chennai

@@ -9,7 +9,6 @@ import {
   Sparkles, 
   Phone, 
   MessageSquare,
-  Compass,
   Globe2,
   FileCheck2,
   Coins,

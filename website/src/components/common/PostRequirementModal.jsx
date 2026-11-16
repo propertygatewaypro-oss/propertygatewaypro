@@ -221,7 +221,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
       try {
         localStorage.setItem('pg_requirement_submitted', 'true');
         sessionStorage.setItem('pg_post_req_dismissed', 'true');
-      } catch (err) {
+      } catch {
         // ignore storage errors
       }
 

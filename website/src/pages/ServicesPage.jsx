@@ -2,23 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Building2, 
-  Scale, 
   Coins, 
   Globe2, 
-  Car, 
   FileCheck2, 
-  TrendingUp, 
-  Users, 
   CheckCircle2, 
   ArrowRight, 
   Phone, 
   MessageSquare, 
   KeyRound, 
   Briefcase, 
-  Layers,
   Sparkles,
-  Award,
-  BadgePercent
 } from 'lucide-react';
 import { BRAND, generateSiteVisitWhatsAppLink } from '../utils/constants';
 import SEO from '../components/common/SEO';

@@ -188,18 +188,6 @@ export default function ManageTestimonials() {
     }
   };
 
-  const handleDelete = async (id) => {
-    setTestimonials(prev => prev.filter(t => t.id !== id));
-    try {
-      setDeletingId(id);
-      await deleteTestimonial(id);
-    } catch (err) {
-      console.error('Delete failed:', err);
-    } finally {
-      setDeletingId(null);
-    }
-  };
-
   // Filter Logic
   const filtered = testimonials.filter(t => {
     const matchesSearch = 

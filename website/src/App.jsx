@@ -54,10 +54,7 @@ function AppContent() {
       <ScrollToTop />
       
       {/* Top Floating Navigation */}
-      <Navbar 
-        onOpenVisitModal={() => handleOpenVisitModal(null)} 
-        onOpenRequirementModal={handleOpenReqModal}
-      />
+      <Navbar onOpenRequirementModal={handleOpenReqModal} />
 
       {/* Main Routed Content */}
       <main className="flex-grow pb-16 md:pb-0">
