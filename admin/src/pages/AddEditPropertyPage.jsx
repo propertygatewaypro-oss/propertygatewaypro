@@ -204,6 +204,12 @@ export default function AddEditPropertyPage() {
       return;
     }
 
+    if (!formData.slug.trim()) {
+      setErrorMessage('Property URL slug is required.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (formData.images.length === 0) {
       setErrorMessage('Please upload or attach at least 1 image.');
       window.scrollTo({ top: 0, behavior: 'smooth' });

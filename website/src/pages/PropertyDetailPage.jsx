@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
-  MapPin, BedDouble, Maximize2, Compass, Calendar, Building, 
+  MapPin, BedDouble, Maximize2, Compass, Calendar,
   ShieldCheck, Phone, Check, ArrowLeft, 
-  Share2, ChevronRight 
+  ChevronRight
 } from 'lucide-react';
-import { fetchPropertyBySlug, subscribePropertyBySlug, submitLeadInquiry } from '../services/propertyService';
+import { subscribePropertyBySlug, submitLeadInquiry } from '../services/propertyService';
 import { BRAND, generateWhatsAppLink } from '../utils/constants';
 import SEO from '../components/common/SEO';
 import { getPropertyListingSchema, getBreadcrumbSchema } from '../utils/seoSchemas';
@@ -14,20 +14,26 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
   const { slug } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   // Quick inquiry form inside detail page
   const [leadName, setLeadName] = useState('');
   const [leadPhone, setLeadPhone] = useState('');
   const [leadTrap, setLeadTrap] = useState('');
+  const [leadConsent, setLeadConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [inquiryError, setInquiryError] = useState('');
 
   useEffect(() => {
     setLoading(true);
+    setLoadError(false);
     const unsubscribe = subscribePropertyBySlug(slug, (liveData) => {
       setProperty(liveData);
+      setLoading(false);
+    }, () => {
+      setLoadError(true);
       setLoading(false);
     });
 
@@ -50,9 +56,9 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
   if (!property) {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center space-y-4">
-        <h2 className="text-2xl font-bold text-brand-navy-950">Property Not Found</h2>
+        <h2 className="text-2xl font-bold text-brand-navy-950">{loadError ? 'Could Not Load Property' : 'Property Not Found'}</h2>
         <p className="text-slate-600 text-sm">
-          The property you are looking for may have been sold or removed from the catalog.
+          {loadError ? 'The listing is temporarily unavailable. Please try again shortly.' : 'The property you are looking for may have been sold or removed from the catalog.'}
         </p>
         <Link 
           to="/properties" 
@@ -75,6 +81,10 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
       setInquiryError('Please enter a valid 10-digit phone number.');
       return;
     }
+    if (!leadConsent) {
+      setInquiryError('Please consent to being contacted about this property.');
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -85,6 +95,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
         propertyId: property.id,
         leadType: 'Property Inquiry',
         source: 'Property Detail Page Form',
+        consent: leadConsent,
         website_trap_field: leadTrap
       });
       setSubmitted(true);
@@ -359,7 +370,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
                   {submitted ? (
                     <div className="p-4 rounded-xl bg-emerald-50 text-emerald-800 text-xs text-center space-y-2">
                       <p className="font-bold">Thank you, {leadName}!</p>
-                      <p>Our Chennai team will WhatsApp the complete brochure & price breakup within 10 minutes.</p>
+                      <p>Our Chennai team will contact you with the brochure and price details.</p>
                     </div>
                   ) : (
                     <form onSubmit={handleInquirySubmit} className="space-y-3">
@@ -379,6 +390,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
                       <input
                         type="text"
                         required
+                        aria-label="Your full name"
                         placeholder="Your Full Name"
                         value={leadName}
                         onChange={(e) => setLeadName(e.target.value)}
@@ -388,11 +400,16 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
                       <input
                         type="tel"
                         required
+                        aria-label="Your WhatsApp number"
                         placeholder="10-digit WhatsApp Number"
                         value={leadPhone}
                         onChange={(e) => setLeadPhone(e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-base md:text-xs outline-none focus:border-brand-emerald-600"
                       />
+                      <label className="flex items-start gap-2 text-xs text-slate-700">
+                        <input type="checkbox" checked={leadConsent} onChange={(e) => setLeadConsent(e.target.checked)} className="mt-0.5" />
+                        <span>I authorize Property Gateway to contact me about this property. See the <a href="/privacy-policy" className="underline">Privacy Policy</a>.</span>
+                      </label>
 
                       <button
                         type="submit"
@@ -403,7 +420,7 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
                       </button>
 
                       <p className="text-[10px] text-slate-400 text-center leading-tight">
-                        🔒 Safe & confidential. Zero spam calls.
+                        Your details will be used to respond to this enquiry.
                       </p>
                     </form>
                   )}

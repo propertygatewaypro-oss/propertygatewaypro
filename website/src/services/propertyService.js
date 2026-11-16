@@ -85,7 +85,7 @@ export function subscribeProperties(onUpdate, filters = {}) {
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(
-        collection(db, "properties"),
+        query(collection(db, "properties"), where("active", "==", true)),
         (snapshot) => {
           if (!snapshot.empty) {
             const rawDocs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
@@ -116,7 +116,7 @@ export function subscribeProperties(onUpdate, filters = {}) {
 export async function fetchProperties(filters = {}) {
   if (isFirebaseConfigured && db) {
     try {
-      const snap = await getDocs(collection(db, "properties"));
+      const snap = await getDocs(query(collection(db, "properties"), where("active", "==", true)));
       if (!snap.empty) {
         const rawDocs = snap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
         return filterAndSortProperties(rawDocs, filters);
@@ -132,10 +132,10 @@ export async function fetchProperties(filters = {}) {
 // -------------------------------------------------------------
 // SINGLE PROPERTY LOOKUP (REALTIME & ONE-SHOT)
 // -------------------------------------------------------------
-export function subscribePropertyBySlug(slug, onUpdate) {
+export function subscribePropertyBySlug(slug, onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
-      return onSnapshot(collection(db, "properties"), (snap) => {
+      return onSnapshot(query(collection(db, "properties"), where("slug", "==", slug), where("active", "==", true), limit(1)), (snap) => {
         if (!snap.empty) {
           const list = snap.docs.map(d => ({ ...d.data(), id: d.id }));
           const match = list.find(p => p.slug === slug || p.id === slug);
@@ -145,6 +145,9 @@ export function subscribePropertyBySlug(slug, onUpdate) {
           }
         }
         onUpdate(null);
+      }, (error) => {
+        console.warn('Could not load property:', error);
+        onError?.(error);
       });
     } catch (err) {
       console.warn("Could not attach slug listener:", err);
@@ -158,7 +161,7 @@ export function subscribePropertyBySlug(slug, onUpdate) {
 export async function fetchPropertyBySlug(slug) {
   if (isFirebaseConfigured && db) {
     try {
-      const q = query(collection(db, "properties"), where("slug", "==", slug), limit(1));
+      const q = query(collection(db, "properties"), where("slug", "==", slug), where("active", "==", true), limit(1));
       const snap = await getDocs(q);
       if (!snap.empty) {
         return { ...snap.docs[0].data(), id: snap.docs[0].id };
@@ -208,7 +211,7 @@ export function subscribePropertyLocations(onUpdate) {
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(
-        collection(db, "properties"),
+        query(collection(db, "properties"), where("active", "==", true)),
         (snapshot) => {
           if (!snapshot.empty) {
             const rawDocs = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
@@ -243,32 +246,42 @@ export async function submitLeadInquiry(leadData) {
   }
 
   // 2. Strict Input Validation
-  if (!leadData.name || !leadData.phone || leadData.phone.replace(/\D/g, '').length < 10) {
+  const normalizedPhone = (leadData.phone || '').replace(/[\s()-]/g, '');
+  if (!leadData.name?.trim() || leadData.name.trim().length > 120 || !/^\+?[0-9]{10,15}$/.test(normalizedPhone)) {
     throw new Error("Please provide a valid full name and 10-digit mobile number.");
+  }
+  if (leadData.consent !== true) {
+    throw new Error("Please consent to being contacted before submitting your inquiry.");
+  }
+  if (!isFirebaseConfigured || !db) {
+    throw new Error("Inquiry service is unavailable. Please call or message us instead.");
   }
 
   const newLead = {
     name: leadData.name.trim(),
-    phone: leadData.phone.trim(),
+    phone: normalizedPhone,
     email: (leadData.email || "").trim(),
     propertyId: leadData.propertyId || "general-inquiry",
     propertyTitle: leadData.propertyTitle || "Chennai Real Estate Consultation",
     preferredLocation: leadData.preferredLocation || "",
     preferredDate: leadData.preferredDate || "",
     leadType: leadData.leadType || "Website Inquiry",
-    message: leadData.message || "",
+    message: (leadData.message || "").trim(),
+    source: leadData.source || "Website",
+    serviceRequired: leadData.serviceRequired || "",
+    targetTimeline: leadData.targetTimeline || "",
+    consent: true,
     status: "New",
     submittedAt: new Date().toISOString()
   };
 
   // 3. Write directly to Firestore Cloud
-  if (isFirebaseConfigured && db) {
-    const docRef = await addDoc(collection(db, "leads"), {
-      ...newLead,
-      timestamp: serverTimestamp()
-    });
-    newLead.id = docRef.id;
-  }
+  const docRef = await addDoc(collection(db, "leads"), {
+    ...newLead,
+    timestamp: serverTimestamp(),
+    consentAt: serverTimestamp()
+  });
+  newLead.id = docRef.id;
 
   return { success: true, lead: newLead };
 }
@@ -280,7 +293,7 @@ export function subscribeTestimonials(onUpdate, onError) {
   if (isFirebaseConfigured && db) {
     try {
       return onSnapshot(
-        collection(db, "testimonials"),
+        query(collection(db, "testimonials"), where("active", "==", true)),
         (snapshot) => {
           if (!snapshot.empty) {
             const allItems = snapshot.docs.map(d => ({ ...d.data(), id: d.id }));
@@ -309,7 +322,7 @@ export function subscribeTestimonials(onUpdate, onError) {
 export async function fetchTestimonials() {
   if (isFirebaseConfigured && db) {
     try {
-      const snap = await getDocs(collection(db, "testimonials"));
+      const snap = await getDocs(query(collection(db, "testimonials"), where("active", "==", true)));
       if (!snap.empty) {
         const allItems = snap.docs.map(d => ({ ...d.data(), id: d.id }));
         const activeOnly = allItems.filter(t => t.active !== false);

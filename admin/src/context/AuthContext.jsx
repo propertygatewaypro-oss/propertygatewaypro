@@ -10,7 +10,8 @@ import {
   browserSessionPersistence,
   EmailAuthProvider,
   reauthenticateWithCredential,
-  updatePassword
+  updatePassword,
+  getIdTokenResult
 } from 'firebase/auth';
 import { formatFirebaseAuthError } from '../utils/authErrors';
 
@@ -18,6 +19,7 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Production-level session subscriber via official Firebase SDK
@@ -30,15 +32,25 @@ export function AuthProvider({ children }) {
 
       const unsubscribe = onAuthStateChanged(
         auth, 
-        (currentUser) => {
+        async (currentUser) => {
           clearTimeout(safetyTimer);
-          setUser(currentUser);
-          setLoading(false);
+          try {
+            const claims = currentUser ? (await getIdTokenResult(currentUser, true)).claims : null;
+            setUser(currentUser);
+            setIsAdmin(claims?.admin === true);
+          } catch (error) {
+            console.error('Could not verify admin claim:', error);
+            setUser(null);
+            setIsAdmin(false);
+          } finally {
+            setLoading(false);
+          }
         },
         (error) => {
           clearTimeout(safetyTimer);
           console.error("Firebase Auth observer error:", error);
           setUser(null);
+          setIsAdmin(false);
           setLoading(false);
         }
       );
@@ -49,6 +61,7 @@ export function AuthProvider({ children }) {
     } else {
       // No demo fallback — pure production initialization state
       setUser(null);
+      setIsAdmin(false);
       setLoading(false);
     }
   }, []);
@@ -79,8 +92,14 @@ export function AuthProvider({ children }) {
         email.trim(), 
         password
       );
+      const token = await getIdTokenResult(userCredential.user, true);
+      if (token.claims.admin !== true) {
+        await fbSignOut(auth);
+        throw new Error('This account is not authorized for the admin portal.');
+      }
       return userCredential.user;
     } catch (err) {
+      if (err.message === 'This account is not authorized for the admin portal.') throw err;
       const friendlyMessage = formatFirebaseAuthError(err);
       throw new Error(friendlyMessage);
     }
@@ -94,6 +113,7 @@ export function AuthProvider({ children }) {
       await fbSignOut(auth);
     }
     setUser(null);
+    setIsAdmin(false);
   };
 
   /**
@@ -161,7 +181,7 @@ export function AuthProvider({ children }) {
     resetPassword,
     changeAdminPassword,
     isFirebaseConfigured,
-    isAuthenticated: Boolean(user)
+    isAuthenticated: Boolean(user && isAdmin)
   };
 
   return (

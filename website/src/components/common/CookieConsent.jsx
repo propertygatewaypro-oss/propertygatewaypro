@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
+const ANALYTICS_ID = 'G-XN859JN9YD';
+
+function enableAnalytics() {
+  if (document.getElementById('pg-google-analytics')) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', ANALYTICS_ID, { send_page_view: true });
+  const script = document.createElement('script');
+  script.id = 'pg-google-analytics';
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_ID}`;
+  document.head.appendChild(script);
+}
+
 export default function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
     const hasConsented = localStorage.getItem('pg_cookie_consent');
+    if (hasConsented === 'all') enableAnalytics();
     if (!hasConsented) {
       const timer = setTimeout(() => setShowConsent(true), 1200);
       return () => clearTimeout(timer);
@@ -13,7 +29,9 @@ export default function CookieConsent() {
   }, []);
 
   const handleAccept = (type) => {
-    localStorage.setItem('pg_cookie_consent', type);
+    const choice = type === 'all' ? 'all' : 'essential';
+    localStorage.setItem('pg_cookie_consent', choice);
+    if (choice === 'all') enableAnalytics();
     setShowConsent(false);
   };
 

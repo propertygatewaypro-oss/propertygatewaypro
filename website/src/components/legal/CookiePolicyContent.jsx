@@ -35,7 +35,7 @@ export default function CookiePolicyContent() {
           Cookies are compact text files containing alphanumeric strings that are transferred to your computer, tablet, or smartphone when you visit a website. Together with modern browser storage mechanisms such as <code>localStorage</code> and <code>sessionStorage</code>, cookies enable web servers to identify your device, recall browsing preferences, and provide persistent navigation experiences.
         </p>
         <p>
-          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), cookies help streamline your home search across Chennai micro-markets without requiring you to re-enter filters on every page reload.
+          At <strong>Property Gateway</strong> (<a href="https://www.propertygatewaypro.com" className="text-[#A88548] hover:underline font-medium">propertygatewaypro.com</a>), browser storage helps remember your preferences while you explore Chennai properties.
         </p>
       </section>
 
@@ -49,19 +49,19 @@ export default function CookiePolicyContent() {
             Why We Use Cookies
           </h2>
         </div>
-        <p>We use cookies and device identifiers for distinct, transparent operational goals:</p>
+        <p>We use browser storage and optional analytics for these purposes:</p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2.5">
           <div className="flex items-start gap-2.5">
             <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
-            <span>Ensuring cryptographic security against Cross-Site Request Forgery (CSRF) in consultation forms;</span>
+            <span>Remembering whether you chose essential storage or accepted analytics;</span>
           </div>
           <div className="flex items-start gap-2.5">
             <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
-            <span>Retaining your selected real estate filter parameters (e.g. OMR, ECR, Villa vs Apartment, Budget tier);</span>
+            <span>Keeping property filters in the page URL when you share a search;</span>
           </div>
           <div className="flex items-start gap-2.5">
             <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
@@ -73,7 +73,7 @@ export default function CookiePolicyContent() {
             <span className="w-5 h-5 rounded-full bg-[#A88548]/15 text-[#A88548] flex items-center justify-center shrink-0 mt-0.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
             </span>
-            <span>Evaluating anonymous technical metrics to optimize high-resolution floor plan image delivery.</span>
+            <span>Measuring visits with Google Analytics when you choose "Accept All".</span>
           </div>
         </div>
       </section>
@@ -89,12 +89,12 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          These cookies are vital for the core technical operation of Property Gateway. Without them, secure authentication, form tokens, and foundational routing functions cannot operate. Under the DPDP Act 2023, these essential session cookies do not require prior consent because they are deployed strictly to deliver services requested by the user.
+          The public site stores your cookie choice and temporary form display preferences in your browser. These settings support the site experience you request.
         </p>
         <div className="p-4 rounded-2xl bg-white border border-[#E7E2D8] space-y-2 font-mono text-xs">
-          <p><span className="text-[#A88548] font-semibold">Cookie / Key:</span> <code>pg_session_id</code>, <code>pg_csrf_token</code>, <code>pg_cookie_consent</code></p>
-          <p><span className="text-[#A88548] font-semibold">Purpose:</span> Session integrity, form submission validation, and recording your cookie preferences.</p>
-          <p><span className="text-[#A88548] font-semibold">Duration:</span> Session duration or up to 1 year for persistent consent.</p>
+          <p><span className="text-[#A88548] font-semibold">Browser keys:</span> <code>pg_cookie_consent</code>, <code>pg_post_req_dismissed</code>, <code>pg_requirement_submitted</code></p>
+          <p><span className="text-[#A88548] font-semibold">Purpose:</span> Remember your cookie choice and avoid repeatedly showing the requirement popup.</p>
+          <p><span className="text-[#A88548] font-semibold">Duration:</span> The dismissal key lasts for the browser session; the other keys remain until you clear site data.</p>
         </div>
       </section>
 
@@ -109,7 +109,7 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          Functional cookies allow Property Gateway to remember choices you make while browsing. For instance, they store whether you filtered for 3 BHK villas in ECR or preferred pricing in Lakhs vs. Crores, ensuring that your view remains customized throughout your browsing session.
+          The site uses browser storage to remember your popup and cookie choices. Property filters are represented in the page URL when available.
         </p>
       </section>
 
@@ -124,7 +124,7 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          Analytics cookies gather aggregated, pseudonymous information about how visitors interact with our portal. They record page load latencies, scroll depth, bounce rates, and popular search terms across Chennai residential zones. These insights allow our engineering team to rectify broken links and speed up floor plan rendering.
+          If you choose "Accept All", we load Google Analytics to measure visits and site usage. If you choose "Essential Only", we do not load it.
         </p>
       </section>
 
@@ -139,7 +139,7 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          When you interact with promotional campaigns for new residential project launches in Chennai, marketing cookies assist in measuring conversion performance and ensuring that users who have already submitted a requirement are not repeatedly exposed to redundant promotional ads. We do not engage in unauthorized third-party cross-site data harvesting.
+          This site does not currently load a separate advertising or remarketing tag. We will update this policy and seek an appropriate choice before adding one.
         </p>
       </section>
 
@@ -154,7 +154,7 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          Certain pages may feature integrated content from third-party platforms, such as interactive Google Maps highlighting project connectivity, or embedded video walkthroughs hosted on YouTube. When interacting with these embeds, those third-party providers may place cookies governed by their respective independent privacy terms.
+          Links to third-party services, such as Google Maps or WhatsApp, take you to those services when you choose to open them. Their privacy practices apply after you leave this site.
         </p>
       </section>
 
@@ -195,14 +195,14 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          You hold complete control over non-essential cookies. You can accept all cookies or choose essential cookies only directly from our floating banner when browsing, or configure your preferences manually:
+          You can accept analytics or choose essential storage only from the banner. You can clear your saved choice through your browser's site data settings:
         </p>
         <div className="bg-[#FAF9F6] border border-[#E7E2D8] rounded-2xl p-4 sm:p-5 space-y-2 text-xs text-slate-700">
           <p>
             • <strong>Essential Cookies:</strong> Always enabled to ensure secure navigation and prevent bot attacks.
           </p>
           <p>
-            • <strong>Preference & Analytics Cookies:</strong> Can be accepted or restricted at any time via the bottom banner or through your browser settings.
+            • <strong>Analytics:</strong> Loads only after you select "Accept All". Clear site data to choose again.
           </p>
         </div>
       </section>
@@ -218,7 +218,7 @@ export default function CookiePolicyContent() {
           </h2>
         </div>
         <p>
-          In addition to our preference centre, you can block or purge cookies through your browser settings:
+          You can clear saved choices or block cookies through your browser settings:
         </p>
         <ul className="space-y-1.5 text-xs text-slate-700 pl-4 list-disc">
           <li><strong>Google Chrome:</strong> Settings → Privacy & Security → Third-party cookies;</li>
@@ -227,7 +227,7 @@ export default function CookiePolicyContent() {
           <li><strong>Microsoft Edge:</strong> Settings → Cookies and site permissions → Manage and delete cookies.</li>
         </ul>
         <p className="text-xs text-slate-500 italic">
-          Note: Disabling all cookies may prevent property filters, dynamic maps, and consultation forms from functioning properly.
+          Note: Clearing site data resets your cookie and popup preferences.
         </p>
       </section>
 

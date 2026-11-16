@@ -1,33 +1,77 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Properties Collection:
-    // - Publicly readable by all visitors browsing the website
-    // - Writable only by authenticated administrators
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+    function validText(data, field, maxLength) {
+      return data[field] is string && data[field].size() > 0 && data[field].size() <= maxLength;
+    }
+    function optionalText(data, field, maxLength) {
+      return !(field in data) || (data[field] is string && data[field].size() <= maxLength);
+    }
+    function validProperty(data) {
+      return data.keys().hasAll(['title', 'slug', 'active'])
+        && validText(data, 'title', 200)
+        && validText(data, 'slug', 220)
+        && data.active is bool;
+    }
+    function validTestimonial(data) {
+      return data.keys().hasAll(['author', 'content', 'active'])
+        && validText(data, 'author', 120)
+        && validText(data, 'content', 3000)
+        && data.active is bool;
+    }
+    function validLead(data) {
+      return data.keys().hasAll(['name', 'phone'])
+        && validText(data, 'name', 120)
+        && data.name.matches('.*[^ ].*')
+        && validText(data, 'phone', 30)
+        && optionalText(data, 'email', 254)
+        && optionalText(data, 'message', 3000);
+    }
+    function validPublicLead(data) {
+      return validLead(data)
+        && data.keys().hasAll(['consent', 'consentAt', 'status', 'timestamp', 'submittedAt'])
+        && data.keys().hasOnly([
+          'name', 'phone', 'email', 'propertyId', 'propertyTitle',
+          'preferredLocation', 'preferredDate', 'leadType', 'message',
+          'source', 'serviceRequired', 'targetTimeline', 'consent',
+          'status', 'submittedAt', 'timestamp', 'consentAt'
+        ])
+        && data.phone.matches('^\\+?[0-9]{10,15}$')
+        && optionalText(data, 'propertyId', 150)
+        && optionalText(data, 'propertyTitle', 220)
+        && optionalText(data, 'preferredLocation', 150)
+        && optionalText(data, 'preferredDate', 80)
+        && optionalText(data, 'leadType', 100)
+        && optionalText(data, 'source', 100)
+        && optionalText(data, 'serviceRequired', 100)
+        && optionalText(data, 'targetTimeline', 100)
+        && validText(data, 'submittedAt', 40)
+        && data.consent == true
+        && data.status == 'New'
+        && data.timestamp == request.time
+        && data.consentAt == request.time;
+    }
     match /properties/{propertyId} {
-      allow read: if true;
-      allow write: if request.auth != null;
+      allow get, list: if isAdmin() || resource.data.active == true;
+      allow create: if isAdmin() && validProperty(request.resource.data);
+      allow update: if isAdmin() && validProperty(request.resource.data);
+      allow delete: if isAdmin();
     }
-    
-    // Leads Collection:
-    // - Publicly creatable by prospective clients submitting contact forms
-    // - Readable and manageable ONLY by authenticated administrators
     match /leads/{leadId} {
-      allow create: if (request.resource.data.name is string 
-                    && request.resource.data.phone is string) || request.auth != null;
-      allow read, write: if request.auth != null;
+      allow create: if (isAdmin() && validLead(request.resource.data))
+        || validPublicLead(request.resource.data);
+      allow update: if isAdmin() && validLead(request.resource.data);
+      allow get, list, delete: if isAdmin();
     }
-
-    // Testimonials / Client Feedbacks Collection:
-    // - Publicly readable by all visitors browsing client reviews on the website
-    // - Writable, updatable, deletable only by authenticated administrators
     match /testimonials/{testimonialId} {
-      allow read: if true;
-      allow write: if request.auth != null;
+      allow get, list: if isAdmin() || resource.data.active == true;
+      allow create: if isAdmin() && validTestimonial(request.resource.data);
+      allow update: if isAdmin() && validTestimonial(request.resource.data);
+      allow delete: if isAdmin();
     }
-
-    // Default catch-all: Block all unspecified collection access
     match /{document=**} {
       allow read, write: if false;
     }

@@ -63,7 +63,7 @@ export default function TermsPage() {
               1. Introduction & Acceptance of Terms
             </h2>
             <p>
-              Welcome to <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>). These Terms & Conditions constitute a legally binding agreement between you (whether visiting as an individual, family, NRI buyer, or commercial investor) and Property Gateway.
+              Welcome to <strong>Property Gateway</strong> (<a href="https://www.propertygatewaypro.com" className="text-[#A88548] hover:underline font-medium">propertygatewaypro.com</a>). These Terms & Conditions constitute a legally binding agreement between you (whether visiting as an individual, family, NRI buyer, or commercial investor) and Property Gateway.
             </p>
             <p>
               By accessing, browsing, or utilizing our website, enquiry tools, consultation schedulers, or concierge advisory services, you acknowledge that you have read, understood, and unequivocally agreed to be bound by these Terms and our <Link to="/privacy-policy" className="text-[#A88548] hover:underline font-medium">Privacy Policy</Link>. If you do not accept these Terms in their entirety, you must immediately discontinue using our website and services.

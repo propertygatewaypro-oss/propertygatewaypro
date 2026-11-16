@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
@@ -6,13 +6,13 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import AdminLayout from './components/layout/AdminLayout';
 
 // Pages
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import ManageProperties from './pages/ManageProperties';
-import AddEditPropertyPage from './pages/AddEditPropertyPage';
-import ManageLeads from './pages/ManageLeads';
-import ManageTestimonials from './pages/ManageTestimonials';
-import SettingsPage from './pages/SettingsPage';
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const ManageProperties = lazy(() => import('./pages/ManageProperties'));
+const AddEditPropertyPage = lazy(() => import('./pages/AddEditPropertyPage'));
+const ManageLeads = lazy(() => import('./pages/ManageLeads'));
+const ManageTestimonials = lazy(() => import('./pages/ManageTestimonials'));
+const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, loading } = useAuth();
@@ -47,7 +47,7 @@ function AdminRoutes() {
   }
 
   return (
-    <Routes>
+    <Suspense fallback={<div className="min-h-screen" aria-label="Loading admin page" />}><Routes>
       <Route 
         path="/login" 
         element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />} 
@@ -73,7 +73,7 @@ function AdminRoutes() {
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    </Routes></Suspense>
   );
 }
 

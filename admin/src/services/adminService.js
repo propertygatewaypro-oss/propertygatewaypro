@@ -1,5 +1,5 @@
 import imageCompression from 'browser-image-compression';
-import { db, storage, isFirebaseConfigured } from './firebase';
+import { db, isFirebaseConfigured } from './firebase';
 import { 
   collection, 
   getDocs, 
@@ -8,11 +8,8 @@ import {
   addDoc,
   updateDoc, 
   deleteDoc, 
-  query, 
-  orderBy,
   onSnapshot
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { convertToWebPFast } from '../utils/imageOptimizer';
 
 // -------------------------------------------------------------
@@ -186,10 +183,13 @@ export function subscribeAdminLeads(onUpdate, onError) {
         collection(db, "leads"), 
         (snapshot) => {
           // Put id LAST so true Firestore doc.id is never overwritten by doc.data().id
-          const liveLeads = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, _docId: doc.id }));
+          const liveLeads = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return { ...data, submittedAt: data.timestamp?.toDate?.().toISOString() || data.submittedAt, id: doc.id, _docId: doc.id };
+          });
           liveLeads.sort((a, b) => {
-            const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
-            const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
+            const timeA = new Date(a.timestamp?.toDate ? a.timestamp.toDate() : (a.submittedAt || a.createdAt || 0)).getTime();
+            const timeB = new Date(b.timestamp?.toDate ? b.timestamp.toDate() : (b.submittedAt || b.createdAt || 0)).getTime();
             return timeB - timeA;
           });
           onUpdate(liveLeads);
@@ -214,10 +214,13 @@ export async function fetchAdminLeads() {
     try {
       const snapshot = await getDocs(collection(db, "leads"));
       // Put id LAST so true Firestore doc.id is never overwritten by doc.data().id
-      const liveLeads = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, _docId: doc.id }));
+      const liveLeads = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return { ...data, submittedAt: data.timestamp?.toDate?.().toISOString() || data.submittedAt, id: doc.id, _docId: doc.id };
+      });
       liveLeads.sort((a, b) => {
-        const timeA = new Date(a.submittedAt || a.createdAt || (a.timestamp?.toDate ? a.timestamp.toDate() : 0)).getTime();
-        const timeB = new Date(b.submittedAt || b.createdAt || (b.timestamp?.toDate ? b.timestamp.toDate() : 0)).getTime();
+        const timeA = new Date(a.timestamp?.toDate ? a.timestamp.toDate() : (a.submittedAt || a.createdAt || 0)).getTime();
+        const timeB = new Date(b.timestamp?.toDate ? b.timestamp.toDate() : (b.submittedAt || b.createdAt || 0)).getTime();
         return timeB - timeA;
       });
       return liveLeads;

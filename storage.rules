@@ -4,13 +4,18 @@ service firebase.storage {
     
     // Property Images & Uploaded Media (Properties & Testimonial Avatars):
     // - Publicly readable for website image rendering
-    // - Uploadable/deletable ONLY by authenticated administrators
-    // - Strict image content type and max size validation (10MB)
+    // - Uploadable/deletable only by users with the admin custom claim
+    // - Strict image content type and max size validation (2MB)
     match /{folder}/{allPaths=**} {
-      allow read: if true;
-      allow write: if request.auth != null 
-                   && request.resource.size < 10 * 1024 * 1024
-                   && request.resource.contentType.matches('image/.*');
+      allow read: if folder in ['properties', 'testimonials'];
+      allow create, update: if request.auth != null
+                   && request.auth.token.admin == true
+                   && folder in ['properties', 'testimonials']
+                   && request.resource.size < 2 * 1024 * 1024
+                   && request.resource.contentType.matches('image/(jpeg|png|webp)');
+      allow delete: if request.auth != null
+                   && request.auth.token.admin == true
+                   && folder in ['properties', 'testimonials'];
     }
 
     // Default deny for all other storage paths

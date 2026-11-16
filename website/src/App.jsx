@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 
 // Layout & Global Components
@@ -12,16 +12,16 @@ import PostRequirementModal from './components/common/PostRequirementModal';
 import { usePsychologicalModalTrigger } from './hooks/usePsychologicalModalTrigger';
 
 // Pages
-import HomePage from './pages/HomePage';
-import PropertiesPage from './pages/PropertiesPage';
-import PropertyDetailPage from './pages/PropertyDetailPage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import ContactPage from './pages/ContactPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsPage from './pages/TermsPage';
-import CookiePolicyPage from './pages/CookiePolicyPage';
-import RefundPolicyPage from './pages/RefundPolicyPage';
+const HomePage = lazy(() => import('./pages/HomePage'));
+const PropertiesPage = lazy(() => import('./pages/PropertiesPage'));
+const PropertyDetailPage = lazy(() => import('./pages/PropertyDetailPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const CookiePolicyPage = lazy(() => import('./pages/CookiePolicyPage'));
+const RefundPolicyPage = lazy(() => import('./pages/RefundPolicyPage'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -61,7 +61,7 @@ function AppContent() {
 
       {/* Main Routed Content */}
       <main className="flex-grow pb-16 md:pb-0">
-        <Routes>
+        <Suspense fallback={<div className="min-h-[40vh]" aria-label="Loading page" />}><Routes>
           <Route 
             path="/" 
             element={<HomePage onOpenVisitModal={handleOpenVisitModal} />} 
@@ -103,7 +103,7 @@ function AppContent() {
 
           {/* Catch-all redirect to Home */}
           <Route path="*" element={<HomePage onOpenVisitModal={handleOpenVisitModal} />} />
-        </Routes>
+        </Routes></Suspense>
       </main>
 
       {/* Global Footer */}

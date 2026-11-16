@@ -38,7 +38,7 @@ export default function PrivacyPolicyContent() {
           </h2>
         </div>
         <p>
-          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), your privacy and data autonomy are fundamental to our advisory relationship. This Privacy Policy outlines the categories of data we collect, why we collect it, how it is processed, and the statutory safeguards provided to you.
+          At <strong>Property Gateway</strong> (<a href="https://www.propertygatewaypro.com" className="text-[#A88548] hover:underline font-medium">propertygatewaypro.com</a>), your privacy and data autonomy are fundamental to our advisory relationship. This Privacy Policy outlines the categories of data we collect, why we collect it, how it is processed, and the statutory safeguards provided to you.
         </p>
         <p>
           This document is published in strict conformity with the <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>, the Digital Personal Data Protection Rules, the <strong>Information Technology Act, 2000</strong>, and regulatory guidelines established by the <strong>Tamil Nadu Real Estate Regulatory Authority (TNRERA)</strong>.
@@ -146,7 +146,7 @@ export default function PrivacyPolicyContent() {
           </h2>
         </div>
         <p>
-          Every form on Property Gateway features an explicit consent acknowledgement. Submitting an enquiry indicates your conscious decision to initiate communication regarding specified properties. We record the exact timestamp, form identifier, and IP address of your submission to maintain an immutable consent audit trail required by the DPDP Act.
+          Our enquiry forms ask for your permission to be contacted. We store the details you submit, the form source, and a submission timestamp with the enquiry. You can contact us to withdraw consent or request deletion.
         </p>
       </section>
 
@@ -283,7 +283,7 @@ export default function PrivacyPolicyContent() {
           </h2>
         </div>
         <p>
-          All personal data collected is stored on secure, encrypted cloud servers adhering to Indian data sovereignty norms. We retain personal data only for as long as reasonably required to fulfill property search advisory, comply with TNRERA audit trails, resolve disputes, or satisfy statutory tax requirements under Indian law.
+          Enquiry data is stored using Firebase services. We retain it while needed to respond to your request and meet applicable recordkeeping obligations. Contact us to ask about retention or request deletion.
         </p>
       </section>
 
@@ -313,7 +313,7 @@ export default function PrivacyPolicyContent() {
           </h2>
         </div>
         <p>
-          Property Gateway utilizes cookies to preserve your filter criteria (such as budget range and micro-market selections), safeguard form submissions against Cross-Site Request Forgery (CSRF), and assess website load speeds. Please consult our detailed <Link to="/cookie-policy" className="text-[#A88548] font-medium hover:underline">Cookie Policy</Link> for comprehensive technical disclosures and our interactive preference toggle.
+          Property Gateway stores your cookie preference in your browser and loads Google Analytics only after you select "Accept All". Please consult our <Link to="/cookie-policy" className="text-[#A88548] font-medium hover:underline">Cookie Policy</Link> for details.
         </p>
       </section>
 

@@ -32,7 +32,7 @@ export default function RefundPolicyContent() {
           </h2>
         </div>
         <p>
-          At <strong>Property Gateway</strong> (<a href="https://propertygateway.com" className="text-[#A88548] hover:underline font-medium">propertygateway.com</a>), we maintain the highest standards of financial transparency and professional ethics in accordance with the <strong>Consumer Protection Act, 2019</strong> and the <strong>Real Estate (Regulation and Development) Act, 2016 (TNRERA)</strong>.
+          At <strong>Property Gateway</strong> (<a href="https://www.propertygatewaypro.com" className="text-[#A88548] hover:underline font-medium">propertygatewaypro.com</a>), we maintain the highest standards of financial transparency and professional ethics in accordance with the <strong>Consumer Protection Act, 2019</strong> and the <strong>Real Estate (Regulation and Development) Act, 2016 (TNRERA)</strong>.
         </p>
         <p>
           This Refund & Cancellation Policy sets forth the terms and conditions governing financial transactions, fee structures, and the clear distinction between advisory services provided by Property Gateway versus property allotment payments remitted directly to real estate developers.

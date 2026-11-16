@@ -22,8 +22,8 @@ property_gateway/
 │   ├── vercel-react-best-practices # High performance React rendering
 │   └── firebase-*                  # Auth, Firestore, and Storage patterns
 │
-├── website/                        # [To be scaffolded] Public portal (Port 3000)
-└── admin/                          # [To be scaffolded] Admin portal (Port 3001)
+├── website/                        # Public React/Vite portal (Port 3000)
+└── admin/                          # Firebase Auth admin portal (Port 3001)
 ```
 
 ---
@@ -32,3 +32,14 @@ property_gateway/
 * **Documentation:** See [docs/README.md](file:///c:/Users/dhine/Documents/Strategy_360/property_gateway/docs/README.md)
 * **Master Specification:** See [docs/PROJECT_SPECIFICATION.md](file:///c:/Users/dhine/Documents/Strategy_360/property_gateway/docs/PROJECT_SPECIFICATION.md)
 * **Scalability Guide:** See [docs/PRODUCTION_SCALE_HARDENING.md](file:///c:/Users/dhine/Documents/Strategy_360/property_gateway/docs/PRODUCTION_SCALE_HARDENING.md)
+
+## Local development
+
+Copy `website/.env.example` and `admin/.env.example` to `.env` files in their
+respective folders, set the Firebase project values, then run `npm install` in
+the root and each app folder. Start both apps with `npm run dev`, or build both
+with `npm run build`.
+
+Before deploying changed Firebase rules or site queries, follow
+[FIREBASE_ROLLOUT.md](FIREBASE_ROLLOUT.md). The admin portal requires an
+`admin: true` Firebase Auth custom claim.

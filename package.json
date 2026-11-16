@@ -9,9 +9,11 @@
     "dev:admin": "npm --prefix admin run dev",
     "build:web": "npm --prefix website run build",
     "build:admin": "npm --prefix admin run build",
-    "build": "npm run build:web && npm run build:admin"
+    "build": "npm run build:web && npm run build:admin",
+    "grant-admin": "node scripts/grant_admin_claim.cjs"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "firebase-admin": "^14.5.1"
   }
 }

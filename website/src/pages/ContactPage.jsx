@@ -39,7 +39,7 @@ export default function ContactPage() {
     message: propertyParam 
       ? `Inquiring about ${propertyParam}.` 
       : (purposeParam === 'home-loan' ? 'Interested in home loan options with minimal documentation.' : ''),
-    consent: true,
+    consent: false,
     website_hp: '' // Honeypot
   });
 
@@ -125,6 +125,7 @@ export default function ContactPage() {
         propertyTitle: leadTitle,
         leadType: typeLabel,
         source: 'Website Contact Page',
+        consent: formData.consent,
         website_trap_field: formData.website_hp,
         submittedAt: new Date().toISOString()
       });
@@ -148,7 +149,7 @@ export default function ContactPage() {
         preferredLocation: 'All Locations',
         targetTimeline: 'Immediate (Within 30 Days)',
         message: '',
-        consent: true,
+        consent: false,
         website_hp: ''
       });
     } catch (err) {

@@ -8,7 +8,7 @@ const FAMILY_SLIDES = [
   {
     image: '/images/families/chennai-family-housewarming.webp',
     title: 'Griha Pravesh Housewarming in Chennai',
-    subtitle: 'Over 500+ families found their verified architectural home through Property Gateway.'
+    subtitle: 'Tell us what you are looking for in Chennai.'
   },
   {
     image: '/images/families/chennai-couple-villa-keys.webp',
@@ -44,6 +44,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
   
   const timerRef = useRef(null);
   const formScrollRef = useRef(null);
+  const dialogRef = useRef(null);
 
   // Auto-slide carousel every 4.5 seconds
   useEffect(() => {
@@ -63,11 +64,31 @@ export default function PostRequirementModal({ isOpen, onClose }) {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
         onClose();
+      } else if (e.key === 'Tab' && isOpen && dialogRef.current) {
+        const focusable = Array.from(dialogRef.current.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]):not([tabindex="-1"]), textarea:not([disabled])')).filter(el => el.getClientRects().length);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!dialogRef.current.contains(document.activeElement) || document.activeElement === dialogRef.current) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+        } else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousFocus = document.activeElement;
+    const frame = requestAnimationFrame(() => dialogRef.current?.focus());
+    return () => {
+      cancelAnimationFrame(frame);
+      previousFocus?.focus?.();
+    };
+  }, [isOpen]);
 
   // Lock background body scroll while modal is active
   useEffect(() => {
@@ -192,6 +213,7 @@ export default function PostRequirementModal({ isOpen, onClose }) {
         message: formData.requirement || 'Looking for personalized Chennai property options.',
         leadType: 'Client Requirement Inquiry',
         source: 'Requirement Modal',
+        consent: formData.consent,
         website_trap_field: formData.website_trap_field
       });
 
@@ -224,6 +246,9 @@ export default function PostRequirementModal({ isOpen, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-black/80 backdrop-blur-xs animate-modal-backdrop overflow-hidden"
       role="dialog"
       aria-modal="true"
+      aria-label="Post your property requirement"
+      tabIndex={-1}
+      ref={dialogRef}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
