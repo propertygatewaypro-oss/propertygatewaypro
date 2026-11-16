@@ -1,25 +1,29 @@
 # Firebase rollout
 
-The local rules use a Firebase Auth custom claim named `admin`. Before deploying
-the rules, grant the claim to each authorized admin account. This requires
-Google Application Default Credentials with permission to manage Firebase Auth:
+## Current production state (2026-11-16)
+
+- Firebase project: `propertygatewaypro-8bc3f`.
+- The authorized admin account has the Firebase Auth `admin: true` custom claim.
+- `firestore.rules` is deployed. The `properties` slug/active composite index is READY.
+- The website and admin app are deployed to `www.propertygatewaypro.com` and `admin.propertygatewaypro.com`.
+- Public Firestore queries for active properties, property details, and testimonials succeeded. Anonymous unfiltered property reads and lead reads returned 403. A public test lead was created successfully and immediately deleted.
+- Firebase Storage has no default bucket in this project, so `storage.rules` could not be deployed. New property photos and testimonial avatars uploaded through the admin app go to Cloudinary; Firestore stores their URLs and the related records. Existing media also includes Unsplash URLs. No active upload path uses Firebase Storage.
+
+The admin account must sign out and sign in again to refresh its ID token before using the updated admin app. Authenticated admin CRUD still requires an interactive smoke test.
+
+## Future deployments
+
+Grant a new authorized admin account the claim before enabling admin-only rules:
 
 ```powershell
-npm run grant-admin -- <firebase-auth-uid> <project-id>
+npm run grant-admin -- <firebase-auth-uid> propertygatewaypro-8bc3f
 ```
 
-The account must sign out and sign in again to refresh its ID token. Confirm
-that the admin portal works with that account before deploying the new rules.
-
-Deploy the new composite index before the website query changes. Wait until the
-index is ready, then deploy the Firestore and Storage rules and both apps:
+Deploy the index first and wait for it to become READY. Deploy the website before restricting public reads to `active: true`, then deploy Firestore rules and the admin app. Use the repository root for Vercel CLI deployments because each Vercel project sets its own root directory (`website` or `admin`).
 
 ```powershell
-npx firebase-tools deploy --only firestore:indexes --project <project-id>
-npx firebase-tools deploy --only firestore:rules,storage --project <project-id>
+npx firebase-tools deploy --only firestore:indexes --project propertygatewaypro-8bc3f
+npx firebase-tools deploy --only firestore:rules --project propertygatewaypro-8bc3f
 ```
 
-The rules are local prototypes until reviewed and deployed. Verify public active
-property and testimonial reads, public lead creation, denied anonymous lead
-reads, denied non-admin writes, and authorized admin CRUD after deployment.
-Existing properties and testimonials must have `active: true` to remain public.
+Deploy `storage.rules` only after configuring a Firebase Storage bucket. Existing properties and testimonials need `active: true` to remain public.
