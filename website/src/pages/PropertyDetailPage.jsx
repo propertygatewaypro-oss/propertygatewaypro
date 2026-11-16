@@ -413,11 +413,11 @@ export default function PropertyDetailPage({ onOpenVisitModal }) {
               {/* RERA Assurance Card */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-800">
-                  <ShieldCheck className="w-4 h-4 text-brand-emerald-600" />
-                  <span>Legal Guarantee</span>
+                  <ShieldCheck className="w-4 h-4 text-[#A88548]" />
+                  <span>Channel Partner & Banking Assurance</span>
                 </div>
                 <p className="text-slate-600 leading-relaxed text-[11px]">
-                  Title scrutinized by our in-house legal experts. SBI & HDFC home loan approval available.
+                  Direct developer price with ₹0 buyer brokerage. 30-year title scrutinized by advocates. Hassle-free home loans with minimal documentation via institutional banking desks.
                 </p>
               </div>
 

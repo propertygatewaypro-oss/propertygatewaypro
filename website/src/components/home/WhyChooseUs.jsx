@@ -119,24 +119,24 @@ export default function WhyChooseUs() {
     },
     {
       index: "02",
-      tag: "0% COMMISSION",
-      title: "Zero Brokerage on New Projects",
-      description: "Buy directly at developer prices. We charge ₹0 commission to buyers for all newly launched gated community apartments, villas, and plots.",
-      highlight: "Save 2% Brokerage"
+      tag: "REAL ESTATE PARTNER",
+      title: "Seamless Property Search",
+      description: "As your channel partner, we connect you with leading developers at ₹0 brokerage. We simplify complex negotiations, verify documentation, and provide end-to-end support.",
+      highlight: "Leading Developers & ₹0 Brokerage"
     },
     {
       index: "03",
-      tag: "30-YR TITLE AUDIT",
-      title: "Title & Document Assistance",
-      description: "Our in-house legal advocates verify 30-year parent deeds, patta, CMDA approvals, and assist with bank loan approvals up to 80% from top lenders.",
-      highlight: "SBI & HDFC Pre-Approved"
+      tag: "HOME LOAN PARTNER",
+      title: "Hassle-Free Home Loans",
+      description: "Leveraging extensive banking relationships to secure competitive interest rates, flexible repayment tenures, and minimal documentation from application to disbursement.",
+      highlight: "Application to Disbursement"
     },
     {
       index: "04",
       tag: "GUIDED INSPECTIONS",
       title: "Complimentary Site Visits",
-      description: "Experience projects in person with your family. We organize dedicated, guided on-site visits with expert project walkthroughs across Chennai.",
-      highlight: "Personalized Site Walkthroughs"
+      description: "Experience prospective projects in person. We organize dedicated, guided on-site project walkthroughs with senior micro-market specialists across Chennai.",
+      highlight: "Personalized Project Tours"
     }
   ];
 

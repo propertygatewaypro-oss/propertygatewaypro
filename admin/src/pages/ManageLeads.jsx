@@ -10,7 +10,9 @@ import {
   Inbox,
   Plus,
   X,
-  AlertCircle
+  AlertCircle,
+  Building2,
+  Coins
 } from 'lucide-react';
 import { subscribeAdminLeads, saveLead, updateLeadStatus, deleteLead } from '../services/adminService';
 
@@ -34,6 +36,7 @@ export default function ManageLeads() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [serviceFilter, setServiceFilter] = useState('All');
 
   // Manual Inquiry Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +47,7 @@ export default function ManageLeads() {
     phone: '',
     email: '',
     propertyTitle: '',
-    leadType: 'General Consultation',
+    leadType: 'Real Estate (Channel Partner)',
     preferredLocation: '',
     preferredDate: '',
     message: '',
@@ -57,7 +60,7 @@ export default function ManageLeads() {
       phone: '',
       email: '',
       propertyTitle: '',
-      leadType: 'General Consultation',
+      leadType: 'Real Estate (Channel Partner)',
       preferredLocation: '',
       preferredDate: '',
       message: '',
@@ -155,10 +158,20 @@ export default function ManageLeads() {
     const matchesSearch = 
       l.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       l.phone?.includes(searchQuery) ||
-      l.propertyTitle?.toLowerCase().includes(searchQuery.toLowerCase());
+      l.propertyTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      l.leadType?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      l.serviceRequired?.toLowerCase().includes(searchQuery.toLowerCase());
     const leadNormStatus = normalizeLeadStatus(l.status);
     const matchesStatus = statusFilter === 'All' || leadNormStatus === statusFilter;
-    return matchesSearch && matchesStatus;
+
+    let matchesService = true;
+    if (serviceFilter === 'Real Estate') {
+      matchesService = !l.leadType?.toLowerCase().includes('home loan') && !l.serviceRequired?.toLowerCase().includes('home loan');
+    } else if (serviceFilter === 'Home Loan') {
+      matchesService = l.leadType?.toLowerCase().includes('home loan') || l.serviceRequired?.toLowerCase().includes('home loan') || l.propertyTitle?.toLowerCase().includes('home loan');
+    }
+
+    return matchesSearch && matchesStatus && matchesService;
   });
 
   return (
@@ -201,12 +214,24 @@ export default function ManageLeads() {
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Filter className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <div className="flex items-center gap-1.5 w-full sm:w-auto">
+            <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <select
+              value={serviceFilter}
+              onChange={(e) => setServiceFilter(e.target.value)}
+              className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-emerald-600 w-full sm:w-auto font-medium"
+            >
+              <option value="All">All Verticals</option>
+              <option value="Real Estate">🏢 Real Estate</option>
+              <option value="Home Loan">🏦 Home Loans</option>
+            </select>
+          </div>
+
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-emerald-600 w-full sm:w-auto"
+            className="text-xs py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-emerald-600 w-full sm:w-auto font-medium"
           >
             <option value="All">All Statuses ({leads.length})</option>
             {STATUS_OPTIONS.map(s => {
@@ -257,8 +282,15 @@ export default function ManageLeads() {
                 <tbody className="divide-y divide-slate-100">
                   {filteredLeads.map((lead) => {
                     const cleanPhone = lead.phone?.replace(/[^0-9]/g, '');
+                    const isLoan = lead.leadType?.toLowerCase().includes('home loan') || 
+                                   lead.serviceRequired?.toLowerCase().includes('home loan') ||
+                                   lead.propertyTitle?.toLowerCase().includes('home loan');
+                    const isBoth = lead.serviceRequired?.includes('Both') || lead.leadType?.includes('Both');
+
                     const waText = encodeURIComponent(
-                      `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding "${lead.propertyTitle || 'Chennai Properties'}". How can I assist you with floor plans or scheduling a site visit?`
+                      isLoan
+                        ? `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding Home Loan Assistance. How can I assist you with competitive interest rates and minimal documentation?`
+                        : `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding "${lead.propertyTitle || 'Chennai Properties'}". How can I assist you with floor plans or scheduling a site visit?`
                     );
 
                     const isSiteVisit = lead.leadType?.includes('Site Visit') || lead.preferredDate;
@@ -282,14 +314,32 @@ export default function ManageLeads() {
                           <div className="font-medium text-slate-900 line-clamp-1">
                             {lead.propertyTitle || 'General Consultation'}
                           </div>
-                          <div className="mt-1 flex items-center gap-1.5">
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                            {/* Service Vertical Badge */}
+                            {isBoth ? (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                                <Building2 className="w-2.5 h-2.5 text-[#A88548]" />
+                                <span>Property + Loan</span>
+                              </span>
+                            ) : isLoan ? (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-800 border border-purple-200">
+                                <Coins className="w-2.5 h-2.5 text-purple-600" />
+                                <span>Home Loan</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-800 border border-blue-200">
+                                <Building2 className="w-2.5 h-2.5 text-blue-600" />
+                                <span>Real Estate</span>
+                              </span>
+                            )}
+
                             {isSiteVisit ? (
                               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
                                 <Calendar className="w-3 h-3" />
                                 <span>Site Visit: {lead.preferredDate || 'Requested'}</span>
                               </span>
                             ) : (
-                              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700">
+                              <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700">
                                 {lead.leadType || 'Inquiry'}
                               </span>
                             )}
@@ -374,8 +424,15 @@ export default function ManageLeads() {
             <div className="md:hidden divide-y divide-slate-100">
               {filteredLeads.map((lead) => {
                 const cleanPhone = lead.phone?.replace(/[^0-9]/g, '');
+                const isLoan = lead.leadType?.toLowerCase().includes('home loan') || 
+                               lead.serviceRequired?.toLowerCase().includes('home loan') ||
+                               lead.propertyTitle?.toLowerCase().includes('home loan');
+                const isBoth = lead.serviceRequired?.includes('Both') || lead.leadType?.includes('Both');
+
                 const waText = encodeURIComponent(
-                  `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding "${lead.propertyTitle || 'Chennai Properties'}". How can I assist you with floor plans or scheduling a site visit?`
+                  isLoan
+                    ? `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding Home Loan Assistance. How can I assist you with competitive interest rates and minimal documentation?`
+                    : `Hi ${lead.name || 'Sir/Madam'}, thank you for contacting Property Gateway regarding "${lead.propertyTitle || 'Chennai Properties'}". How can I assist you with floor plans or scheduling a site visit?`
                 );
                 const isSiteVisit = lead.leadType?.includes('Site Visit') || lead.preferredDate;
                 const currentStatus = normalizeLeadStatus(lead.status);
@@ -414,14 +471,32 @@ export default function ManageLeads() {
                         <span className="text-slate-400 font-medium">Inquiry:</span>
                         <span className="font-semibold text-slate-800">{lead.propertyTitle || 'General Consultation'}</span>
                       </div>
-                      <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                        {/* Service Vertical Badge */}
+                        {isBoth ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                            <Building2 className="w-2.5 h-2.5 text-[#A88548]" />
+                            <span>Property + Loan</span>
+                          </span>
+                        ) : isLoan ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-800 border border-purple-200">
+                            <Coins className="w-2.5 h-2.5 text-purple-600" />
+                            <span>Home Loan</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-800 border border-blue-200">
+                            <Building2 className="w-2.5 h-2.5 text-blue-600" />
+                            <span>Real Estate</span>
+                          </span>
+                        )}
+
                         {isSiteVisit ? (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
                             <Calendar className="w-3 h-3" />
                             <span>Site Visit: {lead.preferredDate || 'Requested'}</span>
                           </span>
                         ) : (
-                          <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700">
+                          <span className="inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700">
                             {lead.leadType || 'Inquiry'}
                           </span>
                         )}
@@ -559,18 +634,20 @@ export default function ManageLeads() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Inquiry Type
+                    Inquiry Type / Vertical
                   </label>
                   <select
                     value={modalForm.leadType}
                     onChange={(e) => setModalForm(prev => ({ ...prev, leadType: e.target.value }))}
                     className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600"
                   >
-                    <option value="General Consultation">General Consultation</option>
+                    <option value="Real Estate (Channel Partner)">Real Estate (Channel Partner)</option>
+                    <option value="Home Loan Assistance">Home Loan Assistance (Minimal Docs)</option>
+                    <option value="Property + Home Loan">Property + Home Loan (Both)</option>
                     <option value="Schedule Site Visit">Schedule Site Visit</option>
                     <option value="Brochure & Floor Plan">Brochure & Floor Plan</option>
                     <option value="Pricing & Payment Plan">Pricing & Payment Plan</option>
-                    <option value="Post Requirement">Custom Requirement</option>
+                    <option value="General Consultation">General Consultation</option>
                   </select>
                 </div>
 

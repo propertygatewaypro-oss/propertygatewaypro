@@ -102,7 +102,7 @@ export default function HomePage({ onOpenVisitModal }) {
   const faqs = [
     {
       q: "Why is there 0% brokerage on new builder projects?",
-      a: `As an authorized channel advisory partner under TNRERA (${BRAND.reraId}) for Chennai's tier-1 builders (Casagrand, TVS Emerald, Shriram, Puravankara, Brigade, Appaswamy), our consultation fees are remunerated directly by the builders. You pay the exact direct developer price with zero added commission or hidden charges.`
+      a: `As your channel partner, we connect buyers with leading developers across Chennai under TNRERA (${BRAND.reraId}). We utilize our deep market knowledge to identify properties that align with your goals, simplify complex negotiations, verify documentation, and ensure transparency at every stage — providing end-to-end support with ₹0 buyer brokerage.`
     },
     {
       q: "How do Property Site Visits work?",
@@ -113,8 +113,8 @@ export default function HomePage({ onOpenVisitModal }) {
       a: "Yes. Every residential apartment, villa, and plot listed on Property Gateway is strictly validated against TNRERA filings, CMDA / DTCP planning approvals, and 30-year title clearance by legal advocates prior to listing."
     },
     {
-      q: "Can Property Gateway assist with bank home loan approvals and legal paperwork?",
-      a: "Yes. We maintain direct loan facilitation desks with leading banks including SBI, HDFC Bank, ICICI Bank, and Axis Bank for expedited home loan processing at optimal interest rates, alongside end-to-end guidance during registration at the Sub-Registrar Office."
+      q: "Can Property Gateway assist with bank home loan approvals and documentation?",
+      a: "Yes. As your home loan partner, we leverage our extensive relationships with banking institutions (SBI, HDFC Bank, ICICI Bank, Axis Bank) to secure the best financial solutions tailored to your needs. We help you obtain competitive interest rates, flexible repayment tenures, and exclusive offers with minimal documentation, managing the entire process from application to disbursement."
     }
   ];
 

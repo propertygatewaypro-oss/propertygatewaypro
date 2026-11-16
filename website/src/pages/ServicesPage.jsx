@@ -114,30 +114,46 @@ export default function ServicesPage() {
   const [secCtaRef, secCtaInView] = useScrollReveal();
 
   // Categories
-  const categories = ['All', 'Homebuyers', 'Luxury & Coastal', 'NRI Services', 'Property Owners', 'Legal & Banking'];
+  const categories = ['All', 'Real Estate', 'Home Loans', 'Legal & Due Diligence', 'NRI Services', 'Commercial & Luxury'];
 
-  // Comprehensive Services Catalog (Inspired by Connection Point & Institutional Advisory)
+  // Comprehensive Services Catalog - Anchored by Core Real Estate & Home Loan Verticals
   const allServices = [
     {
-      id: 'builder-launches',
+      id: 'real-estate-advisory',
       icon: Building2,
-      category: 'Homebuyers',
-      title: '0% Brokerage on New Builder Launches',
-      tagline: 'Authorized Channel Advisory for Chennai Tier-1 Developers',
-      description: 'Direct developer pricing with zero agency commission. We provide first-hand access to pre-launches, inventory selection, and developer payment subsidies across Chennai.',
+      category: 'Real Estate',
+      title: 'Real Estate',
+      tagline: 'Seamless Property Search, End-to-End Support',
+      description: 'As your channel partner, we connect buyers with leading developers. We utilize our deep market knowledge to identify properties that align with your goals. By simplifying complex negotiations, verifying documentation, and ensuring transparency at every stage, we provide end-to-end support.',
       deliverables: [
-        'Casagrand, TVS Emerald, Shriram, Puravankara, Brigade & Appaswamy launches',
-        'Direct pre-launch price advantage and unit selection',
-        'Zero commission charged to homebuyers',
-        'Guided on-site property walkthroughs with senior advisors'
+        'Direct connection with leading tier-1 developers (Casagrand, TVS, Shriram, Brigade, Appaswamy)',
+        'Deep micro-market knowledge identifying properties that align with your lifestyle and budget',
+        'Simplification of complex negotiations with 100% transparent pricing and ₹0 buyer brokerage',
+        'Thorough documentation verification and complete end-to-end transaction advisory'
       ],
-      ctaText: 'Explore New Launches',
-      ctaLink: '/properties?status=New+Launch'
+      ctaText: 'Explore Verified Properties',
+      ctaLink: '/properties'
+    },
+    {
+      id: 'home-loans',
+      icon: Coins,
+      category: 'Home Loans',
+      title: 'Home Loan',
+      tagline: 'Hassle-Free Loans, Minimal Documentation.',
+      description: 'As your home loan partner, we leverage our extensive relationships with banking institutions to secure the best financial solutions tailored to your needs. We help you obtain competitive interest rates, flexible repayment tenures, and exclusive offers. Our team manages the entire process from application to disbursement, offering personalized guidance on documentation and legal verification.',
+      deliverables: [
+        'Extensive relationships with premier banks (SBI, HDFC Bank, ICICI Bank, Axis Bank)',
+        'Competitive interest rates, flexible repayment tenures, and exclusive institutional offers',
+        'Minimal documentation with end-to-end handling from application to final disbursement',
+        'Personalized guidance on documentation, credit eligibility, and legal property verification'
+      ],
+      ctaText: 'Apply for Home Loan',
+      ctaLink: '/contact?purpose=home-loan'
     },
     {
       id: 'legal-audit',
       icon: FileCheck2,
-      category: 'Legal & Banking',
+      category: 'Legal & Due Diligence',
       title: '30-Year Parent Title & Legal Scrutiny',
       tagline: 'Independent High-Court Advocate Verification',
       description: 'Buying property without complete title clarity is your biggest risk. Our in-house real estate advocates audit 30-year parent deeds, revenue records, and statutory approvals.',
@@ -149,22 +165,6 @@ export default function ServicesPage() {
       ],
       ctaText: 'Request Legal Consultation',
       ctaLink: '/contact?purpose=legal-audit'
-    },
-    {
-      id: 'luxury-villas',
-      icon: Sparkles,
-      category: 'Luxury & Coastal',
-      title: 'Luxury Beachfront Villas & Private Estates',
-      tagline: 'Chennai’s Most Prestigious Coastal & Boulevard Addresses',
-      description: 'Bespoke advisory for ultra-high-net-worth individuals, business founders, and film professionals seeking private seaside estates on ECR and penthouses in Central Chennai.',
-      deliverables: [
-        'Direct sea-facing villas on ECR (Neelankarai, Akkarai, Injambakkam)',
-        'Heritage luxury apartments in Anna Nagar, Adyar, and Alwarpet',
-        'High privacy protocols and confidential transactions',
-        'Architectural design consultation and customized floor layouts'
-      ],
-      ctaText: 'View Luxury Villas',
-      ctaLink: '/properties?category=Luxury+Villa'
     },
     {
       id: 'nri-desk',
@@ -183,41 +183,9 @@ export default function ServicesPage() {
       ctaLink: '/contact?purpose=nri-desk'
     },
     {
-      id: 'resale-property',
-      icon: KeyRound,
-      category: 'Property Owners',
-      title: 'Property Resale & Exclusive Mandate Sales',
-      tagline: 'Maximizing Capital Returns with Targeted Buyer Reach',
-      description: 'Looking to sell your premium apartment, villa, or land parcel? We screen high-intent buyers, create cinematic property listings, and manage price negotiations to secure top value.',
-      deliverables: [
-        'Comprehensive comparative market valuation (CMA) report',
-        'Professional architectural photography and verified listing',
-        'Targeted digital distribution across our network of 950+ qualified buyers',
-        'Seamless token agreement, bank NOC coordination, and deed registration'
-      ],
-      ctaText: 'List Your Property for Sale',
-      ctaLink: '/contact?purpose=resale'
-    },
-    {
-      id: 'home-loans',
-      icon: Coins,
-      category: 'Legal & Banking',
-      title: 'Pre-Approved Home Loans & Capital Solutions',
-      tagline: 'Direct Corporate Tie-Ups with Top Banking Lenders',
-      description: 'Navigate home financing with ease. Through institutional alliances with SBI, HDFC Bank, ICICI Bank, and Axis Bank, we unlock preferred interest rates and fast sanctions.',
-      deliverables: [
-        'Pre-approval in 48 to 72 hours with maximum loan-to-value (up to 80%)',
-        'Lowest floating interest rates with waiver of processing charges',
-        'Zero coordination headaches — our loan specialists manage paperwork',
-        'Loan transfer, balance transfer, and top-up options available'
-      ],
-      ctaText: 'Check Loan Eligibility',
-      ctaLink: '/contact?purpose=home-loan'
-    },
-    {
       id: 'site-visits',
       icon: Building2,
-      category: 'Homebuyers',
+      category: 'Real Estate',
       title: 'Guided Project Site Inspections',
       tagline: 'Personalized Property Walkthroughs Across Chennai',
       description: 'Experience your prospective communities in comfort. We organize dedicated, guided on-site project walkthroughs across Chennai for your family.',
@@ -231,9 +199,41 @@ export default function ServicesPage() {
       ctaLink: '/contact?purpose=site-visit'
     },
     {
+      id: 'luxury-villas',
+      icon: Sparkles,
+      category: 'Commercial & Luxury',
+      title: 'Luxury Beachfront Villas & Private Estates',
+      tagline: 'Chennai’s Most Prestigious Coastal & Boulevard Addresses',
+      description: 'Bespoke advisory for ultra-high-net-worth individuals, business founders, and film professionals seeking private seaside estates on ECR and penthouses in Central Chennai.',
+      deliverables: [
+        'Direct sea-facing villas on ECR (Neelankarai, Akkarai, Injambakkam)',
+        'Heritage luxury apartments in Anna Nagar, Adyar, and Alwarpet',
+        'High privacy protocols and confidential transactions',
+        'Architectural design consultation and customized floor layouts'
+      ],
+      ctaText: 'View Luxury Villas',
+      ctaLink: '/properties?category=Luxury+Villa'
+    },
+    {
+      id: 'resale-property',
+      icon: KeyRound,
+      category: 'Commercial & Luxury',
+      title: 'Property Resale & Exclusive Mandate Sales',
+      tagline: 'Maximizing Capital Returns with Targeted Buyer Reach',
+      description: 'Looking to sell your premium apartment, villa, or land parcel? We screen high-intent buyers, create cinematic property listings, and manage price negotiations to secure top value.',
+      deliverables: [
+        'Comprehensive comparative market valuation (CMA) report',
+        'Professional architectural photography and verified listing',
+        'Targeted digital distribution across our network of 950+ qualified buyers',
+        'Seamless token agreement, bank NOC coordination, and deed registration'
+      ],
+      ctaText: 'List Your Property for Sale',
+      ctaLink: '/contact?purpose=resale'
+    },
+    {
       id: 'commercial-investments',
       icon: Briefcase,
-      category: 'Property Owners',
+      category: 'Commercial & Luxury',
       title: 'Commercial Offices & High-Yield Assets',
       tagline: 'Grade-A Tech Park Spaces & Retail High Streets',
       description: 'Strategic commercial property acquisitions and leasing for business enterprises and investors seeking robust 7% to 9% rental yields in OMR, Guindy, and Mount Road.',
@@ -260,8 +260,8 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-slate-800 pb-12">
       <SEO
-        title="Real Estate Advisory & NRI Property Services in Chennai"
-        description="Comprehensive Chennai real estate advisory services: Zero-brokerage new builder acquisitions, beachfront villas on ECR, NRI remote acquisition concierge, and 30-year parent deed legal due diligence."
+        title="Real Estate Channel Partner & Hassle-Free Home Loans | Property Gateway Chennai"
+        description="Property Gateway: Authorized real estate channel partner connecting buyers with leading developers at 0% brokerage, and institutional home loan partner offering hassle-free loans with minimal documentation."
         canonicalUrl="/services"
         schemaData={servicesSchema}
       />
@@ -414,7 +414,169 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* 2. SERVICES CATALOG WITH INTERACTIVE CATEGORY TABS */}
+      {/* 2. CORE SERVICE VERTICALS (FLAGSHIP REAL ESTATE & HOME LOAN DESKS) */}
+      <section className="py-12 sm:py-16 bg-[#F5F2EA] border-b border-[#E7E2D8] relative overflow-hidden">
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-gradient-to-b from-[#A88548]/10 via-transparent to-transparent pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#8C6239] bg-white px-3.5 py-1.5 rounded-full border border-[#E7E2D8] inline-flex items-center gap-1.5 shadow-2xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#A88548]" />
+              <span>FLAGSHIP SERVICE PILLARS</span>
+            </span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#1E232F] tracking-tight mt-3">
+              The Two Pillars of <span className="text-gold-metallic italic">Property Gateway</span>
+            </h2>
+            <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-2.5 max-w-2xl mx-auto leading-relaxed">
+              We operate as your dedicated Channel Partner with Chennai's leading developers and your trusted institutional Home Loan Partner with top banking lenders.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
+            
+            {/* PILLAR 1: REAL ESTATE */}
+            <div className="p-6 sm:p-8 lg:p-9 rounded-3xl bg-white border border-[#E7E2D8] shadow-md hover:border-[#A88548] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#A88548]/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between pb-4 border-b border-[#E7E2D8]">
+                  <div className="w-12 h-12 rounded-2xl bg-[#A88548]/15 border border-[#A88548]/30 flex items-center justify-center text-[#7D5D2A] group-hover:bg-[#A88548] group-hover:text-white transition-all duration-300">
+                    <Building2 className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-[#8C6239] bg-[#FAF9F6] px-3 py-1 rounded-full border border-[#E7E2D8] font-bold">
+                    AUTHORIZED CHANNEL PARTNER
+                  </span>
+                </div>
+
+                <div className="pt-5">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1E232F] group-hover:text-[#A88548] transition-colors">
+                    Real Estate
+                  </h3>
+                  <p className="text-xs sm:text-sm font-semibold text-[#8C6239] mt-1 tracking-wide">
+                    Seamless Property Search, End-to-End Support
+                  </p>
+
+                  <p className="text-xs sm:text-[14px] text-slate-600 mt-4 leading-relaxed font-sans">
+                    As your channel partner, we connect buyers with leading developers. We utilize our deep market knowledge to identify properties that align with your goals. By simplifying complex negotiations, verifying documentation, and ensuring transparency at every stage, we provide end-to-end support.
+                  </p>
+
+                  {/* Highlights */}
+                  <div className="mt-6 pt-5 border-t border-[#E7E2D8] space-y-2.5">
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
+                      <span><strong>Direct Developer Access:</strong> Casagrand, TVS Emerald, Shriram, Brigade, Appaswamy</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
+                      <span><strong>Deep Market Knowledge:</strong> Aligning properties with your family lifestyle & financial goals</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
+                      <span><strong>Simplified Negotiations:</strong> 100% pricing transparency with zero buyer brokerage</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-[#A88548] shrink-0 mt-0.5" />
+                      <span><strong>End-to-End Support:</strong> Rigorous 30-year documentation verification at every stage</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-[#E7E2D8] flex flex-wrap items-center justify-between gap-3 relative z-10">
+                <Link
+                  to="/properties"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold-metallic text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                >
+                  <span>Explore Properties</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <Link
+                  to="/contact?purpose=site-visit"
+                  className="text-xs sm:text-sm font-bold text-[#7D5D2A] hover:text-[#A88548] transition-colors"
+                >
+                  Schedule Guided Site Visit &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* PILLAR 2: HOME LOAN */}
+            <div className="p-6 sm:p-8 lg:p-9 rounded-3xl bg-white border border-[#E7E2D8] shadow-md hover:border-[#A88548] hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#A88548]/10 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform duration-500" />
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between pb-4 border-b border-[#E7E2D8]">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-800 group-hover:bg-emerald-700 group-hover:text-white transition-all duration-300">
+                    <Coins className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 font-bold">
+                    INSTITUTIONAL BANKING PARTNER
+                  </span>
+                </div>
+
+                <div className="pt-5">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1E232F] group-hover:text-[#A88548] transition-colors">
+                    Home Loan
+                  </h3>
+                  <p className="text-xs sm:text-sm font-semibold text-[#8C6239] mt-1 tracking-wide">
+                    Hassle-Free Loans, Minimal Documentation.
+                  </p>
+
+                  <p className="text-xs sm:text-[14px] text-slate-600 mt-4 leading-relaxed font-sans">
+                    As your home loan partner, we leverage our extensive relationships with banking institutions to secure the best financial solutions tailored to your needs. We help you obtain competitive interest rates, flexible repayment tenures, and exclusive offers. Our team manages the entire process from application to disbursement, offering personalized guidance on documentation and legal verification.
+                  </p>
+
+                  {/* Highlights */}
+                  <div className="mt-6 pt-5 border-t border-[#E7E2D8] space-y-2.5">
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span><strong>Extensive Banking Relationships:</strong> Direct desks with SBI, HDFC, ICICI & Axis Bank</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span><strong>Best Financial Solutions:</strong> Competitive interest rates & flexible repayment tenures</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span><strong>Minimal Documentation:</strong> Hassle-free paperwork with fast 48-72 hour in-principle sanction</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <span><strong>Disbursement to Handover:</strong> Personalized guidance on legal verification & disbursement</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-[#E7E2D8] flex flex-wrap items-center justify-between gap-3 relative z-10">
+                <Link
+                  to="/contact?purpose=home-loan"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gold-metallic text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-[0.98]"
+                >
+                  <span>Apply for Home Loan</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <a
+                  href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent("Hello Property Gateway,\n\nI would like assistance with a Home Loan (competitive rates & minimal documentation). Please connect me with a home loan specialist. Thank you!")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs sm:text-sm font-bold text-emerald-700 hover:text-emerald-800 transition-colors inline-flex items-center gap-1.5"
+                >
+                  <img src="/icons/whatsapp-icon.webp" alt="WhatsApp" className="w-4 h-4 object-contain" />
+                  <span>Chat on WhatsApp &rarr;</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. EXTENDED SERVICES CATALOG WITH INTERACTIVE CATEGORY TABS */}
       <section 
         ref={secServicesRef}
         className="py-10 sm:py-14 bg-[#FAF9F6] border-b border-[#E7E2D8]"

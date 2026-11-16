@@ -111,13 +111,19 @@ export default function AboutPage() {
   const [sec5Ref, sec5InView] = useScrollReveal();
   const [sec6Ref, sec6InView] = useScrollReveal();
 
-  // 6 Core Services (Inspired by PropLeaf's high-converting services architecture)
+  // 6 Core Services - Anchored by Flagship Real Estate & Home Loan Verticals
   const services = [
     {
-      icon: Compass,
-      title: "Strategic Property Advisory",
-      category: "Bespoke Consulting",
-      desc: "Tailored residential guidance analyzing commute radii, micro-market price benchmarks, builder delivery history, and 5-year capital appreciation potential."
+      icon: Building2,
+      title: "Real Estate (Channel Partner)",
+      category: "Seamless Search & End-to-End Support",
+      desc: "As your channel partner, we connect buyers with leading developers. We utilize our deep market knowledge to identify properties that align with your goals. By simplifying complex negotiations, verifying documentation, and ensuring transparency at every stage, we provide end-to-end support."
+    },
+    {
+      icon: Coins,
+      title: "Home Loan Partner",
+      category: "Hassle-Free & Minimal Documentation",
+      desc: "As your home loan partner, we leverage our extensive relationships with banking institutions to secure the best financial solutions tailored to your needs. We help you obtain competitive interest rates, flexible repayment tenures, and exclusive offers. Our team manages the entire process from application to disbursement, offering personalized guidance on documentation and legal verification."
     },
     {
       icon: Globe2,
@@ -136,12 +142,6 @@ export default function AboutPage() {
       title: "Legal Due Diligence & Title Audit",
       category: "In-House Legal",
       desc: "Rigorous 30-year parent deed scrutinization by veteran high-court property advocates: CMDA/DTCP building sanctions, revenue patta, and RERA registration compliance."
-    },
-    {
-      icon: Coins,
-      title: "Pre-Approved Home Loans Desk",
-      category: "Institutional Banking",
-      desc: "Direct corporate tie-ups with SBI, HDFC Bank, ICICI Bank, and Axis Bank. We secure competitive interest rates, waiver of loan processing hurdles, and sanctions up to 80%."
     },
     {
       icon: BadgePercent,

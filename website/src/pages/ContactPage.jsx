@@ -9,6 +9,7 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Building2, 
+  Coins,
   ExternalLink
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -23,13 +24,21 @@ export default function ContactPage() {
   const { locations, counts } = useDynamicLocations();
   const propertyParam = searchParams.get('property') || '';
   const locationParam = searchParams.get('location') || '';
+  const purposeParam = searchParams.get('purpose') || '';
+
+  const initialService = purposeParam === 'home-loan' 
+    ? 'Home Loan Assistance' 
+    : 'Property Search & Purchase';
 
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    serviceRequired: initialService,
     preferredLocation: locationParam || 'All Locations',
     targetTimeline: 'Immediate (Within 30 Days)',
-    message: propertyParam ? `Inquiring about ${propertyParam}.` : '',
+    message: propertyParam 
+      ? `Inquiring about ${propertyParam}.` 
+      : (purposeParam === 'home-loan' ? 'Interested in home loan options with minimal documentation.' : ''),
     consent: true,
     website_hp: '' // Honeypot
   });
@@ -39,13 +48,26 @@ export default function ContactPage() {
 
   // Keep form in sync if query parameters change
   useEffect(() => {
+    if (purposeParam === 'home-loan') {
+      setFormData(prev => ({ 
+        ...prev, 
+        serviceRequired: 'Home Loan Assistance',
+        message: prev.message || 'Interested in home loan options with minimal documentation.'
+      }));
+    } else if (purposeParam === 'site-visit') {
+      setFormData(prev => ({ 
+        ...prev, 
+        serviceRequired: 'Property Search & Purchase',
+        message: prev.message || 'I would like to schedule a personalized property site visit in Chennai.'
+      }));
+    }
     if (locationParam) {
       setFormData(prev => ({ ...prev, preferredLocation: locationParam }));
     }
     if (propertyParam) {
       setFormData(prev => ({ ...prev, message: `Inquiring about ${propertyParam}.` }));
     }
-  }, [searchParams, locationParam, propertyParam]);
+  }, [searchParams, purposeParam, locationParam, propertyParam]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -76,19 +98,27 @@ export default function ContactPage() {
 
     setStatus('loading');
     try {
-      const leadTitle = propertyParam 
+      let leadTitle = propertyParam 
         ? propertyParam 
         : (formData.preferredLocation && formData.preferredLocation !== 'All Locations' 
             ? `${formData.preferredLocation} Inquiry` 
             : 'Chennai Real Estate Inquiry');
 
-      const typeLabel = propertyParam 
-        ? 'Property Site Visit' 
-        : 'General Property Inquiry';
+      let typeLabel = 'General Property Inquiry';
+      if (formData.serviceRequired === 'Home Loan Assistance') {
+        typeLabel = 'Home Loan Application';
+        leadTitle = propertyParam ? `${propertyParam} (Home Loan)` : 'Home Loan Inquiry';
+      } else if (formData.serviceRequired === 'Both (Property + Home Loan)') {
+        typeLabel = 'Property & Home Loan';
+        leadTitle = propertyParam ? `${propertyParam} (Property + Loan)` : 'Property + Home Loan Inquiry';
+      } else if (propertyParam) {
+        typeLabel = 'Property Site Visit';
+      }
 
       await submitLeadInquiry({
         name: formData.name,
         phone: formData.phone,
+        serviceRequired: formData.serviceRequired,
         preferredLocation: formData.preferredLocation !== 'All Locations' ? formData.preferredLocation : 'Any Prime Location in Chennai',
         targetTimeline: formData.targetTimeline,
         message: formData.message,
@@ -114,6 +144,7 @@ export default function ContactPage() {
       setFormData({
         name: '',
         phone: '',
+        serviceRequired: purposeParam === 'home-loan' ? 'Home Loan Assistance' : 'Property Search & Purchase',
         preferredLocation: 'All Locations',
         targetTimeline: 'Immediate (Within 30 Days)',
         message: '',
@@ -248,7 +279,9 @@ export default function ContactPage() {
                   href={`https://wa.me/${BRAND.phoneRaw}?text=${encodeURIComponent(
                     propertyParam 
                       ? `Hello Property Gateway,\n\nI would like more information and pricing details for "${propertyParam}". Please share the brochure and floor plans. Thank you!`
-                      : "Hello Property Gateway,\n\nI would like to consult with an advisor regarding verified residential communities in Chennai. Thank you!"
+                      : (purposeParam === 'home-loan'
+                          ? "Hello Property Gateway,\n\nI would like assistance with a Home Loan (competitive interest rates & minimal documentation). Please connect me with a home loan specialist. Thank you!"
+                          : "Hello Property Gateway,\n\nI would like to consult with an advisor regarding verified residential communities in Chennai. Thank you!")
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -379,13 +412,62 @@ export default function ContactPage() {
                   {/* Simple Text Header */}
                   <div className="border-b border-slate-100 pb-5">
                     <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 tracking-tight">
-                      {propertyParam ? `Inquire About ${propertyParam}` : 'Schedule a Visit or Inquiry'}
+                      {propertyParam 
+                        ? `Inquire About ${propertyParam}` 
+                        : (formData.serviceRequired === 'Home Loan Assistance' 
+                            ? 'Apply for a Hassle-Free Home Loan' 
+                            : 'Schedule a Visit or Inquiry')}
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 mt-1">
                       {propertyParam 
                         ? 'Share your details below to receive brochure, verified pricing, and schedule a private inspection.'
-                        : 'Connect with a certified Chennai property specialist. We respond within 2 hours.'}
+                        : (formData.serviceRequired === 'Home Loan Assistance'
+                            ? 'Minimal documentation, competitive bank interest rates, and end-to-end guidance from application to disbursement.'
+                            : 'Connect with a certified Chennai property specialist. We respond within 2 hours.')}
                     </p>
+                  </div>
+
+                  {/* 1. SERVICE REQUIRED SELECTOR */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      Service Required *
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {[
+                        { id: 'Property Search & Purchase', label: 'Property Search', sub: 'Channel Partner', icon: Building2 },
+                        { id: 'Home Loan Assistance', label: 'Home Loan', sub: 'Minimal Docs', icon: Coins },
+                        { id: 'Both (Property + Home Loan)', label: 'Both', sub: 'Search + Loan', icon: ShieldCheck }
+                      ].map((item) => {
+                        const Icon = item.icon;
+                        const isSelected = formData.serviceRequired === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => setFormData(prev => ({ ...prev, serviceRequired: item.id }))}
+                            className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-3 ${
+                              isSelected
+                                ? 'bg-amber-500/10 border-[#A88548] text-[#7D5D2A] shadow-xs'
+                                : 'bg-[#FAF9F6]/50 border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-white'
+                            }`}
+                          >
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                              isSelected ? 'bg-gold-metallic text-white' : 'bg-slate-100 text-slate-500'
+                            }`}>
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <div className="min-w-0">
+                              <span className="block text-xs font-bold leading-tight truncate">
+                                {item.label}
+                              </span>
+                              <span className="block text-[10px] text-slate-500 leading-tight">
+                                {item.sub}
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   {/* 2. NAME & PHONE INPUTS (Well-Spaced Grid) */}
